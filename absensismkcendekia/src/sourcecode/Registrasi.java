@@ -32,7 +32,7 @@ public class Registrasi extends javax.swing.JFrame {
         stat = DB.stm;
     }
     
-    public void registrasi(){
+    public void addregistrasi(){
         try {
             if (txt_id.getText().equals("") || txt_username.getText().equals("") 
                     || txt_nama.getText().equals("") || txt_nip.getText().equals("") || txt_password.getText().equals(" ")){
@@ -52,7 +52,7 @@ public class Registrasi extends javax.swing.JFrame {
            hapuslayar();
         }
     }
-    //digunakan agar komputer dapat menghapus layar pada awal kita masuk
+
     private void hapuslayar(){
         txt_id.setText(" ");
         txt_nip.setText(" ");
@@ -254,7 +254,7 @@ public class Registrasi extends javax.swing.JFrame {
 
     private void btn_daftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_daftarActionPerformed
         // TODO add your handling code here:
-        this.registrasi();
+        this.addregistrasi();
     }//GEN-LAST:event_btn_daftarActionPerformed
 
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
