@@ -378,9 +378,9 @@ public class TambahSiswa extends javax.swing.JFrame {
 //                login.setVisible(true);
             }
         } catch (Exception e) {
-//           JOptionPane.showMessageDialog(this, "Data Sudah Ada","Pesan",JOptionPane.WARNING_MESSAGE);
-//           hapuslayar();
-            System.out.println(e);
+           JOptionPane.showMessageDialog(this, "Data Sudah Ada","Pesan",JOptionPane.WARNING_MESSAGE);
+           hapuslayar();
+           //System.out.println(e);
         }
     }//GEN-LAST:event_btnsimpanActionPerformed
 
