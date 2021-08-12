@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Agu 2021 pada 07.48
+-- Waktu pembuatan: 12 Agu 2021 pada 12.26
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.2.34
 
@@ -48,6 +48,30 @@ INSERT INTO `admin` (`idadmin`, `nip`, `username`, `nama`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `guru`
+--
+
+CREATE TABLE `guru` (
+  `nip` varchar(15) NOT NULL,
+  `nk` varchar(15) NOT NULL,
+  `nama` varchar(40) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `jeniskelamin` varchar(15) NOT NULL,
+  `notlp` varchar(15) NOT NULL,
+  `alamat` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `guru`
+--
+
+INSERT INTO `guru` (`nip`, `nk`, `nama`, `email`, `jeniskelamin`, `notlp`, `alamat`) VALUES
+('3411181108', 'TBO01', 'Chabs', 'cal30@gmail.com', 'perempuan', '087822209880', 'disini'),
+('3411181123', 'BK01', 'Rafi Aziizi', 'rafiaziizi@gmail.com', 'Laki-Laki', '087823321818', 'cimohay');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `siswa`
 --
 
@@ -74,6 +98,12 @@ INSERT INTO `siswa` (`nis`, `nk`, `nama`, `alamat`, `jeniskelamin`, `notlp`, `em
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `guru`
+--
+ALTER TABLE `guru`
+  ADD PRIMARY KEY (`nip`);
 
 --
 -- Indeks untuk tabel `siswa`
