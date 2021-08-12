@@ -112,6 +112,8 @@ public class Login extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null,("Selamat Datang ") + rs.getString("nama"),
                                 "Login Dosen Berhasil", JOptionPane.INFORMATION_MESSAGE);
                         dispose();
+                        DataSiswa dtsiswa=new DataSiswa();
+                        dtsiswa.setVisible(true);
                    
                 }
             } else {

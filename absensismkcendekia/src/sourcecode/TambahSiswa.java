@@ -25,10 +25,53 @@ public class TambahSiswa extends javax.swing.JFrame {
      */
     public TambahSiswa() {
         initComponents();
+        koneksi DB = new koneksi();
+        DB.config();
+        con = DB.con;
+        stat = DB.stm;
     }
    
+    public void simpandata(){
+        String jeniskelamin = null;
+        if(rb1.isSelected()){
+            jeniskelamin = "perempuan";
+        } else if (rb2.isSelected()){
+            jeniskelamin = "Laki-Laki";
+        }
+        
+        try {
+            if (txt_nis.getText().equals("") || txt_nk.getText().equals("") 
+                    || txt_nama.getText().equals("") || txt_alamat.getText().equals("") || txt_email.getText().equals(" ") 
+                    || txt_notlp.getText().equals(" ")|| txt_walikelas.getText().equals(" ")|| txt_noortu.getText().equals(" ")
+                    || txt_namaortu.getText().equals(" ")){
+                JOptionPane.showMessageDialog(this, "Data Tidak Boleh Kosong","Pesan",JOptionPane.ERROR_MESSAGE);
+            hapuslayar();
+            } else {
+                String simpan = "insert into siswa values ('"+txt_nis.getText()
+                        +"','"+txt_nk.getText()
+                        +"','"+txt_nama.getText()
+                        +"','"+txt_alamat.getText()
+                        +"','"+jeniskelamin
+                        +"','"+txt_notlp.getText()
+                        +"','"+txt_email.getText()
+                        +"','"+txt_walikelas.getText()
+                        +"','"+txt_namaortu.getText()
+                        +"','"+txt_noortu.getText()
+                        +"')";
+                stat = con.createStatement();
+                int SA =stat.executeUpdate(simpan);
+                JOptionPane.showMessageDialog(this,"Data Berhasil disimpan!");
+                this.setVisible(false);
+                DataSiswa dtsiswa=new DataSiswa();
+                dtsiswa.setVisible(true);
+            }
+        } catch (Exception e) {
+           JOptionPane.showMessageDialog(this, "Data Sudah Ada","Pesan",JOptionPane.WARNING_MESSAGE);
+           hapuslayar();
+           //System.out.println(e);
+        }
+    }
     
-
     private void hapuslayar(){
         txt_nis.setText(" ");
         txt_nk.setText(" ");
@@ -73,8 +116,8 @@ public class TambahSiswa extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        btnsimpan = new javax.swing.JButton();
-        btnedit = new javax.swing.JButton();
+        button_simpan = new javax.swing.JButton();
+        button_kembali = new javax.swing.JButton();
         rb1 = new javax.swing.JRadioButton();
         rb2 = new javax.swing.JRadioButton();
 
@@ -156,17 +199,17 @@ public class TambahSiswa extends javax.swing.JFrame {
 
         jLabel11.setText("No.Ortu");
 
-        btnsimpan.setText("Simpan Data");
-        btnsimpan.addActionListener(new java.awt.event.ActionListener() {
+        button_simpan.setText("Simpan Data");
+        button_simpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsimpanActionPerformed(evt);
+                button_simpanActionPerformed(evt);
             }
         });
 
-        btnedit.setText("Edit Data");
-        btnedit.addActionListener(new java.awt.event.ActionListener() {
+        button_kembali.setText("Kembali");
+        button_kembali.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btneditActionPerformed(evt);
+                button_kembaliActionPerformed(evt);
             }
         });
 
@@ -218,10 +261,10 @@ public class TambahSiswa extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(panelsiswaLayout.createSequentialGroup()
                         .addGap(192, 192, 192)
-                        .addComponent(btnsimpan)
+                        .addComponent(button_simpan)
                         .addGap(46, 46, 46)
-                        .addComponent(btnedit)
-                        .addGap(0, 200, Short.MAX_VALUE)))
+                        .addComponent(button_kembali)
+                        .addGap(0, 208, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(panelsiswaLayout.createSequentialGroup()
                 .addGap(266, 266, 266)
@@ -279,8 +322,8 @@ public class TambahSiswa extends javax.swing.JFrame {
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(panelsiswaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnsimpan)
-                    .addComponent(btnedit))
+                    .addComponent(button_simpan)
+                    .addComponent(button_kembali))
                 .addGap(31, 31, 31))
         );
 
@@ -330,59 +373,20 @@ public class TambahSiswa extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_noortuActionPerformed
 
-    private void btneditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneditActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btneditActionPerformed
+    private void button_kembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_kembaliActionPerformed
+        this.setVisible(false);
+        DataSiswa dtsiswa=new DataSiswa();
+        dtsiswa.setVisible(true);
+    }//GEN-LAST:event_button_kembaliActionPerformed
 
     private void rb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rb1ActionPerformed
 
-    private void btnsimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsimpanActionPerformed
+    private void button_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_simpanActionPerformed
         // TODO add your handling code here:
-        String jeniskelamin = null;
-        if(rb1.isSelected()){
-            jeniskelamin = "perempuan";
-        } else if (rb2.isSelected()){
-            jeniskelamin = "Laki-Laki";
-        }
-        
-        try {
-            if (txt_nis.getText().equals("") || txt_nk.getText().equals("") 
-                    || txt_nama.getText().equals("") || txt_alamat.getText().equals("") || txt_email.getText().equals(" ") 
-                    || txt_notlp.getText().equals(" ")|| txt_walikelas.getText().equals(" ")|| txt_noortu.getText().equals(" ")
-                    || txt_namaortu.getText().equals(" ")){
-                JOptionPane.showMessageDialog(this, "Data Tidak Boleh Kosong","Pesan",JOptionPane.ERROR_MESSAGE);
-            hapuslayar();
-            } else {
-                //Digunakan untuk memanggil JDBC driver
-                Class.forName("com.mysql.jdbc.Driver");
-                con=DriverManager.getConnection("jdbc:mysql://localhost/smkcendekia", "root", "");
-                stat = con.createStatement();
-                String simpan = "insert into siswa values ('"+txt_nis.getText()
-                        +"','"+txt_nk.getText()
-                        +"','"+txt_nama.getText()
-                        +"','"+txt_alamat.getText()
-                        +"','"+jeniskelamin
-                        +"','"+txt_notlp.getText()
-                        +"','"+txt_email.getText()
-                        +"','"+txt_walikelas.getText()
-                        +"','"+txt_namaortu.getText()
-                        +"','"+txt_noortu.getText()
-                        +"')";
-                stat = con.createStatement();
-                int SA =stat.executeUpdate(simpan);
-                JOptionPane.showMessageDialog(this,"Data Berhasil disimpan!");
-                this.setVisible(false);
-//                Login login = new Login();
-//                login.setVisible(true);
-            }
-        } catch (Exception e) {
-           JOptionPane.showMessageDialog(this, "Data Sudah Ada","Pesan",JOptionPane.WARNING_MESSAGE);
-           hapuslayar();
-           //System.out.println(e);
-        }
-    }//GEN-LAST:event_btnsimpanActionPerformed
+        this.simpandata();
+    }//GEN-LAST:event_button_simpanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -420,8 +424,8 @@ public class TambahSiswa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnedit;
-    private javax.swing.JButton btnsimpan;
+    private javax.swing.JButton button_kembali;
+    private javax.swing.JButton button_simpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

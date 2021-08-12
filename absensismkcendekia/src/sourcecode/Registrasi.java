@@ -26,8 +26,32 @@ public class Registrasi extends javax.swing.JFrame {
      */
     public Registrasi() {
         initComponents();
+        koneksi DB = new koneksi();
+        DB.config();
+        con = DB.con;
+        stat = DB.stm;
     }
     
+    public void registrasi(){
+        try {
+            if (txt_id.getText().equals("") || txt_username.getText().equals("") 
+                    || txt_nama.getText().equals("") || txt_nip.getText().equals("") || txt_password.getText().equals(" ")){
+                JOptionPane.showMessageDialog(this, "Data Tidak Boleh Kosong","Pesan",JOptionPane.ERROR_MESSAGE);
+            hapuslayar();
+            } else {
+                String simpan = "insert into admin values ('"+txt_id.getText()+"','"+txt_nip.getText()+"','"+txt_password.getText()+"','"+txt_nama.getText()+"','"+txt_username.getText()+"')";
+                stat = con.createStatement();
+                int SA =stat.executeUpdate(simpan);
+                JOptionPane.showMessageDialog(this,"Registrasi Anda Berhasil!");
+                this.setVisible(false);
+                Login login = new Login();
+                login.setVisible(true);
+            }
+        } catch (Exception e) {
+           JOptionPane.showMessageDialog(this, "Akun Sudah Ada","Pesa",JOptionPane.WARNING_MESSAGE);
+           hapuslayar();
+        }
+    }
     //digunakan agar komputer dapat menghapus layar pada awal kita masuk
     private void hapuslayar(){
         txt_id.setText(" ");
@@ -230,28 +254,7 @@ public class Registrasi extends javax.swing.JFrame {
 
     private void btn_daftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_daftarActionPerformed
         // TODO add your handling code here:
-        try {
-            if (txt_id.getText().equals("") || txt_username.getText().equals("") 
-                    || txt_nama.getText().equals("") || txt_nip.getText().equals("") || txt_password.getText().equals(" ")){
-                JOptionPane.showMessageDialog(this, "Data Tidak Boleh Kosong","Pesan",JOptionPane.ERROR_MESSAGE);
-            hapuslayar();
-            } else {
-                //Digunakan untuk memanggil JDBC driver
-                Class.forName("com.mysql.jdbc.Driver");
-                con=DriverManager.getConnection("jdbc:mysql://localhost/smkcendekia", "root", "");
-                stat = con.createStatement();
-                String simpan = "insert into admin values ('"+txt_id.getText()+"','"+txt_nip.getText()+"','"+txt_password.getText()+"','"+txt_nama.getText()+"','"+txt_username.getText()+"')";
-                stat = con.createStatement();
-                int SA =stat.executeUpdate(simpan);
-                JOptionPane.showMessageDialog(this,"Registrasi Anda Berhasil!");
-                this.setVisible(false);
-                Login login = new Login();
-                login.setVisible(true);
-            }
-        } catch (Exception e) {
-           JOptionPane.showMessageDialog(this, "Akun Sudah Ada","Pesa",JOptionPane.WARNING_MESSAGE);
-           hapuslayar();
-        }
+        this.registrasi();
     }//GEN-LAST:event_btn_daftarActionPerformed
 
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed

@@ -84,10 +84,10 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="192" max="-2" attributes="0"/>
-                          <Component id="btnsimpan" min="-2" max="-2" attributes="0"/>
+                          <Component id="button_simpan" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                          <Component id="btnedit" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="200" max="32767" attributes="0"/>
+                          <Component id="button_kembali" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="208" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -162,8 +162,8 @@
                   </Group>
                   <EmptySpace pref="39" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnsimpan" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnedit" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="button_simpan" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="button_kembali" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               </Group>
@@ -281,20 +281,20 @@
             <Property name="text" type="java.lang.String" value="No.Ortu"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="btnsimpan">
+        <Component class="javax.swing.JButton" name="button_simpan">
           <Properties>
             <Property name="text" type="java.lang.String" value="Simpan Data"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnsimpanActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_simpanActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnedit">
+        <Component class="javax.swing.JButton" name="button_kembali">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Edit Data"/>
+            <Property name="text" type="java.lang.String" value="Kembali"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btneditActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_kembaliActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rb1">

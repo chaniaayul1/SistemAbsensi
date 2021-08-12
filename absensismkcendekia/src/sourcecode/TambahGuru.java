@@ -25,8 +25,45 @@ public class TambahGuru extends javax.swing.JFrame {
      */
     public TambahGuru() {
         initComponents();
+        koneksi DB = new koneksi();
+        DB.config();
+        con = DB.con;
+        stat = DB.stm;
     }
 
+    public void simpandata(){
+        String jeniskelamin = null;
+        if(rb1.isSelected()){
+            jeniskelamin = "perempuan";
+        } else if (rb2.isSelected()){
+            jeniskelamin = "Laki-Laki";
+        }
+        
+        try {
+            if (txt_nip.getText().equals("") || txt_nk.getText().equals("") 
+                    || txt_nama.getText().equals("") || txt_email.getText().equals("")
+                    || txt_notlp.getText().equals(" ")|| txt_alamat.getText().equals(" ")){
+                JOptionPane.showMessageDialog(this, "Data Tidak Boleh Kosong","Pesan",JOptionPane.ERROR_MESSAGE);
+            hapuslayar();
+            } else {
+                String simpan = "insert into guru values ('"+txt_nip.getText()
+                        +"','"+txt_nk.getText()
+                        +"','"+txt_nama.getText()
+                        +"','"+txt_email.getText()
+                        +"','"+jeniskelamin
+                        +"','"+txt_notlp.getText()
+                        +"','"+txt_alamat.getText()
+                        +"')";
+                stat = con.createStatement();
+                int SA =stat.executeUpdate(simpan);
+                JOptionPane.showMessageDialog(this,"Data Berhasil disimpan!");
+                this.setVisible(false);
+            }
+        } catch (Exception e) {
+           JOptionPane.showMessageDialog(this, "Data Sudah Ada","Pesan",JOptionPane.WARNING_MESSAGE);
+           hapuslayar();
+        }    
+    }
      private void hapuslayar(){
         txt_nip.setText(" ");
         txt_nk.setText(" ");
@@ -272,42 +309,7 @@ public class TambahGuru extends javax.swing.JFrame {
 
     private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
         // TODO add your handling code here:
-           String jeniskelamin = null;
-        if(rb1.isSelected()){
-            jeniskelamin = "perempuan";
-        } else if (rb2.isSelected()){
-            jeniskelamin = "Laki-Laki";
-        }
-        
-        try {
-            if (txt_nip.getText().equals("") || txt_nk.getText().equals("") 
-                    || txt_nama.getText().equals("") || txt_email.getText().equals("")
-                    || txt_notlp.getText().equals(" ")|| txt_alamat.getText().equals(" ")){
-                JOptionPane.showMessageDialog(this, "Data Tidak Boleh Kosong","Pesan",JOptionPane.ERROR_MESSAGE);
-            hapuslayar();
-            } else {
-                //Digunakan untuk memanggil JDBC driver
-                Class.forName("com.mysql.jdbc.Driver");
-                con=DriverManager.getConnection("jdbc:mysql://localhost/smkcendekia", "root", "");
-                stat = con.createStatement();
-                String simpan = "insert into guru values ('"+txt_nip.getText()
-                        +"','"+txt_nk.getText()
-                        +"','"+txt_nama.getText()
-                        +"','"+txt_email.getText()
-                        +"','"+jeniskelamin
-                        +"','"+txt_notlp.getText()
-                        +"','"+txt_alamat.getText()
-                        +"')";
-                stat = con.createStatement();
-                int SA =stat.executeUpdate(simpan);
-                JOptionPane.showMessageDialog(this,"Data Berhasil disimpan!");
-                this.setVisible(false);
-            }
-        } catch (Exception e) {
-           JOptionPane.showMessageDialog(this, "Data Sudah Ada","Pesan",JOptionPane.WARNING_MESSAGE);
-           hapuslayar();
-           //System.out.println(e);
-        }
+         this.simpandata();
     }//GEN-LAST:event_btn_simpanActionPerformed
 
     /**
