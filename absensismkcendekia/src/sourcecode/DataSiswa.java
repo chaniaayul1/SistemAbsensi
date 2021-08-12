@@ -45,6 +45,7 @@ public class DataSiswa extends javax.swing.JFrame {
                 model.addRow(row);
                 no++;
             }
+            jnj
              table_siswa.setModel(model);
         } catch (Exception e) {
             System.out.println(e);
