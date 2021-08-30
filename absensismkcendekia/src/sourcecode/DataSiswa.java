@@ -110,7 +110,7 @@ public class DataSiswa extends javax.swing.JFrame {
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
-            "Delete Data Penjualan Gagal", JOptionPane.INFORMATION_MESSAGE);
+            "Delete Data Siswa Gagal", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
