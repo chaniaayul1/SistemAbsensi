@@ -109,6 +109,7 @@ public class Logins extends javax.swing.JFrame {
         LoginButton = new keeptoo.KButton();
         Close1 = new javax.swing.JLabel();
         Close2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(238, 239, 240));
@@ -213,6 +214,11 @@ public class Logins extends javax.swing.JFrame {
                 LoginButtonMouseClicked(evt);
             }
         });
+        LoginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginButtonActionPerformed(evt);
+            }
+        });
         ContentRightPanel.add(LoginButton);
         LoginButton.setBounds(50, 350, 300, 45);
 
@@ -227,6 +233,10 @@ public class Logins extends javax.swing.JFrame {
         Close2.setPreferredSize(new java.awt.Dimension(20, 20));
         ContentRightPanel.add(Close2);
         Close2.setBounds(370, 10, 20, 20);
+
+        jButton1.setText("jButton1");
+        ContentRightPanel.add(jButton1);
+        jButton1.setBounds(270, 120, 73, 23);
 
         BackgroundPanel.add(ContentRightPanel);
         ContentRightPanel.setBounds(400, 0, 400, 460);
@@ -272,6 +282,10 @@ public class Logins extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_LoginButtonMouseClicked
+
+    private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LoginButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -319,5 +333,6 @@ public class Logins extends javax.swing.JFrame {
     private javax.swing.JLabel PasswordLabel;
     private javax.swing.JTextField UsernameField;
     private javax.swing.JLabel UsernameLabel;
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }

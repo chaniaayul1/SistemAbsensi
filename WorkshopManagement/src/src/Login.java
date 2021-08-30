@@ -246,6 +246,11 @@ public class Login extends javax.swing.JFrame {
                 LoginButtonMouseClicked(evt);
             }
         });
+        LoginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginButtonActionPerformed(evt);
+            }
+        });
 
         ForgotLabel.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
         ForgotLabel.setForeground(new java.awt.Color(102, 102, 102));
@@ -445,6 +450,10 @@ public class Login extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_LoginButtonMouseClicked
+
+    private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LoginButtonActionPerformed
 
     /**
      * @param args the command line arguments
