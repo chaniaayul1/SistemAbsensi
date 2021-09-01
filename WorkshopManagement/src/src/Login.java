@@ -95,6 +95,7 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Information = new javax.swing.JLabel();
         BackgroundPanel = new javax.swing.JPanel();
         gradientPanel1 = new keeptoo.GradientPanel();
         Logo = new javax.swing.JLabel();
@@ -103,7 +104,6 @@ public class Login extends javax.swing.JFrame {
         Close1 = new javax.swing.JLabel();
         Close2 = new javax.swing.JLabel();
         Image = new javax.swing.JLabel();
-        Information = new javax.swing.JLabel();
         LoginPanel = new javax.swing.JPanel();
         LoginLabel = new javax.swing.JLabel();
         UsernameLabel = new javax.swing.JLabel();
@@ -123,6 +123,12 @@ public class Login extends javax.swing.JFrame {
         ResetPassButton = new keeptoo.KButton();
         Search = new javax.swing.JLabel();
         Checked = new javax.swing.JLabel();
+
+        Information.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Information.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        Information.setText("<html>\nBengkel Listrik Teknik Instalasi Tenaga Listrik SMK Cendekia Batujajar memiliki berbagai\nperalatan yang sangat lengkap guna menunjang kebutuhan kegiatan praktikum siswa,\nseperti tersedianya berbagai macam obeng, saklar, kontaktor hingga bor duduk.\n</html>");
+        Information.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        Information.setPreferredSize(new java.awt.Dimension(700, 110));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(238, 239, 240));
@@ -181,14 +187,6 @@ public class Login extends javax.swing.JFrame {
         Image.setPreferredSize(new java.awt.Dimension(535, 455));
         BackgroundPanel.add(Image);
         Image.setBounds(150, 290, 535, 455);
-
-        Information.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        Information.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        Information.setText("<html>\nBengkel Listrik Teknik Instalasi Tenaga Listrik SMK Cendekia Batujajar memiliki berbagai\nperalatan yang sangat lengkap guna menunjang kebutuhan kegiatan praktikum siswa,\nseperti tersedianya berbagai macam obeng, saklar, kontaktor hingga bor duduk.\n</html>");
-        Information.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        Information.setPreferredSize(new java.awt.Dimension(700, 110));
-        BackgroundPanel.add(Information);
-        Information.setBounds(80, 170, 700, 110);
 
         LoginPanel.setBackground(new java.awt.Color(255, 255, 255));
         LoginPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.darkGray, java.awt.Color.darkGray));

@@ -148,8 +148,6 @@ public class DataGuru extends javax.swing.JFrame {
     private void initComponents() {
 
         bgPanel = new javax.swing.JPanel();
-        panel_header = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         panel_body = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_guru = new javax.swing.JTable();
@@ -163,29 +161,6 @@ public class DataGuru extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         bgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        panel_header.setBackground(new java.awt.Color(255, 204, 0));
-
-        jLabel1.setText("DATA GURU");
-
-        javax.swing.GroupLayout panel_headerLayout = new javax.swing.GroupLayout(panel_header);
-        panel_header.setLayout(panel_headerLayout);
-        panel_headerLayout.setHorizontalGroup(
-            panel_headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_headerLayout.createSequentialGroup()
-                .addGap(245, 245, 245)
-                .addComponent(jLabel1)
-                .addContainerGap(267, Short.MAX_VALUE))
-        );
-        panel_headerLayout.setVerticalGroup(
-            panel_headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_headerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
-
-        bgPanel.add(panel_header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 50));
 
         panel_body.setBackground(new java.awt.Color(255, 255, 204));
 
@@ -271,17 +246,17 @@ public class DataGuru extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        bgPanel.add(panel_body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 570, 310));
+        bgPanel.add(panel_body, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 570, 310));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1366, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 786, Short.MAX_VALUE)
         );
 
         pack();
@@ -352,10 +327,8 @@ public class DataGuru extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panel_body;
-    private javax.swing.JPanel panel_header;
     private javax.swing.JTable table_guru;
     private javax.swing.JTextField txt_search;
     // End of variables declaration//GEN-END:variables
