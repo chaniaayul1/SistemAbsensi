@@ -9,6 +9,7 @@ public class Session {
     public static String usernm;
     public static String nissiswa;
     public static String nipguru;
+    public static String nipadmin;
     public static String level;
     
     public static String getusername(){
@@ -27,11 +28,19 @@ public class Session {
         return nissiswa;
     }
     
-    public static void setnipguru(String nissiswa){
+    public static void setnipguru(String nipguru){
         Session.nipguru=nipguru;
     }
     
     public static String getnipguru(){
         return nipguru;
+    }
+    
+    public static void setnipadmin (String nipadmin){
+        Session.nipadmin = nipadmin;
+    }
+    
+    public static String getnipadmin (){
+        return nipadmin;
     }
 }
