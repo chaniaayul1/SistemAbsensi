@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Agu 2021 pada 12.26
--- Versi server: 10.4.14-MariaDB
--- Versi PHP: 7.2.34
+-- Generation Time: Sep 03, 2021 at 06:54 AM
+-- Server version: 10.4.19-MariaDB
+-- PHP Version: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,31 +24,31 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
-  `idadmin` varchar(8) NOT NULL,
-  `nip` varchar(10) NOT NULL,
-  `username` varchar(30) NOT NULL,
-  `nama` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL
+  `idadmin` varchar(10) NOT NULL,
+  `nip` varchar(15) NOT NULL,
+  `nama` varchar(35) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `level` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `admin`
+-- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`idadmin`, `nip`, `username`, `nama`, `password`) VALUES
-('ADM01', '3411181108', 'Chabs', 'Chania Ayu Lestari', 'temanhidup1'),
-(' ADM02', '341118123', ' teman123', ' Rafi Aziizi', ' raf'),
-('ADM03', '3411181103', 'emakcangtip', 'Nurul Innayah', 'Emak'),
-('ADM04', '3411181109', 'nes', 'Nesa', 'tes123');
+INSERT INTO `admin` (`idadmin`, `nip`, `nama`, `username`, `password`, `level`) VALUES
+('ADM002', '3411181122', 'Chania Ayu Lestari', 'chania', 'chan', 1),
+('ADM005', '3411181123', 'ras', 'raska', 'raskaa', 0),
+('ADM006', '3411181123', 'Rafi Aziizi Muchtar', 'rafi', 'rafi', 0);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `guru`
+-- Table structure for table `guru`
 --
 
 CREATE TABLE `guru` (
@@ -62,17 +62,18 @@ CREATE TABLE `guru` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `guru`
+-- Dumping data for table `guru`
 --
 
 INSERT INTO `guru` (`nip`, `nk`, `nama`, `email`, `jeniskelamin`, `notlp`, `alamat`) VALUES
 ('3411181108', 'TBO01', 'Chabs', 'cal30@gmail.com', 'perempuan', '087822209880', 'disini'),
+('3411181122', 'XB1', 'Roki Firmansyah', 'roki@gmail.com', 'Laki-Laki', '081282407441', 'Karawang'),
 ('3411181123', 'BK01', 'Rafi Aziizi', 'rafiaziizi@gmail.com', 'Laki-Laki', '087823321818', 'cimohay');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `siswa`
+-- Table structure for table `siswa`
 --
 
 CREATE TABLE `siswa` (
@@ -89,28 +90,45 @@ CREATE TABLE `siswa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `siswa`
+-- Dumping data for table `siswa`
 --
 
 INSERT INTO `siswa` (`nis`, `nk`, `nama`, `alamat`, `jeniskelamin`, `notlp`, `email`, `nip`, `namaortu`, `noortu`) VALUES
-('3411181108', 'TBO', 'Chan', 'cimhai', 'perempuan', '087822209880', 'chani@gmail.com', 54321, 'ood', '087823321919');
+('3411181123', 'XB1', 'Rafi', 'Cikampek', 'Laki-Laki', '081282407414', 'rafiaziizi69@gmail.com', 3421, 'Tutut', '081282407413');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `guru`
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`idadmin`),
+  ADD KEY `nip` (`nip`);
+
+--
+-- Indexes for table `guru`
 --
 ALTER TABLE `guru`
   ADD PRIMARY KEY (`nip`);
 
 --
--- Indeks untuk tabel `siswa`
+-- Indexes for table `siswa`
 --
 ALTER TABLE `siswa`
   ADD PRIMARY KEY (`nis`),
   ADD KEY `nk` (`nk`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `admin`
+--
+ALTER TABLE `admin`
+  ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`nip`) REFERENCES `guru` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

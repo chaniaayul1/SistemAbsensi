@@ -6,18 +6,89 @@
 package smkcendekia;
 
 import java.awt.Color;
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author chani
  */
 public class login extends javax.swing.JFrame {
-
+    Connection con;
+    Statement stat;
+    ResultSet rs;
+    String sql,user;
     /**
      * Creates new form login
      */
     public login() {
         initComponents();
+        koneksi DB = new koneksi();
+        DB.config();
+        con = DB.con;
+        stat = DB.stm;
+    }
+    
+    public void proseslogin(){
+      String userlog,level;
+      try {
+            sql = "SELECT * FROM admin WHERE username='"+txt_username.getText()+"' AND password='"+txt_password.getText()+"'";
+            rs = stat.executeQuery(sql);
+            String usernm = txt_username.getText();
+            
+            if (rs.next()) {
+                if (null == rs.getString("level")) {
+                    //
+                } else switch (rs.getString("level")) {
+                    case "0": 
+                        //Level 0 untuk Guru BK
+                        JOptionPane.showMessageDialog(null,("Selamat Datang ") + rs.getString("nama"),
+                                "Login Guru BK Berhasil", JOptionPane.INFORMATION_MESSAGE);
+                        keloladata_bk kdbk = new keloladata_bk();
+                        kdbk.username.setText(usernm);
+                        kdbk.setVisible(true);
+                        user = rs.getString("username");
+                        Session.setusername(user);
+                        dispose();
+                        //
+                        break;
+                    case "1":
+                        //Level 1 untuk Bagian IT
+                        JOptionPane.showMessageDialog(null,("Selamat Datang ") + rs.getString("nama"),
+                                "Login Bagian IT Berhasil", JOptionPane.INFORMATION_MESSAGE);
+                        //
+                        keloladata_it kdit = new keloladata_it();
+                        kdit.username.setText(usernm);
+                        kdit.setVisible(true);
+                        user = rs.getString("username");
+                        Session.setusername(user);
+                        dispose();
+                        break;
+                    case "2":
+                        //Level 2 untuk Kepsek
+                        JOptionPane.showMessageDialog(null,("Selamat Datang ") + rs.getString("nama"),
+                                "Login Kepala Sekolah Berhasil", JOptionPane.INFORMATION_MESSAGE);
+                        //
+                        registrasi regist3 = new registrasi();
+                        regist3.setVisible(true);
+                        user = rs.getString("username");
+                        Session.setusername(user);
+                        dispose();
+                        break;    
+                    default:
+                        break;          
+                }
+            } else {
+                    JOptionPane.showMessageDialog(null, ("Maaf, Username atau Password Salah, Silahkan Coba Lagi!"), 
+                        "Login Gagal", JOptionPane.INFORMATION_MESSAGE);
+                }
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }  
     }
 
     /**
@@ -30,22 +101,28 @@ public class login extends javax.swing.JFrame {
     private void initComponents() {
 
         panel_login = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
         txt_username = new javax.swing.JTextField();
+        txt_password = new javax.swing.JPasswordField();
         btn_login = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         panel_login.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panel_login.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 410, 430, 70));
 
+        txt_username.setBackground(new java.awt.Color(244, 243, 244));
+        txt_username.setBorder(null);
         txt_username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_usernameActionPerformed(evt);
             }
         });
-        panel_login.add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 310, 430, 70));
+        panel_login.add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 313, 420, 62));
+
+        txt_password.setBackground(new java.awt.Color(244, 243, 244));
+        txt_password.setBorder(null);
+        panel_login.add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 410, 420, 62));
 
         btn_login.setText("LOGIN");
         btn_login.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -59,7 +136,7 @@ public class login extends javax.swing.JFrame {
                 btn_loginMousePressed(evt);
             }
         });
-        panel_login.add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 530, 340, 40));
+        panel_login.add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 530, 520, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/login.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -80,7 +157,7 @@ public class login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usernameActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txt_usernameActionPerformed
 
     private void btn_loginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseEntered
@@ -95,7 +172,8 @@ public class login extends javax.swing.JFrame {
 
     private void btn_loginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMousePressed
         // TODO add your handling code here:
-        btn_login.setBackground(new Color(46,32,198));  
+        btn_login.setBackground(new Color(46,32,198));
+        this.proseslogin();
     }//GEN-LAST:event_btn_loginMousePressed
 
     /**
@@ -136,8 +214,8 @@ public class login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_login;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JPanel panel_login;
+    private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 }

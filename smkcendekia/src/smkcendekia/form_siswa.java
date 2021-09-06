@@ -34,7 +34,7 @@ public class form_siswa extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setEnabled(false);
-        setPreferredSize(new java.awt.Dimension(1366, 768));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/tambah_siswa.png"))); // NOI18N

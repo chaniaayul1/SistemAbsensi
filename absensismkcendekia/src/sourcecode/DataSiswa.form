@@ -55,7 +55,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="443" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" pref="440" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -239,6 +239,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Lihat Data"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_lihatdataActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btn_hapus">
               <Properties>

@@ -240,6 +240,11 @@ public class DataSiswa extends javax.swing.JFrame {
         tablesiswa.setViewportView(table_siswa);
 
         btn_lihatdata.setText("Lihat Data");
+        btn_lihatdata.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_lihatdataActionPerformed(evt);
+            }
+        });
 
         btn_hapus.setText("Hapus");
         btn_hapus.addActionListener(new java.awt.event.ActionListener() {
@@ -312,7 +317,7 @@ public class DataSiswa extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE))
         );
 
         pack();
@@ -339,6 +344,10 @@ public class DataSiswa extends javax.swing.JFrame {
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_btn_backActionPerformed
+
+    private void btn_lihatdataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihatdataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_lihatdataActionPerformed
 
     /**
      * @param args the command line arguments
