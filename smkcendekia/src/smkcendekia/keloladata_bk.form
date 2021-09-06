@@ -502,7 +502,7 @@
         <Component class="javax.swing.JLabel" name="Background">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/assets/listmenu2.png"/>
+              <Image iconType="3" name="/assets/listmenu.png"/>
             </Property>
           </Properties>
           <Constraints>
@@ -560,12 +560,18 @@
                     <Component class="javax.swing.JTextField" name="txt_searchsiswa">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="160" y="110" width="810" height="30"/>
+                          <AbsoluteConstraints x="160" y="110" width="790" height="30"/>
                         </Constraint>
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JButton" name="btn_searchsiswa">
                       <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Zilla Slab SemiBold" size="12" style="0"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Search"/>
                       </Properties>
                       <Events>
@@ -573,12 +579,18 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="990" y="110" width="-1" height="30"/>
+                          <AbsoluteConstraints x="960" y="110" width="100" height="30"/>
                         </Constraint>
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JButton" name="btn_lihatsiswa">
                       <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Zilla Slab SemiBold" size="12" style="0"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Lihat Data"/>
                       </Properties>
                       <Events>
@@ -586,20 +598,30 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="890" y="570" width="-1" height="-1"/>
+                          <AbsoluteConstraints x="750" y="560" width="120" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JButton" name="btn_hapussiswa">
                       <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Zilla Slab SemiBold" size="12" style="0"/>
+                        </Property>
+                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                          <Image iconType="3" name="/assets/icon/delete.png"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Hapus"/>
+                        <Property name="iconTextGap" type="int" value="18"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_hapussiswaActionPerformed"/>
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="990" y="570" width="-1" height="-1"/>
+                          <AbsoluteConstraints x="910" y="560" width="120" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -639,8 +661,8 @@
                                 <Column editable="true" title="No" type="java.lang.Object"/>
                                 <Column editable="true" title="NIS" type="java.lang.Object"/>
                                 <Column editable="true" title="NK" type="java.lang.Object"/>
-                                <Column editable="true" title="Nama" type="java.lang.Object"/>
                                 <Column editable="true" title="Jenis Kelamin" type="java.lang.Object"/>
+                                <Column editable="true" title="Nama" type="java.lang.Object"/>
                               </Table>
                             </Property>
                             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -687,12 +709,12 @@
                     <Component class="javax.swing.JLabel" name="bgsiswa">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/assets/panelsiswa.png"/>
+                          <Image iconType="3" name="/assets/panel/panelsiswa.png"/>
                         </Property>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="0" y="0" width="-1" height="-1"/>
+                          <AbsoluteConstraints x="0" y="0" width="1107" height="658"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -932,9 +954,9 @@
                           <Image iconType="3" name="/assets/icon/edit.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Edit"/>
-                        <Property name="iconTextGap" type="int" value="10"/>
+                        <Property name="iconTextGap" type="int" value="18"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[1, -2, 1, 10]"/>
+                          <Insets value="[1, 1, 1, 10]"/>
                         </Property>
                       </Properties>
                       <Events>
@@ -942,7 +964,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="810" y="600" width="100" height="30"/>
+                          <AbsoluteConstraints x="780" y="590" width="120" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -960,7 +982,7 @@
                         <Property name="text" type="java.lang.String" value="Simpan"/>
                         <Property name="iconTextGap" type="int" value="10"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[1, -2, 1, 10]"/>
+                          <Insets value="[1, 1, 1, 10]"/>
                         </Property>
                       </Properties>
                       <Events>
@@ -968,7 +990,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="950" y="600" width="100" height="30"/>
+                          <AbsoluteConstraints x="920" y="590" width="130" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -986,7 +1008,7 @@
                         <Property name="text" type="java.lang.String" value="Kembali"/>
                         <Property name="iconTextGap" type="int" value="18"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[1, -2, 1, 10]"/>
+                          <Insets value="[1, 1, 1, 10]"/>
                         </Property>
                       </Properties>
                       <Events>
@@ -994,7 +1016,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="65" y="600" width="120" height="30"/>
+                          <AbsoluteConstraints x="70" y="590" width="140" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1010,7 +1032,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="640" y="600" width="120" height="30"/>
+                          <AbsoluteConstraints x="625" y="590" width="120" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1081,12 +1103,18 @@
                     <Component class="javax.swing.JTextField" name="txt_searchguru">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="180" y="100" width="790" height="30"/>
+                          <AbsoluteConstraints x="160" y="100" width="790" height="30"/>
                         </Constraint>
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JButton" name="btn_searchguru">
                       <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Zilla Slab SemiBold" size="12" style="0"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Search"/>
                       </Properties>
                       <Events>
@@ -1094,7 +1122,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="990" y="100" width="-1" height="30"/>
+                          <AbsoluteConstraints x="970" y="100" width="100" height="30"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1161,31 +1189,53 @@
                     </Container>
                     <Component class="javax.swing.JButton" name="btn_lihatguru">
                       <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Zilla Slab SemiBold" size="12" style="0"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Lihat Data"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_lihatguruActionPerformed"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="811" y="570" width="110" height="-1"/>
+                          <AbsoluteConstraints x="770" y="570" width="140" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JButton" name="brn_hapusguru">
                       <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Zilla Slab SemiBold" size="12" style="0"/>
+                        </Property>
+                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                          <Image iconType="3" name="/assets/icon/delete.png"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Hapus"/>
+                        <Property name="iconTextGap" type="int" value="18"/>
+                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+                          <Insets value="[1, 1, 1, 10]"/>
+                        </Property>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="brn_hapusguruActionPerformed"/>
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="943" y="570" width="80" height="-1"/>
+                          <AbsoluteConstraints x="923" y="570" width="140" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JLabel" name="bgguru">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/assets/panelguru.png"/>
+                          <Image iconType="3" name="/assets/panel/panelguru.png"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1253,6 +1303,9 @@
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txt_noteleponguru">
+                      <Properties>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_noteleponguruActionPerformed"/>
                       </Events>
@@ -1263,6 +1316,9 @@
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txt_nipguru">
+                      <Properties>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_nipguruActionPerformed"/>
                       </Events>
@@ -1273,6 +1329,9 @@
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txt_nkguru">
+                      <Properties>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_nkguruActionPerformed"/>
                       </Events>
@@ -1283,6 +1342,9 @@
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txt_namaguru">
+                      <Properties>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_namaguruActionPerformed"/>
                       </Events>
@@ -1357,6 +1419,9 @@
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txt_emailguru">
+                      <Properties>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_emailguruActionPerformed"/>
                       </Events>
@@ -1399,6 +1464,9 @@
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txt_alamatguru">
+                      <Properties>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_alamatguruActionPerformed"/>
                       </Events>
@@ -1409,6 +1477,9 @@
                       </Constraints>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txt_jkguru">
+                      <Properties>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_jkguruActionPerformed"/>
                       </Events>
@@ -1530,7 +1601,7 @@
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btn_hapus">
+                    <Component class="javax.swing.JButton" name="btn_simpanprofileguru">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1539,21 +1610,24 @@
                           <Font name="Zilla Slab SemiBold" size="12" style="0"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/assets/icon/delete.png"/>
+                          <Image iconType="3" name="/assets/icon/floppy-disk.png"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Hapus"/>
+                        <Property name="text" type="java.lang.String" value="Simpan"/>
                         <Property name="iconTextGap" type="int" value="18"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[1, -2, 1, 10]"/>
+                          <Insets value="[1, 1, 1, 10]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_simpanprofileguruActionPerformed"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="950" y="560" width="120" height="30"/>
+                          <AbsoluteConstraints x="930" y="560" width="140" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btn_edit">
+                    <Component class="javax.swing.JButton" name="btn_editprofileguru">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1567,16 +1641,19 @@
                         <Property name="text" type="java.lang.String" value="Edit"/>
                         <Property name="iconTextGap" type="int" value="18"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[1, -2, 1, 10]"/>
+                          <Insets value="[1, 1, 1, 10]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_editprofileguruActionPerformed"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="800" y="560" width="120" height="30"/>
+                          <AbsoluteConstraints x="780" y="560" width="140" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btn_kembali">
+                    <Component class="javax.swing.JButton" name="btn_kembaliprofileguru">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1590,12 +1667,15 @@
                         <Property name="text" type="java.lang.String" value="Kembali"/>
                         <Property name="iconTextGap" type="int" value="18"/>
                         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[1, -2, 1, 10]"/>
+                          <Insets value="[1, 1, 1, 10]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_kembaliprofileguruActionPerformed"/>
+                      </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="65" y="560" width="120" height="30"/>
+                          <AbsoluteConstraints x="65" y="560" width="150" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1646,7 +1726,7 @@
                     <Component class="javax.swing.JLabel" name="bgkelas">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/assets/panelkelas.png"/>
+                          <Image iconType="3" name="/assets/panel/panelkelas.png"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1706,6 +1786,9 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btn_lihatadmin">
                       <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Lihat"/>
                       </Properties>
                       <Events>
@@ -1713,7 +1796,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="690" y="580" width="100" height="30"/>
+                          <AbsoluteConstraints x="600" y="580" width="120" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1749,7 +1832,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="820" y="580" width="100" height="30"/>
+                          <AbsoluteConstraints x="770" y="580" width="120" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1803,7 +1886,7 @@
                     <Component class="javax.swing.JLabel" name="bgadmin">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/assets/panel/panelprofilesiswa.png"/>
+                          <Image iconType="3" name="/assets/panel/paneladmin.png"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1854,7 +1937,7 @@
                     <Component class="javax.swing.JLabel" name="bgabsensi">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/assets/panelabsensi.png"/>
+                          <Image iconType="3" name="/assets/panel/panelabsensi.png"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1898,7 +1981,7 @@
                     <Component class="javax.swing.JLabel" name="bglapabsensi">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/assets/panellapabsensi.png"/>
+                          <Image iconType="3" name="/assets/panel/panellapabsensi.png"/>
                         </Property>
                       </Properties>
                       <Constraints>

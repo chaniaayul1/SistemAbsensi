@@ -346,7 +346,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         model.addColumn("Nama");
         try {
             stat = con.createStatement( );
-            con.createStatement().executeUpdate("DELETE FROM guru WHERE nis='"+txt_searchguru.getText()+"'");
+            con.createStatement().executeUpdate("DELETE FROM guru WHERE nip='"+txt_searchguru.getText()+"'");
             rs   = stat.executeQuery(sql);
             int no=1;
             while(rs.next ()){
@@ -369,24 +369,26 @@ public class keloladata_bk extends javax.swing.JFrame {
     //PROSEDUR MENAMPILKAN DATA PROFILE GURU
     public void tampilprofileguru(){
         try {
+            System.out.println(Session.getnipguru());
             stat = con.createStatement( );
             sql  = "SELECT * FROM guru WHERE nip='"+Session.getnipguru()+"'";
+            
             rs   = stat.executeQuery(sql);
             while(rs.next ()){
-                Object[ ] obj = new Object[10];
+                Object[ ] obj = new Object[7];
                 obj[0] =rs.getString("nip");
                 txt_nipguru.setText((String) obj[0]);
                 obj[1] =rs.getString("nk");
                 txt_nkguru.setText((String) obj[1]);
                 obj[2] =rs.getString("nama");
                 txt_namaguru.setText((String) obj[2]);
-                obj[3] =rs.getString("alamat");
+                obj[3] =rs.getString("email");
                 txt_emailguru.setText((String) obj[3]);
                 obj[4] =rs.getString("jeniskelamin");
                 txt_jkguru.setText((String) obj[4]);
                 obj[5] =rs.getString("notlp");
                 txt_noteleponguru.setText((String) obj[5]);
-                obj[6] =rs.getString("email");
+                obj[6] =rs.getString("alamat");
                 txt_alamatguru.setText((String) obj[6]);
             }
         } catch (SQLException ex) {
@@ -485,7 +487,7 @@ public class keloladata_bk extends javax.swing.JFrame {
             Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     
+    
     public void querysearchklikguru(){
         int i = tabel_guru.getSelectedRow();
         if(i>-1){
@@ -641,6 +643,11 @@ public class keloladata_bk extends javax.swing.JFrame {
         }
     }
     
+    public void lihatdataadmin(){
+        switchpanel(profileguru);
+        
+    }
+    
     
     //PERIPHERAL
     public void switchpanel(JLayeredPane panel){
@@ -759,9 +766,9 @@ public class keloladata_bk extends javax.swing.JFrame {
         lb_titik5 = new javax.swing.JLabel();
         lb_titik6 = new javax.swing.JLabel();
         lb_titik7 = new javax.swing.JLabel();
-        btn_hapus = new javax.swing.JButton();
-        btn_edit = new javax.swing.JButton();
-        btn_kembali = new javax.swing.JButton();
+        btn_simpanprofileguru = new javax.swing.JButton();
+        btn_editprofileguru = new javax.swing.JButton();
+        btn_kembaliprofileguru = new javax.swing.JButton();
         bgprofileguru = new javax.swing.JLabel();
         datakelas = new javax.swing.JLayeredPane();
         panelkelas = new javax.swing.JPanel();
@@ -1021,7 +1028,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         username.setText("INI USERNAME");
         PanelUtama.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 30, 190, 40));
 
-        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/listmenu2.png"))); // NOI18N
+        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/listmenu.png"))); // NOI18N
         PanelUtama.add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         LayerPane.setEnabled(false);
@@ -1036,8 +1043,10 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         panelsiswa.setLayout(null);
         panelsiswa.add(txt_searchsiswa);
-        txt_searchsiswa.setBounds(160, 110, 810, 30);
+        txt_searchsiswa.setBounds(160, 110, 790, 30);
 
+        btn_searchsiswa.setBackground(new java.awt.Color(255, 255, 255));
+        btn_searchsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_searchsiswa.setText("Search");
         btn_searchsiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1045,8 +1054,10 @@ public class keloladata_bk extends javax.swing.JFrame {
             }
         });
         panelsiswa.add(btn_searchsiswa);
-        btn_searchsiswa.setBounds(990, 110, 65, 30);
+        btn_searchsiswa.setBounds(960, 110, 100, 30);
 
+        btn_lihatsiswa.setBackground(new java.awt.Color(255, 255, 255));
+        btn_lihatsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_lihatsiswa.setText("Lihat Data");
         btn_lihatsiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1054,16 +1065,20 @@ public class keloladata_bk extends javax.swing.JFrame {
             }
         });
         panelsiswa.add(btn_lihatsiswa);
-        btn_lihatsiswa.setBounds(890, 570, 81, 23);
+        btn_lihatsiswa.setBounds(750, 560, 120, 40);
 
+        btn_hapussiswa.setBackground(new java.awt.Color(255, 255, 255));
+        btn_hapussiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_hapussiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/delete.png"))); // NOI18N
         btn_hapussiswa.setText("Hapus");
+        btn_hapussiswa.setIconTextGap(18);
         btn_hapussiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_hapussiswaActionPerformed(evt);
             }
         });
         panelsiswa.add(btn_hapussiswa);
-        btn_hapussiswa.setBounds(990, 570, 63, 23);
+        btn_hapussiswa.setBounds(910, 560, 120, 40);
 
         javax.swing.GroupLayout btn_addsiswaLayout = new javax.swing.GroupLayout(btn_addsiswa);
         btn_addsiswa.setLayout(btn_addsiswaLayout);
@@ -1087,7 +1102,7 @@ public class keloladata_bk extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "No", "NIS", "NK", "Nama", "Jenis Kelamin"
+                "No", "NIS", "NK", "Jenis Kelamin", "Nama"
             }
         ));
         tabel_siswa.setRowHeight(20);
@@ -1102,9 +1117,9 @@ public class keloladata_bk extends javax.swing.JFrame {
         panelsiswa.add(tabsiswa);
         tabsiswa.setBounds(50, 160, 1010, 340);
 
-        bgsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panelsiswa.png"))); // NOI18N
+        bgsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelsiswa.png"))); // NOI18N
         panelsiswa.add(bgsiswa);
-        bgsiswa.setBounds(0, 0, 0, 0);
+        bgsiswa.setBounds(0, 0, 1107, 658);
 
         datasiswa.add(panelsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
 
@@ -1188,45 +1203,45 @@ public class keloladata_bk extends javax.swing.JFrame {
         btn_editprofilesiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_editprofilesiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/edit.png"))); // NOI18N
         btn_editprofilesiswa.setText("Edit");
-        btn_editprofilesiswa.setIconTextGap(10);
-        btn_editprofilesiswa.setMargin(new java.awt.Insets(1, -2, 1, 10));
+        btn_editprofilesiswa.setIconTextGap(18);
+        btn_editprofilesiswa.setMargin(new java.awt.Insets(1, 1, 1, 10));
         btn_editprofilesiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_editprofilesiswaActionPerformed(evt);
             }
         });
-        panelprofilesiswa.add(btn_editprofilesiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 600, 100, 30));
+        panelprofilesiswa.add(btn_editprofilesiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 590, 120, 40));
 
         btn_simpanprofilesiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_simpanprofilesiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_simpanprofilesiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/floppy-disk.png"))); // NOI18N
         btn_simpanprofilesiswa.setText("Simpan");
         btn_simpanprofilesiswa.setIconTextGap(10);
-        btn_simpanprofilesiswa.setMargin(new java.awt.Insets(1, -2, 1, 10));
+        btn_simpanprofilesiswa.setMargin(new java.awt.Insets(1, 1, 1, 10));
         btn_simpanprofilesiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_simpanprofilesiswaActionPerformed(evt);
             }
         });
-        panelprofilesiswa.add(btn_simpanprofilesiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 600, 100, 30));
+        panelprofilesiswa.add(btn_simpanprofilesiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 590, 130, 40));
 
         btn_kembaliprofilesiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_kembaliprofilesiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_kembaliprofilesiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/back-button.png"))); // NOI18N
         btn_kembaliprofilesiswa.setText("Kembali");
         btn_kembaliprofilesiswa.setIconTextGap(18);
-        btn_kembaliprofilesiswa.setMargin(new java.awt.Insets(1, -2, 1, 10));
+        btn_kembaliprofilesiswa.setMargin(new java.awt.Insets(1, 1, 1, 10));
         btn_kembaliprofilesiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_kembaliprofilesiswaActionPerformed(evt);
             }
         });
-        panelprofilesiswa.add(btn_kembaliprofilesiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 600, 120, 30));
+        panelprofilesiswa.add(btn_kembaliprofilesiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 590, 140, 40));
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         jButton1.setText("Riwayat Absen");
-        panelprofilesiswa.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 600, 120, 30));
+        panelprofilesiswa.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(625, 590, 120, 40));
 
         bgprofilesiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelprofilesiswa2.png"))); // NOI18N
         panelprofilesiswa.add(bgprofilesiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -1253,15 +1268,17 @@ public class keloladata_bk extends javax.swing.JFrame {
         );
 
         panelguru.add(btn_addguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, 30));
-        panelguru.add(txt_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 790, 30));
+        panelguru.add(txt_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 790, 30));
 
+        btn_searchguru.setBackground(new java.awt.Color(255, 255, 255));
+        btn_searchguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_searchguru.setText("Search");
         btn_searchguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchguruActionPerformed(evt);
             }
         });
-        panelguru.add(btn_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 100, -1, 30));
+        panelguru.add(btn_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 100, 100, 30));
 
         tabel_guru.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1285,18 +1302,30 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         panelguru.add(tabguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 1020, 370));
 
+        btn_lihatguru.setBackground(new java.awt.Color(255, 255, 255));
+        btn_lihatguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_lihatguru.setText("Lihat Data");
-        panelguru.add(btn_lihatguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(811, 570, 110, -1));
+        btn_lihatguru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_lihatguruActionPerformed(evt);
+            }
+        });
+        panelguru.add(btn_lihatguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 570, 140, 40));
 
+        brn_hapusguru.setBackground(new java.awt.Color(255, 255, 255));
+        brn_hapusguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        brn_hapusguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/delete.png"))); // NOI18N
         brn_hapusguru.setText("Hapus");
+        brn_hapusguru.setIconTextGap(18);
+        brn_hapusguru.setMargin(new java.awt.Insets(1, 1, 1, 10));
         brn_hapusguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 brn_hapusguruActionPerformed(evt);
             }
         });
-        panelguru.add(brn_hapusguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(943, 570, 80, -1));
+        panelguru.add(brn_hapusguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(923, 570, 140, 40));
 
-        bgguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panelguru.png"))); // NOI18N
+        bgguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelguru.png"))); // NOI18N
         panelguru.add(bgguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         dataguru.add(panelguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
@@ -1317,6 +1346,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         lb_nk.setText("NK");
         panelprofileguru.add(lb_nk, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, 50, 30));
 
+        txt_noteleponguru.setEnabled(false);
         txt_noteleponguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_noteleponguruActionPerformed(evt);
@@ -1324,6 +1354,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         });
         panelprofileguru.add(txt_noteleponguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 380, 530, 30));
 
+        txt_nipguru.setEnabled(false);
         txt_nipguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_nipguruActionPerformed(evt);
@@ -1331,6 +1362,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         });
         panelprofileguru.add(txt_nipguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, 530, 30));
 
+        txt_nkguru.setEnabled(false);
         txt_nkguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_nkguruActionPerformed(evt);
@@ -1338,6 +1370,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         });
         panelprofileguru.add(txt_nkguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 180, 530, 30));
 
+        txt_namaguru.setEnabled(false);
         txt_namaguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_namaguruActionPerformed(evt);
@@ -1365,6 +1398,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         lb_notelepon.setText("No.Telepon");
         panelprofileguru.add(lb_notelepon, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 380, 120, 30));
 
+        txt_emailguru.setEnabled(false);
         txt_emailguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_emailguruActionPerformed(evt);
@@ -1382,6 +1416,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         lb_jk.setText("Jenis Kelamin");
         panelprofileguru.add(lb_jk, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 330, 130, 30));
 
+        txt_alamatguru.setEnabled(false);
         txt_alamatguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_alamatguruActionPerformed(evt);
@@ -1389,6 +1424,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         });
         panelprofileguru.add(txt_alamatguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 430, 530, 80));
 
+        txt_jkguru.setEnabled(false);
         txt_jkguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_jkguruActionPerformed(evt);
@@ -1431,29 +1467,44 @@ public class keloladata_bk extends javax.swing.JFrame {
         lb_titik7.setText(":");
         panelprofileguru.add(lb_titik7, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 130, 20, 30));
 
-        btn_hapus.setBackground(new java.awt.Color(255, 255, 255));
-        btn_hapus.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_hapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/delete.png"))); // NOI18N
-        btn_hapus.setText("Hapus");
-        btn_hapus.setIconTextGap(18);
-        btn_hapus.setMargin(new java.awt.Insets(1, -2, 1, 10));
-        panelprofileguru.add(btn_hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 560, 120, 30));
+        btn_simpanprofileguru.setBackground(new java.awt.Color(255, 255, 255));
+        btn_simpanprofileguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_simpanprofileguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/floppy-disk.png"))); // NOI18N
+        btn_simpanprofileguru.setText("Simpan");
+        btn_simpanprofileguru.setIconTextGap(18);
+        btn_simpanprofileguru.setMargin(new java.awt.Insets(1, 1, 1, 10));
+        btn_simpanprofileguru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_simpanprofileguruActionPerformed(evt);
+            }
+        });
+        panelprofileguru.add(btn_simpanprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 560, 140, 40));
 
-        btn_edit.setBackground(new java.awt.Color(255, 255, 255));
-        btn_edit.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_edit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/edit.png"))); // NOI18N
-        btn_edit.setText("Edit");
-        btn_edit.setIconTextGap(18);
-        btn_edit.setMargin(new java.awt.Insets(1, -2, 1, 10));
-        panelprofileguru.add(btn_edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 560, 120, 30));
+        btn_editprofileguru.setBackground(new java.awt.Color(255, 255, 255));
+        btn_editprofileguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_editprofileguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/edit.png"))); // NOI18N
+        btn_editprofileguru.setText("Edit");
+        btn_editprofileguru.setIconTextGap(18);
+        btn_editprofileguru.setMargin(new java.awt.Insets(1, 1, 1, 10));
+        btn_editprofileguru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_editprofileguruActionPerformed(evt);
+            }
+        });
+        panelprofileguru.add(btn_editprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 560, 140, 40));
 
-        btn_kembali.setBackground(new java.awt.Color(255, 255, 255));
-        btn_kembali.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_kembali.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/back-button.png"))); // NOI18N
-        btn_kembali.setText("Kembali");
-        btn_kembali.setIconTextGap(18);
-        btn_kembali.setMargin(new java.awt.Insets(1, -2, 1, 10));
-        panelprofileguru.add(btn_kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 560, 120, 30));
+        btn_kembaliprofileguru.setBackground(new java.awt.Color(255, 255, 255));
+        btn_kembaliprofileguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_kembaliprofileguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/back-button.png"))); // NOI18N
+        btn_kembaliprofileguru.setText("Kembali");
+        btn_kembaliprofileguru.setIconTextGap(18);
+        btn_kembaliprofileguru.setMargin(new java.awt.Insets(1, 1, 1, 10));
+        btn_kembaliprofileguru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kembaliprofileguruActionPerformed(evt);
+            }
+        });
+        panelprofileguru.add(btn_kembaliprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 560, 150, 40));
 
         bgprofileguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelprofileguru.png"))); // NOI18N
         panelprofileguru.add(bgprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -1468,7 +1519,7 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         panelkelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bgkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panelkelas.png"))); // NOI18N
+        bgkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelkelas.png"))); // NOI18N
         panelkelas.add(bgkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         datakelas.add(panelkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
@@ -1485,13 +1536,14 @@ public class keloladata_bk extends javax.swing.JFrame {
         txt_searchadmin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         paneladmin.add(txt_searchadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 250, 40));
 
+        btn_lihatadmin.setBackground(new java.awt.Color(255, 255, 255));
         btn_lihatadmin.setText("Lihat");
         btn_lihatadmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_lihatadminActionPerformed(evt);
             }
         });
-        paneladmin.add(btn_lihatadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 580, 100, 30));
+        paneladmin.add(btn_lihatadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 580, 120, 40));
 
         btn_editadmin.setText("Edit");
         paneladmin.add(btn_editadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 580, 100, 30));
@@ -1510,7 +1562,7 @@ public class keloladata_bk extends javax.swing.JFrame {
                 btn_hapusadminMouseClicked(evt);
             }
         });
-        paneladmin.add(btn_hapusadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 580, 100, 30));
+        paneladmin.add(btn_hapusadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 580, 120, 40));
 
         tabadmin.setBackground(new java.awt.Color(255, 255, 255));
         tabadmin.setBorder(null);
@@ -1552,7 +1604,7 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         paneladmin.add(tabadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 1010, 360));
 
-        bgadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelprofilesiswa.png"))); // NOI18N
+        bgadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/paneladmin.png"))); // NOI18N
         paneladmin.add(bgadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         paneladmin.add(saveadm, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 400, -1, -1));
 
@@ -1566,7 +1618,7 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         panelabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bgabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panelabsensi.png"))); // NOI18N
+        bgabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelabsensi.png"))); // NOI18N
         panelabsensi.add(bgabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         dataabsensi.add(panelabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
@@ -1579,7 +1631,7 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         panellapabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bglapabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panellapabsensi.png"))); // NOI18N
+        bglapabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panellapabsensi.png"))); // NOI18N
         panellapabsensi.add(bglapabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         datalapabsensi.add(panellapabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
@@ -1702,14 +1754,13 @@ public class keloladata_bk extends javax.swing.JFrame {
 
     private void btn_lihatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihatsiswaActionPerformed
         if (txt_searchsiswa != null){
+            Session.setnissiswa(txt_searchsiswa.getText());
             switchpanel(profilesiswa);
             this.tampilprofilesiswa();
         }else{
             JOptionPane.showMessageDialog(null, ("Data Pencarian Tidak Boleh Kosong"), 
             "Data Profile Guru", JOptionPane.INFORMATION_MESSAGE);
         }
-        
-        this.tampilprofilesiswa();
     }//GEN-LAST:event_btn_lihatsiswaActionPerformed
 
     private void btn_hapussiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapussiswaActionPerformed
@@ -1717,11 +1768,11 @@ public class keloladata_bk extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_hapussiswaActionPerformed
 
     private void brn_hapusguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brn_hapusguruActionPerformed
-        deletedataguru();
+        this.deletedataguru();
     }//GEN-LAST:event_brn_hapusguruActionPerformed
 
     private void btn_searchguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchguruActionPerformed
-        querysearchguru();
+        this.querysearchguru();
     }//GEN-LAST:event_btn_searchguruActionPerformed
 
     private void btn_dataadminMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dataadminMouseEntered
@@ -1766,7 +1817,14 @@ public class keloladata_bk extends javax.swing.JFrame {
     }//GEN-LAST:event_tabel_adminMouseClicked
 
     private void btn_lihatadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihatadminActionPerformed
-
+        if (txt_searchadmin != null){
+            Session.setnipguru(txt_searchadmin.getText());
+            switchpanel(profileguru);
+            this.tampilprofileguru();
+        }else{
+            JOptionPane.showMessageDialog(null, ("Data Pencarian Tidak Boleh Kosong"), 
+            "Data Profile Guru", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btn_lihatadminActionPerformed
 
     private void btn_registrasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrasiActionPerformed
@@ -1792,6 +1850,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     private void btn_kembaliprofilesiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliprofilesiswaActionPerformed
         switchpanel(datasiswa);
         this.editprofilesiswa(false);
+        this.tampilsiswa();
     }//GEN-LAST:event_btn_kembaliprofilesiswaActionPerformed
 
     private void btn_simpanprofilesiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanprofilesiswaActionPerformed
@@ -1834,6 +1893,37 @@ public class keloladata_bk extends javax.swing.JFrame {
     private void txt_jkguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_jkguruActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_jkguruActionPerformed
+
+    private void btn_lihatguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihatguruActionPerformed
+        // TODO add your handling code here:
+        if (txt_searchguru != null){
+            Session.setnipguru(txt_searchguru.getText());
+            switchpanel(profileguru);
+            this.tampilprofileguru();
+        }else{
+            JOptionPane.showMessageDialog(null, ("Data Pencarian Tidak Boleh Kosong"), 
+            "Data Profile Guru", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btn_lihatguruActionPerformed
+
+    private void btn_editprofileguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editprofileguruActionPerformed
+        // TODO add your handling code here:
+        this.editprofileguru(true);
+    }//GEN-LAST:event_btn_editprofileguruActionPerformed
+
+    private void btn_kembaliprofileguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliprofileguruActionPerformed
+        // TODO add your handling code here:
+        switchpanel(dataguru);
+        this.editprofileguru(false);
+        this.tampilguru();
+    }//GEN-LAST:event_btn_kembaliprofileguruActionPerformed
+
+    private void btn_simpanprofileguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanprofileguruActionPerformed
+        // TODO add your handling code here:
+        this.simpanprofileguru();
+        this.editprofileguru(false);
+    }//GEN-LAST:event_btn_simpanprofileguruActionPerformed
 
     
     public static void main(String args[]) {
@@ -1892,13 +1982,12 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JPanel btn_dataguru;
     private javax.swing.JPanel btn_datakelas;
     private javax.swing.JPanel btn_datasiswa;
-    private javax.swing.JButton btn_edit;
     private javax.swing.JButton btn_editadmin;
+    private javax.swing.JButton btn_editprofileguru;
     private javax.swing.JButton btn_editprofilesiswa;
-    private javax.swing.JButton btn_hapus;
     private javax.swing.JButton btn_hapusadmin;
     private javax.swing.JButton btn_hapussiswa;
-    private javax.swing.JButton btn_kembali;
+    private javax.swing.JButton btn_kembaliprofileguru;
     private javax.swing.JButton btn_kembaliprofilesiswa;
     private javax.swing.JPanel btn_lapabsen;
     private javax.swing.JButton btn_lihatadmin;
@@ -1908,6 +1997,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JButton btn_registrasi;
     private javax.swing.JButton btn_searchguru;
     private javax.swing.JButton btn_searchsiswa;
+    private javax.swing.JButton btn_simpanprofileguru;
     private javax.swing.JButton btn_simpanprofilesiswa;
     private javax.swing.JLayeredPane dataabsensi;
     private javax.swing.JLayeredPane dataadmin;
