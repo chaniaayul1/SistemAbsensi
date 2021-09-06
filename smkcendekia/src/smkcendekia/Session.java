@@ -10,7 +10,6 @@ public class Session {
     public static String nissiswa;
     public static String nipguru;
     public static String nipadmin;
-    public static String level;
     
     public static String getusername(){
         return usernm;

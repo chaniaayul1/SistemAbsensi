@@ -47,50 +47,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         Background.revalidate();
     }
     
-    public void settable(){
-        //SETTING TRANSPARASI SCROLLPANE TABEL SISWA
-        ((DefaultTableCellRenderer)tabel_siswa.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
-        tabel_siswa.setGridColor(Color.BLACK);
-        tabel_siswa.setForeground(Color.BLACK);
-        tabsiswa.setOpaque(false);
-        tabsiswa.getViewport().setOpaque(false);
-        tabsiswa.setBorder(null);
-        tabsiswa.setViewportBorder(null);
-        tabel_siswa.setShowGrid(true);
-        
-        //SETTING TRANPARANSI SCROLLPANE TABEL GURU
-        ((DefaultTableCellRenderer)tabel_guru.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
-        tabel_guru.setGridColor(Color.BLACK);
-        tabel_guru.setForeground(Color.BLACK);
-        tabguru.setOpaque(false);
-        tabguru.getViewport().setOpaque(false);
-        tabguru.setBorder(null);
-        tabguru.setViewportBorder(null);
-        tabel_guru.setShowGrid(true);
-        
-        //SETTING TRANSPARASI SCROLLPANE NILAI
-        ((DefaultTableCellRenderer)tabel_admin.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
-        tabel_admin.setGridColor(Color.BLACK);
-        tabel_admin.setForeground(Color.BLACK);
-        tabadmin.setOpaque(false);
-        tabadmin.getViewport().setOpaque(false);
-        tabadmin.setBorder(null);
-        tabadmin.setViewportBorder(null);
-        tabel_admin.setShowGrid(true);
-    }
-  
-    //RESET ALL PANEL
-    public void resetpanel(){
-        datasiswa.setVisible(false);
-        dataguru.setVisible(false);
-        datakelas.setVisible(false);
-        dataabsensi.setVisible(false);
-        datalapabsensi.setVisible(false);
-        profilesiswa.setVisible(false);
-        dataadmin.setVisible(false);
-    }
-    
-    //======SISWA======//
+     //======SISWA======//
     //FUNGSI ATAU PROSEDUR MENAMPILKAN DATA SISWA PADA TABEL
     public void tampilsiswa(){        
         model = new DefaultTableModel ( );
@@ -265,6 +222,7 @@ public class keloladata_bk extends javax.swing.JFrame {
             "Data Profile Siswa Error", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+    
     //PROSEDUR MENCARI DATA SISWA PADA TABEL
     public void querysearchsiswa(){
         int row = tabel_siswa.getRowCount();
@@ -369,33 +327,34 @@ public class keloladata_bk extends javax.swing.JFrame {
     //PROSEDUR MENAMPILKAN DATA PROFILE GURU
     public void tampilprofileguru(){
         try {
-            System.out.println(Session.getnipguru());
-            stat = con.createStatement( );
-            sql  = "SELECT * FROM guru WHERE nip='"+Session.getnipguru()+"'";
+            if (saveadm!=null)
+            {
+                stat = con.createStatement( );
+                sql  = "SELECT * FROM guru WHERE nip='"+Session.getnipguru()+"'";
             
-            rs   = stat.executeQuery(sql);
-            while(rs.next ()){
-                Object[ ] obj = new Object[7];
-                obj[0] =rs.getString("nip");
-                txt_nipguru.setText((String) obj[0]);
-                obj[1] =rs.getString("nk");
-                txt_nkguru.setText((String) obj[1]);
-                obj[2] =rs.getString("nama");
-                txt_namaguru.setText((String) obj[2]);
-                obj[3] =rs.getString("email");
-                txt_emailguru.setText((String) obj[3]);
-                obj[4] =rs.getString("jeniskelamin");
-                txt_jkguru.setText((String) obj[4]);
-                obj[5] =rs.getString("notlp");
-                txt_noteleponguru.setText((String) obj[5]);
-                obj[6] =rs.getString("alamat");
-                txt_alamatguru.setText((String) obj[6]);
+                rs   = stat.executeQuery(sql);
+                while(rs.next ()){
+                    Object[ ] obj = new Object[7];
+                    obj[0] =rs.getString("nip");
+                    txt_nipguru.setText((String) obj[0]);
+                    obj[1] =rs.getString("nk");
+                    txt_nkguru.setText((String) obj[1]);
+                    obj[2] =rs.getString("nama");
+                    txt_namaguru.setText((String) obj[2]);
+                    obj[3] =rs.getString("email");
+                    txt_emailguru.setText((String) obj[3]);
+                    obj[4] =rs.getString("jeniskelamin");
+                    txt_jkguru.setText((String) obj[4]);
+                    obj[5] =rs.getString("notlp");
+                    txt_noteleponguru.setText((String) obj[5]);
+                    obj[6] =rs.getString("alamat");
+                    txt_alamatguru.setText((String) obj[6]);
+                }
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
             "Lihat Profile Guru Gagal", JOptionPane.INFORMATION_MESSAGE);
-        }
-        
+        } 
     }
     
     //PROSEDUR EDIT DAN SIMPAN PROFILE GURU
@@ -419,8 +378,9 @@ public class keloladata_bk extends javax.swing.JFrame {
             txt_alamatguru.setEnabled(false);
         }
     }
+    
     // VOID SIMPAN GURU
-     public void simpanprofileguru(){
+    public void simpanprofileguru(){
         try {
             // TODO add your handling code here:
             stat = con.createStatement( );
@@ -592,7 +552,44 @@ public class keloladata_bk extends javax.swing.JFrame {
             "Delete Data Admin Gagal", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-     
+    
+    //PROSEDUR MENAMPILKAN DATA PROFILE GURU
+    public void tampilprofileadmin(){
+        try {
+            Session.setnipguru(null);
+            if(saveadm.getText()!=null){
+                stat = con.createStatement( );
+                sql  = "SELECT * FROM guru WHERE nip='"+Session.getnipadmin()+"'";
+            
+                rs   = stat.executeQuery(sql);
+                while(rs.next ()){
+                    Object[ ] obj = new Object[7];
+                    obj[0] =rs.getString("nip");
+                    txt_nipguru.setText((String) obj[0]);
+                    obj[1] =rs.getString("nk");
+                    txt_nkguru.setText((String) obj[1]);
+                    obj[2] =rs.getString("nama");
+                    txt_namaguru.setText((String) obj[2]);
+                    obj[3] =rs.getString("email");
+                    txt_emailguru.setText((String) obj[3]);
+                    obj[4] =rs.getString("jeniskelamin");
+                    txt_jkguru.setText((String) obj[4]);
+                    obj[5] =rs.getString("notlp");
+                    txt_noteleponguru.setText((String) obj[5]);
+                    obj[6] =rs.getString("alamat");
+                    txt_alamatguru.setText((String) obj[6]);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+                "Lihat Profile Admin Gagal", JOptionPane.INFORMATION_MESSAGE);
+            }    
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+            "Lihat Profile Guru Gagal", JOptionPane.INFORMATION_MESSAGE);
+        } 
+    }
+    
     //PROSEDUR MENCARI DATA ADMIN PADA TABEL
     public void querysearchadmin(){
         int row = tabel_admin.getRowCount();
@@ -602,7 +599,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         
         try{
            stat = con.createStatement( );
-           sql  = "Select * from admin WHERE ='"+txt_searchadmin.getText()+"'";
+           sql  = "Select * from admin WHERE nip='"+txt_searchadmin.getText()+"'";
            rs   = stat.executeQuery(sql);
 
            int no=1;
@@ -640,14 +637,9 @@ public class keloladata_bk extends javax.swing.JFrame {
         if(i>-1){
             saveadm.setText(model.getValueAt(i, 1).toString());
             txt_searchadmin.setText(model.getValueAt(i, 2).toString());
+            Session.setnipadmin(txt_searchadmin.getText());
         }
     }
-    
-    public void lihatdataadmin(){
-        switchpanel(profileguru);
-        
-    }
-    
     
     //PERIPHERAL
     public void switchpanel(JLayeredPane panel){
@@ -657,6 +649,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         LayerPane.revalidate();
     }
 
+    //reset button
     public void resetbutton(){
         panelbutton.add(btn_dashboard);
         panelbutton.add(btn_datasiswa);
@@ -668,6 +661,50 @@ public class keloladata_bk extends javax.swing.JFrame {
         panelbutton.add(btn_logout);
         panelbutton.repaint();
         panelbutton.revalidate();
+    }
+    
+    //settable
+    public void settable(){
+        //SETTING TRANSPARASI SCROLLPANE TABEL SISWA
+        ((DefaultTableCellRenderer)tabel_siswa.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
+        tabel_siswa.setGridColor(Color.BLACK);
+        tabel_siswa.setForeground(Color.BLACK);
+        tabsiswa.setOpaque(false);
+        tabsiswa.getViewport().setOpaque(false);
+        tabsiswa.setBorder(null);
+        tabsiswa.setViewportBorder(null);
+        tabel_siswa.setShowGrid(true);
+        
+        //SETTING TRANPARANSI SCROLLPANE TABEL GURU
+        ((DefaultTableCellRenderer)tabel_guru.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
+        tabel_guru.setGridColor(Color.BLACK);
+        tabel_guru.setForeground(Color.BLACK);
+        tabguru.setOpaque(false);
+        tabguru.getViewport().setOpaque(false);
+        tabguru.setBorder(null);
+        tabguru.setViewportBorder(null);
+        tabel_guru.setShowGrid(true);
+        
+        //SETTING TRANSPARASI SCROLLPANE NILAI
+        ((DefaultTableCellRenderer)tabel_admin.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
+        tabel_admin.setGridColor(Color.BLACK);
+        tabel_admin.setForeground(Color.BLACK);
+        tabadmin.setOpaque(false);
+        tabadmin.getViewport().setOpaque(false);
+        tabadmin.setBorder(null);
+        tabadmin.setViewportBorder(null);
+        tabel_admin.setShowGrid(true);
+    }
+  
+    //RESET ALL PANEL
+    public void resetpanel(){
+        datasiswa.setVisible(false);
+        dataguru.setVisible(false);
+        datakelas.setVisible(false);
+        dataabsensi.setVisible(false);
+        datalapabsensi.setVisible(false);
+        profilesiswa.setVisible(false);
+        dataadmin.setVisible(false);
     }
     
     @SuppressWarnings("unchecked")
@@ -689,7 +726,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         lbkelas = new javax.swing.JLabel();
         iconkelas = new javax.swing.JLabel();
         btn_dataadmin = new javax.swing.JPanel();
-        lbadmin = new javax.swing.JLabel();
+        lbkelas1 = new javax.swing.JLabel();
         iconadmin = new javax.swing.JLabel();
         btn_dataabsensi = new javax.swing.JPanel();
         lbabsen = new javax.swing.JLabel();
@@ -927,11 +964,10 @@ public class keloladata_bk extends javax.swing.JFrame {
         });
         btn_dataadmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbadmin.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
-        lbadmin.setForeground(new java.awt.Color(255, 255, 255));
-        lbadmin.setText("Data Admin");
-        lbadmin.setToolTipText("");
-        btn_dataadmin.add(lbadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 13, -1, -1));
+        lbkelas1.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
+        lbkelas1.setForeground(new java.awt.Color(255, 255, 255));
+        lbkelas1.setText("Data Admin");
+        btn_dataadmin.add(lbkelas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 13, -1, -1));
 
         iconadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/iconadmin.png"))); // NOI18N
         btn_dataadmin.add(iconadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 7, -1, -1));
@@ -1137,11 +1173,6 @@ public class keloladata_bk extends javax.swing.JFrame {
         txt_rfidsiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         txt_rfidsiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_rfidsiswa.setEnabled(false);
-        txt_rfidsiswa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_rfidsiswaActionPerformed(evt);
-            }
-        });
         panelprofilesiswa.add(txt_rfidsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, 550, 30));
 
         txt_nissiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -1157,11 +1188,6 @@ public class keloladata_bk extends javax.swing.JFrame {
         txt_namasiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         txt_namasiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_namasiswa.setEnabled(false);
-        txt_namasiswa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_namasiswaActionPerformed(evt);
-            }
-        });
         panelprofilesiswa.add(txt_namasiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 222, 550, 30));
 
         txt_alamatsiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -1347,35 +1373,15 @@ public class keloladata_bk extends javax.swing.JFrame {
         panelprofileguru.add(lb_nk, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, 50, 30));
 
         txt_noteleponguru.setEnabled(false);
-        txt_noteleponguru.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_noteleponguruActionPerformed(evt);
-            }
-        });
         panelprofileguru.add(txt_noteleponguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 380, 530, 30));
 
         txt_nipguru.setEnabled(false);
-        txt_nipguru.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_nipguruActionPerformed(evt);
-            }
-        });
         panelprofileguru.add(txt_nipguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, 530, 30));
 
         txt_nkguru.setEnabled(false);
-        txt_nkguru.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_nkguruActionPerformed(evt);
-            }
-        });
         panelprofileguru.add(txt_nkguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 180, 530, 30));
 
         txt_namaguru.setEnabled(false);
-        txt_namaguru.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_namaguruActionPerformed(evt);
-            }
-        });
         panelprofileguru.add(txt_namaguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 230, 530, 30));
 
         lb_nama.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
@@ -1399,11 +1405,6 @@ public class keloladata_bk extends javax.swing.JFrame {
         panelprofileguru.add(lb_notelepon, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 380, 120, 30));
 
         txt_emailguru.setEnabled(false);
-        txt_emailguru.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_emailguruActionPerformed(evt);
-            }
-        });
         panelprofileguru.add(txt_emailguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 280, 530, 30));
 
         lb_alamat.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
@@ -1417,19 +1418,9 @@ public class keloladata_bk extends javax.swing.JFrame {
         panelprofileguru.add(lb_jk, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 330, 130, 30));
 
         txt_alamatguru.setEnabled(false);
-        txt_alamatguru.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_alamatguruActionPerformed(evt);
-            }
-        });
         panelprofileguru.add(txt_alamatguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 430, 530, 80));
 
         txt_jkguru.setEnabled(false);
-        txt_jkguru.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_jkguruActionPerformed(evt);
-            }
-        });
         panelprofileguru.add(txt_jkguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 330, 530, 30));
 
         lb_nip.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
@@ -1753,13 +1744,13 @@ public class keloladata_bk extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_searchsiswaActionPerformed
 
     private void btn_lihatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihatsiswaActionPerformed
-        if (txt_searchsiswa != null){
+        if (txt_searchsiswa.getText().equals(Session.getnissiswa())){
             Session.setnissiswa(txt_searchsiswa.getText());
             switchpanel(profilesiswa);
             this.tampilprofilesiswa();
         }else{
-            JOptionPane.showMessageDialog(null, ("Data Pencarian Tidak Boleh Kosong"), 
-            "Data Profile Guru", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, ("Data Tidak Ditemukan"), 
+            "Data Profile Siswa", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btn_lihatsiswaActionPerformed
 
@@ -1791,6 +1782,9 @@ public class keloladata_bk extends javax.swing.JFrame {
         btn_logout.setBackground(new Color(88,163,234));
         this.setVisible(false);
         Session.setusername(null);
+        Session.setnipguru(null);
+        Session.setnipadmin(null);
+        Session.setnissiswa(null);
         login lgn=new login();
         lgn.setVisible(true);
     }//GEN-LAST:event_btn_logoutMousePressed
@@ -1817,13 +1811,13 @@ public class keloladata_bk extends javax.swing.JFrame {
     }//GEN-LAST:event_tabel_adminMouseClicked
 
     private void btn_lihatadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihatadminActionPerformed
-        if (txt_searchadmin != null){
-            Session.setnipguru(txt_searchadmin.getText());
+        if (txt_searchadmin.getText().equals(Session.getnipadmin())){
+            Session.setnipadmin(txt_searchadmin.getText());
             switchpanel(profileguru);
-            this.tampilprofileguru();
+            this.tampilprofileadmin();
         }else{
-            JOptionPane.showMessageDialog(null, ("Data Pencarian Tidak Boleh Kosong"), 
-            "Data Profile Guru", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, ("Data Tidak Ditemukan"), 
+            "Data Profile Admin", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btn_lihatadminActionPerformed
 
@@ -1858,53 +1852,15 @@ public class keloladata_bk extends javax.swing.JFrame {
         this.editprofilesiswa(false);
     }//GEN-LAST:event_btn_simpanprofilesiswaActionPerformed
 
-    private void txt_rfidsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_rfidsiswaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_rfidsiswaActionPerformed
-
-    private void txt_noteleponguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_noteleponguruActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_noteleponguruActionPerformed
-
-    private void txt_nipguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nipguruActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_nipguruActionPerformed
-
-    private void txt_nkguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nkguruActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_nkguruActionPerformed
-
-    private void txt_namaguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namaguruActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_namaguruActionPerformed
-
-    private void txt_namasiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namasiswaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_namasiswaActionPerformed
-
-    private void txt_emailguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_emailguruActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_emailguruActionPerformed
-
-    private void txt_alamatguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_alamatguruActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_alamatguruActionPerformed
-
-    private void txt_jkguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_jkguruActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_jkguruActionPerformed
-
     private void btn_lihatguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihatguruActionPerformed
-        // TODO add your handling code here:
-        if (txt_searchguru != null){
+        if (txt_searchguru.getText().equals(Session.getnipguru())){ 
             Session.setnipguru(txt_searchguru.getText());
             switchpanel(profileguru);
             this.tampilprofileguru();
         }else{
-            JOptionPane.showMessageDialog(null, ("Data Pencarian Tidak Boleh Kosong"), 
+            JOptionPane.showMessageDialog(null, ("Data Tidak Ditemukan"), 
             "Data Profile Guru", JOptionPane.INFORMATION_MESSAGE);
         }
-        
     }//GEN-LAST:event_btn_lihatguruActionPerformed
 
     private void btn_editprofileguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editprofileguruActionPerformed
@@ -1914,9 +1870,17 @@ public class keloladata_bk extends javax.swing.JFrame {
 
     private void btn_kembaliprofileguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliprofileguruActionPerformed
         // TODO add your handling code here:
-        switchpanel(dataguru);
-        this.editprofileguru(false);
-        this.tampilguru();
+        if(Session.getnipguru()==null){
+            Session.setnipadmin(null);
+            switchpanel(dataadmin);
+            this.tampiladmin();
+        }
+        else{
+            Session.setnipguru(null);
+            switchpanel(dataguru);
+            this.editprofileguru(false);
+            this.tampilguru();
+        }
     }//GEN-LAST:event_btn_kembaliprofileguruActionPerformed
 
     private void btn_simpanprofileguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanprofileguruActionPerformed
@@ -2031,10 +1995,10 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JLabel lb_titik6;
     private javax.swing.JLabel lb_titik7;
     private javax.swing.JLabel lbabsen;
-    private javax.swing.JLabel lbadmin;
     private javax.swing.JLabel lbdashboard;
     private javax.swing.JLabel lbguru;
     private javax.swing.JLabel lbkelas;
+    private javax.swing.JLabel lbkelas1;
     private javax.swing.JLabel lblapabsen;
     private javax.swing.JLabel lblogout;
     private javax.swing.JLabel lbsiswa;
