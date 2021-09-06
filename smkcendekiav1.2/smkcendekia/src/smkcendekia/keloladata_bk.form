@@ -502,7 +502,7 @@
         <Component class="javax.swing.JLabel" name="Background">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/assets/listmenu2.png"/>
+              <Image iconType="3" name="/assets/listmenu.png"/>
             </Property>
           </Properties>
           <Constraints>
@@ -687,12 +687,12 @@
                     <Component class="javax.swing.JLabel" name="bgsiswa">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/assets/panelsiswa.png"/>
+                          <Image iconType="3" name="/assets/panel/panelsiswa.png"/>
                         </Property>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="0" y="0" width="-1" height="-1"/>
+                          <AbsoluteConstraints x="0" y="0" width="1107" height="658"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1185,7 +1185,7 @@
                     <Component class="javax.swing.JLabel" name="bgguru">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/assets/panelguru.png"/>
+                          <Image iconType="3" name="/assets/panel/panelguru.png"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1646,7 +1646,7 @@
                     <Component class="javax.swing.JLabel" name="bgkelas">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/assets/panelkelas.png"/>
+                          <Image iconType="3" name="/assets/panel/panelkelas.png"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1803,7 +1803,7 @@
                     <Component class="javax.swing.JLabel" name="bgadmin">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/assets/panel/panelprofilesiswa.png"/>
+                          <Image iconType="3" name="/assets/panel/paneladmin.png"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1854,7 +1854,7 @@
                     <Component class="javax.swing.JLabel" name="bgabsensi">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/assets/panelabsensi.png"/>
+                          <Image iconType="3" name="/assets/panel/panelabsensi.png"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1898,7 +1898,7 @@
                     <Component class="javax.swing.JLabel" name="bglapabsensi">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/assets/panellapabsensi.png"/>
+                          <Image iconType="3" name="/assets/panel/panellapabsensi.png"/>
                         </Property>
                       </Properties>
                       <Constraints>

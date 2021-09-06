@@ -1021,7 +1021,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         username.setText("INI USERNAME");
         PanelUtama.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 30, 190, 40));
 
-        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/listmenu2.png"))); // NOI18N
+        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/listmenu.png"))); // NOI18N
         PanelUtama.add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         LayerPane.setEnabled(false);
@@ -1102,9 +1102,9 @@ public class keloladata_bk extends javax.swing.JFrame {
         panelsiswa.add(tabsiswa);
         tabsiswa.setBounds(50, 160, 1010, 340);
 
-        bgsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panelsiswa.png"))); // NOI18N
+        bgsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelsiswa.png"))); // NOI18N
         panelsiswa.add(bgsiswa);
-        bgsiswa.setBounds(0, 0, 0, 0);
+        bgsiswa.setBounds(0, 0, 1107, 658);
 
         datasiswa.add(panelsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
 
@@ -1296,7 +1296,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         });
         panelguru.add(brn_hapusguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(943, 570, 80, -1));
 
-        bgguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panelguru.png"))); // NOI18N
+        bgguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelguru.png"))); // NOI18N
         panelguru.add(bgguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         dataguru.add(panelguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
@@ -1468,7 +1468,7 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         panelkelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bgkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panelkelas.png"))); // NOI18N
+        bgkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelkelas.png"))); // NOI18N
         panelkelas.add(bgkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         datakelas.add(panelkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
@@ -1552,7 +1552,7 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         paneladmin.add(tabadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 1010, 360));
 
-        bgadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelprofilesiswa.png"))); // NOI18N
+        bgadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/paneladmin.png"))); // NOI18N
         paneladmin.add(bgadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         paneladmin.add(saveadm, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 400, -1, -1));
 
@@ -1566,7 +1566,7 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         panelabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bgabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panelabsensi.png"))); // NOI18N
+        bgabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelabsensi.png"))); // NOI18N
         panelabsensi.add(bgabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         dataabsensi.add(panelabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
@@ -1579,7 +1579,7 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         panellapabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bglapabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panellapabsensi.png"))); // NOI18N
+        bglapabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panellapabsensi.png"))); // NOI18N
         panellapabsensi.add(bglapabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         datalapabsensi.add(panellapabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
