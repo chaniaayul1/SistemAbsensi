@@ -18,7 +18,7 @@ public class koneksi {
     public void config(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost/smkcendekia", "root", "");
+            con=DriverManager.getConnection("jdbc:mysql://localhost/smkcendekia1", "root", "");
             stm = con.createStatement();
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Koneksi Database Gagal ");
