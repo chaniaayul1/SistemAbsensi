@@ -882,9 +882,18 @@ public class keloladata_bk extends javax.swing.JFrame {
         btn_simpanprofileguru = new javax.swing.JButton();
         btn_editprofileguru = new javax.swing.JButton();
         btn_kembaliprofileguru = new javax.swing.JButton();
+        btn_lihatdatasiswa = new javax.swing.JButton();
         bgprofileguru = new javax.swing.JLabel();
         datakelas = new javax.swing.JLayeredPane();
         panelkelas = new javax.swing.JPanel();
+        btn_addkelas = new javax.swing.JButton();
+        txt_datakelas = new javax.swing.JTextField();
+        btn_searchkelas = new javax.swing.JButton();
+        btn_refreshkelas = new javax.swing.JButton();
+        tabkelas = new javax.swing.JScrollPane();
+        tabel_kelas = new javax.swing.JTable();
+        btn_hapuskelas = new javax.swing.JButton();
+        btn_lihatkelas = new javax.swing.JButton();
         bgkelas = new javax.swing.JLabel();
         dataadmin = new javax.swing.JLayeredPane();
         paneladmin = new javax.swing.JPanel();
@@ -899,6 +908,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         saveadm = new javax.swing.JLabel();
         dataabsensi = new javax.swing.JLayeredPane();
         panelabsensi = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
         bgabsensi = new javax.swing.JLabel();
         datalapabsensi = new javax.swing.JLayeredPane();
         panellapabsensi = new javax.swing.JPanel();
@@ -990,6 +1000,57 @@ public class keloladata_bk extends javax.swing.JFrame {
         txt_level = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         bgtambahguru1 = new javax.swing.JLabel();
+        form_kelas = new javax.swing.JLayeredPane();
+        panelformkelas = new javax.swing.JPanel();
+        jLabel63 = new javax.swing.JLabel();
+        jLabel71 = new javax.swing.JLabel();
+        jLabel74 = new javax.swing.JLabel();
+        jLabel75 = new javax.swing.JLabel();
+        jLabel77 = new javax.swing.JLabel();
+        jLabel78 = new javax.swing.JLabel();
+        txt_tambahnk = new javax.swing.JTextField();
+        jLabel79 = new javax.swing.JLabel();
+        jLabel80 = new javax.swing.JLabel();
+        jLabel81 = new javax.swing.JLabel();
+        jLabel82 = new javax.swing.JLabel();
+        jLabel84 = new javax.swing.JLabel();
+        jLabel85 = new javax.swing.JLabel();
+        txt_tambahkelasnip = new javax.swing.JTextField();
+        txt_tambahkelastingkatan = new javax.swing.JTextField();
+        txt_tambahkelasnamakelas = new javax.swing.JTextField();
+        txt_tambahkelasjurusan = new javax.swing.JTextField();
+        txt_idkelas = new javax.swing.JTextField();
+        btn_simpantambahkelas = new javax.swing.JButton();
+        bgtambahguru2 = new javax.swing.JLabel();
+        profilekelas = new javax.swing.JLayeredPane();
+        panelprofilekelas = new javax.swing.JPanel();
+        lb_gambar1 = new javax.swing.JLabel();
+        lb_nk1 = new javax.swing.JLabel();
+        txt_profilekelasjumlahsiswa = new javax.swing.JTextField();
+        txt_profileidkelas = new javax.swing.JTextField();
+        txt_profilekelasnk = new javax.swing.JTextField();
+        txt_profilekelastingkat = new javax.swing.JTextField();
+        lb_nama1 = new javax.swing.JLabel();
+        lb_email1 = new javax.swing.JLabel();
+        lb_titik8 = new javax.swing.JLabel();
+        lb_notelepon1 = new javax.swing.JLabel();
+        txt_profilekelasjurusan = new javax.swing.JTextField();
+        lb_alamat1 = new javax.swing.JLabel();
+        lb_jk1 = new javax.swing.JLabel();
+        txt_profilekelasnip = new javax.swing.JTextField();
+        txt_profilekelasnamakelas = new javax.swing.JTextField();
+        lb_nip1 = new javax.swing.JLabel();
+        lb_titik9 = new javax.swing.JLabel();
+        lb_titik10 = new javax.swing.JLabel();
+        lb_titik11 = new javax.swing.JLabel();
+        lb_titik12 = new javax.swing.JLabel();
+        lb_titik13 = new javax.swing.JLabel();
+        lb_titik14 = new javax.swing.JLabel();
+        btn_profilekelassimpan = new javax.swing.JButton();
+        btn_profilekelasedit = new javax.swing.JButton();
+        btn_kembaliprofileguru1 = new javax.swing.JButton();
+        btn_profilekelaslihatdata = new javax.swing.JButton();
+        bgprofileguru1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -1264,7 +1325,7 @@ public class keloladata_bk extends javax.swing.JFrame {
             }
         });
         panelsiswa.add(btn_lihatsiswa);
-        btn_lihatsiswa.setBounds(770, 560, 120, 40);
+        btn_lihatsiswa.setBounds(770, 570, 120, 40);
 
         btn_hapussiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_hapussiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -1277,7 +1338,7 @@ public class keloladata_bk extends javax.swing.JFrame {
             }
         });
         panelsiswa.add(btn_hapussiswa);
-        btn_hapussiswa.setBounds(930, 560, 120, 40);
+        btn_hapussiswa.setBounds(930, 570, 120, 40);
 
         tabel_siswa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1303,6 +1364,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         tabsiswa.setBounds(50, 160, 1010, 380);
 
         btn_refreshdatasiswa.setBackground(new java.awt.Color(255, 255, 255));
+        btn_refreshdatasiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/refresh (1).png"))); // NOI18N
         btn_refreshdatasiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_refreshdatasiswaActionPerformed(evt);
@@ -1450,7 +1512,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         dataguru.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelguru.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panelguru.add(txt_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 690, 30));
+        panelguru.add(txt_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 690, 30));
 
         btn_searchguru.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -1460,7 +1522,7 @@ public class keloladata_bk extends javax.swing.JFrame {
                 btn_searchguruActionPerformed(evt);
             }
         });
-        panelguru.add(btn_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 100, 100, 30));
+        panelguru.add(btn_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 110, 100, 30));
 
         tabel_guru.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1482,7 +1544,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         });
         tabguru.setViewportView(tabel_guru);
 
-        panelguru.add(tabguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 1020, 370));
+        panelguru.add(tabguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 1020, 370));
 
         btn_lihatguru.setBackground(new java.awt.Color(255, 255, 255));
         btn_lihatguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -1509,7 +1571,12 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         btn_refreshdataguru.setBackground(new java.awt.Color(255, 255, 255));
         btn_refreshdataguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/refresh (1).png"))); // NOI18N
-        panelguru.add(btn_refreshdataguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 100, 40, 30));
+        btn_refreshdataguru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshdataguruActionPerformed(evt);
+            }
+        });
+        panelguru.add(btn_refreshdataguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 110, 40, 30));
 
         btn_tambahguru.setBackground(new java.awt.Color(255, 255, 255));
         btn_tambahguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -1520,7 +1587,7 @@ public class keloladata_bk extends javax.swing.JFrame {
                 btn_tambahguruActionPerformed(evt);
             }
         });
-        panelguru.add(btn_tambahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 150, 30));
+        panelguru.add(btn_tambahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 150, 30));
 
         bgguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelguru.png"))); // NOI18N
         panelguru.add(bgguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -1668,6 +1735,11 @@ public class keloladata_bk extends javax.swing.JFrame {
         });
         panelprofileguru.add(btn_kembaliprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 560, 150, 40));
 
+        btn_lihatdatasiswa.setBackground(new java.awt.Color(255, 255, 255));
+        btn_lihatdatasiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_lihatdatasiswa.setText("Lihat Siswa");
+        panelprofileguru.add(btn_lihatdatasiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 560, 140, 40));
+
         bgprofileguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelprofileguru.png"))); // NOI18N
         panelprofileguru.add(bgprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -1681,6 +1753,50 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         panelkelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btn_addkelas.setBackground(new java.awt.Color(255, 255, 255));
+        btn_addkelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_addkelas.setText("Kelas Baru");
+        panelkelas.add(btn_addkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 120, 30));
+        panelkelas.add(txt_datakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 700, 30));
+
+        btn_searchkelas.setBackground(new java.awt.Color(255, 255, 255));
+        btn_searchkelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_searchkelas.setText("Search");
+        panelkelas.add(btn_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 110, 100, 30));
+
+        btn_refreshkelas.setBackground(new java.awt.Color(255, 255, 255));
+        panelkelas.add(btn_refreshkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 110, 60, 30));
+
+        tabkelas.setBackground(new java.awt.Color(255, 255, 255));
+
+        tabel_kelas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "No", "NK", "Nama Kelas", "Angkatan", "Jurusan", "P", "L", "Jumlah Siswa"
+            }
+        ));
+        tabkelas.setViewportView(tabel_kelas);
+
+        panelkelas.add(tabkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 1010, 380));
+
+        btn_hapuskelas.setBackground(new java.awt.Color(255, 255, 255));
+        btn_hapuskelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_hapuskelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/delete.png"))); // NOI18N
+        btn_hapuskelas.setText("Hapus");
+        btn_hapuskelas.setIconTextGap(18);
+        btn_hapuskelas.setMargin(new java.awt.Insets(1, 1, 1, 14));
+        panelkelas.add(btn_hapuskelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 580, 120, 40));
+
+        btn_lihatkelas.setBackground(new java.awt.Color(255, 255, 255));
+        btn_lihatkelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_lihatkelas.setText("LIhat Kelas");
+        panelkelas.add(btn_lihatkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 580, 120, 40));
+
         bgkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelkelas.png"))); // NOI18N
         panelkelas.add(bgkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -1693,8 +1809,7 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         paneladmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txt_searchadmin.setBackground(new java.awt.Color(240, 240, 240));
-        txt_searchadmin.setFont(new java.awt.Font("Roboto Slab Thin", 1, 14)); // NOI18N
+        txt_searchadmin.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
         txt_searchadmin.setBorder(null);
         paneladmin.add(txt_searchadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 270, 30));
 
@@ -1714,7 +1829,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         btn_editadmin.setText("Edit");
         btn_editadmin.setIconTextGap(18);
         btn_editadmin.setMargin(new java.awt.Insets(1, 1, 1, 14));
-        paneladmin.add(btn_editadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 570, 120, 40));
+        paneladmin.add(btn_editadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 570, 130, 40));
 
         btn_registrasi.setBackground(new java.awt.Color(255, 255, 255));
         btn_registrasi.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -1792,6 +1907,9 @@ public class keloladata_bk extends javax.swing.JFrame {
         dataabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField1.setText("jTextField1");
+        panelabsensi.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 530, 30));
 
         bgabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelabsensi.png"))); // NOI18N
         panelabsensi.add(bgabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -2200,6 +2318,253 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         LayerPane.add(form_registrasi, "card4");
 
+        form_kelas.setOpaque(true);
+        form_kelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelformkelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel63.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel63.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel63.setText("NK");
+        panelformkelas.add(jLabel63, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 195, -1, -1));
+
+        jLabel71.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel71.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel71.setText("NIP");
+        panelformkelas.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 235, -1, -1));
+
+        jLabel74.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel74.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel74.setText("Tingkatan");
+        panelformkelas.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, -1, -1));
+
+        jLabel75.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel75.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel75.setText("Nama Kelas");
+        panelformkelas.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, -1, -1));
+
+        jLabel77.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel77.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel77.setText("Jurusan");
+        panelformkelas.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, -1, -1));
+
+        jLabel78.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel78.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel78.setText(":");
+        panelformkelas.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 195, -1, -1));
+        panelformkelas.add(txt_tambahnk, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 840, 30));
+
+        jLabel79.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel79.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel79.setText("ID Kelas");
+        panelformkelas.add(jLabel79, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 155, -1, -1));
+
+        jLabel80.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel80.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel80.setText(":");
+        panelformkelas.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 235, -1, -1));
+
+        jLabel81.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel81.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel81.setText(":");
+        panelformkelas.add(jLabel81, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 275, -1, -1));
+
+        jLabel82.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel82.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel82.setText(":");
+        panelformkelas.add(jLabel82, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 355, -1, -1));
+
+        jLabel84.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel84.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel84.setText(":");
+        panelformkelas.add(jLabel84, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 315, -1, -1));
+
+        jLabel85.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel85.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel85.setText(":");
+        panelformkelas.add(jLabel85, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 155, -1, -1));
+
+        txt_tambahkelasnip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_tambahkelasnipActionPerformed(evt);
+            }
+        });
+        panelformkelas.add(txt_tambahkelasnip, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 840, 30));
+        panelformkelas.add(txt_tambahkelastingkatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 840, 30));
+        panelformkelas.add(txt_tambahkelasnamakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 353, 840, 30));
+        panelformkelas.add(txt_tambahkelasjurusan, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 840, 30));
+        panelformkelas.add(txt_idkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 840, 30));
+
+        btn_simpantambahkelas.setBackground(new java.awt.Color(255, 255, 255));
+        btn_simpantambahkelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_simpantambahkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/floppy-disk.png"))); // NOI18N
+        btn_simpantambahkelas.setText("Simpan");
+        btn_simpantambahkelas.setIconTextGap(18);
+        btn_simpantambahkelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_simpantambahkelasActionPerformed(evt);
+            }
+        });
+        panelformkelas.add(btn_simpantambahkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 580, 140, 35));
+
+        bgtambahguru2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/paneltambahguru.png"))); // NOI18N
+        panelformkelas.add(bgtambahguru2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        form_kelas.add(panelformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
+
+        LayerPane.add(form_kelas, "card4");
+
+        profilekelas.setOpaque(true);
+        profilekelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelprofilekelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lb_gambar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/teacher.png"))); // NOI18N
+        lb_gambar1.setText("jLabel15");
+        panelprofilekelas.add(lb_gambar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 310, 270));
+
+        lb_nk1.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_nk1.setForeground(new java.awt.Color(0, 51, 204));
+        lb_nk1.setText("NK");
+        panelprofilekelas.add(lb_nk1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, 50, 30));
+
+        txt_profilekelasjumlahsiswa.setEnabled(false);
+        panelprofilekelas.add(txt_profilekelasjumlahsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 380, 530, 30));
+
+        txt_profileidkelas.setEnabled(false);
+        panelprofilekelas.add(txt_profileidkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, 530, 30));
+
+        txt_profilekelasnk.setEnabled(false);
+        panelprofilekelas.add(txt_profilekelasnk, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 180, 530, 30));
+
+        txt_profilekelastingkat.setEnabled(false);
+        panelprofilekelas.add(txt_profilekelastingkat, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 230, 530, 30));
+
+        lb_nama1.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_nama1.setForeground(new java.awt.Color(0, 51, 204));
+        lb_nama1.setText("Tingkat");
+        panelprofilekelas.add(lb_nama1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 90, 30));
+
+        lb_email1.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_email1.setForeground(new java.awt.Color(0, 51, 204));
+        lb_email1.setText("Jurusan");
+        panelprofilekelas.add(lb_email1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 280, 100, 30));
+
+        lb_titik8.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik8.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik8.setText(":");
+        panelprofilekelas.add(lb_titik8, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 180, 20, 30));
+
+        lb_notelepon1.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_notelepon1.setForeground(new java.awt.Color(0, 51, 204));
+        lb_notelepon1.setText("Jumlah Siswa");
+        panelprofilekelas.add(lb_notelepon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 380, 120, 30));
+
+        txt_profilekelasjurusan.setEnabled(false);
+        panelprofilekelas.add(txt_profilekelasjurusan, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 280, 530, 30));
+
+        lb_alamat1.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_alamat1.setForeground(new java.awt.Color(0, 51, 204));
+        lb_alamat1.setText("NIP");
+        panelprofilekelas.add(lb_alamat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 430, 130, 30));
+
+        lb_jk1.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_jk1.setForeground(new java.awt.Color(0, 51, 204));
+        lb_jk1.setText("Nama Kelas");
+        panelprofilekelas.add(lb_jk1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 330, 130, 30));
+
+        txt_profilekelasnip.setEnabled(false);
+        panelprofilekelas.add(txt_profilekelasnip, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 430, 530, 30));
+
+        txt_profilekelasnamakelas.setEnabled(false);
+        panelprofilekelas.add(txt_profilekelasnamakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 330, 530, 30));
+
+        lb_nip1.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_nip1.setForeground(new java.awt.Color(0, 51, 204));
+        lb_nip1.setText("ID Kelas");
+        panelprofilekelas.add(lb_nip1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 130, 80, 30));
+
+        lb_titik9.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik9.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik9.setText(":");
+        panelprofilekelas.add(lb_titik9, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 20, 30));
+
+        lb_titik10.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik10.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik10.setText(":");
+        panelprofilekelas.add(lb_titik10, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 280, 20, 30));
+
+        lb_titik11.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik11.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik11.setText(":");
+        panelprofilekelas.add(lb_titik11, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 330, 20, 30));
+
+        lb_titik12.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik12.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik12.setText(":");
+        panelprofilekelas.add(lb_titik12, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 380, 20, 30));
+
+        lb_titik13.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik13.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik13.setText(":");
+        panelprofilekelas.add(lb_titik13, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 430, 20, 30));
+
+        lb_titik14.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik14.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik14.setText(":");
+        panelprofilekelas.add(lb_titik14, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 130, 20, 30));
+
+        btn_profilekelassimpan.setBackground(new java.awt.Color(255, 255, 255));
+        btn_profilekelassimpan.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_profilekelassimpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/floppy-disk.png"))); // NOI18N
+        btn_profilekelassimpan.setText("Simpan");
+        btn_profilekelassimpan.setIconTextGap(18);
+        btn_profilekelassimpan.setMargin(new java.awt.Insets(1, 1, 1, 10));
+        btn_profilekelassimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_profilekelassimpanActionPerformed(evt);
+            }
+        });
+        panelprofilekelas.add(btn_profilekelassimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 560, 140, 40));
+
+        btn_profilekelasedit.setBackground(new java.awt.Color(255, 255, 255));
+        btn_profilekelasedit.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_profilekelasedit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/edit.png"))); // NOI18N
+        btn_profilekelasedit.setText("Edit");
+        btn_profilekelasedit.setIconTextGap(18);
+        btn_profilekelasedit.setMargin(new java.awt.Insets(1, 1, 1, 10));
+        btn_profilekelasedit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_profilekelaseditActionPerformed(evt);
+            }
+        });
+        panelprofilekelas.add(btn_profilekelasedit, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 560, 140, 40));
+
+        btn_kembaliprofileguru1.setBackground(new java.awt.Color(255, 255, 255));
+        btn_kembaliprofileguru1.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_kembaliprofileguru1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/back-button.png"))); // NOI18N
+        btn_kembaliprofileguru1.setText("Kembali");
+        btn_kembaliprofileguru1.setIconTextGap(18);
+        btn_kembaliprofileguru1.setMargin(new java.awt.Insets(1, 1, 1, 10));
+        btn_kembaliprofileguru1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kembaliprofileguru1ActionPerformed(evt);
+            }
+        });
+        panelprofilekelas.add(btn_kembaliprofileguru1, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 560, 150, 40));
+
+        btn_profilekelaslihatdata.setBackground(new java.awt.Color(255, 255, 255));
+        btn_profilekelaslihatdata.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_profilekelaslihatdata.setText("Lihat Siswa");
+        panelprofilekelas.add(btn_profilekelaslihatdata, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 560, 140, 40));
+
+        bgprofileguru1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelprofileguru.png"))); // NOI18N
+        panelprofilekelas.add(bgprofileguru1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        profilekelas.add(panelprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
+
+        LayerPane.add(profilekelas, "card4");
+
         PanelUtama.add(LayerPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 110, 1107, 658));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -2459,6 +2824,7 @@ public class keloladata_bk extends javax.swing.JFrame {
 
     private void btn_refreshdatasiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshdatasiswaActionPerformed
         // TODO add your handling code here:
+        tampilsiswa();
     }//GEN-LAST:event_btn_refreshdatasiswaActionPerformed
 
     private void txt_nkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nkActionPerformed
@@ -2597,6 +2963,31 @@ public class keloladata_bk extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txt_levelActionPerformed
 
+    private void btn_refreshdataguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshdataguruActionPerformed
+        // TODO add your handling code here:
+        tampilguru();
+    }//GEN-LAST:event_btn_refreshdataguruActionPerformed
+
+    private void txt_tambahkelasnipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tambahkelasnipActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_tambahkelasnipActionPerformed
+
+    private void btn_simpantambahkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpantambahkelasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_simpantambahkelasActionPerformed
+
+    private void btn_profilekelassimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_profilekelassimpanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_profilekelassimpanActionPerformed
+
+    private void btn_profilekelaseditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_profilekelaseditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_profilekelaseditActionPerformed
+
+    private void btn_kembaliprofileguru1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliprofileguru1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_kembaliprofileguru1ActionPerformed
+
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -2643,12 +3034,15 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JLabel bgkelas;
     private javax.swing.JLabel bglapabsensi;
     private javax.swing.JLabel bgprofileguru;
+    private javax.swing.JLabel bgprofileguru1;
     private javax.swing.JLabel bgprofilesiswa;
     private javax.swing.JLabel bgsiswa;
     private javax.swing.JLabel bgtambahguru;
     private javax.swing.JLabel bgtambahguru1;
+    private javax.swing.JLabel bgtambahguru2;
     private javax.swing.JLabel bgtambahsiswa;
     private javax.swing.JButton brn_hapusguru;
+    private javax.swing.JButton btn_addkelas;
     private javax.swing.JButton btn_daftar;
     private javax.swing.JPanel btn_dashboard;
     private javax.swing.JPanel btn_dataabsensi;
@@ -2660,22 +3054,32 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JButton btn_editprofileguru;
     private javax.swing.JButton btn_editprofilesiswa;
     private javax.swing.JButton btn_hapusadmin;
+    private javax.swing.JButton btn_hapuskelas;
     private javax.swing.JButton btn_hapussiswa;
     private javax.swing.JButton btn_kembaliprofileguru;
+    private javax.swing.JButton btn_kembaliprofileguru1;
     private javax.swing.JButton btn_kembaliprofilesiswa;
     private javax.swing.JPanel btn_lapabsen;
     private javax.swing.JButton btn_lihatadmin;
+    private javax.swing.JButton btn_lihatdatasiswa;
     private javax.swing.JButton btn_lihatguru;
+    private javax.swing.JButton btn_lihatkelas;
     private javax.swing.JButton btn_lihatsiswa;
     private javax.swing.JPanel btn_logout;
+    private javax.swing.JButton btn_profilekelasedit;
+    private javax.swing.JButton btn_profilekelaslihatdata;
+    private javax.swing.JButton btn_profilekelassimpan;
     private javax.swing.JButton btn_refreshdataguru;
     private javax.swing.JButton btn_refreshdatasiswa;
+    private javax.swing.JButton btn_refreshkelas;
     private javax.swing.JButton btn_registrasi;
     private javax.swing.JButton btn_searchguru;
+    private javax.swing.JButton btn_searchkelas;
     private javax.swing.JButton btn_searchsiswa;
     private javax.swing.JButton btn_simpanprofileguru;
     private javax.swing.JButton btn_simpanprofilesiswa;
     private javax.swing.JButton btn_simpantambahguru;
+    private javax.swing.JButton btn_simpantambahkelas;
     private javax.swing.JButton btn_simpantambahsiswa;
     private javax.swing.JButton btn_tambahguru;
     private javax.swing.JButton btn_tambahsiswa;
@@ -2686,6 +3090,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JLayeredPane datalapabsensi;
     private javax.swing.JLayeredPane datasiswa;
     private javax.swing.JLayeredPane form_guru;
+    private javax.swing.JLayeredPane form_kelas;
     private javax.swing.JLayeredPane form_registrasi;
     private javax.swing.JLayeredPane form_siswa;
     private javax.swing.JLabel iconabsen;
@@ -2735,6 +3140,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
+    private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
@@ -2743,25 +3149,52 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel70;
+    private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
     private javax.swing.JLabel jLabel73;
+    private javax.swing.JLabel jLabel74;
+    private javax.swing.JLabel jLabel75;
+    private javax.swing.JLabel jLabel77;
+    private javax.swing.JLabel jLabel78;
+    private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel80;
+    private javax.swing.JLabel jLabel81;
+    private javax.swing.JLabel jLabel82;
+    private javax.swing.JLabel jLabel84;
+    private javax.swing.JLabel jLabel85;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lb_alamat;
+    private javax.swing.JLabel lb_alamat1;
     private javax.swing.JLabel lb_email;
+    private javax.swing.JLabel lb_email1;
     private javax.swing.JLabel lb_gambar;
+    private javax.swing.JLabel lb_gambar1;
     private javax.swing.JLabel lb_jk;
+    private javax.swing.JLabel lb_jk1;
     private javax.swing.JLabel lb_nama;
+    private javax.swing.JLabel lb_nama1;
     private javax.swing.JLabel lb_nip;
+    private javax.swing.JLabel lb_nip1;
     private javax.swing.JLabel lb_nk;
+    private javax.swing.JLabel lb_nk1;
     private javax.swing.JLabel lb_notelepon;
+    private javax.swing.JLabel lb_notelepon1;
     private javax.swing.JLabel lb_titik1;
+    private javax.swing.JLabel lb_titik10;
+    private javax.swing.JLabel lb_titik11;
+    private javax.swing.JLabel lb_titik12;
+    private javax.swing.JLabel lb_titik13;
+    private javax.swing.JLabel lb_titik14;
     private javax.swing.JLabel lb_titik2;
     private javax.swing.JLabel lb_titik3;
     private javax.swing.JLabel lb_titik4;
     private javax.swing.JLabel lb_titik5;
     private javax.swing.JLabel lb_titik6;
     private javax.swing.JLabel lb_titik7;
+    private javax.swing.JLabel lb_titik8;
+    private javax.swing.JLabel lb_titik9;
     private javax.swing.JLabel lbabsen;
     private javax.swing.JLabel lbdashboard;
     private javax.swing.JLabel lbguru;
@@ -2774,15 +3207,18 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JPanel paneladmin;
     private javax.swing.JPanel panelbutton;
     private javax.swing.JPanel panelformguru;
+    private javax.swing.JPanel panelformkelas;
     private javax.swing.JPanel panelformregistrasi;
     private javax.swing.JPanel panelformsiswa;
     private javax.swing.JPanel panelguru;
     private javax.swing.JPanel panelkelas;
     private javax.swing.JPanel panellapabsensi;
     private javax.swing.JPanel panelprofileguru;
+    private javax.swing.JPanel panelprofilekelas;
     private javax.swing.JPanel panelprofilesiswa;
     private javax.swing.JPanel panelsiswa;
     private javax.swing.JLayeredPane profileguru;
+    private javax.swing.JLayeredPane profilekelas;
     private javax.swing.JLayeredPane profilesiswa;
     private javax.swing.JRadioButton rb1;
     private javax.swing.JRadioButton rb2;
@@ -2792,8 +3228,10 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JScrollPane tabadmin;
     private javax.swing.JTable tabel_admin;
     private javax.swing.JTable tabel_guru;
+    private javax.swing.JTable tabel_kelas;
     private javax.swing.JTable tabel_siswa;
     private javax.swing.JScrollPane tabguru;
+    private javax.swing.JScrollPane tabkelas;
     private javax.swing.JScrollPane tabsiswa;
     private javax.swing.JTextField txt_RFID;
     private javax.swing.JTextField txt_alamat;
@@ -2802,12 +3240,14 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JTextField txt_alamattambahguru;
     private javax.swing.ButtonGroup txt_buttonJK;
     private javax.swing.ButtonGroup txt_buttonjktambahguru;
+    private javax.swing.JTextField txt_datakelas;
     private javax.swing.JTextField txt_email;
     private javax.swing.JTextField txt_emailguru;
     private javax.swing.JTextField txt_emailsiswa;
     private javax.swing.JTextField txt_emailtambahguru;
     private javax.swing.JTextField txt_gendersiswa;
     private javax.swing.JTextField txt_id;
+    private javax.swing.JTextField txt_idkelas;
     private javax.swing.JTextField txt_jkguru;
     private javax.swing.JComboBox<String> txt_level;
     private javax.swing.JTextField txt_nama;
@@ -2828,6 +3268,13 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JTextField txt_noteleponguru;
     private javax.swing.JTextField txt_notelpsiswa;
     private javax.swing.JTextField txt_ortusiswa;
+    private javax.swing.JTextField txt_profileidkelas;
+    private javax.swing.JTextField txt_profilekelasjumlahsiswa;
+    private javax.swing.JTextField txt_profilekelasjurusan;
+    private javax.swing.JTextField txt_profilekelasnamakelas;
+    private javax.swing.JTextField txt_profilekelasnip;
+    private javax.swing.JTextField txt_profilekelasnk;
+    private javax.swing.JTextField txt_profilekelastingkat;
     private javax.swing.JTextField txt_regisnama;
     private javax.swing.JTextField txt_regisnip;
     private javax.swing.JTextField txt_regispassword;
@@ -2836,6 +3283,11 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JTextField txt_searchadmin;
     private javax.swing.JTextField txt_searchguru;
     private javax.swing.JTextField txt_searchsiswa;
+    private javax.swing.JTextField txt_tambahkelasjurusan;
+    private javax.swing.JTextField txt_tambahkelasnamakelas;
+    private javax.swing.JTextField txt_tambahkelasnip;
+    private javax.swing.JTextField txt_tambahkelastingkatan;
+    private javax.swing.JTextField txt_tambahnk;
     private javax.swing.JTextField txt_tlp;
     private javax.swing.JTextField txt_tlptambahguru;
     private javax.swing.JTextField txt_walassiswa;
