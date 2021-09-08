@@ -111,6 +111,8 @@ public class login extends javax.swing.JFrame {
 
         panel_login.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        txt_username.setBackground(new java.awt.Color(244, 243, 244));
+        txt_username.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txt_username.setBorder(null);
         txt_username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,6 +121,8 @@ public class login extends javax.swing.JFrame {
         });
         panel_login.add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 313, 430, 62));
 
+        txt_password.setBackground(new java.awt.Color(244, 243, 244));
+        txt_password.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txt_password.setBorder(null);
         panel_login.add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 410, 430, 62));
 
