@@ -859,7 +859,42 @@ public class keloladata_bk extends javax.swing.JFrame {
         }
     }
     
-    
+    //================================DATA ABSEN===================================//
+    //PROSEDUR MENAMPILKAN DATA ABSEN DI TABEL
+    public void tampilabsen(){        
+        model = new DefaultTableModel ( );
+        tabel_absen.setModel(model);
+        model.addColumn("No");
+        model.addColumn("NIS");
+        model.addColumn("NK");
+        model.addColumn("Nama");
+        model.addColumn("Jam");
+        model.addColumn("Tanggal");
+        model.addColumn("Status");
+
+         try{
+           stat = con.createStatement( );
+           sql  = "Select * from absen";
+           rs   = stat.executeQuery(sql);
+           int no=1;
+           while(rs.next ()){
+                Object[ ] obj = new Object[6];
+                obj[0] = Integer.toString(no);
+                obj[1] = rs.getString("nis");
+                obj[2] = rs.getString("nk");
+                obj[3] = rs.getString("nama");
+                obj[4] = rs.getString("jam");
+                obj[5] = rs.getString("tanggal");
+                obj[6] = rs.getString("status");
+                model.addRow(obj);
+                no++;
+            }
+            
+             tabel_kelas.setModel(model);
+        } catch (SQLException e) {
+            System.out.println(e);
+      }
+    }
     
     //==============================PERIPHERAL================================//
     //SWITCH PANEL
@@ -973,6 +1008,16 @@ public class keloladata_bk extends javax.swing.JFrame {
         tabkelas.setBorder(null);
         tabkelas.setViewportBorder(null);
         tabel_kelas.setShowGrid(true);
+        
+        //SETTING TRANSPARASI SCROLLPANE TABLE ABSEN
+        ((DefaultTableCellRenderer)tabel_absen.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
+        tabel_absen.setGridColor(Color.BLACK);
+        tabel_absen.setForeground(Color.BLACK);
+        tababsen.setOpaque(false);
+        tababsen.getViewport().setOpaque(false);
+        tababsen.setBorder(null);
+        tababsen.setViewportBorder(null);
+        tabel_absen.setShowGrid(true);
     }
   
     //RESET ALL PANEL
@@ -1256,7 +1301,12 @@ public class keloladata_bk extends javax.swing.JFrame {
         bgregistrasiadmin = new javax.swing.JLabel();
         dataabsensi = new javax.swing.JLayeredPane();
         panelabsensi = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        txt_searchdataabsen = new javax.swing.JTextField();
+        btn_searchdataabsen = new javax.swing.JButton();
+        tababsen = new javax.swing.JScrollPane();
+        tabel_absen = new javax.swing.JTable();
+        cb_statusdataabsen = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         bgabsensi = new javax.swing.JLabel();
         datalapabsensi = new javax.swing.JLayeredPane();
         panellapabsensi = new javax.swing.JPanel();
@@ -1700,15 +1750,14 @@ public class keloladata_bk extends javax.swing.JFrame {
         btn_kembaliprofilesiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_kembaliprofilesiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_kembaliprofilesiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/back-button.png"))); // NOI18N
-        btn_kembaliprofilesiswa.setText("Kembali");
         btn_kembaliprofilesiswa.setIconTextGap(18);
-        btn_kembaliprofilesiswa.setMargin(new java.awt.Insets(1, 1, 1, 10));
+        btn_kembaliprofilesiswa.setMargin(new java.awt.Insets(1, 10, 1, 10));
         btn_kembaliprofilesiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_kembaliprofilesiswaActionPerformed(evt);
             }
         });
-        panelprofilesiswa.add(btn_kembaliprofilesiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 590, 140, 40));
+        panelprofilesiswa.add(btn_kembaliprofilesiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 590, 55, 35));
 
         bgprofilesiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelprofilesiswa2.png"))); // NOI18N
         panelprofilesiswa.add(bgprofilesiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -1862,7 +1911,7 @@ public class keloladata_bk extends javax.swing.JFrame {
                 btn_simpantambahsiswaActionPerformed(evt);
             }
         });
-        panelformsiswa.add(btn_simpantambahsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 580, 140, 35));
+        panelformsiswa.add(btn_simpantambahsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 580, 140, 40));
 
         btn_scantambahsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_scantambahsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -1878,15 +1927,14 @@ public class keloladata_bk extends javax.swing.JFrame {
         btn_kembalitambahisiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_kembalitambahisiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_kembalitambahisiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/back-button.png"))); // NOI18N
-        btn_kembalitambahisiswa.setText("Kembali");
         btn_kembalitambahisiswa.setIconTextGap(18);
-        btn_kembalitambahisiswa.setMargin(new java.awt.Insets(1, 1, 1, 14));
+        btn_kembalitambahisiswa.setMargin(new java.awt.Insets(1, 5, 1, 5));
         btn_kembalitambahisiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_kembalitambahisiswaActionPerformed(evt);
             }
         });
-        panelformsiswa.add(btn_kembalitambahisiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, 140, 35));
+        panelformsiswa.add(btn_kembalitambahisiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, 55, 35));
 
         bgtambahsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/paneltambahsiswa.png"))); // NOI18N
         panelformsiswa.add(bgtambahsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -2118,15 +2166,14 @@ public class keloladata_bk extends javax.swing.JFrame {
         btn_kembaliprofileguru.setBackground(new java.awt.Color(255, 255, 255));
         btn_kembaliprofileguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_kembaliprofileguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/back-button.png"))); // NOI18N
-        btn_kembaliprofileguru.setText("Kembali");
         btn_kembaliprofileguru.setIconTextGap(18);
-        btn_kembaliprofileguru.setMargin(new java.awt.Insets(1, 1, 1, 10));
+        btn_kembaliprofileguru.setMargin(new java.awt.Insets(1, 10, 1, 10));
         btn_kembaliprofileguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_kembaliprofileguruActionPerformed(evt);
             }
         });
-        panelprofileguru.add(btn_kembaliprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 560, 150, 40));
+        panelprofileguru.add(btn_kembaliprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 560, 55, 35));
 
         bgprofileguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelprofileguru.png"))); // NOI18N
         panelprofileguru.add(bgprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -2241,15 +2288,14 @@ public class keloladata_bk extends javax.swing.JFrame {
         btn_kembaliformguru.setBackground(new java.awt.Color(255, 255, 255));
         btn_kembaliformguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_kembaliformguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/back-button.png"))); // NOI18N
-        btn_kembaliformguru.setText("Kembali");
         btn_kembaliformguru.setIconTextGap(18);
-        btn_kembaliformguru.setMargin(new java.awt.Insets(1, 1, 1, 14));
+        btn_kembaliformguru.setMargin(new java.awt.Insets(1, 14, 1, 14));
         btn_kembaliformguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_kembaliformguruActionPerformed(evt);
             }
         });
-        panelformguru.add(btn_kembaliformguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, 140, 35));
+        panelformguru.add(btn_kembaliformguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, 55, 35));
 
         bgtambahguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/paneltambahguru.png"))); // NOI18N
         panelformguru.add(bgtambahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -2304,12 +2350,12 @@ public class keloladata_bk extends javax.swing.JFrame {
         btn_hapuskelas.setText("Hapus");
         btn_hapuskelas.setIconTextGap(18);
         btn_hapuskelas.setMargin(new java.awt.Insets(1, 1, 1, 14));
-        panelkelas.add(btn_hapuskelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 580, 120, 40));
+        panelkelas.add(btn_hapuskelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 580, 130, 40));
 
         btn_lihatkelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_lihatkelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_lihatkelas.setText("LIhat Kelas");
-        panelkelas.add(btn_lihatkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 580, 120, 40));
+        panelkelas.add(btn_lihatkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 580, 130, 40));
 
         bgkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelkelas.png"))); // NOI18N
         panelkelas.add(bgkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -2452,15 +2498,14 @@ public class keloladata_bk extends javax.swing.JFrame {
         btn_kembaliprofilekelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_kembaliprofilekelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_kembaliprofilekelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/back-button.png"))); // NOI18N
-        btn_kembaliprofilekelas.setText("Kembali");
         btn_kembaliprofilekelas.setIconTextGap(18);
-        btn_kembaliprofilekelas.setMargin(new java.awt.Insets(1, 1, 1, 10));
+        btn_kembaliprofilekelas.setMargin(new java.awt.Insets(1, 10, 1, 10));
         btn_kembaliprofilekelas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_kembaliprofilekelasActionPerformed(evt);
             }
         });
-        panelprofilekelas.add(btn_kembaliprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 560, 150, 40));
+        panelprofilekelas.add(btn_kembaliprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 560, 55, 35));
 
         bgprofilekelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelprofilekelas.png"))); // NOI18N
         panelprofilekelas.add(bgprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -2565,7 +2610,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         paneladmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txt_searchadmin.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        paneladmin.add(txt_searchadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 270, 30));
+        paneladmin.add(txt_searchadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 850, 30));
 
         btn_lihatadmin.setBackground(new java.awt.Color(255, 255, 255));
         btn_lihatadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -2748,15 +2793,14 @@ public class keloladata_bk extends javax.swing.JFrame {
         btn_kembaliregadmin.setBackground(new java.awt.Color(255, 255, 255));
         btn_kembaliregadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_kembaliregadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/back-button.png"))); // NOI18N
-        btn_kembaliregadmin.setText("Kembali");
         btn_kembaliregadmin.setIconTextGap(18);
-        btn_kembaliregadmin.setMargin(new java.awt.Insets(1, 1, 1, 14));
+        btn_kembaliregadmin.setMargin(new java.awt.Insets(1, 14, 1, 14));
         btn_kembaliregadmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_kembaliregadminActionPerformed(evt);
             }
         });
-        panelformregistrasi.add(btn_kembaliregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, 140, 35));
+        panelformregistrasi.add(btn_kembaliregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, 55, 35));
 
         bgregistrasiadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelregistrasiadmin.png"))); // NOI18N
         panelformregistrasi.add(bgregistrasiadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -2770,9 +2814,35 @@ public class keloladata_bk extends javax.swing.JFrame {
         dataabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelabsensi.add(txt_searchdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 430, 30));
 
-        jTextField1.setText("jTextField1");
-        panelabsensi.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 530, 30));
+        btn_searchdataabsen.setBackground(new java.awt.Color(255, 255, 255));
+        btn_searchdataabsen.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_searchdataabsen.setText("Search");
+        panelabsensi.add(btn_searchdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, 100, 30));
+
+        tabel_absen.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "No", "NIS", "NK", "Nama", "Jam", "Tanggal", "Status"
+            }
+        ));
+        tababsen.setViewportView(tabel_absen);
+
+        panelabsensi.add(tababsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 1010, 400));
+
+        cb_statusdataabsen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hadir", "Sakit", "Izin", "Alpha" }));
+        panelabsensi.add(cb_statusdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 430, 30));
+
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        jButton1.setText("Update");
+        panelabsensi.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 100, 30));
 
         bgabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelabsensi.png"))); // NOI18N
         panelabsensi.add(bgabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -2829,7 +2899,9 @@ public class keloladata_bk extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_datakelasMouseClicked
 
     private void btn_dataabsensiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dataabsensiMouseClicked
-         switchpanel(dataabsensi);
+        switchpanel(dataabsensi);
+        this.tampilabsen();
+        txt_searchdataabsen.setText("");
     }//GEN-LAST:event_btn_dataabsensiMouseClicked
 
     private void btn_lapabsenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_lapabsenMouseClicked
@@ -3217,6 +3289,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JButton btn_registrasi;
     private javax.swing.JButton btn_riwayatabsen;
     private javax.swing.JButton btn_scantambahsiswa;
+    private javax.swing.JButton btn_searchdataabsen;
     private javax.swing.JButton btn_searchguru;
     private javax.swing.JButton btn_searchkelas;
     private javax.swing.JButton btn_searchsiswa;
@@ -3228,6 +3301,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JButton btn_simpantambahsiswa;
     private javax.swing.JButton btn_tambahguru;
     private javax.swing.JButton btn_tambahsiswa;
+    private javax.swing.JComboBox<String> cb_statusdataabsen;
     private javax.swing.JLayeredPane dataabsensi;
     private javax.swing.JLayeredPane dataadmin;
     private javax.swing.JLayeredPane dataguru;
@@ -3246,6 +3320,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JLabel iconlapabsen;
     private javax.swing.JLabel iconlogout;
     private javax.swing.JLabel iconsiswa;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -3277,7 +3352,6 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel82;
     private javax.swing.JLabel jLabel84;
     private javax.swing.JLabel jLabel85;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lb_alamatformguru;
     private javax.swing.JLabel lb_alamatformsiswa;
     private javax.swing.JLabel lb_alamatprofileguru;
@@ -3368,7 +3442,9 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JRadioButton rb3;
     private javax.swing.JRadioButton rb4;
     private javax.swing.JLabel saveadm;
+    private javax.swing.JScrollPane tababsen;
     private javax.swing.JScrollPane tabadmin;
+    private javax.swing.JTable tabel_absen;
     private javax.swing.JTable tabel_admin;
     private javax.swing.JTable tabel_guru;
     private javax.swing.JTable tabel_kelas;
@@ -3425,6 +3501,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JTextField txt_rfidformsiswa;
     private javax.swing.JTextField txt_rfidsiswa;
     private javax.swing.JTextField txt_searchadmin;
+    private javax.swing.JTextField txt_searchdataabsen;
     private javax.swing.JTextField txt_searchguru;
     private javax.swing.JTextField txt_searchkelas;
     private javax.swing.JTextField txt_searchsiswa;
