@@ -10,6 +10,7 @@ public class Session {
     public static String nissiswa;
     public static String nipguru;
     public static String nipadmin;
+    public static String nipwalas;
     
     public static String getusername(){
         return usernm;
@@ -41,5 +42,13 @@ public class Session {
     
     public static String getnipadmin (){
         return nipadmin;
+    }
+    
+    public static void setnipwalas (String nipwalas){
+        Session.nipwalas = nipwalas;
+    }
+    
+    public static String getnipwalas (){
+        return nipwalas;
     }
 }
