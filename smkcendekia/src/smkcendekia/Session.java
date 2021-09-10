@@ -11,6 +11,7 @@ public class Session {
     public static String nipguru;
     public static String nipadmin;
     public static String nipwalas;
+    public static String nkkelas;
     
     public static String getusername(){
         return usernm;
@@ -50,5 +51,13 @@ public class Session {
     
     public static String getnipwalas (){
         return nipwalas;
+    }
+    
+    public static void setnkkelas(String nkkelas){
+        Session.nkkelas = nkkelas;
+    }
+    
+    public static String getnkkelas (){
+        return nkkelas;
     }
 }
