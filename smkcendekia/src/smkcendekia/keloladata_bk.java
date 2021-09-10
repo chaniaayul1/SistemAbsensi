@@ -28,7 +28,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     Connection con;
     Statement stat;
     ResultSet rs;
-    String sql, leveluser,bfrfid;
+    String sql, leveluser,bfrfid,wlskelas;
     koneksi k;
     DefaultTableModel model;
     
@@ -889,6 +889,8 @@ public class keloladata_bk extends javax.swing.JFrame {
     
     //tampilcombobox
     public void tampil_combowalas(){
+        cb_walasformkelas.removeAllItems();
+        cb_walasformkelas.addItem("--pilih--");
         try {
             stat = con.createStatement( );
             String sql = "select * from walikelas";
@@ -901,12 +903,9 @@ public class keloladata_bk extends javax.swing.JFrame {
         }
     }
 
-    
     //PROSEDUR MENAMBAH DATA WALAS PADA TABEL
     public void tambahdatakelas(){
-        tampil_combowalas();
         try {
-            
             if (txt_nkformkelas.getText().equals("") || cb_walasformkelas.getSelectedItem().equals("") ||
                     txt_tingkatanformkelas.getText().equals("") || txt_jurusanformkelas.getText().equals("") 
                     || txt_namaformkelas.getText().equals("")){
@@ -914,8 +913,9 @@ public class keloladata_bk extends javax.swing.JFrame {
             } else {
                 //Digunakan untuk memanggil JDBC driver
                 stat = con.createStatement();
+                this.getwalaskelas();
                 String simpan = "insert into kelas values ('"+txt_nkformkelas.getText()
-                        +"','"+cb_walasformkelas.getSelectedItem()
+                        +"','"+wlskelas
                         +"','"+txt_namaformkelas.getText()
                         +"','"+txt_tingkatanformkelas.getText()
                         +"','"+txt_jurusanformkelas.getText()
@@ -926,12 +926,26 @@ public class keloladata_bk extends javax.swing.JFrame {
                 this.hapuslayar();
             }
         } catch (Exception e) {
-//          JOptionPane.showMessageDialog(null, ("Data Kelas Gagal ditambahkan"), 
-//            "Tambah Data Kelas", JOptionPane.ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(null, ("Data Kelas Gagal ditambahkan"), 
+          "Tambah Data Kelas", JOptionPane.ERROR_MESSAGE);
 System.out.println(e);
         }
     }
     
+    public void updatewalasprofilekelas(){
+        cb_walasformkelas.removeAllItems();
+        cb_walasformkelas.addItem("--pilih--");
+        try {
+            stat = con.createStatement( );
+            String sql = "select * from walikelas";
+            rs   = stat.executeQuery(sql);
+            while(rs.next ()){
+                cb_walasformkelas.addItem(rs.getString("nama"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
     public void deletedatakelas(){
         model = new DefaultTableModel ( );
         tabel_kelas.setModel(model);
@@ -1020,11 +1034,11 @@ System.out.println(e);
     public void tampilprofilekelas(){
         try {
             stat = con.createStatement( );
-            sql  = "SELECT k.idwalikelas, k.nk, k.angkatan,k.jurusan, k.namakelas, w.nama FROM kelas AS k INNER JOIN walikelas AS w ON k.idwalikelas = w.idwalikelas";
+            sql  = "SELECT k.idwalikelas, k.nk, k.angkatan,k.jurusan, k.namakelas, w.nama FROM kelas AS k INNER JOIN walikelas AS w WHERE k.idwalikelas = w.idwalikelas "; 
             
             rs   = stat.executeQuery(sql);
             while(rs.next ()){
-                Object[ ] obj = new Object[7];
+                Object[ ] obj = new Object[5];
                 obj[0] =rs.getString("nk");
                 txt_nkprofilekelas.setText((String) obj[0]);
                 obj[1] =rs.getString("angkatan");
@@ -1069,8 +1083,9 @@ System.out.println(e);
          try {
             // TODO add your handling code here:
             stat = con.createStatement( );
+            this.getwalaskelas();
             con.createStatement().executeUpdate("UPDATE kelas set   nk='"+txt_nkprofilekelas.getText()+"', "
-                                                                        + "idwalikelas='"+txt_.getText()+"', "
+                                                                        + "idwalikelas='"+wlskelas+"', "
                                                                         + "angkatan='"+txt_angkatanprofilekelas.getText()+"', "
                                                                         + "jurusan='"+txt_jurusanprofilekelas.getText()+"', "
                                                                         + "namakelas='"+txt_namaprofilekelas.getText()+"', "
@@ -1101,6 +1116,18 @@ System.out.println(e);
     
     public void getwalaskelas(){
         String value = cb_walasformkelas.getSelectedItem().toString();
+        try {
+            stat = con.createStatement( );
+            sql  = "Select idwalikelas from walikelas WHERE nama='"+value+"'";
+            rs   = stat.executeQuery(sql);
+            while(rs.next ()){
+                Object[ ] obj = new Object[1];
+                obj[0] = rs.getString("idwalikelas");
+                wlskelas=(String) obj[0];
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         
     }
     //================================ADMIN===================================//
@@ -1409,6 +1436,9 @@ System.out.println(e);
         rb3.setSelected(false);rb4.setSelected(false);
         txt_tlpformwalikelas.setText("");txt_alamatformwalikelas.setText(""); 
 
+        txt_nkformkelas.setText("");txt_tingkatanformkelas.setText("");
+        txt_jurusanformkelas.setText("");txt_namaformkelas.setText("");
+        
         //admin
         txt_nipregadmin.setText("");txt_namaregadmin.setText("");
         txt_usernameregadmin.setText("");txt_passwordregadmin.setText("");
@@ -4268,14 +4298,12 @@ System.out.println(e);
     private void btn_simpanformkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanformkelasActionPerformed
         // TODO add your handling code here:
         this.tambahdatakelas();
-        switchpanel(datakelas);
     }//GEN-LAST:event_btn_simpanformkelasActionPerformed
 
     private void btn_simpanprofilekelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanprofilekelasActionPerformed
         // TODO add your handling code here:
         this.simpanprofilekelas();
         this.editprofilekelas(false);
-        
     }//GEN-LAST:event_btn_simpanprofilekelasActionPerformed
 
     private void btn_editprofilekelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editprofilekelasActionPerformed
@@ -4395,8 +4423,8 @@ System.out.println(e);
     }//GEN-LAST:event_btn_kembaliprofileguruActionPerformed
 
     private void btn_addkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addkelasActionPerformed
-        // TODO add your handling code here:
         switchpanel(form_kelas);
+        this.tampil_combowalas();
     }//GEN-LAST:event_btn_addkelasActionPerformed
 
     private void btn_lihatkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihatkelasActionPerformed
