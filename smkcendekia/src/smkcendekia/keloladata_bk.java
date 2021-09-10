@@ -40,6 +40,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         con = DB.con;
         stat = DB.stm;
         resetpanel();
+        
         //setExtendedState(MAXIMIZED_BOTH);
         this.toFront();
         settable();
@@ -861,17 +862,136 @@ public class keloladata_bk extends javax.swing.JFrame {
         tabel_kelas.setModel(model);
         model.addColumn("No");
         model.addColumn("NK");
-        model.addColumn("Nama Kelas");
-        model.addColumn("Angkatan");
-        model.addColumn("Jurusan");
+        model.addColumn("Wali Kelas");
         model.addColumn("P");
         model.addColumn("L");
         model.addColumn("Jumlah Siswa");
 
          try{
            stat = con.createStatement( );
-           sql  = "Select * from kelas";
+           sql  = "SELECT k.idwalikelas, k.nk, k.angkatan,k.jurusan, k.namakelas, w.nama FROM kelas AS k INNER JOIN walikelas AS w ON k.idwalikelas = w.idwalikelas";
            rs   = stat.executeQuery(sql);
+           int no=1;
+           while(rs.next ()){
+                Object[ ] obj = new Object[5];
+                obj[0] = Integer.toString(no);
+                obj[1] = rs.getString("nk");
+                obj[2] = rs.getString("nama");
+                model.addRow(obj);
+                no++;
+            }
+            
+             tabel_kelas.setModel(model);
+        } catch (SQLException e) {
+            System.out.println(e);
+      }
+    }
+    
+    //tampilcombobox
+    public void tampil_combowalas(){
+        try {
+            stat = con.createStatement( );
+            String sql = "select * from walikelas";
+            rs   = stat.executeQuery(sql);
+            while(rs.next ()){
+                cb_walasformkelas.addItem(rs.getString("nama"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    
+    //PROSEDUR MENAMBAH DATA WALAS PADA TABEL
+    public void tambahdatakelas(){
+        tampil_combowalas();
+        try {
+            
+            if (txt_nkformkelas.getText().equals("") || cb_walasformkelas.getSelectedItem().equals("") ||
+                    txt_tingkatanformkelas.getText().equals("") || txt_jurusanformkelas.getText().equals("") 
+                    || txt_namaformkelas.getText().equals("")){
+                JOptionPane.showMessageDialog(this, "Data Tidak Boleh Kosong","Pesan",JOptionPane.ERROR_MESSAGE);
+            } else {
+                //Digunakan untuk memanggil JDBC driver
+                stat = con.createStatement();
+                String simpan = "insert into kelas values ('"+txt_nkformkelas.getText()
+                        +"','"+cb_walasformkelas.getSelectedItem()
+                        +"','"+txt_namaformkelas.getText()
+                        +"','"+txt_tingkatanformkelas.getText()
+                        +"','"+txt_jurusanformkelas.getText()
+                        +"')";
+                stat = con.createStatement();
+                int SA =stat.executeUpdate(simpan);
+                JOptionPane.showMessageDialog(this,"Data Kelas Berhasil disimpan!");
+                this.hapuslayar();
+            }
+        } catch (Exception e) {
+//          JOptionPane.showMessageDialog(null, ("Data Kelas Gagal ditambahkan"), 
+//            "Tambah Data Kelas", JOptionPane.ERROR_MESSAGE);
+System.out.println(e);
+        }
+    }
+    
+    public void deletedatakelas(){
+        model = new DefaultTableModel ( );
+        tabel_kelas.setModel(model);
+        model.addColumn("No");
+        model.addColumn("NK");
+        model.addColumn("Nama Kelas");
+        model.addColumn("Angkatan");
+        model.addColumn("Jurusan");
+//        model.addColumn("P");
+//        model.addColumn("L");
+//        model.addColumn("Jumlah Siswa");
+        try {
+            stat = con.createStatement( );
+            con.createStatement().executeUpdate("DELETE FROM kelas WHERE nk='"+txt_searchkelas.getText()+"'");
+            rs   = stat.executeQuery(sql);
+            int no=1;
+           while(rs.next ()){
+                Object[ ] obj = new Object[5];
+                obj[0] = Integer.toString(no);
+                obj[1] = rs.getString("nk");
+                obj[2] = rs.getString("namakelas");
+                obj[3] = rs.getString("angkatan");
+                obj[4] = rs.getString("jurusan");
+//                obj[5] = rs.getString("p");
+//                obj[6] = rs.getString("l");
+//                obj[7] = rs.getString("jemlahsiswa");
+                model.addRow(obj);
+                no++;
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
+            "Delete Data kelas Gagal", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void validasideletedatakelas(){
+        int jwbn=JOptionPane.showConfirmDialog(null, "Benarkah anda ingin menghapus data ini?", "Hapus Data Kelas",JOptionPane.YES_NO_OPTION);
+        if (jwbn==JOptionPane.YES_OPTION){
+            this.deletedatakelas();
+            this.tampilkelas();
+            txt_searchkelas.setText("");
+        }
+        else if(jwbn==JOptionPane.NO_OPTION){
+            
+        }
+    }
+    
+    public void querysearchkelas(){
+        int row = tabel_kelas.getRowCount();
+        for(int a=0;a<row;a++){
+            model.removeRow(0);
+        }
+        
+        try{
+           stat = con.createStatement( );
+           sql  = "Select * from kelas WHERE nk='"+txt_searchkelas.getText()+"'";
+                   
+           rs   = stat.executeQuery(sql);
+
            int no=1;
            while(rs.next ()){
                 Object[ ] obj = new Object[5];
@@ -883,14 +1003,106 @@ public class keloladata_bk extends javax.swing.JFrame {
                 model.addRow(obj);
                 no++;
             }
-            
-             tabel_kelas.setModel(model);
-        } catch (SQLException e) {
-            System.out.println(e);
-      }
+        } catch (SQLException ex) {
+            Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
+    public void querysearchklikkelas(){
+        int i = tabel_kelas.getSelectedRow();
+        if(i>-1){ 
+            txt_searchkelas.setText(model.getValueAt(i, 1).toString());
+            Session.setnkkelas(txt_searchkelas.getText());
+        }
+    }
     
+    //PROSEDUR MENAMPILKAN DATA PROFILE KELAS
+    public void tampilprofilekelas(){
+        try {
+            stat = con.createStatement( );
+            sql  = "SELECT k.idwalikelas, k.nk, k.angkatan,k.jurusan, k.namakelas, w.nama FROM kelas AS k INNER JOIN walikelas AS w ON k.idwalikelas = w.idwalikelas";
+            
+            rs   = stat.executeQuery(sql);
+            while(rs.next ()){
+                Object[ ] obj = new Object[7];
+                obj[0] =rs.getString("nk");
+                txt_nkprofilekelas.setText((String) obj[0]);
+                obj[1] =rs.getString("angkatan");
+                txt_angkatanprofilekelas.setText((String) obj[1]);
+                obj[2] =rs.getString("jurusan");
+                txt_jurusanprofilekelas.setText((String) obj[2]);
+                obj[3] =rs.getString("namakelas");
+                txt_namaprofilekelas.setText((String) obj[3]);
+                obj[4] =rs.getString("nama");
+                txt_walasprofilekelas.setText((String) obj[4]);
+//                obj[5] =rs.getString("nip");
+//                txt_nipprofilekelas.setText((String) obj[5]);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+            "Lihat Profile Wali Kelas Gagal", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(ex);
+        } 
+    }
+    
+    //PROSEDUR EDIT DAN SIMPAN PROFILE KELAS
+    public void editprofilekelas(boolean check){
+        if (check==true){
+            txt_nkprofilekelas.setEnabled(true);
+            txt_angkatanprofilekelas.setEnabled(true);
+            txt_jurusanprofilekelas.setEnabled(true);
+            txt_namaprofilekelas.setEnabled(true);
+            txt_jmlprofilekelas.setEnabled(true);
+            txt_walasprofilekelas.setEnabled(false);
+        }
+        else{
+            txt_nkprofilekelas.setEnabled(false);
+            txt_angkatanprofilekelas.setEnabled(false);
+            txt_jurusanprofilekelas.setEnabled(false);
+            txt_namaprofilekelas.setEnabled(false);
+            txt_jmlprofilekelas.setEnabled(false);
+            txt_walasprofilekelas.setEnabled(false);
+        }
+    }
+    
+    public void simpanprofilekelas(){
+         try {
+            // TODO add your handling code here:
+            stat = con.createStatement( );
+            con.createStatement().executeUpdate("UPDATE kelas set   nk='"+txt_nkprofilekelas.getText()+"', "
+                                                                        + "idwalikelas='"+txt_.getText()+"', "
+                                                                        + "angkatan='"+txt_angkatanprofilekelas.getText()+"', "
+                                                                        + "jurusan='"+txt_jurusanprofilekelas.getText()+"', "
+                                                                        + "namakelas='"+txt_namaprofilekelas.getText()+"', "
+                                                                        + "WHERE nk='"+txt_searchkelas.getText()+"'");
+            rs   = stat.executeQuery(sql);
+            
+            while(rs.next ()){
+                Object[ ] obj = new Object[3];
+                obj[0] =rs.getString("nk");
+                txt_nkprofilekelas.setText((String) obj[0]);
+                obj[1] =rs.getString("angkatan");
+                txt_angkatanprofilekelas.setText((String) obj[1]);
+                obj[2] =rs.getString("jurusan");
+                txt_jurusanprofilekelas.setText((String) obj[2]);
+                obj[3] =rs.getString("namakelas");
+                txt_namaprofilekelas.setText((String) obj[3]);
+                obj[4] =rs.getString("idwalikelas");
+                txt_walasprofilekelas.setText((String) obj[4]);
+
+            }
+            JOptionPane.showMessageDialog(null, ("Data Kelas Berhasil di Update"), 
+            "Data Profile Kelas", JOptionPane.INFORMATION_MESSAGE);
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data Kelas Gagal di Update"), 
+            "Data Profile Kelas Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void getwalaskelas(){
+        String value = cb_walasformkelas.getSelectedItem().toString();
+        
+    }
     //================================ADMIN===================================//
     //VOID MENAMPILKAN DATA ADMIN PADA TABEL
     public void tampiladmin(){        
@@ -1587,7 +1799,6 @@ public class keloladata_bk extends javax.swing.JFrame {
         profilekelas = new javax.swing.JLayeredPane();
         panelprofilekelas = new javax.swing.JPanel();
         lb_gambar1 = new javax.swing.JLabel();
-        lb_idprofilekelas = new javax.swing.JLabel();
         lb_nkprofilekelas = new javax.swing.JLabel();
         lb_tingkatprofilekelas = new javax.swing.JLabel();
         lb_jurusanprofilekelas = new javax.swing.JLabel();
@@ -1600,14 +1811,12 @@ public class keloladata_bk extends javax.swing.JFrame {
         lb_titik11 = new javax.swing.JLabel();
         lb_titik12 = new javax.swing.JLabel();
         lb_titik13 = new javax.swing.JLabel();
-        lb_titik14 = new javax.swing.JLabel();
-        txt_idprofilekelas = new javax.swing.JTextField();
         txt_nkprofilekelas = new javax.swing.JTextField();
-        txt_tingkatprofilekelas = new javax.swing.JTextField();
-        txt_jrurusanprofilekelas = new javax.swing.JTextField();
+        txt_angkatanprofilekelas = new javax.swing.JTextField();
+        txt_jurusanprofilekelas = new javax.swing.JTextField();
         txt_namaprofilekelas = new javax.swing.JTextField();
         txt_jmlprofilekelas = new javax.swing.JTextField();
-        txt_nipprofilekelas = new javax.swing.JTextField();
+        txt_walasprofilekelas = new javax.swing.JTextField();
         btn_simpanprofilekelas = new javax.swing.JButton();
         btn_editprofilekelas = new javax.swing.JButton();
         btn_lihatprofilekelas = new javax.swing.JButton();
@@ -1615,25 +1824,22 @@ public class keloladata_bk extends javax.swing.JFrame {
         bgprofilekelas = new javax.swing.JLabel();
         form_kelas = new javax.swing.JLayeredPane();
         panelformkelas = new javax.swing.JPanel();
-        lb_idformkelas = new javax.swing.JLabel();
         lb_nkformkelas = new javax.swing.JLabel();
         lb_nipformkelas = new javax.swing.JLabel();
         lb_tingkatanformkelas = new javax.swing.JLabel();
         lb_jurusanformkelas = new javax.swing.JLabel();
         lb_namaformkelas = new javax.swing.JLabel();
-        jLabel85 = new javax.swing.JLabel();
         jLabel78 = new javax.swing.JLabel();
         jLabel80 = new javax.swing.JLabel();
         jLabel81 = new javax.swing.JLabel();
         jLabel84 = new javax.swing.JLabel();
         jLabel82 = new javax.swing.JLabel();
-        txt_idformkelas = new javax.swing.JTextField();
         txt_nkformkelas = new javax.swing.JTextField();
-        txt_nipformkelas = new javax.swing.JTextField();
         txt_tingkatanformkelas = new javax.swing.JTextField();
         txt_jurusanformkelas = new javax.swing.JTextField();
         txt_namaformkelas = new javax.swing.JTextField();
         btn_simpanformkelas = new javax.swing.JButton();
+        cb_walasformkelas = new javax.swing.JComboBox<>();
         bgformkelas = new javax.swing.JLabel();
         dataadmin = new javax.swing.JLayeredPane();
         paneladmin = new javax.swing.JPanel();
@@ -1960,6 +2166,12 @@ public class keloladata_bk extends javax.swing.JFrame {
         datasiswa.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelsiswa.setLayout(null);
+
+        txt_searchsiswa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_searchsiswaActionPerformed(evt);
+            }
+        });
         panelsiswa.add(txt_searchsiswa);
         txt_searchsiswa.setBounds(190, 110, 710, 30);
 
@@ -3150,34 +3362,56 @@ public class keloladata_bk extends javax.swing.JFrame {
         btn_addkelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_addkelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_addkelas.setText("Kelas Baru");
+        btn_addkelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addkelasActionPerformed(evt);
+            }
+        });
         panelkelas.add(btn_addkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 120, 30));
         panelkelas.add(txt_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 700, 30));
 
         btn_searchkelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchkelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_searchkelas.setText("Search");
+        btn_searchkelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_searchkelasActionPerformed(evt);
+            }
+        });
         panelkelas.add(btn_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 110, 100, 30));
 
         btn_refreshkelas.setBackground(new java.awt.Color(255, 255, 255));
+        btn_refreshkelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshkelasActionPerformed(evt);
+            }
+        });
         panelkelas.add(btn_refreshkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 110, 60, 30));
 
         tabkelas.setBackground(new java.awt.Color(255, 255, 255));
+        tabkelas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabkelasMouseClicked(evt);
+            }
+        });
 
         tabel_kelas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "No", "NK", "Nama Kelas", "Angkatan", "Jurusan", "P", "L", "Jumlah Siswa"
+                "No", "NK", "Wali Kelas", "P", "L", "Jumlah Siswa"
             }
         ));
+        tabel_kelas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_kelasMouseClicked(evt);
+            }
+        });
         tabkelas.setViewportView(tabel_kelas);
-        if (tabel_kelas.getColumnModel().getColumnCount() > 0) {
-            tabel_kelas.getColumnModel().getColumn(7).setHeaderValue("Jumlah Siswa");
-        }
 
         panelkelas.add(tabkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 1010, 380));
 
@@ -3187,11 +3421,21 @@ public class keloladata_bk extends javax.swing.JFrame {
         btn_hapuskelas.setText("Hapus");
         btn_hapuskelas.setIconTextGap(18);
         btn_hapuskelas.setMargin(new java.awt.Insets(1, 1, 1, 14));
+        btn_hapuskelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapuskelasActionPerformed(evt);
+            }
+        });
         panelkelas.add(btn_hapuskelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 580, 130, 40));
 
         btn_lihatkelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_lihatkelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_lihatkelas.setText("LIhat Kelas");
+        btn_lihatkelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_lihatkelasActionPerformed(evt);
+            }
+        });
         panelkelas.add(btn_lihatkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 580, 130, 40));
 
         bgkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelkelas.png"))); // NOI18N
@@ -3210,96 +3454,88 @@ public class keloladata_bk extends javax.swing.JFrame {
         lb_gambar1.setText("jLabel15");
         panelprofilekelas.add(lb_gambar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 310, 270));
 
-        lb_idprofilekelas.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
-        lb_idprofilekelas.setForeground(new java.awt.Color(0, 51, 204));
-        lb_idprofilekelas.setText("ID Kelas");
-        panelprofilekelas.add(lb_idprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 130, 80, 30));
-
         lb_nkprofilekelas.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_nkprofilekelas.setForeground(new java.awt.Color(0, 51, 204));
         lb_nkprofilekelas.setText("NK");
-        panelprofilekelas.add(lb_nkprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, 50, 30));
+        panelprofilekelas.add(lb_nkprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, 50, 30));
 
         lb_tingkatprofilekelas.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_tingkatprofilekelas.setForeground(new java.awt.Color(0, 51, 204));
         lb_tingkatprofilekelas.setText("Tingkat");
-        panelprofilekelas.add(lb_tingkatprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 90, 30));
+        panelprofilekelas.add(lb_tingkatprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, 90, 30));
 
         lb_jurusanprofilekelas.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_jurusanprofilekelas.setForeground(new java.awt.Color(0, 51, 204));
         lb_jurusanprofilekelas.setText("Jurusan");
-        panelprofilekelas.add(lb_jurusanprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 280, 100, 30));
+        panelprofilekelas.add(lb_jurusanprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 270, 100, 30));
 
         lb_namaprofilekelas.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_namaprofilekelas.setForeground(new java.awt.Color(0, 51, 204));
         lb_namaprofilekelas.setText("Nama Kelas");
-        panelprofilekelas.add(lb_namaprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 330, 130, 30));
+        panelprofilekelas.add(lb_namaprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 130, 30));
 
         lb_jmlprofilekelas.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_jmlprofilekelas.setForeground(new java.awt.Color(0, 51, 204));
         lb_jmlprofilekelas.setText("Jumlah Siswa");
-        panelprofilekelas.add(lb_jmlprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 380, 120, 30));
+        panelprofilekelas.add(lb_jmlprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, 120, 30));
 
         lb_nipprofilekelas.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_nipprofilekelas.setForeground(new java.awt.Color(0, 51, 204));
-        lb_nipprofilekelas.setText("NIP");
-        panelprofilekelas.add(lb_nipprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 430, 130, 30));
+        lb_nipprofilekelas.setText("Wali Kelas");
+        panelprofilekelas.add(lb_nipprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 130, 30));
 
         lb_titik8.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_titik8.setForeground(new java.awt.Color(0, 51, 204));
         lb_titik8.setText(":");
-        panelprofilekelas.add(lb_titik8, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 180, 20, 30));
+        panelprofilekelas.add(lb_titik8, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, 20, 30));
 
         lb_titik9.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_titik9.setForeground(new java.awt.Color(0, 51, 204));
         lb_titik9.setText(":");
-        panelprofilekelas.add(lb_titik9, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 20, 30));
+        panelprofilekelas.add(lb_titik9, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, 20, 30));
 
         lb_titik10.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_titik10.setForeground(new java.awt.Color(0, 51, 204));
         lb_titik10.setText(":");
-        panelprofilekelas.add(lb_titik10, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 280, 20, 30));
+        panelprofilekelas.add(lb_titik10, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 270, 20, 30));
 
         lb_titik11.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_titik11.setForeground(new java.awt.Color(0, 51, 204));
         lb_titik11.setText(":");
-        panelprofilekelas.add(lb_titik11, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 330, 20, 30));
+        panelprofilekelas.add(lb_titik11, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 320, 20, 30));
 
         lb_titik12.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_titik12.setForeground(new java.awt.Color(0, 51, 204));
         lb_titik12.setText(":");
-        panelprofilekelas.add(lb_titik12, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 380, 20, 30));
+        panelprofilekelas.add(lb_titik12, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 370, 20, 30));
 
         lb_titik13.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_titik13.setForeground(new java.awt.Color(0, 51, 204));
         lb_titik13.setText(":");
-        panelprofilekelas.add(lb_titik13, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 430, 20, 30));
-
-        lb_titik14.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
-        lb_titik14.setForeground(new java.awt.Color(0, 51, 204));
-        lb_titik14.setText(":");
-        panelprofilekelas.add(lb_titik14, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 130, 20, 30));
-
-        txt_idprofilekelas.setEnabled(false);
-        panelprofilekelas.add(txt_idprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, 530, 30));
+        panelprofilekelas.add(lb_titik13, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 170, 20, 30));
 
         txt_nkprofilekelas.setEnabled(false);
-        panelprofilekelas.add(txt_nkprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 180, 530, 30));
+        panelprofilekelas.add(txt_nkprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, 530, 30));
 
-        txt_tingkatprofilekelas.setEnabled(false);
-        panelprofilekelas.add(txt_tingkatprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 230, 530, 30));
+        txt_angkatanprofilekelas.setEnabled(false);
+        panelprofilekelas.add(txt_angkatanprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 220, 530, 30));
 
-        txt_jrurusanprofilekelas.setEnabled(false);
-        panelprofilekelas.add(txt_jrurusanprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 280, 530, 30));
+        txt_jurusanprofilekelas.setEnabled(false);
+        txt_jurusanprofilekelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_jurusanprofilekelasActionPerformed(evt);
+            }
+        });
+        panelprofilekelas.add(txt_jurusanprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 270, 530, 30));
 
         txt_namaprofilekelas.setEnabled(false);
-        panelprofilekelas.add(txt_namaprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 330, 530, 30));
+        panelprofilekelas.add(txt_namaprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 530, 30));
 
         txt_jmlprofilekelas.setEnabled(false);
-        panelprofilekelas.add(txt_jmlprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 380, 530, 30));
+        panelprofilekelas.add(txt_jmlprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 530, 30));
 
-        txt_nipprofilekelas.setEnabled(false);
-        panelprofilekelas.add(txt_nipprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 430, 530, 30));
+        txt_walasprofilekelas.setEnabled(false);
+        panelprofilekelas.add(txt_walasprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 530, 30));
 
         btn_simpanprofilekelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_simpanprofilekelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -3356,71 +3592,59 @@ public class keloladata_bk extends javax.swing.JFrame {
 
         panelformkelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lb_idformkelas.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        lb_idformkelas.setForeground(new java.awt.Color(0, 51, 204));
-        lb_idformkelas.setText("ID Kelas");
-        panelformkelas.add(lb_idformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 155, -1, -1));
-
         lb_nkformkelas.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         lb_nkformkelas.setForeground(new java.awt.Color(0, 51, 204));
         lb_nkformkelas.setText("NK");
-        panelformkelas.add(lb_nkformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 195, -1, -1));
+        panelformkelas.add(lb_nkformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
 
         lb_nipformkelas.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         lb_nipformkelas.setForeground(new java.awt.Color(0, 51, 204));
-        lb_nipformkelas.setText("NIP");
-        panelformkelas.add(lb_nipformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 235, -1, -1));
+        lb_nipformkelas.setText("Walikelas");
+        panelformkelas.add(lb_nipformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
 
         lb_tingkatanformkelas.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         lb_tingkatanformkelas.setForeground(new java.awt.Color(0, 51, 204));
         lb_tingkatanformkelas.setText("Tingkatan");
-        panelformkelas.add(lb_tingkatanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, -1, -1));
+        panelformkelas.add(lb_tingkatanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, -1, -1));
 
         lb_jurusanformkelas.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         lb_jurusanformkelas.setForeground(new java.awt.Color(0, 51, 204));
         lb_jurusanformkelas.setText("Jurusan");
-        panelformkelas.add(lb_jurusanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, -1, -1));
+        panelformkelas.add(lb_jurusanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, -1, -1));
 
         lb_namaformkelas.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         lb_namaformkelas.setForeground(new java.awt.Color(0, 51, 204));
         lb_namaformkelas.setText("Nama Kelas");
-        panelformkelas.add(lb_namaformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, -1, -1));
-
-        jLabel85.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        jLabel85.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel85.setText(":");
-        panelformkelas.add(jLabel85, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 155, -1, -1));
+        panelformkelas.add(lb_namaformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, -1, -1));
 
         jLabel78.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         jLabel78.setForeground(new java.awt.Color(0, 51, 204));
         jLabel78.setText(":");
-        panelformkelas.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 195, -1, -1));
+        panelformkelas.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 135, -1, -1));
 
         jLabel80.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         jLabel80.setForeground(new java.awt.Color(0, 51, 204));
         jLabel80.setText(":");
-        panelformkelas.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 235, -1, -1));
+        panelformkelas.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 215, -1, -1));
 
         jLabel81.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         jLabel81.setForeground(new java.awt.Color(0, 51, 204));
         jLabel81.setText(":");
-        panelformkelas.add(jLabel81, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 275, -1, -1));
+        panelformkelas.add(jLabel81, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 295, -1, -1));
 
         jLabel84.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         jLabel84.setForeground(new java.awt.Color(0, 51, 204));
         jLabel84.setText(":");
-        panelformkelas.add(jLabel84, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 315, -1, -1));
+        panelformkelas.add(jLabel84, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 375, -1, -1));
 
         jLabel82.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         jLabel82.setForeground(new java.awt.Color(0, 51, 204));
         jLabel82.setText(":");
-        panelformkelas.add(jLabel82, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 355, -1, -1));
-        panelformkelas.add(txt_idformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 840, 30));
-        panelformkelas.add(txt_nkformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 840, 30));
-        panelformkelas.add(txt_nipformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 840, 30));
-        panelformkelas.add(txt_tingkatanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 840, 30));
-        panelformkelas.add(txt_jurusanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 840, 30));
-        panelformkelas.add(txt_namaformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 353, 840, 30));
+        panelformkelas.add(jLabel82, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 465, -1, -1));
+        panelformkelas.add(txt_nkformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 840, 30));
+        panelformkelas.add(txt_tingkatanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, 840, 30));
+        panelformkelas.add(txt_jurusanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 840, 30));
+        panelformkelas.add(txt_namaformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 460, 840, 30));
 
         btn_simpanformkelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_simpanformkelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -3433,6 +3657,13 @@ public class keloladata_bk extends javax.swing.JFrame {
             }
         });
         panelformkelas.add(btn_simpanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 580, 140, 35));
+
+        cb_walasformkelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Pilih---" }));
+        cb_walasformkelas.setFocusable(false);
+        cb_walasformkelas.setLightWeightPopupEnabled(false);
+        cb_walasformkelas.setRequestFocusEnabled(false);
+        cb_walasformkelas.setVerifyInputWhenFocusTarget(false);
+        panelformkelas.add(cb_walasformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 840, 30));
 
         bgformkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/paneltambahkelas.png"))); // NOI18N
         panelformkelas.add(bgformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -3880,6 +4111,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         Session.setnipadmin(null);
         Session.setnissiswa(null);
         Session.setnipwalas(null);
+        Session.setnkkelas(null);
         login lgn=new login();
         lgn.setVisible(true);
     }//GEN-LAST:event_btn_logoutMousePressed
@@ -4035,18 +4267,27 @@ public class keloladata_bk extends javax.swing.JFrame {
 
     private void btn_simpanformkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanformkelasActionPerformed
         // TODO add your handling code here:
+        this.tambahdatakelas();
+        switchpanel(datakelas);
     }//GEN-LAST:event_btn_simpanformkelasActionPerformed
 
     private void btn_simpanprofilekelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanprofilekelasActionPerformed
         // TODO add your handling code here:
+        this.simpanprofilekelas();
+        this.editprofilekelas(false);
+        
     }//GEN-LAST:event_btn_simpanprofilekelasActionPerformed
 
     private void btn_editprofilekelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editprofilekelasActionPerformed
         // TODO add your handling code here:
+       this.editprofilekelas(true);
     }//GEN-LAST:event_btn_editprofilekelasActionPerformed
 
     private void btn_kembaliprofilekelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliprofilekelasActionPerformed
-
+            switchpanel(datakelas);
+            this.editprofilekelas(false);
+            this.tampilkelas();
+            txt_searchkelas.setText("");
     }//GEN-LAST:event_btn_kembaliprofilekelasActionPerformed
 
     private void btn_kembaliregadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliregadminActionPerformed
@@ -4153,6 +4394,61 @@ public class keloladata_bk extends javax.swing.JFrame {
         txt_searchguru.setText("");
     }//GEN-LAST:event_btn_kembaliprofileguruActionPerformed
 
+    private void btn_addkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addkelasActionPerformed
+        // TODO add your handling code here:
+        switchpanel(form_kelas);
+    }//GEN-LAST:event_btn_addkelasActionPerformed
+
+    private void btn_lihatkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihatkelasActionPerformed
+        // TODO add your handling code here:
+        if (txt_searchkelas.getText().equals(Session.getnkkelas())){
+            Session.setnkkelas(txt_searchkelas.getText());
+            switchpanel(profilekelas);
+            this.tampilprofilekelas();
+        }else{
+            JOptionPane.showMessageDialog(null, ("Data Tidak Ditemukan"), 
+            "Data Profile Kelas", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_lihatkelasActionPerformed
+
+    private void btn_hapuskelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapuskelasActionPerformed
+        // TODO add your handling code here:
+        this.validasideletedatakelas();
+    }//GEN-LAST:event_btn_hapuskelasActionPerformed
+
+    private void btn_searchkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchkelasActionPerformed
+        // TODO add your handling code here:
+         if (txt_searchkelas.getText().equals("")){
+            JOptionPane.showMessageDialog(null, ("Data Pencarian Tidak Ditemukan"), 
+            "Data Kelas", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            this.querysearchkelas();
+        }
+    }//GEN-LAST:event_btn_searchkelasActionPerformed
+
+    private void btn_refreshkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshkelasActionPerformed
+        // TODO add your handling code here:
+        this.tampilkelas();
+    }//GEN-LAST:event_btn_refreshkelasActionPerformed
+
+    private void txt_jurusanprofilekelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_jurusanprofilekelasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_jurusanprofilekelasActionPerformed
+
+    private void txt_searchsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_searchsiswaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_searchsiswaActionPerformed
+
+    private void tabkelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabkelasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabkelasMouseClicked
+
+    private void tabel_kelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_kelasMouseClicked
+        // TODO add your handling code here:
+        this.querysearchklikkelas();
+    }//GEN-LAST:event_tabel_kelasMouseClicked
+
     
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -4244,6 +4540,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JButton btn_tambahsiswa;
     private javax.swing.JButton btn_tambahwalikelas;
     private javax.swing.JComboBox<String> cb_statusdataabsen;
+    private javax.swing.JComboBox<String> cb_walasformkelas;
     private javax.swing.JLayeredPane dataabsensi;
     private javax.swing.JLayeredPane dataadmin;
     private javax.swing.JLayeredPane dataguru;
@@ -4303,7 +4600,6 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel82;
     private javax.swing.JLabel jLabel84;
-    private javax.swing.JLabel jLabel85;
     private javax.swing.JLabel lb_alamatformguru;
     private javax.swing.JLabel lb_alamatformsiswa;
     private javax.swing.JLabel lb_alamatformwalikelas;
@@ -4318,8 +4614,6 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JLabel lb_gambar1;
     private javax.swing.JLabel lb_gambar2;
     private javax.swing.JLabel lb_guru;
-    private javax.swing.JLabel lb_idformkelas;
-    private javax.swing.JLabel lb_idprofilekelas;
     private javax.swing.JLabel lb_idprofilewalikelas;
     private javax.swing.JLabel lb_idregadmin;
     private javax.swing.JLabel lb_idwalasformsiswa;
@@ -4370,7 +4664,6 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JLabel lb_titik11;
     private javax.swing.JLabel lb_titik12;
     private javax.swing.JLabel lb_titik13;
-    private javax.swing.JLabel lb_titik14;
     private javax.swing.JLabel lb_titik15;
     private javax.swing.JLabel lb_titik16;
     private javax.swing.JLabel lb_titik17;
@@ -4441,6 +4734,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JTextField txt_alamatprofileguru;
     private javax.swing.JTextField txt_alamatprofilewalikelas;
     private javax.swing.JTextField txt_alamatsiswa;
+    private javax.swing.JTextField txt_angkatanprofilekelas;
     private javax.swing.ButtonGroup txt_buttonJKguru;
     private javax.swing.ButtonGroup txt_buttonJKsiswa;
     private javax.swing.ButtonGroup txt_buttonJKwalikelas;
@@ -4451,9 +4745,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JTextField txt_emailprofilewalikelas;
     private javax.swing.JTextField txt_emailsiswa;
     private javax.swing.JTextField txt_gendersiswa;
-    private javax.swing.JTextField txt_idformkelas;
     private javax.swing.JTextField txt_idformwalikelas;
-    private javax.swing.JTextField txt_idprofilekelas;
     private javax.swing.JTextField txt_idprofilewalikelas;
     private javax.swing.JTextField txt_idregadmin;
     private javax.swing.JTextField txt_idwalasformsiswa;
@@ -4462,8 +4754,8 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JTextField txt_jkprofileguru;
     private javax.swing.JTextField txt_jkprofilewalikelas;
     private javax.swing.JTextField txt_jmlprofilekelas;
-    private javax.swing.JTextField txt_jrurusanprofilekelas;
     private javax.swing.JTextField txt_jurusanformkelas;
+    private javax.swing.JTextField txt_jurusanprofilekelas;
     private javax.swing.JComboBox<String> txt_level;
     private javax.swing.JTextField txt_namaformguru;
     private javax.swing.JTextField txt_namaformkelas;
@@ -4475,10 +4767,8 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JTextField txt_namaregadmin;
     private javax.swing.JTextField txt_namasiswa;
     private javax.swing.JTextField txt_nipformguru;
-    private javax.swing.JTextField txt_nipformkelas;
     private javax.swing.JTextField txt_nipformwalikelas;
     private javax.swing.JTextField txt_nipprofileguru;
-    private javax.swing.JTextField txt_nipprofilekelas;
     private javax.swing.JTextField txt_nipprofilewalikelas;
     private javax.swing.JTextField txt_nipregadmin;
     private javax.swing.JTextField txt_nisformsiswa;
@@ -4505,10 +4795,10 @@ public class keloladata_bk extends javax.swing.JFrame {
     private javax.swing.JTextField txt_searchwalikelas;
     private javax.swing.JTextField txt_telpformsiswa;
     private javax.swing.JTextField txt_tingkatanformkelas;
-    private javax.swing.JTextField txt_tingkatprofilekelas;
     private javax.swing.JTextField txt_tlpformguru;
     private javax.swing.JTextField txt_tlpformwalikelas;
     private javax.swing.JTextField txt_usernameregadmin;
+    private javax.swing.JTextField txt_walasprofilekelas;
     private javax.swing.JTextField txt_walassiswa;
     public javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
