@@ -866,7 +866,6 @@ public class keloladata_bk extends javax.swing.JFrame {
         model.addColumn("P");
         model.addColumn("L");
         model.addColumn("Jumlah Siswa");
-
          try{
            stat = con.createStatement( );
            sql  = "SELECT k.idwalikelas, k.nk, k.angkatan,k.jurusan, k.namakelas, w.nama FROM kelas AS k INNER JOIN walikelas AS w ON k.idwalikelas = w.idwalikelas";
@@ -1034,8 +1033,8 @@ System.out.println(e);
     public void tampilprofilekelas(){
         try {
             stat = con.createStatement( );
-            sql  = "SELECT k.idwalikelas, k.nk, k.angkatan,k.jurusan, k.namakelas, w.nama FROM kelas AS k INNER JOIN walikelas AS w WHERE k.idwalikelas = w.idwalikelas "; 
-            
+            sql  = "SELECT kelas.nk, kelas.namakelas, kelas.angkatan, kelas.jurusan, walikelas.nama from kelas INNER join walikelas WHERE kelas.idwalikelas = walikelas.idwalikelas";
+            saveadmkelas.setText(sql);
             rs   = stat.executeQuery(sql);
             while(rs.next ()){
                 Object[ ] obj = new Object[5];
@@ -1053,8 +1052,8 @@ System.out.println(e);
 //                txt_nipprofilekelas.setText((String) obj[5]);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
-            "Lihat Profile Wali Kelas Gagal", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+//            "Lihat Profile Wali Kelas Gagal", JOptionPane.INFORMATION_MESSAGE);
             System.out.println(ex);
         } 
     }
@@ -1384,7 +1383,39 @@ System.out.println(e);
            rs   = stat.executeQuery(sql);
            int no=1;
            while(rs.next ()){
-                Object[ ] obj = new Object[6];
+                Object[ ] obj = new Object[7];
+                obj[0] = Integer.toString(no);
+                obj[1] = rs.getString("nis");
+                obj[2] = rs.getString("nk");
+                obj[3] = rs.getString("nama");
+                obj[4] = rs.getString("tanggal");
+                obj[5] = rs.getString("jam");
+                obj[6] = rs.getString("status");
+                model.addRow(obj);
+                no++;
+            }
+            
+             tabel_absen.setModel(model);
+        } catch (SQLException e) {
+            System.out.println(e);
+      }
+    }
+    
+    //PROSEDUR MENCARI DATA ABSEN PADA TABEL BY NIS
+    public void querysearchabsen(){
+        int row = tabel_absen.getRowCount();
+        for(int a=0;a<row;a++){
+            model.removeRow(0);
+        }
+        
+        try{
+           stat = con.createStatement( );
+           sql  = "Select * from absen WHERE nis='"+txt_searchdataabsen.getText()+"'";
+           rs   = stat.executeQuery(sql);
+
+           int no=1;
+           while(rs.next ()){
+                Object[ ] obj = new Object[7];
                 obj[0] = Integer.toString(no);
                 obj[1] = rs.getString("nis");
                 obj[2] = rs.getString("nk");
@@ -1395,13 +1426,18 @@ System.out.println(e);
                 model.addRow(obj);
                 no++;
             }
-            
-             tabel_kelas.setModel(model);
-        } catch (SQLException e) {
-            System.out.println(e);
-      }
+        } catch (SQLException ex) {
+            Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+     
+    public void querysearchklikabsen(){
+        int i = tabel_absen.getSelectedRow();
+        if(i>-1){
+            txt_searchdataabsen.setText(model.getValueAt(i, 2).toString());
+//            Session.setnipadmin(txt_searchadmin.getText());
+        }
+    }
     //==============================PERIPHERAL================================//
     //SWITCH PANEL
     public void switchpanel(JLayeredPane panel){
@@ -1435,7 +1471,7 @@ System.out.println(e);
         txt_buttonJKwalikelas.clearSelection();
         rb3.setSelected(false);rb4.setSelected(false);
         txt_tlpformwalikelas.setText("");txt_alamatformwalikelas.setText(""); 
-
+        //kelas                    
         txt_nkformkelas.setText("");txt_tingkatanformkelas.setText("");
         txt_jurusanformkelas.setText("");txt_namaformkelas.setText("");
         
@@ -1825,7 +1861,8 @@ System.out.println(e);
         tabel_kelas = new javax.swing.JTable();
         btn_hapuskelas = new javax.swing.JButton();
         btn_lihatkelas = new javax.swing.JButton();
-        bgkelas = new javax.swing.JLabel();
+        saveadmkelas = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         profilekelas = new javax.swing.JLayeredPane();
         panelprofilekelas = new javax.swing.JPanel();
         lb_gambar1 = new javax.swing.JLabel();
@@ -3469,8 +3506,11 @@ System.out.println(e);
         });
         panelkelas.add(btn_lihatkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 580, 130, 40));
 
-        bgkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelkelas.png"))); // NOI18N
-        panelkelas.add(bgkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        saveadmkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelkelas.png"))); // NOI18N
+        panelkelas.add(saveadmkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jLabel1.setText("jLabel1");
+        panelkelas.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 570, -1, -1));
 
         datakelas.add(panelkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
 
@@ -3794,7 +3834,7 @@ System.out.println(e);
 
         bgadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/paneladmin.png"))); // NOI18N
         paneladmin.add(bgadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        paneladmin.add(saveadm, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 400, -1, -1));
+        paneladmin.add(saveadm, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, 100, 50));
 
         dataadmin.add(paneladmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
 
@@ -3921,6 +3961,11 @@ System.out.println(e);
         btn_searchdataabsen.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchdataabsen.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_searchdataabsen.setText("Search");
+        btn_searchdataabsen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_searchdataabsenActionPerformed(evt);
+            }
+        });
         panelabsensi.add(btn_searchdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, 100, 30));
 
         tabel_absen.setModel(new javax.swing.table.DefaultTableModel(
@@ -4481,6 +4526,11 @@ System.out.println(e);
         this.querysearchklikkelas();
     }//GEN-LAST:event_tabel_kelasMouseClicked
 
+    private void btn_searchdataabsenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchdataabsenActionPerformed
+        // TODO add your handling code here:
+        this.querysearchabsen();
+    }//GEN-LAST:event_btn_searchdataabsenActionPerformed
+
     
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -4498,7 +4548,6 @@ System.out.println(e);
     private javax.swing.JLabel bgadmin;
     private javax.swing.JLabel bgformkelas;
     private javax.swing.JLabel bgguru;
-    private javax.swing.JLabel bgkelas;
     private javax.swing.JLabel bglapabsensi;
     private javax.swing.JLabel bgprofileguru;
     private javax.swing.JLabel bgprofilekelas;
@@ -4596,6 +4645,7 @@ System.out.println(e);
     private javax.swing.JLabel iconlogout;
     private javax.swing.JLabel iconsiswa;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -4749,6 +4799,7 @@ System.out.println(e);
     private javax.swing.JRadioButton rb5;
     private javax.swing.JRadioButton rb6;
     private javax.swing.JLabel saveadm;
+    private javax.swing.JLabel saveadmkelas;
     private javax.swing.JScrollPane tababsen;
     private javax.swing.JScrollPane tabadmin;
     private javax.swing.JTable tabel_absen;
