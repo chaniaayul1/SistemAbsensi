@@ -183,9 +183,9 @@ public class keloladata_bk extends javax.swing.JFrame {
                JOptionPane.showMessageDialog(this, "Data Kelas Tidak Ditemukan","Pesan",JOptionPane.ERROR_MESSAGE);
            }
         } catch (SQLException e) {
-            
       }
     }
+    
     public void rfidlogging(){
         try{
                stat = con.createStatement( );
@@ -1905,6 +1905,7 @@ System.out.println(e);
         txt_level = new javax.swing.JComboBox<>();
         btn_kembaliregadmin = new javax.swing.JButton();
         bgregistrasiadmin = new javax.swing.JLabel();
+        bgregistrasiadmin1 = new javax.swing.JLabel();
         dataabsensi = new javax.swing.JLayeredPane();
         panelabsensi = new javax.swing.JPanel();
         txt_searchdataabsen = new javax.swing.JTextField();
@@ -3111,7 +3112,7 @@ System.out.println(e);
 
         lb_nipprofilewalikelas.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_nipprofilewalikelas.setForeground(new java.awt.Color(0, 51, 204));
-        lb_nipprofilewalikelas.setText("NK");
+        lb_nipprofilewalikelas.setText("NIP");
         panelprofilewalikelas.add(lb_nipprofilewalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 177, 50, 30));
 
         lb_namaprofilewalikelas.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
@@ -3806,7 +3807,7 @@ System.out.println(e);
 
         lb_idregadmin.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         lb_idregadmin.setForeground(new java.awt.Color(0, 51, 204));
-        lb_idregadmin.setText("ID");
+        lb_idregadmin.setText("ID Admin");
         panelformregistrasi.add(lb_idregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
 
         lb_nipregadmin.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
@@ -3902,6 +3903,9 @@ System.out.println(e);
 
         bgregistrasiadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelregistrasiadmin.png"))); // NOI18N
         panelformregistrasi.add(bgregistrasiadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        bgregistrasiadmin1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelregistrasiadmin.png"))); // NOI18N
+        panelformregistrasi.add(bgregistrasiadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         form_registrasi.add(panelformregistrasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
 
@@ -4501,6 +4505,7 @@ System.out.println(e);
     private javax.swing.JLabel bgprofilesiswa;
     private javax.swing.JLabel bgprofilewalikelas;
     private javax.swing.JLabel bgregistrasiadmin;
+    private javax.swing.JLabel bgregistrasiadmin1;
     private javax.swing.JLabel bgsiswa;
     private javax.swing.JLabel bgtambahguru;
     private javax.swing.JLabel bgtambahsiswa;
