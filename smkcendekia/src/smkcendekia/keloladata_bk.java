@@ -27,8 +27,8 @@ import javax.swing.table.DefaultTableModel;
 public class keloladata_bk extends javax.swing.JFrame {
     Connection con;
     Statement stat;
-    ResultSet rs;
-    String sql, leveluser,bfrfid,wlskelas;
+    ResultSet rs,rs1,rs2;
+    String sql, leveluser,bfrfid,wlskelas,wlsprofkelas;
     koneksi k;
     DefaultTableModel model;
     
@@ -894,6 +894,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     //PROSEDUR MENAMPILKAN DATA KELAS DI TABEL
     public void tampilkelas(){        
         model = new DefaultTableModel ( );
+        Object[ ] obj = new Object[5];
         tabel_kelas.setModel(model);
         model.addColumn("No");
         model.addColumn("NK");
@@ -907,13 +908,27 @@ public class keloladata_bk extends javax.swing.JFrame {
            rs   = stat.executeQuery(sql);
            int no=1;
            while(rs.next ()){
-                Object[ ] obj = new Object[5];
                 obj[0] = Integer.toString(no);
                 obj[1] = rs.getString("nk");
                 obj[2] = rs.getString("nama");
-                model.addRow(obj);
                 no++;
             }
+           /*sql  = "SELECT jeniskelamin,count(jeniskelamin) from siswa where NK='"+obj[1]+"' AND jeniskelamin='Perempuan'";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+                obj[3] = rs.getString(sql);
+            }
+           sql  = "SELECT jeniskelamin,count(jeniskelamin) from siswa where NK='"+obj[1]+"' AND jeniskelamin='Laki-Laki'";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+                obj[4] = rs.getString(sql);
+            }
+           sql  = "SELECT nk,count(nk) from siswa where NK='"+obj[1]+"'";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+                obj[5] = rs.getString(sql);
+            }*/
+           model.addRow(obj);
             
              tabel_kelas.setModel(model);
         } catch (SQLException e) {
@@ -980,6 +995,7 @@ System.out.println(e);
             System.out.println(e);
         }
     }
+    
     public void deletedatakelas(){
         model = new DefaultTableModel ( );
         tabel_kelas.setModel(model);
@@ -1068,7 +1084,7 @@ System.out.println(e);
     public void tampilprofilekelas(){
         try {
             stat = con.createStatement( );
-            sql  = "SELECT kelas.nk, kelas.namakelas, kelas.angkatan, kelas.jurusan, walikelas.nama from kelas INNER join walikelas WHERE kelas.idwalikelas = walikelas.idwalikelas";
+            sql  = "SELECT kelas.*, walikelas.nama from kelas INNER join walikelas WHERE kelas.nk='"+Session.getnkkelas()+"' AND kelas.idwalikelas = walikelas.idwalikelas";
             saveadmkelas.setText(sql);
             rs   = stat.executeQuery(sql);
             while(rs.next ()){
@@ -1083,8 +1099,6 @@ System.out.println(e);
                 txt_namaprofilekelas.setText((String) obj[3]);
                 obj[4] =rs.getString("nama");
                 txt_walasprofilekelas.setText((String) obj[4]);
-//                obj[5] =rs.getString("nip");
-//                txt_nipprofilekelas.setText((String) obj[5]);
             }
         } catch (SQLException ex) {
 //            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
@@ -1096,13 +1110,22 @@ System.out.println(e);
     //PROSEDUR EDIT DAN SIMPAN PROFILE KELAS
     public void editprofilekelas(boolean check){
         if (check==true){
+            txt_nkprofilekelas.setEnabled(true);
             txt_angkatanprofilekelas.setEnabled(true);
             txt_jurusanprofilekelas.setEnabled(true);
             txt_namaprofilekelas.setEnabled(true);
             txt_jmlprofilekelas.setEnabled(true);
             txt_walasprofilekelas.setEnabled(false);
+            txt_walasprofilekelas.setVisible(false);
+            cb_walasprofilekelas.setVisible(true);
+            cb_walasprofilekelas.setEnabled(true);
         }
         else{
+            txt_nkprofilekelas.setEnabled(false);
+            txt_walasprofilekelas.setVisible(true);
+            txt_walasprofilekelas.setEnabled(false);
+            cb_walasprofilekelas.setVisible(false);
+            cb_walasprofilekelas.setEnabled(false);
             txt_nkprofilekelas.setEnabled(false);
             txt_angkatanprofilekelas.setEnabled(false);
             txt_jurusanprofilekelas.setEnabled(false);
@@ -1116,34 +1139,47 @@ System.out.println(e);
          try {
             // TODO add your handling code here:
             stat = con.createStatement( );
-            this.getwalaskelas();
+            this.convernamawalaskelas();
             con.createStatement().executeUpdate("UPDATE kelas set   nk='"+txt_nkprofilekelas.getText()+"', "
-                                                                        + "idwalikelas='"+wlskelas+"', "
+                                                                        + "idwalikelas='"+wlsprofkelas+"', "
                                                                         + "angkatan='"+txt_angkatanprofilekelas.getText()+"', "
                                                                         + "jurusan='"+txt_jurusanprofilekelas.getText()+"', "
-                                                                        + "namakelas='"+txt_namaprofilekelas.getText()+"', "
-                                                                        + "WHERE nk='"+txt_searchkelas.getText()+"'");
+                                                                        + "namakelas='"+txt_namaprofilekelas.getText()+"' "
+                                                                        + "WHERE nk='"+Session.getnkkelas()+"'");
             rs   = stat.executeQuery(sql);
             
-            while(rs.next ()){
-                Object[ ] obj = new Object[3];
-                obj[0] =rs.getString("nk");
-                txt_nkprofilekelas.setText((String) obj[0]);
-                obj[1] =rs.getString("angkatan");
-                txt_angkatanprofilekelas.setText((String) obj[1]);
-                obj[2] =rs.getString("jurusan");
-                txt_jurusanprofilekelas.setText((String) obj[2]);
-                obj[3] =rs.getString("namakelas");
-                txt_namaprofilekelas.setText((String) obj[3]);
-                obj[4] =rs.getString("idwalikelas");
-                txt_walasprofilekelas.setText((String) obj[4]);
-
-            }
+            this.tampilprofilekelas();
+            
             JOptionPane.showMessageDialog(null, ("Data Kelas Berhasil di Update"), 
             "Data Profile Kelas", JOptionPane.INFORMATION_MESSAGE);
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data Kelas Gagal di Update"), 
             "Data Profile Kelas Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex);
+        }
+    }
+    
+    public void convernamawalaskelas() throws SQLException{
+        String value = cb_walasprofilekelas.getSelectedItem().toString();
+            sql  = "Select idwalikelas from walikelas WHERE nama='"+value+"'";
+            rs   = stat.executeQuery(sql);
+             while(rs.next ()){
+                wlsprofkelas=(rs.getString("idwalikelas"));
+            }
+    }
+    
+    public void getwalasprofilekelas(){
+        cb_walasprofilekelas.removeAllItems();
+        cb_walasprofilekelas.addItem("--pilih--");
+        try {
+            stat = con.createStatement( );
+            String sql = "select idwalikelas,nama from walikelas";
+            rs   = stat.executeQuery(sql);
+            while(rs.next ()){
+                cb_walasprofilekelas.addItem(rs.getString("nama"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
     
@@ -1160,8 +1196,7 @@ System.out.println(e);
             }
         } catch (Exception e) {
             System.out.println(e);
-        }
-        
+        } 
     }
     //================================ADMIN===================================//
     //VOID MENAMPILKAN DATA ADMIN PADA TABEL
@@ -1978,6 +2013,7 @@ System.out.println(e);
         btn_editprofilekelas = new javax.swing.JButton();
         btn_lihatprofilekelas = new javax.swing.JButton();
         btn_kembaliprofilekelas = new javax.swing.JButton();
+        cb_walasprofilekelas = new javax.swing.JComboBox<>();
         bgprofilekelas = new javax.swing.JLabel();
         form_kelas = new javax.swing.JLayeredPane();
         panelformkelas = new javax.swing.JPanel();
@@ -3952,6 +3988,11 @@ System.out.println(e);
         });
         panelprofilekelas.add(btn_kembaliprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 560, 55, 35));
 
+        cb_walasprofilekelas.setFocusable(false);
+        cb_walasprofilekelas.setLightWeightPopupEnabled(false);
+        cb_walasprofilekelas.setRequestFocusEnabled(false);
+        panelprofilekelas.add(cb_walasprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 530, 30));
+
         bgprofilekelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelprofilekelas.png"))); // NOI18N
         panelprofilekelas.add(bgprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -4629,6 +4670,7 @@ System.out.println(e);
     private void btn_editprofilekelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editprofilekelasActionPerformed
         // TODO add your handling code here:
        this.editprofilekelas(true);
+       this.getwalasprofilekelas();
     }//GEN-LAST:event_btn_editprofilekelasActionPerformed
 
     private void btn_kembaliprofilekelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliprofilekelasActionPerformed
@@ -4937,6 +4979,7 @@ System.out.println(e);
     private javax.swing.JComboBox<String> cb_siswabermasalah;
     private javax.swing.JComboBox<String> cb_statusdataabsen;
     private javax.swing.JComboBox<String> cb_walasformkelas;
+    private javax.swing.JComboBox<String> cb_walasprofilekelas;
     private javax.swing.JLayeredPane dataabsensi;
     private javax.swing.JLayeredPane dataadmin;
     private javax.swing.JLayeredPane dataanggotakelas;
