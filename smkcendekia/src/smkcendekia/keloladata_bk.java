@@ -1702,6 +1702,30 @@ System.out.println(e);
         username = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
         LayerPane = new javax.swing.JLayeredPane();
+        form_registrasi = new javax.swing.JLayeredPane();
+        panelformregistrasi = new javax.swing.JPanel();
+        lb_idregadmin = new javax.swing.JLabel();
+        lb_nipregadmin = new javax.swing.JLabel();
+        lb_namaregadmin = new javax.swing.JLabel();
+        lb_usernameregadmin = new javax.swing.JLabel();
+        lb_paswordregadmin = new javax.swing.JLabel();
+        lb_statusregadmin = new javax.swing.JLabel();
+        jLabel66 = new javax.swing.JLabel();
+        jLabel68 = new javax.swing.JLabel();
+        jLabel69 = new javax.swing.JLabel();
+        jLabel70 = new javax.swing.JLabel();
+        jLabel72 = new javax.swing.JLabel();
+        jLabel73 = new javax.swing.JLabel();
+        txt_idregadmin = new javax.swing.JTextField();
+        txt_nipregadmin = new javax.swing.JTextField();
+        txt_namaregadmin = new javax.swing.JTextField();
+        txt_usernameregadmin = new javax.swing.JTextField();
+        txt_passwordregadmin = new javax.swing.JTextField();
+        btn_daftarregadmin = new javax.swing.JButton();
+        txt_level = new javax.swing.JComboBox<>();
+        btn_kembaliregadmin = new javax.swing.JButton();
+        btn_scantambahadmin = new javax.swing.JButton();
+        bgregistrasiadmin = new javax.swing.JLabel();
         datasiswa = new javax.swing.JLayeredPane();
         panelsiswa = new javax.swing.JPanel();
         txt_searchsiswa = new javax.swing.JTextField();
@@ -1984,30 +2008,6 @@ System.out.println(e);
         tabel_admin = new javax.swing.JTable();
         bgadmin = new javax.swing.JLabel();
         saveadm = new javax.swing.JLabel();
-        form_registrasi = new javax.swing.JLayeredPane();
-        panelformregistrasi = new javax.swing.JPanel();
-        lb_idregadmin = new javax.swing.JLabel();
-        lb_nipregadmin = new javax.swing.JLabel();
-        lb_namaregadmin = new javax.swing.JLabel();
-        lb_usernameregadmin = new javax.swing.JLabel();
-        lb_paswordregadmin = new javax.swing.JLabel();
-        lb_statusregadmin = new javax.swing.JLabel();
-        jLabel66 = new javax.swing.JLabel();
-        jLabel68 = new javax.swing.JLabel();
-        jLabel69 = new javax.swing.JLabel();
-        jLabel70 = new javax.swing.JLabel();
-        jLabel72 = new javax.swing.JLabel();
-        jLabel73 = new javax.swing.JLabel();
-        txt_idregadmin = new javax.swing.JTextField();
-        txt_nipregadmin = new javax.swing.JTextField();
-        txt_namaregadmin = new javax.swing.JTextField();
-        txt_usernameregadmin = new javax.swing.JTextField();
-        txt_passwordregadmin = new javax.swing.JTextField();
-        btn_daftarregadmin = new javax.swing.JButton();
-        txt_level = new javax.swing.JComboBox<>();
-        btn_kembaliregadmin = new javax.swing.JButton();
-        btn_scantambahadmin = new javax.swing.JButton();
-        bgregistrasiadmin = new javax.swing.JLabel();
         dataabsensi = new javax.swing.JLayeredPane();
         panelabsensi = new javax.swing.JPanel();
         txt_searchdataabsen = new javax.swing.JTextField();
@@ -2019,7 +2019,29 @@ System.out.println(e);
         bgabsensi = new javax.swing.JLabel();
         datalapabsensi = new javax.swing.JLayeredPane();
         panellapabsensi = new javax.swing.JPanel();
+        txt_searchbynis = new javax.swing.JTextField();
+        txt_tglakhir = new javax.swing.JTextField();
+        tab_lapabsen = new javax.swing.JScrollPane();
+        tabel_lapabsen = new javax.swing.JTable();
         bglapabsensi = new javax.swing.JLabel();
+        datalapsiswamasalah = new javax.swing.JLayeredPane();
+        panelsiswabermasalah = new javax.swing.JPanel();
+        txt_siswabermasalah = new javax.swing.JTextField();
+        cb_siswabermasalah = new javax.swing.JComboBox<>();
+        btn_lihatprofilesiswabermasalah = new javax.swing.JButton();
+        btn_updatestatussiswabermasalah = new javax.swing.JButton();
+        tab_siswabermasalah = new javax.swing.JScrollPane();
+        tabel_siswabermasalah = new javax.swing.JTable();
+        bglapabsensi1 = new javax.swing.JLabel();
+        dataanggotakelas = new javax.swing.JLayeredPane();
+        panelanggotakelas = new javax.swing.JPanel();
+        txt_idwalasanggotakelas = new javax.swing.JTextField();
+        tab_siswabermasalah1 = new javax.swing.JScrollPane();
+        tabel_siswabermasalah1 = new javax.swing.JTable();
+        lb_nislapabsen = new javax.swing.JLabel();
+        txt_searchnisanggotakelas = new javax.swing.JTextField();
+        lb_idwalasanggotakelas = new javax.swing.JLabel();
+        bglapabsensi2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -2293,6 +2315,125 @@ System.out.println(e);
         LayerPane.setOpaque(true);
         LayerPane.setLayout(new java.awt.CardLayout());
 
+        form_registrasi.setOpaque(true);
+        form_registrasi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelformregistrasi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lb_idregadmin.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_idregadmin.setForeground(new java.awt.Color(0, 51, 204));
+        lb_idregadmin.setText("ID Admin");
+        panelformregistrasi.add(lb_idregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
+
+        lb_nipregadmin.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_nipregadmin.setForeground(new java.awt.Color(0, 51, 204));
+        lb_nipregadmin.setText("NIP");
+        panelformregistrasi.add(lb_nipregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+
+        lb_namaregadmin.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_namaregadmin.setForeground(new java.awt.Color(0, 51, 204));
+        lb_namaregadmin.setText("Nama");
+        panelformregistrasi.add(lb_namaregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, -1));
+
+        lb_usernameregadmin.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_usernameregadmin.setForeground(new java.awt.Color(0, 51, 204));
+        lb_usernameregadmin.setText("Username");
+        panelformregistrasi.add(lb_usernameregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, -1, -1));
+
+        lb_paswordregadmin.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_paswordregadmin.setForeground(new java.awt.Color(0, 51, 204));
+        lb_paswordregadmin.setText("Password");
+        panelformregistrasi.add(lb_paswordregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, -1, -1));
+
+        lb_statusregadmin.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_statusregadmin.setForeground(new java.awt.Color(0, 51, 204));
+        lb_statusregadmin.setText("Status");
+        panelformregistrasi.add(lb_statusregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, -1, -1));
+
+        jLabel66.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel66.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel66.setText(":");
+        panelformregistrasi.add(jLabel66, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 195, -1, -1));
+
+        jLabel68.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel68.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel68.setText(":");
+        panelformregistrasi.add(jLabel68, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 235, -1, -1));
+
+        jLabel69.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel69.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel69.setText(":");
+        panelformregistrasi.add(jLabel69, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 274, -1, -1));
+
+        jLabel70.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel70.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel70.setText(":");
+        panelformregistrasi.add(jLabel70, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 370, -1, -1));
+
+        jLabel72.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel72.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel72.setText(":");
+        panelformregistrasi.add(jLabel72, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 315, -1, -1));
+
+        jLabel73.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel73.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel73.setText(":");
+        panelformregistrasi.add(jLabel73, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 153, -1, -1));
+        panelformregistrasi.add(txt_idregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 840, 30));
+        panelformregistrasi.add(txt_nipregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 760, 30));
+        panelformregistrasi.add(txt_namaregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 840, 30));
+        panelformregistrasi.add(txt_usernameregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 840, 30));
+        panelformregistrasi.add(txt_passwordregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 840, 30));
+
+        btn_daftarregadmin.setBackground(new java.awt.Color(255, 255, 255));
+        btn_daftarregadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_daftarregadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/floppy-disk.png"))); // NOI18N
+        btn_daftarregadmin.setText("Daftar");
+        btn_daftarregadmin.setIconTextGap(18);
+        btn_daftarregadmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_daftarregadminActionPerformed(evt);
+            }
+        });
+        panelformregistrasi.add(btn_daftarregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 580, 140, 35));
+
+        txt_level.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Guru BK", "Bagian IT", "Kepala Sekolah" }));
+        txt_level.setFocusable(false);
+        txt_level.setLightWeightPopupEnabled(false);
+        txt_level.setRequestFocusEnabled(false);
+        txt_level.setVerifyInputWhenFocusTarget(false);
+        panelformregistrasi.add(txt_level, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, 840, 40));
+
+        btn_kembaliregadmin.setBackground(new java.awt.Color(255, 255, 255));
+        btn_kembaliregadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_kembaliregadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/back-button.png"))); // NOI18N
+        btn_kembaliregadmin.setIconTextGap(18);
+        btn_kembaliregadmin.setMargin(new java.awt.Insets(1, 14, 1, 14));
+        btn_kembaliregadmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kembaliregadminActionPerformed(evt);
+            }
+        });
+        panelformregistrasi.add(btn_kembaliregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, 55, 35));
+
+        btn_scantambahadmin.setBackground(new java.awt.Color(255, 255, 255));
+        btn_scantambahadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_scantambahadmin.setText("Check");
+        btn_scantambahadmin.setIconTextGap(18);
+        btn_scantambahadmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_scantambahadminActionPerformed(evt);
+            }
+        });
+        panelformregistrasi.add(btn_scantambahadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 190, 70, 30));
+
+        bgregistrasiadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelregistrasiadmin.png"))); // NOI18N
+        panelformregistrasi.add(bgregistrasiadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        form_registrasi.add(panelformregistrasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
+
+        LayerPane.add(form_registrasi, "card4");
+
         datasiswa.setEnabled(false);
         datasiswa.setMinimumSize(new java.awt.Dimension(1366, 768));
         datasiswa.setOpaque(true);
@@ -2497,6 +2638,11 @@ System.out.println(e);
         btn_riwayatabsen.setBackground(new java.awt.Color(255, 255, 255));
         btn_riwayatabsen.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_riwayatabsen.setText("Riwayat Absen");
+        btn_riwayatabsen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_riwayatabsenActionPerformed(evt);
+            }
+        });
         panelprofilesiswa.add(btn_riwayatabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(625, 590, 120, 40));
 
         btn_kembaliprofilesiswa.setBackground(new java.awt.Color(255, 255, 255));
@@ -3987,125 +4133,6 @@ System.out.println(e);
 
         LayerPane.add(dataadmin, "card4");
 
-        form_registrasi.setOpaque(true);
-        form_registrasi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        panelformregistrasi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lb_idregadmin.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        lb_idregadmin.setForeground(new java.awt.Color(0, 51, 204));
-        lb_idregadmin.setText("ID Admin");
-        panelformregistrasi.add(lb_idregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
-
-        lb_nipregadmin.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        lb_nipregadmin.setForeground(new java.awt.Color(0, 51, 204));
-        lb_nipregadmin.setText("NIP");
-        panelformregistrasi.add(lb_nipregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
-
-        lb_namaregadmin.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        lb_namaregadmin.setForeground(new java.awt.Color(0, 51, 204));
-        lb_namaregadmin.setText("Nama");
-        panelformregistrasi.add(lb_namaregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, -1));
-
-        lb_usernameregadmin.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        lb_usernameregadmin.setForeground(new java.awt.Color(0, 51, 204));
-        lb_usernameregadmin.setText("Username");
-        panelformregistrasi.add(lb_usernameregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, -1, -1));
-
-        lb_paswordregadmin.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        lb_paswordregadmin.setForeground(new java.awt.Color(0, 51, 204));
-        lb_paswordregadmin.setText("Password");
-        panelformregistrasi.add(lb_paswordregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, -1, -1));
-
-        lb_statusregadmin.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        lb_statusregadmin.setForeground(new java.awt.Color(0, 51, 204));
-        lb_statusregadmin.setText("Status");
-        panelformregistrasi.add(lb_statusregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, -1, -1));
-
-        jLabel66.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        jLabel66.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel66.setText(":");
-        panelformregistrasi.add(jLabel66, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 195, -1, -1));
-
-        jLabel68.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        jLabel68.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel68.setText(":");
-        panelformregistrasi.add(jLabel68, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 235, -1, -1));
-
-        jLabel69.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        jLabel69.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel69.setText(":");
-        panelformregistrasi.add(jLabel69, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 274, -1, -1));
-
-        jLabel70.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        jLabel70.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel70.setText(":");
-        panelformregistrasi.add(jLabel70, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 370, -1, -1));
-
-        jLabel72.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        jLabel72.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel72.setText(":");
-        panelformregistrasi.add(jLabel72, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 315, -1, -1));
-
-        jLabel73.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        jLabel73.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel73.setText(":");
-        panelformregistrasi.add(jLabel73, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 153, -1, -1));
-        panelformregistrasi.add(txt_idregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 840, 30));
-        panelformregistrasi.add(txt_nipregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 760, 30));
-        panelformregistrasi.add(txt_namaregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 840, 30));
-        panelformregistrasi.add(txt_usernameregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 840, 30));
-        panelformregistrasi.add(txt_passwordregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 840, 30));
-
-        btn_daftarregadmin.setBackground(new java.awt.Color(255, 255, 255));
-        btn_daftarregadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_daftarregadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/floppy-disk.png"))); // NOI18N
-        btn_daftarregadmin.setText("Daftar");
-        btn_daftarregadmin.setIconTextGap(18);
-        btn_daftarregadmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_daftarregadminActionPerformed(evt);
-            }
-        });
-        panelformregistrasi.add(btn_daftarregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 580, 140, 35));
-
-        txt_level.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Guru BK", "Bagian IT", "Kepala Sekolah" }));
-        txt_level.setFocusable(false);
-        txt_level.setLightWeightPopupEnabled(false);
-        txt_level.setRequestFocusEnabled(false);
-        txt_level.setVerifyInputWhenFocusTarget(false);
-        panelformregistrasi.add(txt_level, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, 840, 40));
-
-        btn_kembaliregadmin.setBackground(new java.awt.Color(255, 255, 255));
-        btn_kembaliregadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_kembaliregadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/back-button.png"))); // NOI18N
-        btn_kembaliregadmin.setIconTextGap(18);
-        btn_kembaliregadmin.setMargin(new java.awt.Insets(1, 14, 1, 14));
-        btn_kembaliregadmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_kembaliregadminActionPerformed(evt);
-            }
-        });
-        panelformregistrasi.add(btn_kembaliregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, 55, 35));
-
-        btn_scantambahadmin.setBackground(new java.awt.Color(255, 255, 255));
-        btn_scantambahadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_scantambahadmin.setText("Check");
-        btn_scantambahadmin.setIconTextGap(18);
-        btn_scantambahadmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_scantambahadminActionPerformed(evt);
-            }
-        });
-        panelformregistrasi.add(btn_scantambahadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 190, 70, 30));
-
-        bgregistrasiadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelregistrasiadmin.png"))); // NOI18N
-        panelformregistrasi.add(bgregistrasiadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        form_registrasi.add(panelformregistrasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
-
-        LayerPane.add(form_registrasi, "card4");
-
         dataabsensi.setOpaque(true);
         dataabsensi.setPreferredSize(new java.awt.Dimension(1107, 658));
         dataabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -4162,6 +4189,23 @@ System.out.println(e);
         datalapabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panellapabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panellapabsensi.add(txt_searchbynis, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 400, 30));
+        panellapabsensi.add(txt_tglakhir, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 400, 30));
+
+        tabel_lapabsen.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tab_lapabsen.setViewportView(tabel_lapabsen);
+
+        panellapabsensi.add(tab_lapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 1010, 400));
 
         bglapabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panellapabsensi.png"))); // NOI18N
         panellapabsensi.add(bglapabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -4169,6 +4213,82 @@ System.out.println(e);
         datalapabsensi.add(panellapabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
 
         LayerPane.add(datalapabsensi, "card4");
+
+        datalapsiswamasalah.setOpaque(true);
+        datalapsiswamasalah.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelsiswabermasalah.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelsiswabermasalah.add(txt_siswabermasalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 400, 30));
+
+        cb_siswabermasalah.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        panelsiswabermasalah.add(cb_siswabermasalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 400, 30));
+
+        btn_lihatprofilesiswabermasalah.setText("Search");
+        panelsiswabermasalah.add(btn_lihatprofilesiswabermasalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, -1, 30));
+
+        btn_updatestatussiswabermasalah.setText("Search");
+        panelsiswabermasalah.add(btn_updatestatussiswabermasalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, -1, 30));
+
+        tabel_siswabermasalah.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tab_siswabermasalah.setViewportView(tabel_siswabermasalah);
+
+        panelsiswabermasalah.add(tab_siswabermasalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 1010, 400));
+
+        bglapabsensi1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panellapabsensi.png"))); // NOI18N
+        panelsiswabermasalah.add(bglapabsensi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        datalapsiswamasalah.add(panelsiswabermasalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
+
+        LayerPane.add(datalapsiswamasalah, "card4");
+
+        dataanggotakelas.setOpaque(true);
+        dataanggotakelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelanggotakelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelanggotakelas.add(txt_idwalasanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 400, 30));
+
+        tabel_siswabermasalah1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tab_siswabermasalah1.setViewportView(tabel_siswabermasalah1);
+
+        panelanggotakelas.add(tab_siswabermasalah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 1010, 400));
+
+        lb_nislapabsen.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_nislapabsen.setForeground(new java.awt.Color(0, 51, 204));
+        lb_nislapabsen.setText("Id Walikelas");
+        panelanggotakelas.add(lb_nislapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 174, -1, -1));
+        panelanggotakelas.add(txt_searchnisanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 400, 30));
+
+        lb_idwalasanggotakelas.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_idwalasanggotakelas.setForeground(new java.awt.Color(0, 51, 204));
+        lb_idwalasanggotakelas.setText("NIS");
+        panelanggotakelas.add(lb_idwalasanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
+
+        bglapabsensi2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelanggotakelas.png"))); // NOI18N
+        panelanggotakelas.add(bglapabsensi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        dataanggotakelas.add(panelanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
+
+        LayerPane.add(dataanggotakelas, "card4");
 
         PanelUtama.add(LayerPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 110, 1107, 658));
 
@@ -4710,6 +4830,11 @@ System.out.println(e);
         this.querydataguruadmin();
     }//GEN-LAST:event_btn_scantambahadminActionPerformed
 
+    private void btn_riwayatabsenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_riwayatabsenActionPerformed
+        // TODO add your handling code here:
+        switchpanel(riwayat_siswa);
+    }//GEN-LAST:event_btn_riwayatabsenActionPerformed
+
     
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -4728,6 +4853,8 @@ System.out.println(e);
     private javax.swing.JLabel bgformkelas;
     private javax.swing.JLabel bgguru;
     private javax.swing.JLabel bglapabsensi;
+    private javax.swing.JLabel bglapabsensi1;
+    private javax.swing.JLabel bglapabsensi2;
     private javax.swing.JLabel bgprofileguru;
     private javax.swing.JLabel bgprofilekelas;
     private javax.swing.JLabel bgprofilesiswa;
@@ -4772,6 +4899,7 @@ System.out.println(e);
     private javax.swing.JButton btn_lihatguru;
     private javax.swing.JButton btn_lihatkelas;
     private javax.swing.JButton btn_lihatprofilekelas;
+    private javax.swing.JButton btn_lihatprofilesiswabermasalah;
     private javax.swing.JButton btn_lihatsiswa;
     private javax.swing.JButton btn_lihatwalikelas;
     private javax.swing.JPanel btn_logout;
@@ -4804,14 +4932,18 @@ System.out.println(e);
     private javax.swing.JButton btn_tambahguru;
     private javax.swing.JButton btn_tambahsiswa;
     private javax.swing.JButton btn_tambahwalikelas;
+    private javax.swing.JButton btn_updatestatussiswabermasalah;
     private javax.swing.JComboBox<String> cb_searchriwayatsiswa;
+    private javax.swing.JComboBox<String> cb_siswabermasalah;
     private javax.swing.JComboBox<String> cb_statusdataabsen;
     private javax.swing.JComboBox<String> cb_walasformkelas;
     private javax.swing.JLayeredPane dataabsensi;
     private javax.swing.JLayeredPane dataadmin;
+    private javax.swing.JLayeredPane dataanggotakelas;
     private javax.swing.JLayeredPane dataguru;
     private javax.swing.JLayeredPane datakelas;
     private javax.swing.JLayeredPane datalapabsensi;
+    private javax.swing.JLayeredPane datalapsiswamasalah;
     private javax.swing.JLayeredPane datasiswa;
     private javax.swing.JLayeredPane datawalikelas;
     private javax.swing.JLayeredPane form_guru;
@@ -4883,6 +5015,7 @@ System.out.println(e);
     private javax.swing.JLabel lb_guru;
     private javax.swing.JLabel lb_idprofilewalikelas;
     private javax.swing.JLabel lb_idregadmin;
+    private javax.swing.JLabel lb_idwalasanggotakelas;
     private javax.swing.JLabel lb_idwalasformsiswa;
     private javax.swing.JLabel lb_jabatanformguru;
     private javax.swing.JLabel lb_jabatanprofileguru;
@@ -4911,6 +5044,7 @@ System.out.println(e);
     private javax.swing.JLabel lb_nipprofilewalikelas;
     private javax.swing.JLabel lb_nipregadmin;
     private javax.swing.JLabel lb_nisformsiswa;
+    private javax.swing.JLabel lb_nislapabsen;
     private javax.swing.JLabel lb_nkformkelas;
     private javax.swing.JLabel lb_nkformsiswa;
     private javax.swing.JLabel lb_nkprofilekelas;
@@ -4957,6 +5091,7 @@ System.out.println(e);
     private javax.swing.JLabel lbsiswa;
     private javax.swing.JPanel panelabsensi;
     private javax.swing.JPanel paneladmin;
+    private javax.swing.JPanel panelanggotakelas;
     private javax.swing.JPanel panelbutton;
     private javax.swing.JPanel panelformguru;
     private javax.swing.JPanel panelformkelas;
@@ -4972,6 +5107,7 @@ System.out.println(e);
     private javax.swing.JPanel panelprofilewalikelas;
     private javax.swing.JPanel panelriwayatsiswa;
     private javax.swing.JPanel panelsiswa;
+    private javax.swing.JPanel panelsiswabermasalah;
     private javax.swing.JPanel panelwalikelas;
     private javax.swing.JLayeredPane profileguru;
     private javax.swing.JLayeredPane profilekelas;
@@ -4986,14 +5122,20 @@ System.out.println(e);
     private javax.swing.JLayeredPane riwayat_siswa;
     private javax.swing.JLabel saveadm;
     private javax.swing.JLabel saveadmkelas;
+    private javax.swing.JScrollPane tab_lapabsen;
+    private javax.swing.JScrollPane tab_siswabermasalah;
+    private javax.swing.JScrollPane tab_siswabermasalah1;
     private javax.swing.JScrollPane tababsen;
     private javax.swing.JScrollPane tabadmin;
     private javax.swing.JTable tabel_absen;
     private javax.swing.JTable tabel_admin;
     private javax.swing.JTable tabel_guru;
     private javax.swing.JTable tabel_kelas;
+    private javax.swing.JTable tabel_lapabsen;
     private javax.swing.JTable tabel_riwayatsiswa;
     private javax.swing.JTable tabel_siswa;
+    private javax.swing.JTable tabel_siswabermasalah;
+    private javax.swing.JTable tabel_siswabermasalah1;
     private javax.swing.JTable tabel_walikelas;
     private javax.swing.JScrollPane tabguru;
     private javax.swing.JScrollPane tabkelas;
@@ -5020,6 +5162,7 @@ System.out.println(e);
     private javax.swing.JTextField txt_idformwalikelas;
     private javax.swing.JTextField txt_idprofilewalikelas;
     private javax.swing.JTextField txt_idregadmin;
+    private javax.swing.JTextField txt_idwalasanggotakelas;
     private javax.swing.JTextField txt_idwalasformsiswa;
     private javax.swing.JTextField txt_jabatanformguru;
     private javax.swing.JTextField txt_jabatanprofileguru;
@@ -5060,12 +5203,16 @@ System.out.println(e);
     private javax.swing.JTextField txt_rfidformsiswa;
     private javax.swing.JTextField txt_rfidsiswa;
     private javax.swing.JTextField txt_searchadmin;
+    private javax.swing.JTextField txt_searchbynis;
     private javax.swing.JTextField txt_searchdataabsen;
     private javax.swing.JTextField txt_searchguru;
     private javax.swing.JTextField txt_searchkelas;
+    private javax.swing.JTextField txt_searchnisanggotakelas;
     private javax.swing.JTextField txt_searchsiswa;
     private javax.swing.JTextField txt_searchwalikelas;
+    private javax.swing.JTextField txt_siswabermasalah;
     private javax.swing.JTextField txt_telpformsiswa;
+    private javax.swing.JTextField txt_tglakhir;
     private javax.swing.JTextField txt_tingkatanformkelas;
     private javax.swing.JTextField txt_tlpformguru;
     private javax.swing.JTextField txt_tlpformwalikelas;
