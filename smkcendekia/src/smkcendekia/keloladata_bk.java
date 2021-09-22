@@ -1525,8 +1525,8 @@ System.out.println(e);
     public void querysearchklikabsen(){
         int i = tabel_absen.getSelectedRow();
         if(i>-1){
-            txt_searchdataabsen.setText(model.getValueAt(i, 2).toString());
-//            Session.setnipadmin(txt_searchadmin.getText());
+            txt_searchdataabsen.setText(model.getValueAt(i, 1).toString());
+            Session.setabsen(txt_searchdataabsen.getText());
         }
     }
     //==============================PERIPHERAL================================//
@@ -2033,6 +2033,7 @@ System.out.println(e);
         txt_namaformkelas = new javax.swing.JTextField();
         btn_simpanformkelas = new javax.swing.JButton();
         cb_walasformkelas = new javax.swing.JComboBox<>();
+        btn_kembaliformkelas = new javax.swing.JButton();
         bgformkelas = new javax.swing.JLabel();
         dataadmin = new javax.swing.JLayeredPane();
         paneladmin = new javax.swing.JPanel();
@@ -2091,6 +2092,9 @@ System.out.println(e);
 
         btn_dashboard.setBackground(new java.awt.Color(37, 112, 183));
         btn_dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_dashboardMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_dashboardMouseEntered(evt);
             }
@@ -4069,7 +4073,7 @@ System.out.println(e);
                 btn_simpanformkelasActionPerformed(evt);
             }
         });
-        panelformkelas.add(btn_simpanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 580, 140, 35));
+        panelformkelas.add(btn_simpanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 580, 140, 35));
 
         cb_walasformkelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Pilih---" }));
         cb_walasformkelas.setFocusable(false);
@@ -4077,6 +4081,15 @@ System.out.println(e);
         cb_walasformkelas.setRequestFocusEnabled(false);
         cb_walasformkelas.setVerifyInputWhenFocusTarget(false);
         panelformkelas.add(cb_walasformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 840, 30));
+
+        btn_kembaliformkelas.setBackground(new java.awt.Color(255, 255, 255));
+        btn_kembaliformkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/back-button.png"))); // NOI18N
+        btn_kembaliformkelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kembaliformkelasActionPerformed(evt);
+            }
+        });
+        panelformkelas.add(btn_kembaliformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 580, 55, 35));
 
         bgformkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/paneltambahkelas.png"))); // NOI18N
         panelformkelas.add(bgformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -4877,6 +4890,21 @@ System.out.println(e);
         switchpanel(riwayat_siswa);
     }//GEN-LAST:event_btn_riwayatabsenActionPerformed
 
+    private void btn_dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dashboardMouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+        dashboard ds = new dashboard();
+        ds.setVisible(true);
+                        
+    }//GEN-LAST:event_btn_dashboardMouseClicked
+
+    private void btn_kembaliformkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliformkelasActionPerformed
+        // TODO add your handling code here:
+        switchpanel(datakelas);
+        tampilkelas();
+        txt_searchkelas.setText("");
+    }//GEN-LAST:event_btn_kembaliformkelasActionPerformed
+
     
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -4928,6 +4956,7 @@ System.out.println(e);
     private javax.swing.JButton btn_hapuskelas;
     private javax.swing.JButton btn_hapussiswa;
     private javax.swing.JButton btn_kembaliformguru;
+    private javax.swing.JButton btn_kembaliformkelas;
     private javax.swing.JButton btn_kembaliformwalikelas;
     private javax.swing.JButton btn_kembaliprofileguru;
     private javax.swing.JButton btn_kembaliprofilekelas;

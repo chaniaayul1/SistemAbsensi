@@ -73,8 +73,8 @@ public class login extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null,("Selamat Datang ") + rs.getString("nama"),
                                 "Login Kepala Sekolah Berhasil", JOptionPane.INFORMATION_MESSAGE);
                         //
-                        registrasi regist3 = new registrasi();
-                        regist3.setVisible(true);
+//                        registrasi regist3 = new registrasi();
+//                        regist3.setVisible(true);
                         user = rs.getString("username");
                         Session.setusername(user);
                         dispose();

@@ -12,6 +12,7 @@ public class Session {
     public static String nipadmin;
     public static String nipwalas;
     public static String nkkelas;
+    public static String absen;
     
     public static String getusername(){
         return usernm;
@@ -59,5 +60,13 @@ public class Session {
     
     public static String getnkkelas (){
         return nkkelas;
+    }
+    
+      public static void setabsen(String absen){
+        Session.absen= absen;
+    }
+    
+    public static String getabsen(){
+        return absen;
     }
 }
