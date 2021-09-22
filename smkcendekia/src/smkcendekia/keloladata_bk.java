@@ -14,9 +14,11 @@ import java.sql.ResultSet;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -894,7 +896,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     //PROSEDUR MENAMPILKAN DATA KELAS DI TABEL
     public void tampilkelas(){        
         model = new DefaultTableModel ( );
-        Object[ ] obj = new Object[5];
+        
         tabel_kelas.setModel(model);
         model.addColumn("No");
         model.addColumn("NK");
@@ -902,32 +904,37 @@ public class keloladata_bk extends javax.swing.JFrame {
         model.addColumn("P");
         model.addColumn("L");
         model.addColumn("Jumlah Siswa");
+            Object[ ] obj = new Object[5];
          try{
            stat = con.createStatement( );
-           sql  = "SELECT k.idwalikelas, k.nk, k.angkatan,k.jurusan, k.namakelas, w.nama FROM kelas AS k INNER JOIN walikelas AS w ON k.idwalikelas = w.idwalikelas";
-           rs   = stat.executeQuery(sql);
+          // sql  = "SELECT k.idwalikelas, k.nk, k.angkatan,k.jurusan, k.namakelas, w.nama FROM kelas AS k INNER JOIN walikelas AS w ON k.idwalikelas = w.idwalikelas";
+          sql = "SELECT siswa.nk, count(siswa.nk),siswa.idwalikelas, siswa.jeniskelamin FROM siswa join kelas where siswa.nk = kelas.nk group by jeniskelamin"; 
+          rs   = stat.executeQuery(sql);
            int no=1;
            while(rs.next ()){
+            
                 obj[0] = Integer.toString(no);
                 obj[1] = rs.getString("nk");
-                obj[2] = rs.getString("nama");
+                obj[2] = rs.getString("idwalikelas");
+                
                 no++;
             }
-           /*sql  = "SELECT jeniskelamin,count(jeniskelamin) from siswa where NK='"+obj[1]+"' AND jeniskelamin='Perempuan'";
-           rs   = stat.executeQuery(sql);
-           while(rs.next ()){
-                obj[3] = rs.getString(sql);
+       
+           sql  = "SELECT siswa.nk ,count(siswa.nk) from siswa join kelas where nk='"+rs.getString("nk")+"' AND jeniskelamin='Perempuan'";
+           rs1   = stat.executeQuery(sql);
+           while(rs1.next ()){
+                obj[3] = rs1.getString(sql);
             }
-           sql  = "SELECT jeniskelamin,count(jeniskelamin) from siswa where NK='"+obj[1]+"' AND jeniskelamin='Laki-Laki'";
+           sql  =  "SELECT siswa.nk ,count(siswa.nk) from siswa join kelas where nk='"+rs.getString("nk")+"' AND jeniskelamin='Laki-Laki'";
            rs   = stat.executeQuery(sql);
            while(rs.next ()){
                 obj[4] = rs.getString(sql);
             }
-           sql  = "SELECT nk,count(nk) from siswa where NK='"+obj[1]+"'";
+           sql  = "SELECT nk,count(nis) from siswa where nk='"+rs.getString("nk")+"'";
            rs   = stat.executeQuery(sql);
            while(rs.next ()){
                 obj[5] = rs.getString(sql);
-            }*/
+            }
            model.addRow(obj);
             
              tabel_kelas.setModel(model);
@@ -4073,7 +4080,7 @@ System.out.println(e);
                 btn_simpanformkelasActionPerformed(evt);
             }
         });
-        panelformkelas.add(btn_simpanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 580, 140, 35));
+        panelformkelas.add(btn_simpanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 580, 140, 35));
 
         cb_walasformkelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---Pilih---" }));
         cb_walasformkelas.setFocusable(false);
@@ -4867,6 +4874,13 @@ System.out.println(e);
 
     private void btn_cetakriwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakriwayatsiswaActionPerformed
         // TODO add your handling code here:
+        MessageFormat header = new MessageFormat("RIWAYAT ABSEN");
+        try {
+            tabel_riwayatsiswa.print(JTable.PrintMode.FIT_WIDTH, header,null);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+        
     }//GEN-LAST:event_btn_cetakriwayatsiswaActionPerformed
 
     private void tabel_riwayatsiswaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_riwayatsiswaMouseClicked
