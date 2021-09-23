@@ -30,7 +30,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     Connection con;
     Statement stat;
     ResultSet rs,rs1,rs2;
-    String sql, leveluser,bfrfid,wlskelas,wlsprofkelas;
+    String sql, leveluser,bfrfid,wlskelas,wlsprofkelas,usernameadm;
     koneksi k;
     DefaultTableModel model;
     
@@ -133,7 +133,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     public void tambahdatasiswa(){
         String jeniskelamin = null;
         if(rb1.isSelected()){
-            jeniskelamin = "perempuan";
+            jeniskelamin = "Perempuan";
         } else if (rb2.isSelected()){
             jeniskelamin = "Laki-Laki";
         }
@@ -188,6 +188,7 @@ public class keloladata_bk extends javax.swing.JFrame {
       }
     }
     
+    //ALL ABOUT RFID
     public void rfidlogging(){
         try{
                stat = con.createStatement( );
@@ -239,6 +240,7 @@ public class keloladata_bk extends javax.swing.JFrame {
             "Data RFID Siswa", JOptionPane.INFORMATION_MESSAGE);
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Data RFID sudah dimiliki oleh orang lain","Pesan",JOptionPane.ERROR_MESSAGE);
+            this.tampilprofilesiswa();
         }
     }
     
@@ -246,7 +248,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     public void tampilprofilesiswa(){
         try {
             stat = con.createStatement( );
-            sql  = "SELECT * from siswa where nis='"+Session.getnissiswa()+"'";
+            sql  = "SELECT s.*,w.nama from siswa as s inner join walikelas as w ON s.idwalikelas=w.idwalikelas where s.nis='"+Session.getnissiswa()+"'";
             rs   = stat.executeQuery(sql);
             while(rs.next ()){
                 Object[ ] obj = new Object[11];
@@ -266,7 +268,7 @@ public class keloladata_bk extends javax.swing.JFrame {
                 txt_notelpsiswa.setText((String) obj[6]);
                 obj[7] =rs.getString("email");
                 txt_emailsiswa.setText((String) obj[7]);
-                obj[8] =rs.getString("idwalikelas");
+                obj[8] =rs.getString("w.nama");
                 txt_walassiswa.setText((String) obj[8]);
                 obj[9] =rs.getString("namaortu");
                 txt_ortusiswa.setText((String) obj[9]);
@@ -277,6 +279,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
             "Lihat Profile Siswa Gagal", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(ex);
         }
     }
     
@@ -573,6 +576,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data Guru Gagal di Update"), 
             "Data Profile Guru", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex);
         }
     }
     
@@ -791,7 +795,7 @@ public class keloladata_bk extends javax.swing.JFrame {
                                                                         + "alamat='"+txt_alamatprofilewalikelas.getText()+"'"
                                                                         + "WHERE idwalikelas='"+txt_searchwalikelas.getText()+"'");
             rs   = stat.executeQuery(sql);
-            
+            this.simpanprofilewalas2();
             while(rs.next ()){
                 Object[ ] obj = new Object[7];
                 obj[0] =rs.getString("idwalikelas");
@@ -814,6 +818,25 @@ public class keloladata_bk extends javax.swing.JFrame {
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data Walikelas Gagal di Update"), 
             "Data Profile walikelas Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void simpanprofilewalas2(){
+        try {
+            // TODO add your handling code here:
+            stat = con.createStatement( );
+            con.createStatement().executeUpdate("UPDATE guru set nama='"+txt_namaprofilewalikelas.getText()+"', "
+                                                                        + "email='"+txt_emailprofilewalikelas.getText()+"', "
+                                                                        + "jeniskelamin='"+txt_jkprofilewalikelas.getText()+"', "
+                                                                        + "notlp='"+txt_notelpprofilewalikelas.getText()+"', "
+                                                                        + "alamat='"+txt_alamatprofilewalikelas.getText()+"'"
+                                                                        + "WHERE nip='"+txt_nipprofilewalikelas.getText()+"'");
+            rs   = stat.executeQuery(sql);
+
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data Guru Gagal di Update"), 
+            "Data Profile Guru", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex);
         }
     }
     
@@ -907,21 +930,22 @@ public class keloladata_bk extends javax.swing.JFrame {
          try{
            stat = con.createStatement( );
           
-          sql = "SELECT siswa.nk,kelas.idwalikelas,"
-                  + "SUM(CASE WHEN siswa.jeniskelamin='Laki-Laki' THEN 1 ELSE 0 END) AS PRIA, "
+          /*sql = "SELECT siswa.nk,kelas.idwalikelas,walikelas.nama,"
+                  + "SUM(CASE WHEN siswa.jeniskelamin='Laki-Laki' THEN 1 ELSE 0 END) AS Pria, "
                   + "SUM(CASE WHEN siswa.jeniskelamin='Perempuan' THEN 1 ELSE 0 END) AS Wanita, "
                   + "COUNT(CASE WHEN siswa.jeniskelamin THEN 1 ELSE 0 END) AS JumlahSiswa "
-                  + "FROM siswa join kelas WHERE siswa.nk=kelas.nk GROUP BY siswa.jeniskelamin"; 
+                  + "FROM siswa join kelas,walikelas WHERE siswa.nk=kelas.nk GROUP BY siswa.jeniskelamin"; */
+          sql="SELECT k.*, w.nama FROM kelas AS k INNER JOIN walikelas AS w ON k.idwalikelas = w.idwalikelas";
           rs   = stat.executeQuery(sql);
            int no =1;
           while(rs.next ()){
                 Object[ ] obj = new Object[6];
                 obj[0] = Integer.toString(no);
                 obj[1] = rs.getString("nk");
-                obj[2] = rs.getString("idwalikelas");
-                obj[3] = rs.getString("Pria");
-                obj[4] = rs.getString("Wanita");
-                obj[5] = rs.getString("JumlahSiswa");
+                obj[2] = rs.getString("nama");
+                obj[3] = rs.getString("jl");
+                obj[4] = rs.getString("jp");
+                obj[5] = rs.getString("js");
                 model.addRow(obj);
                 no++;
             }
@@ -1083,7 +1107,7 @@ System.out.println(e);
             saveadmkelas.setText(sql);
             rs   = stat.executeQuery(sql);
             while(rs.next ()){
-                Object[ ] obj = new Object[5];
+                Object[ ] obj = new Object[6];
                 obj[0] =rs.getString("nk");
                 txt_nkprofilekelas.setText((String) obj[0]);
                 obj[1] =rs.getString("angkatan");
@@ -1094,6 +1118,8 @@ System.out.println(e);
                 txt_namaprofilekelas.setText((String) obj[3]);
                 obj[4] =rs.getString("nama");
                 txt_walasprofilekelas.setText((String) obj[4]);
+                obj[5] =rs.getString("js");
+                txt_jmlprofilekelas.setText((String) obj[5]);
             }
         } catch (SQLException ex) {
 //            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
@@ -1109,7 +1135,7 @@ System.out.println(e);
             txt_angkatanprofilekelas.setEnabled(true);
             txt_jurusanprofilekelas.setEnabled(true);
             txt_namaprofilekelas.setEnabled(true);
-            txt_jmlprofilekelas.setEnabled(true);
+            txt_jmlprofilekelas.setEnabled(false);
             txt_walasprofilekelas.setEnabled(false);
             txt_walasprofilekelas.setVisible(false);
             cb_walasprofilekelas.setVisible(true);
@@ -1203,7 +1229,6 @@ System.out.println(e);
         model.addColumn("NIP");
         model.addColumn("Nama");
         model.addColumn("Username");
-        model.addColumn("Password");
         model.addColumn("Status");
         
          try{
@@ -1212,25 +1237,24 @@ System.out.println(e);
            rs   = stat.executeQuery(sql);
            int no=1;
            while(rs.next ()){
-                Object[ ] obj = new Object[7];
+                Object[ ] obj = new Object[6];
                 obj[0] = Integer.toString(no);
                 obj[1] = rs.getString("idadmin");
                 obj[2] = rs.getString("nip");
                 obj[3] = rs.getString("nama");
                 obj[4] = rs.getString("username");
-                obj[5] = rs.getString("password");
                 String getlevel = rs.getString("level");
                 if ("0".equals(getlevel))
                 {
-                    obj[6]="Guru BK";
+                    obj[5]="Guru BK";
                 }
                 else if("1".equals(getlevel))
                 {
-                    obj[6]="Bagian IT";
+                    obj[5]="Bagian IT";
                 }
                 else
                 {
-                    obj[6]="Kepala Sekolah";
+                    obj[5]="Kepala Sekolah";
                 }
                 model.addRow(obj);
                 no++;
@@ -1251,7 +1275,6 @@ System.out.println(e);
         model.addColumn("NIP");
         model.addColumn("Nama");
         model.addColumn("Username");
-        model.addColumn("Password");
         model.addColumn("Status");
         try {
             stat = con.createStatement( );
@@ -1259,25 +1282,24 @@ System.out.println(e);
             rs   = stat.executeQuery(sql);
             int no=1;
             while(rs.next ()){
-                Object[ ] obj = new Object[7];
+                Object[ ] obj = new Object[6];
                 obj[0] = Integer.toString(no);
                 obj[1] = rs.getString("idadmin");
                 obj[2] = rs.getString("nip");
                 obj[3] = rs.getString("nama");
                 obj[4] = rs.getString("username");
-                obj[5] = rs.getString("password");
                 String getlevel = rs.getString("level");
                 if ("0".equals(getlevel))
                 {
-                    obj[6]="Guru BK";
+                    obj[5]="Guru BK";
                 }
                 else if("1".equals(getlevel))
                 {
-                    obj[6]="Bagian IT";
+                    obj[5]="Bagian IT";
                 }
                 else
                 {
-                    obj[6]="Kepala Sekolah";
+                    obj[5]="Kepala Sekolah";
                 }
                 model.addRow(obj);
                 no++;
@@ -1286,21 +1308,39 @@ System.out.println(e);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
             "Delete Data Admin Gagal", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(ex);
         }
     }
     
     //PROSEDUR VALIDASI HAPUS DATA ADMIN PADA TABEL
     public void validasideletedataadmin(){
-        int jwbn=JOptionPane.showConfirmDialog(null, "Benarkah anda ingin menghapus data ini?", "Hapus Data Admin",JOptionPane.YES_NO_OPTION);
-        if (jwbn==JOptionPane.YES_OPTION){
-            this.deletedataadmin();
-            this.tampiladmin();
-            txt_searchadmin.setText("");
-            saveadm.setText("");
-        }
-        else if(jwbn==JOptionPane.NO_OPTION){
+        try{
+           stat = con.createStatement( );
+           sql  = "Select username from admin where nip='"+Session.getnipadmin()+"'";
+           rs   = stat.executeQuery(sql);
+           int no=1;
+           while(rs.next ()){
+                Object[ ] obj = new Object[1];
+                obj[0] = rs.getString("username");
+                usernameadm=(String) obj[0];
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
             
+      }
+        if (usernameadm.equals(username.getText())){
+            JOptionPane.showMessageDialog(null, ("Akun Sedang Di Gunakan"), 
+            "Pesan", JOptionPane.ERROR_MESSAGE);
         }
+        else{
+             int jwbn=JOptionPane.showConfirmDialog(null, "Benarkah anda ingin menghapus data ini?", "Hapus Data Admin",JOptionPane.YES_NO_OPTION);
+                if (jwbn==JOptionPane.YES_OPTION){
+                this.deletedataadmin();
+                this.tampiladmin();
+                txt_searchadmin.setText("");
+                saveadm.setText("");
+            }  
+        }    
     }
     
     //PROSEDUR TAMBAH DATA ADMIN
@@ -1312,11 +1352,16 @@ System.out.println(e);
                 JOptionPane.showMessageDialog(this, "Data Tidak Boleh Kosong","Pesan",JOptionPane.ERROR_MESSAGE);
             hapuslayar();
             } else {
-                String simpan = "insert into admin(idadmin,nip,nama,username,password,level) values ('"+txt_idregadmin.getText()+"','"+txt_nipregadmin.getText()+"','"+txt_namaregadmin.getText()+"','"+txt_usernameregadmin.getText()+"','"+txt_passwordregadmin.getText()+"','"+leveluser+"')";
+                String simpan = "insert into admin(idadmin,nip,nama,username,password,level) values ('"+txt_idregadmin.getText()+"',"
+                        + "'"+txt_nipregadmin.getText()+"',"
+                        + "'"+txt_namaregadmin.getText()+"',"
+                        + "'"+txt_usernameregadmin.getText()+"',"
+                        + "'"+txt_passwordregadmin.getText()+"',"
+                        + "'"+leveluser+"')";
                 stat = con.createStatement();
                 int SA =stat.executeUpdate(simpan);
+                saveadm.setText("");
                 JOptionPane.showMessageDialog(this,"Registrasi Anda Berhasil!");
-                
             }
         } catch (HeadlessException | SQLException e) {
            JOptionPane.showMessageDialog(this, "Periksa kembali mengenai NIP atau Akun yang akan dibuat sudah ada","Pesan",JOptionPane.WARNING_MESSAGE);
@@ -1413,25 +1458,24 @@ System.out.println(e);
 
            int no=1;
            while(rs.next ()){
-                Object[ ] obj = new Object[7];
+                Object[ ] obj = new Object[6];
                 obj[0] = Integer.toString(no);
                 obj[1] = rs.getString("idadmin");
                 obj[2] = rs.getString("nip");
                 obj[3] = rs.getString("nama");
                 obj[4] = rs.getString("username");
-                obj[5] = rs.getString("password");
                 String getlevel = rs.getString("level");
                 if ("0".equals(getlevel))
                 {
-                    obj[6]="Guru BK";
+                    obj[5]="Guru BK";
                 }
                 else if("1".equals(getlevel))
                 {
-                    obj[6]="Bagian IT";
+                    obj[5]="Bagian IT";
                 }
                 else
                 {
-                    obj[6]="Kepala Sekolah";
+                    obj[5]="Kepala Sekolah";
                 }
                 model.addRow(obj);
                 no++;
@@ -1750,7 +1794,7 @@ System.out.println(e);
         txt_nipregadmin = new javax.swing.JTextField();
         txt_namaregadmin = new javax.swing.JTextField();
         txt_usernameregadmin = new javax.swing.JTextField();
-        txt_passwordregadmin = new javax.swing.JTextField();
+        txt_passwordregadmin = new javax.swing.JPasswordField();
         btn_daftarregadmin = new javax.swing.JButton();
         txt_level = new javax.swing.JComboBox<>();
         btn_kembaliregadmin = new javax.swing.JButton();
@@ -2414,10 +2458,14 @@ System.out.println(e);
         jLabel73.setForeground(new java.awt.Color(0, 51, 204));
         jLabel73.setText(":");
         panelformregistrasi.add(jLabel73, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 153, -1, -1));
+
+        txt_idregadmin.setEnabled(false);
         panelformregistrasi.add(txt_idregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 840, 30));
         panelformregistrasi.add(txt_nipregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 760, 30));
         panelformregistrasi.add(txt_namaregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 840, 30));
         panelformregistrasi.add(txt_usernameregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 840, 30));
+
+        txt_passwordregadmin.setText("jPasswordField1");
         panelformregistrasi.add(txt_passwordregadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 840, 30));
 
         btn_daftarregadmin.setBackground(new java.awt.Color(255, 255, 255));
@@ -4140,25 +4188,18 @@ System.out.println(e);
         tabel_admin.setForeground(new java.awt.Color(255, 255, 255));
         tabel_admin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "No", "ID Admin", "NIP", "Nama", "Username", "Password", "Status"
+                "No", "ID Admin", "NIP", "Nama", "Username", "Status"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class
-            };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -4171,6 +4212,14 @@ System.out.println(e);
             }
         });
         tabadmin.setViewportView(tabel_admin);
+        if (tabel_admin.getColumnModel().getColumnCount() > 0) {
+            tabel_admin.getColumnModel().getColumn(0).setResizable(false);
+            tabel_admin.getColumnModel().getColumn(1).setResizable(false);
+            tabel_admin.getColumnModel().getColumn(2).setResizable(false);
+            tabel_admin.getColumnModel().getColumn(3).setResizable(false);
+            tabel_admin.getColumnModel().getColumn(4).setResizable(false);
+            tabel_admin.getColumnModel().getColumn(5).setResizable(false);
+        }
 
         paneladmin.add(tabadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 1010, 390));
 
@@ -5273,7 +5322,7 @@ System.out.println(e);
     private javax.swing.JTextField txt_notelpprofilewalikelas;
     private javax.swing.JTextField txt_notelpsiswa;
     private javax.swing.JTextField txt_ortusiswa;
-    private javax.swing.JTextField txt_passwordregadmin;
+    private javax.swing.JPasswordField txt_passwordregadmin;
     private javax.swing.JTextField txt_rfidformsiswa;
     private javax.swing.JTextField txt_rfidsiswa;
     private javax.swing.JTextField txt_searchadmin;
