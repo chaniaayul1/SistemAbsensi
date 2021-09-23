@@ -901,43 +901,31 @@ public class keloladata_bk extends javax.swing.JFrame {
         model.addColumn("No");
         model.addColumn("NK");
         model.addColumn("Wali Kelas");
-        model.addColumn("P");
         model.addColumn("L");
+        model.addColumn("P");
         model.addColumn("Jumlah Siswa");
-            Object[ ] obj = new Object[5];
          try{
            stat = con.createStatement( );
-          // sql  = "SELECT k.idwalikelas, k.nk, k.angkatan,k.jurusan, k.namakelas, w.nama FROM kelas AS k INNER JOIN walikelas AS w ON k.idwalikelas = w.idwalikelas";
-          sql = "SELECT siswa.nk, count(siswa.nk),siswa.idwalikelas, siswa.jeniskelamin FROM siswa join kelas where siswa.nk = kelas.nk group by jeniskelamin"; 
+          
+          sql = "SELECT siswa.nk,kelas.idwalikelas,"
+                  + "SUM(CASE WHEN siswa.jeniskelamin='Laki-Laki' THEN 1 ELSE 0 END) AS PRIA, "
+                  + "SUM(CASE WHEN siswa.jeniskelamin='Perempuan' THEN 1 ELSE 0 END) AS Wanita, "
+                  + "COUNT(CASE WHEN siswa.jeniskelamin THEN 1 ELSE 0 END) AS JumlahSiswa "
+                  + "FROM siswa join kelas WHERE siswa.nk=kelas.nk GROUP BY siswa.jeniskelamin"; 
           rs   = stat.executeQuery(sql);
-           int no=1;
-           while(rs.next ()){
-            
+           int no =1;
+          while(rs.next ()){
+                Object[ ] obj = new Object[6];
                 obj[0] = Integer.toString(no);
                 obj[1] = rs.getString("nk");
                 obj[2] = rs.getString("idwalikelas");
-                
+                obj[3] = rs.getString("Pria");
+                obj[4] = rs.getString("Wanita");
+                obj[5] = rs.getString("JumlahSiswa");
+                model.addRow(obj);
                 no++;
             }
        
-           sql  = "SELECT siswa.nk ,count(siswa.nk) from siswa join kelas where nk='"+rs.getString("nk")+"' AND jeniskelamin='Perempuan'";
-           rs1   = stat.executeQuery(sql);
-           while(rs1.next ()){
-                obj[3] = rs1.getString(sql);
-            }
-           sql  =  "SELECT siswa.nk ,count(siswa.nk) from siswa join kelas where nk='"+rs.getString("nk")+"' AND jeniskelamin='Laki-Laki'";
-           rs   = stat.executeQuery(sql);
-           while(rs.next ()){
-                obj[4] = rs.getString(sql);
-            }
-           sql  = "SELECT nk,count(nis) from siswa where nk='"+rs.getString("nk")+"'";
-           rs   = stat.executeQuery(sql);
-           while(rs.next ()){
-                obj[5] = rs.getString(sql);
-            }
-           model.addRow(obj);
-            
-             tabel_kelas.setModel(model);
         } catch (SQLException e) {
             System.out.println(e);
       }
