@@ -1532,34 +1532,17 @@ System.out.println(e);
     
      public void updatestatusabsen(){
        try {
-            // TODO add your handling code here:
-            Object[ ] obj = new Object[7];
-           int no=1;
-                obj[0] = Integer.toString(no);
-                obj[1] = rs.getString("nis");
-                obj[2] = rs.getString("nk");
-                obj[3] = rs.getString("nama");
-                obj[4] = rs.getString("tanggal");
-                obj[5] = rs.getString("jam");
-                obj[6] = rs.getString("status");
-                model.addRow(obj);
+
             stat = con.createStatement( );
-            this.convernamawalaskelas();
-            con.createStatement().executeUpdate("UPDATE absen set   nis='"+rs.getString("nis")+"', "
-                                                                        + "nk='"+rs.getString("nk")+"', "
-                                                                        + "nama='"+rs.getString("nama")+"', "
-                                                                        + "jam='"+rs.getString("tanggal")+"', "
-                                                                        + "tanggal='"+rs.getString("jam")+"' "
-                                                                        + "status='"+cb_statusdataabsen+"' "
-                                                                        + "WHERE nk='"+txt_searchdataabsen+"'");
+            con.createStatement().executeUpdate("UPDATE absen set status='"+cb_statusdataabsen.getSelectedItem());
             rs   = stat.executeQuery(sql);
             
             this.tampilprofilekelas();
             
-            JOptionPane.showMessageDialog(null, ("Data Kelas Berhasil di Update"), 
-            "Data Profile Kelas", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, ("Update berhasil"), 
+            "Update Status", JOptionPane.INFORMATION_MESSAGE);
         }catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ("Data Kelas Gagal di Update"), 
+            JOptionPane.showMessageDialog(null, ("Data Gagal di Update"), 
             "Data Profile Kelas Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(ex);
         }
@@ -2154,7 +2137,7 @@ System.out.println(e);
         tababsen = new javax.swing.JScrollPane();
         tabel_absen = new javax.swing.JTable();
         cb_statusdataabsen = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btn_updateabsen = new javax.swing.JButton();
         bgabsensi = new javax.swing.JLabel();
         datalapabsensi = new javax.swing.JLayeredPane();
         panellapabsensi = new javax.swing.JPanel();
@@ -4521,15 +4504,15 @@ System.out.println(e);
         cb_statusdataabsen.setVerifyInputWhenFocusTarget(false);
         panelabsensi.add(cb_statusdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 430, 30));
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        jButton1.setText("Update");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_updateabsen.setBackground(new java.awt.Color(255, 255, 255));
+        btn_updateabsen.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_updateabsen.setText("Update");
+        btn_updateabsen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_updateabsenActionPerformed(evt);
             }
         });
-        panelabsensi.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 100, 30));
+        panelabsensi.add(btn_updateabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 100, 30));
 
         bgabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelabsensi.png"))); // NOI18N
         panelabsensi.add(bgabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -5261,9 +5244,11 @@ System.out.println(e);
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_kembaliprofilekelas1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_updateabsenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateabsenActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        this.updatestatusabsen();
+        this.tampilabsen();
+    }//GEN-LAST:event_btn_updateabsenActionPerformed
 
     private void btn_lihatanggotakelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihatanggotakelasActionPerformed
         // TODO add your handling code here:
@@ -5389,6 +5374,7 @@ System.out.println(e);
     private javax.swing.JButton btn_tambahguru;
     private javax.swing.JButton btn_tambahsiswa;
     private javax.swing.JButton btn_tambahwalikelas;
+    private javax.swing.JButton btn_updateabsen;
     private javax.swing.JButton btn_updatestatussiswabermasalah;
     private javax.swing.JComboBox<String> cb_searchriwayatsiswa;
     private javax.swing.JComboBox<String> cb_siswabermasalah;
@@ -5419,7 +5405,6 @@ System.out.println(e);
     private javax.swing.JLabel iconlapabsen;
     private javax.swing.JLabel iconlogout;
     private javax.swing.JLabel iconsiswa;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
