@@ -1534,10 +1534,10 @@ System.out.println(e);
        try {
 
             stat = con.createStatement( );
-            con.createStatement().executeUpdate("UPDATE absen set status='"+cb_statusdataabsen.getSelectedItem());
+            con.createStatement().executeUpdate("UPDATE absen set status='"+cb_statusdataabsen.getSelectedItem()+"' WHERE nk='"+txt_searchdataabsen.getText()+"'");
             rs   = stat.executeQuery(sql);
             
-            this.tampilprofilekelas();
+            this.tampilabsen();
             
             JOptionPane.showMessageDialog(null, ("Update berhasil"), 
             "Update Status", JOptionPane.INFORMATION_MESSAGE);
