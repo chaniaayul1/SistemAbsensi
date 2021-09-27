@@ -1534,7 +1534,7 @@ System.out.println(e);
        try {
 
             stat = con.createStatement( );
-            con.createStatement().executeUpdate("UPDATE absen set status='"+cb_statusdataabsen.getSelectedItem()+"' WHERE nk='"+txt_searchdataabsen.getText()+"'");
+            con.createStatement().executeUpdate("UPDATE absen set status='"+cb_statusdataabsen.getSelectedItem()+"' WHERE nis='"+txt_searchdataabsen.getText()+"'");
             rs   = stat.executeQuery(sql);
             
             this.tampilabsen();
