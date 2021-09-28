@@ -1265,6 +1265,26 @@ System.out.println(e);
             System.out.println(e);
       }
     }
+    
+    public void editprofileadmin(boolean check){
+        if (check==true){
+            txt_namaprofileadmin.setEnabled(false);
+            txt_nipprofileadmin.setEnabled(false);
+            txt_namaprofileadmin.setEnabled(false);
+            txt_usernameprofileadmin.setEnabled(true);
+            txt_passprofileadmin.setEnabled(true);
+            txt_statusprofileadmin.setEnabled(true);
+            
+        }
+        else{
+            txt_namaprofileadmin.setEnabled(false);
+            txt_nipprofileadmin.setEnabled(false);
+            txt_namaprofileadmin.setEnabled(false);
+            txt_usernameprofileadmin.setEnabled(false);
+            txt_passprofileadmin.setEnabled(false);
+            txt_statusprofileadmin.setEnabled(false);
+        }
+    }    
 
     //PROSEDUR MENGHAPUS DATA ADMIN PADA TABEL
     public void deletedataadmin(){
@@ -1382,6 +1402,31 @@ System.out.println(e);
         else
         {
             leveluser="2";
+        }
+    }
+    
+    public void simpandataadmin(){
+        try {
+            // TODO add your handling code here:
+            stat = con.createStatement( );
+            this.convernamawalaskelas();
+            con.createStatement().executeUpdate("UPDATE admin set   nip='"+txt_searchadmin.getText()+"', "
+                                                                        + "idadmin='"+txt_idadminprofileadmin+"', "
+                                                                        + "nama='"+txt_namaprofileadmin.getText()+"', "
+                                                                        + "username='"+txt_usernameprofileadmin.getText()+"', "
+                                                                        + "password='"+txt_passprofileadmin.getText()+"', "
+                                                                         + "status='"+txt_statusprofileadmin.getText()+"' "
+                                                                        + "WHERE nip='"+Session.getnipadmin()+"'");
+            rs   = stat.executeQuery(sql);
+            
+            this.tampilprofilekelas();
+            
+            JOptionPane.showMessageDialog(null, ("Data Admin Berhasil di Update"), 
+            "Data Profile Admin", JOptionPane.INFORMATION_MESSAGE);
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data Admin Gagal di Update"), 
+            "Data Profile Admin Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex);
         }
     }
     
@@ -5234,10 +5279,13 @@ System.out.println(e);
 
     private void btn_simpanprofilekelas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanprofilekelas1ActionPerformed
         // TODO add your handling code here:
+        this.simpandataadmin();
+        this.tampiladmin();
     }//GEN-LAST:event_btn_simpanprofilekelas1ActionPerformed
 
     private void btn_editprofilekelas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editprofilekelas1ActionPerformed
         // TODO add your handling code here:
+        this.editprofileadmin(true);
     }//GEN-LAST:event_btn_editprofilekelas1ActionPerformed
 
     private void btn_kembaliprofilekelas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliprofilekelas1ActionPerformed
