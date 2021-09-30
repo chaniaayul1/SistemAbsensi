@@ -30,7 +30,9 @@ public class keloladata_bk extends javax.swing.JFrame {
     Connection con;
     Statement stat;
     ResultSet rs,rs1,rs2;
-    String sql, leveluser,bfrfid,wlskelas,wlsprofkelas,usernameadm;
+    String sql, leveluser,leveluser2,bfrfid,wlskelas,wlsprofkelas,usernameadm,idabsen;
+    String gendersiswa,wlssiswa;
+    int leveluser3;
     koneksi k;
     DefaultTableModel model;
     
@@ -109,8 +111,20 @@ public class keloladata_bk extends javax.swing.JFrame {
                 model.addRow(obj);
                 no++;
             }
+            this.deletedatarfid();
 
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
+            "Delete Data Siswa Gagal", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+    public void deletedatarfid(){
+        try {
+            stat = con.createStatement( );
+            con.createStatement().executeUpdate("DELETE FROM rfid WHERE nis='"+txt_searchsiswa.getText()+"'");
+            rs   = stat.executeQuery(sql);
+            } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
             "Delete Data Siswa Gagal", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -150,7 +164,7 @@ public class keloladata_bk extends javax.swing.JFrame {
                 String simpan = "insert into siswa values ('"+txt_nisformsiswa.getText()
                         +"','"+txt_rfidformsiswa.getText()
                         +"','"+txt_nkformsiswa.getText()
-                        +"','"+txt_idwalasformsiswa.getText()
+                        +"','"+wlssiswa
                         +"','"+txt_namaformsiswa.getText()
                         +"','"+txt_alamatformsiswa.getText()
                         +"','"+jeniskelamin
@@ -179,7 +193,7 @@ public class keloladata_bk extends javax.swing.JFrame {
            rs   = stat.executeQuery(sql);
            while(rs.next ()){ 
                 obj[0] = rs.getString("idwalikelas");
-                txt_idwalasformsiswa.setText((String) obj[0]);
+                wlssiswa=(String) obj[0];
             }
            if (obj[0]==null){
                JOptionPane.showMessageDialog(this, "Data Kelas Tidak Ditemukan","Pesan",JOptionPane.ERROR_MESSAGE);
@@ -290,11 +304,14 @@ public class keloladata_bk extends javax.swing.JFrame {
             txt_nissiswa.setEnabled(true);
             txt_namasiswa.setEnabled(true);
             txt_alamatsiswa.setEnabled(true);
-            txt_gendersiswa.setEnabled(true);
             txt_notelpsiswa.setEnabled(true);
             txt_emailsiswa.setEnabled(true);
             txt_ortusiswa.setEnabled(true);
             txt_noortusiswa.setEnabled(true);
+            txt_gendersiswa.setVisible(false);
+            txt_gendersiswa.setEnabled(false);
+            cb_gendersiswa.setVisible(true);
+            cb_gendersiswa.setEnabled(true);
         }
         else{
             btn_scanprofilesiswa.setEnabled(false);
@@ -303,12 +320,15 @@ public class keloladata_bk extends javax.swing.JFrame {
             txt_nksiswa.setEnabled(false);
             txt_namasiswa.setEnabled(false);
             txt_alamatsiswa.setEnabled(false);
-            txt_gendersiswa.setEnabled(false);
             txt_notelpsiswa.setEnabled(false);
             txt_emailsiswa.setEnabled(false);
             txt_walassiswa.setEnabled(false);
             txt_ortusiswa.setEnabled(false);
             txt_noortusiswa.setEnabled(false);
+            txt_gendersiswa.setVisible(true);
+            txt_gendersiswa.setEnabled(false);
+            cb_gendersiswa.setVisible(false);
+            cb_gendersiswa.setEnabled(false);
         }
     }
     
@@ -324,13 +344,14 @@ public class keloladata_bk extends javax.swing.JFrame {
         }
         catch (SQLException ex) {            
         }
+        this.updatejkprofilesiswa();
         try {
             // TODO add your handling code here:
             stat = con.createStatement( );
             con.createStatement().executeUpdate("UPDATE siswa set   nis='"+txt_nissiswa.getText()+"', "                                                                       
                                                                         + "nama='"+txt_namasiswa.getText()+"', "
                                                                         + "alamat='"+txt_alamatsiswa.getText()+"', "
-                                                                        + "jeniskelamin='"+txt_gendersiswa.getText()+"', "
+                                                                        + "jeniskelamin='"+gendersiswa+"', "
                                                                         + "email='"+txt_emailsiswa.getText()+"', "
                                                                         + "notlp='"+txt_notelpsiswa.getText()+"', "
                                                                         + "namaortu='"+txt_ortusiswa.getText()+"', "        
@@ -339,6 +360,7 @@ public class keloladata_bk extends javax.swing.JFrame {
             rs   = stat.executeQuery(sql);
             JOptionPane.showMessageDialog(null, ("Data Siswa Berhasil di Update"), 
             "Data Profile Siswa", JOptionPane.INFORMATION_MESSAGE);
+            this.tampilprofilesiswa();
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data Siswa Gagal di Update"), 
             "Data Profile Siswa Error", JOptionPane.INFORMATION_MESSAGE);
@@ -346,6 +368,10 @@ public class keloladata_bk extends javax.swing.JFrame {
         }
     }
     
+    public void updatejkprofilesiswa(){
+        String value = cb_gendersiswa.getSelectedItem().toString();
+        gendersiswa=value;
+    }
     //PROSEDUR MENCARI DATA SISWA PADA TABEL
     public void querysearchsiswa(){
         int row = tabel_siswa.getRowCount();
@@ -383,6 +409,29 @@ public class keloladata_bk extends javax.swing.JFrame {
         }
     }
     
+    public void querynamawalassiswa(){
+        try {
+            stat = con.createStatement( );
+            sql  = "Select nama from walikelas where idwalikelas='"+wlssiswa+"'";
+            rs   = stat.executeQuery(sql);
+            while(rs.next ()){ 
+                txt_idwalasformsiswa.setText(rs.getString("nama"));
+            }            
+        } catch (SQLException ex) {  
+            System.out.println(ex);
+        }
+    }
+    
+    public void queryidwalassiswa(){
+        try {
+            stat = con.createStatement( );
+            sql  = "Select idwalikelas from walikelas where nama='"+txt_idwalasformsiswa.getText()+"'";
+            rs   = stat.executeQuery(sql);
+            wlssiswa = rs.getString("idwalikelas");
+            
+        } catch (SQLException ex) {   
+        }
+    }
 
     //================================GURU====================================//
     //VOID MENAMPILKAN DATA WALAS PADA TABEL
@@ -1266,27 +1315,7 @@ System.out.println(e);
       }
     }
     
-    public void editprofileadmin(boolean check){
-        if (check==true){
-            txt_namaprofileadmin.setEnabled(false);
-            txt_nipprofileadmin.setEnabled(false);
-            txt_namaprofileadmin.setEnabled(false);
-            txt_usernameprofileadmin.setEnabled(true);
-            txt_passprofileadmin.setEnabled(true);
-            txt_statusprofileadmin.setEnabled(true);
-            
-        }
-        else{
-            txt_namaprofileadmin.setEnabled(false);
-            txt_nipprofileadmin.setEnabled(false);
-            txt_namaprofileadmin.setEnabled(false);
-            txt_usernameprofileadmin.setEnabled(false);
-            txt_passprofileadmin.setEnabled(false);
-            txt_statusprofileadmin.setEnabled(false);
-        }
-    }    
-
-    //PROSEDUR MENGHAPUS DATA ADMIN PADA TABEL
+    //HAPUS DATA ADMIN
     public void deletedataadmin(){
         model = new DefaultTableModel();
         tabel_admin.setModel(model);
@@ -1301,29 +1330,6 @@ System.out.println(e);
             con.createStatement().executeUpdate("DELETE FROM admin WHERE idadmin='"+saveadm.getText()+"'");
             rs   = stat.executeQuery(sql);
             int no=1;
-//            while(rs.next ()){
-//                 Object[ ] obj = new Object[6];
-//                 obj[0] = Integer.toString(no);
-//                 obj[1] = rs.getString("idadmin");
-//                 obj[2] = rs.getString("nip");
-//                 obj[3] = rs.getString("nama");
-//                 obj[4] = rs.getString("username");
-//                 String getlevel = rs.getString("level");
-//                 if ("0".equals(getlevel))
-//                 {
-//                     obj[5]="Guru BK";
-//                 }
-//                 else if("1".equals(getlevel))
-//                 {
-//                     obj[5]="Bagian IT";
-//                 }
-//                 else
-//                 {
-//                     obj[5]="Kepala Sekolah";
-//                 }
-//                 model.addRow(obj);
-//                 no++;
-//             }
             this.tampiladmin();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
@@ -1332,7 +1338,6 @@ System.out.println(e);
         }
     }
     
-    //PROSEDUR VALIDASI HAPUS DATA ADMIN PADA TABEL
     public void validasideletedataadmin(){
         try{
            stat = con.createStatement( );
@@ -1389,83 +1394,6 @@ System.out.println(e);
         }
     }
     
-    public void leveladmin(){
-        String value = txt_level.getSelectedItem().toString();
-        if ("Guru BK".equals(value))
-        {
-            leveluser="0";
-        }
-        else if ("Bagian IT".equals(value))
-        {
-            leveluser="1";
-        }
-        else
-        {
-            leveluser="2";
-        }
-    }
-    
-    public void simpandataadmin(){
-        try {
-            // TODO add your handling code here:
-            stat = con.createStatement( );
-            this.convernamawalaskelas();
-            con.createStatement().executeUpdate("UPDATE admin set   nip='"+txt_searchadmin.getText()+"', "
-                                                                        + "idadmin='"+txt_idadminprofileadmin+"', "
-                                                                        + "nama='"+txt_namaprofileadmin.getText()+"', "
-                                                                        + "username='"+txt_usernameprofileadmin.getText()+"', "
-                                                                        + "password='"+txt_passprofileadmin.getText()+"', "
-                                                                         + "status='"+txt_statusprofileadmin.getText()+"' "
-                                                                        + "WHERE nip='"+Session.getnipadmin()+"'");
-            rs   = stat.executeQuery(sql);
-            
-            this.tampilprofilekelas();
-            
-            JOptionPane.showMessageDialog(null, ("Data Admin Berhasil di Update"), 
-            "Data Profile Admin", JOptionPane.INFORMATION_MESSAGE);
-        }catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ("Data Admin Gagal di Update"), 
-            "Data Profile Admin Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println(ex);
-        }
-    }
-    
-    //PROSEDUR MENAMPILKAN DATA PROFILE GURU VIA ADMIN
-    public void tampilprofileadmin(){
-        try {
-            Session.setnipguru(null);
-            if(saveadm.getText()!=null){
-                stat = con.createStatement( );
-                sql  = "SELECT * FROM admin WHERE nip='"+Session.getnipadmin()+"'";
-            
-                rs   = stat.executeQuery(sql);
-                while(rs.next ()){
-                    Object[ ] obj = new Object[7];
-                    obj[0] =rs.getString("idadmin");
-                    txt_idadminprofileadmin.setText((String) obj[0]);
-                    obj[1] =rs.getString("nip");
-                    txt_nipprofileadmin.setText((String) obj[1]);
-                    obj[2] =rs.getString("nama");
-                    txt_namaprofileadmin.setText((String) obj[2]);
-                    obj[3] =rs.getString("username");
-                    txt_usernameprofileadmin.setText((String) obj[3]);
-                    obj[4] =rs.getString("password");
-                    txt_passprofileadmin.setText((String) obj[4]);
-                    obj[5] =rs.getString("level");
-                    txt_statusprofileadmin.setText((String) obj[5]);
-                    
-                }
-            }
-            else{
-                JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
-                "Lihat Profile Admin Gagal", JOptionPane.INFORMATION_MESSAGE);
-            }    
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
-            "Lihat Profile Guru Gagal", JOptionPane.INFORMATION_MESSAGE);
-        } 
-    }
-    
     public void querydataguruadmin(){
         try {
             Object[ ] obj = new Object[1];
@@ -1487,7 +1415,178 @@ System.out.println(e);
             System.out.println(ex);
         }
     }
-   
+    
+    public void leveladmin(){
+        String value = txt_level.getSelectedItem().toString();
+        if ("Guru BK".equals(value))
+        {
+            leveluser="0";
+        }
+        else if ("Bagian IT".equals(value))
+        {
+            leveluser="1";
+        }
+        else
+        {
+            leveluser="2";
+        }
+    }
+    
+    //UPDATE DATA ADMIN
+    public void simpandataadmin(){
+        try {
+            // TODO add your handling code here:
+            stat = con.createStatement( );
+            this.convertstatusprofileadmin();
+            con.createStatement().executeUpdate("UPDATE admin set   nip='"+txt_searchadmin.getText()+"', "
+                                                                        + "idadmin='"+txt_idadminprofileadmin.getText()+"', "
+                                                                        + "nama='"+txt_namaprofileadmin.getText()+"', "
+                                                                        + "username='"+txt_usernameprofileadmin.getText()+"', "
+                                                                        + "password='"+txt_passprofileadmin.getText()+"', "
+                                                                         + "level='"+leveluser3+"' "
+                                                                        + "WHERE nip='"+Session.getnipadmin()+"'");
+            rs   = stat.executeQuery(sql);
+            
+            this.tampilprofileadmin();
+            
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data Admin Gagal di Update"), 
+            "Data Profile Admin Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex);
+        }
+    }
+    
+    public void checkusernameprofileadmin(){
+        if(txt_nipprofileadmin.getText().equals(Session.geteditadmin()))
+        {
+            int jwbn=JOptionPane.showConfirmDialog(null, "Benarkah anda ingin merubah username diri sendiri? (Relogin)", "Update Data Admin",JOptionPane.YES_NO_OPTION);
+            if (jwbn==JOptionPane.YES_OPTION){
+                this.simpandataadmin();
+                this.logout();
+            }
+        }
+        else{
+            this.simpandataadmin();
+            JOptionPane.showMessageDialog(null, ("Data Admin Berhasil di Update"), 
+            "Data Profile Admin", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+    public void convertstatusprofileadmin(){
+        String value = cb_statusprofileadmin.getSelectedItem().toString();
+        if(value=="Guru BK"){
+            leveluser3=0;
+        }
+        else if(value=="Bagian IT"){
+            leveluser3=1;
+        }
+        else{
+            leveluser3=2;
+        }
+    }
+    
+    public void checkpassprofileadmin(){
+        if(btn_checkpassprofileadmin.isSelected()){
+            txt_passprofileadmin.setVisible(false);
+            txt_pass2profileadmin.setVisible(true);
+            txt_pass2profileadmin.setEnabled(false);
+            txt_usernameprofileadmin.setEnabled(false);
+            txt_statusprofileadmin.setEnabled(false);
+        }
+        else{
+            txt_passprofileadmin.setVisible(true);
+            txt_passprofileadmin.setEnabled(false);
+            txt_pass2profileadmin.setVisible(false);
+        }
+    }
+    
+    public void editprofileadmin(boolean check){
+        if (check==true){
+            txt_namaprofileadmin.setEnabled(false);
+            txt_nipprofileadmin.setEnabled(false);
+            txt_namaprofileadmin.setEnabled(false);
+            txt_usernameprofileadmin.setEnabled(true);
+            txt_passprofileadmin.setEnabled(true);
+            txt_statusprofileadmin.setEnabled(true);
+            txt_pass2profileadmin.setVisible(false);
+            txt_passprofileadmin.setVisible(true);
+            if("Guru BK".equals(txt_statusprofileadmin.getText())){
+                txt_statusprofileadmin.setEnabled(false);
+                txt_statusprofileadmin.setVisible(true);
+                cb_statusprofileadmin.setVisible(false);
+                cb_statusprofileadmin.setEnabled(false);
+            }
+            else{
+                txt_statusprofileadmin.setEnabled(false);
+                txt_statusprofileadmin.setVisible(false);
+                cb_statusprofileadmin.setVisible(true);
+                cb_statusprofileadmin.setEnabled(true);
+            }
+        }
+        else{
+            txt_namaprofileadmin.setEnabled(false);
+            txt_nipprofileadmin.setEnabled(false);
+            txt_namaprofileadmin.setEnabled(false);
+            txt_usernameprofileadmin.setEnabled(false);
+            txt_passprofileadmin.setEnabled(false);
+            txt_statusprofileadmin.setEnabled(false);
+            txt_statusprofileadmin.setEnabled(false);
+            txt_statusprofileadmin.setVisible(true);
+            cb_statusprofileadmin.setVisible(false);
+            cb_statusprofileadmin.setEnabled(false);
+        }
+    }   
+    
+    //PROSEDUR PROFILE ADMIN
+    public void tampilprofileadmin(){
+        try {
+            if(saveadm.getText()!=null){
+                stat = con.createStatement( );
+                sql  = "SELECT * FROM admin WHERE nip='"+Session.getnipadmin()+"'";
+            
+                rs   = stat.executeQuery(sql);
+                while(rs.next ()){
+                    Object[ ] obj = new Object[7];
+                    obj[0] =rs.getString("idadmin");
+                    txt_idadminprofileadmin.setText((String) obj[0]);
+                    obj[1] =rs.getString("nip");
+                    txt_nipprofileadmin.setText((String) obj[1]);
+                    obj[2] =rs.getString("nama");
+                    txt_namaprofileadmin.setText((String) obj[2]);
+                    obj[3] =rs.getString("username");
+                    txt_usernameprofileadmin.setText((String) obj[3]);
+                    obj[4] =rs.getString("password");
+                    txt_passprofileadmin.setText((String) obj[4]);
+                    obj[5] =rs.getString("password");
+                    txt_pass2profileadmin.setText((String) obj[5]);
+                    obj[6] =rs.getString("level");
+                    leveluser2=(String) obj[6];    
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+                "Lihat Profile Admin Gagal", JOptionPane.INFORMATION_MESSAGE);
+            }    
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+            "Lihat Profile Guru Gagal", JOptionPane.INFORMATION_MESSAGE);
+        } 
+    }
+
+    public void convertstatusadmin(){
+        if (leveluser2.equals("0"))
+        {
+            txt_statusprofileadmin.setText("Guru BK");
+        }
+        else if(leveluser2.equals("1"))
+        {
+            txt_statusprofileadmin.setText("Bagian IT");
+        }
+        else{
+            txt_statusprofileadmin.setText("Kepala Sekolah");
+        }
+    }
+    
     //PROSEDUR MENCARI DATA ADMIN PADA TABEL
     public void querysearchadmin(){
         int row = tabel_admin.getRowCount();
@@ -1543,7 +1642,7 @@ System.out.println(e);
     public void tampilabsen(){        
         model = new DefaultTableModel ( );
         tabel_absen.setModel(model);
-        model.addColumn("No");
+        model.addColumn("idabsen");
         model.addColumn("NIS");
         model.addColumn("NK");
         model.addColumn("Nama");
@@ -1555,10 +1654,9 @@ System.out.println(e);
            stat = con.createStatement( );
            sql  = "Select * from absen";
            rs   = stat.executeQuery(sql);
-           int no=1;
            while(rs.next ()){
                 Object[ ] obj = new Object[7];
-                obj[0] = Integer.toString(no);
+                obj[0] = rs.getString("idabsen");
                 obj[1] = rs.getString("nis");
                 obj[2] = rs.getString("nk");
                 obj[3] = rs.getString("nama");
@@ -1566,7 +1664,6 @@ System.out.println(e);
                 obj[5] = rs.getString("jam");
                 obj[6] = rs.getString("status");
                 model.addRow(obj);
-                no++;
             }
             
              tabel_absen.setModel(model);
@@ -1579,7 +1676,8 @@ System.out.println(e);
        try {
 
             stat = con.createStatement( );
-            con.createStatement().executeUpdate("UPDATE absen set status='"+cb_statusdataabsen.getSelectedItem()+"' WHERE nis='"+txt_searchdataabsen.getText()+"'");
+            con.createStatement().executeUpdate("UPDATE absen set status='"+cb_statusdataabsen.getSelectedItem()+"' WHERE idabsen='"+idabsen+"'");
+            System.out.println(idabsen);
             rs   = stat.executeQuery(sql);
             
             this.tampilabsen();
@@ -1605,10 +1703,9 @@ System.out.println(e);
            sql  = "Select * from absen WHERE nis='"+txt_searchdataabsen.getText()+"'";
            rs   = stat.executeQuery(sql);
 
-           int no=1;
            while(rs.next ()){
                 Object[ ] obj = new Object[7];
-                obj[0] = Integer.toString(no);
+                obj[0] = rs.getString("idabsen");
                 obj[1] = rs.getString("nis");
                 obj[2] = rs.getString("nk");
                 obj[3] = rs.getString("nama");
@@ -1616,7 +1713,6 @@ System.out.println(e);
                 obj[5] = rs.getString("jam");
                 obj[6] = rs.getString("status");
                 model.addRow(obj);
-                no++;
             }
         } catch (SQLException ex) {
             Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
@@ -1627,7 +1723,8 @@ System.out.println(e);
         int i = tabel_absen.getSelectedRow();
         if(i>-1){
             txt_searchdataabsen.setText(model.getValueAt(i, 1).toString());
-            Session.setabsen(txt_searchdataabsen.getText());
+            lb_idabsen.setText(model.getValueAt(i, 0).toString());
+            idabsen=lb_idabsen.getText();
         }
     }
     //==============================PERIPHERAL================================//
@@ -1799,6 +1896,18 @@ System.out.println(e);
         dataadmin.setVisible(false);
     }
     
+    public void logout(){
+        btn_logout.setBackground(new Color(88,163,234));
+        this.setVisible(false);
+        Session.setusername(null);
+        Session.setnipguru(null);
+        Session.setnipadmin(null);
+        Session.setnissiswa(null);
+        Session.setnipwalas(null);
+        Session.setnkkelas(null);
+        login lgn=new login();
+        lgn.setVisible(true);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1887,6 +1996,7 @@ System.out.println(e);
         txt_walassiswa = new javax.swing.JTextField();
         txt_ortusiswa = new javax.swing.JTextField();
         txt_noortusiswa = new javax.swing.JTextField();
+        cb_gendersiswa = new javax.swing.JComboBox<>();
         btn_scanprofilesiswa = new javax.swing.JButton();
         btn_editprofilesiswa = new javax.swing.JButton();
         btn_simpanprofilesiswa = new javax.swing.JButton();
@@ -2166,14 +2276,15 @@ System.out.println(e);
         txt_idadminprofileadmin = new javax.swing.JTextField();
         txt_namaprofileadmin = new javax.swing.JTextField();
         txt_usernameprofileadmin = new javax.swing.JTextField();
-        txt_passprofileadmin = new javax.swing.JTextField();
+        txt_passprofileadmin = new javax.swing.JPasswordField();
+        txt_pass2profileadmin = new javax.swing.JTextField();
         txt_statusprofileadmin = new javax.swing.JTextField();
         txt_nipprofileadmin = new javax.swing.JTextField();
-        btn_simpanprofilekelas1 = new javax.swing.JButton();
-        btn_editprofilekelas1 = new javax.swing.JButton();
-        btn_lihatprofilekelas1 = new javax.swing.JButton();
-        btn_kembaliprofilekelas1 = new javax.swing.JButton();
-        cb_walasprofilekelas1 = new javax.swing.JComboBox<>();
+        btn_checkpassprofileadmin = new javax.swing.JToggleButton();
+        btn_simpanprofileadmin = new javax.swing.JButton();
+        btn_editprofileadmin = new javax.swing.JButton();
+        btn_kembaliprofileadmin = new javax.swing.JButton();
+        cb_statusprofileadmin = new javax.swing.JComboBox<>();
         bgprofileadmin = new javax.swing.JLabel();
         dataabsensi = new javax.swing.JLayeredPane();
         panelabsensi = new javax.swing.JPanel();
@@ -2184,6 +2295,7 @@ System.out.println(e);
         cb_statusdataabsen = new javax.swing.JComboBox<>();
         btn_updateabsen = new javax.swing.JButton();
         bgabsensi = new javax.swing.JLabel();
+        lb_idabsen = new javax.swing.JLabel();
         datalapabsensi = new javax.swing.JLayeredPane();
         panellapabsensi = new javax.swing.JPanel();
         txt_searchbynis = new javax.swing.JTextField();
@@ -2616,12 +2728,6 @@ System.out.println(e);
         datasiswa.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelsiswa.setLayout(null);
-
-        txt_searchsiswa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_searchsiswaActionPerformed(evt);
-            }
-        });
         panelsiswa.add(txt_searchsiswa);
         txt_searchsiswa.setBounds(190, 110, 710, 30);
 
@@ -2775,6 +2881,12 @@ System.out.println(e);
         txt_noortusiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_noortusiswa.setEnabled(false);
         panelprofilesiswa.add(txt_noortusiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 538, 550, 30));
+
+        cb_gendersiswa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-Laki", "Perempuan" }));
+        cb_gendersiswa.setFocusable(false);
+        cb_gendersiswa.setLightWeightPopupEnabled(false);
+        cb_gendersiswa.setRequestFocusEnabled(false);
+        panelprofilesiswa.add(cb_gendersiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 335, 550, 30));
 
         btn_scanprofilesiswa.setText("Scan");
         btn_scanprofilesiswa.setEnabled(false);
@@ -3964,11 +4076,6 @@ System.out.println(e);
         panelkelas.add(btn_refreshkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 110, 60, 30));
 
         tabkelas.setBackground(new java.awt.Color(255, 255, 255));
-        tabkelas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabkelasMouseClicked(evt);
-            }
-        });
 
         tabel_kelas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -4099,11 +4206,6 @@ System.out.println(e);
         panelprofilekelas.add(txt_angkatanprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 220, 530, 30));
 
         txt_jurusanprofilekelas.setEnabled(false);
-        txt_jurusanprofilekelas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_jurusanprofilekelasActionPerformed(evt);
-            }
-        });
         panelprofilekelas.add(txt_jurusanprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 270, 530, 30));
 
         txt_namaprofilekelas.setEnabled(false);
@@ -4439,15 +4541,12 @@ System.out.println(e);
         panelprofileadmin.add(txt_namaprofileadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 220, 530, 30));
 
         txt_usernameprofileadmin.setEnabled(false);
-        txt_usernameprofileadmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_usernameprofileadminActionPerformed(evt);
-            }
-        });
         panelprofileadmin.add(txt_usernameprofileadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 270, 530, 30));
 
+        txt_passprofileadmin.setText("jPasswordField1");
         txt_passprofileadmin.setEnabled(false);
-        panelprofileadmin.add(txt_passprofileadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 530, 30));
+        panelprofileadmin.add(txt_passprofileadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 460, 30));
+        panelprofileadmin.add(txt_pass2profileadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 460, 30));
 
         txt_statusprofileadmin.setEnabled(false);
         panelprofileadmin.add(txt_statusprofileadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 530, 30));
@@ -4455,53 +4554,57 @@ System.out.println(e);
         txt_nipprofileadmin.setEnabled(false);
         panelprofileadmin.add(txt_nipprofileadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 530, 30));
 
-        btn_simpanprofilekelas1.setBackground(new java.awt.Color(255, 255, 255));
-        btn_simpanprofilekelas1.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_simpanprofilekelas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/floppy-disk.png"))); // NOI18N
-        btn_simpanprofilekelas1.setText("Simpan");
-        btn_simpanprofilekelas1.setIconTextGap(18);
-        btn_simpanprofilekelas1.setMargin(new java.awt.Insets(1, 1, 1, 10));
-        btn_simpanprofilekelas1.addActionListener(new java.awt.event.ActionListener() {
+        btn_checkpassprofileadmin.setText("Lihat");
+        btn_checkpassprofileadmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_simpanprofilekelas1ActionPerformed(evt);
+                btn_checkpassprofileadminActionPerformed(evt);
             }
         });
-        panelprofileadmin.add(btn_simpanprofilekelas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 560, 140, 40));
+        panelprofileadmin.add(btn_checkpassprofileadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 320, 60, 30));
 
-        btn_editprofilekelas1.setBackground(new java.awt.Color(255, 255, 255));
-        btn_editprofilekelas1.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_editprofilekelas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/edit.png"))); // NOI18N
-        btn_editprofilekelas1.setText("Edit");
-        btn_editprofilekelas1.setIconTextGap(18);
-        btn_editprofilekelas1.setMargin(new java.awt.Insets(1, 1, 1, 10));
-        btn_editprofilekelas1.addActionListener(new java.awt.event.ActionListener() {
+        btn_simpanprofileadmin.setBackground(new java.awt.Color(255, 255, 255));
+        btn_simpanprofileadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_simpanprofileadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/floppy-disk.png"))); // NOI18N
+        btn_simpanprofileadmin.setText("Simpan");
+        btn_simpanprofileadmin.setIconTextGap(18);
+        btn_simpanprofileadmin.setMargin(new java.awt.Insets(1, 1, 1, 10));
+        btn_simpanprofileadmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_editprofilekelas1ActionPerformed(evt);
+                btn_simpanprofileadminActionPerformed(evt);
             }
         });
-        panelprofileadmin.add(btn_editprofilekelas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 560, 140, 40));
+        panelprofileadmin.add(btn_simpanprofileadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 560, 140, 40));
 
-        btn_lihatprofilekelas1.setBackground(new java.awt.Color(255, 255, 255));
-        btn_lihatprofilekelas1.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_lihatprofilekelas1.setText("Lihat Siswa");
-        panelprofileadmin.add(btn_lihatprofilekelas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 560, 140, 40));
-
-        btn_kembaliprofilekelas1.setBackground(new java.awt.Color(255, 255, 255));
-        btn_kembaliprofilekelas1.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_kembaliprofilekelas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_kembali.png"))); // NOI18N
-        btn_kembaliprofilekelas1.setIconTextGap(18);
-        btn_kembaliprofilekelas1.setMargin(new java.awt.Insets(1, 10, 1, 10));
-        btn_kembaliprofilekelas1.addActionListener(new java.awt.event.ActionListener() {
+        btn_editprofileadmin.setBackground(new java.awt.Color(255, 255, 255));
+        btn_editprofileadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_editprofileadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/edit.png"))); // NOI18N
+        btn_editprofileadmin.setText("Edit");
+        btn_editprofileadmin.setIconTextGap(18);
+        btn_editprofileadmin.setMargin(new java.awt.Insets(1, 1, 1, 10));
+        btn_editprofileadmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_kembaliprofilekelas1ActionPerformed(evt);
+                btn_editprofileadminActionPerformed(evt);
             }
         });
-        panelprofileadmin.add(btn_kembaliprofilekelas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 560, 55, 35));
+        panelprofileadmin.add(btn_editprofileadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 560, 140, 40));
 
-        cb_walasprofilekelas1.setFocusable(false);
-        cb_walasprofilekelas1.setLightWeightPopupEnabled(false);
-        cb_walasprofilekelas1.setRequestFocusEnabled(false);
-        panelprofileadmin.add(cb_walasprofilekelas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 530, 30));
+        btn_kembaliprofileadmin.setBackground(new java.awt.Color(255, 255, 255));
+        btn_kembaliprofileadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_kembaliprofileadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_kembali.png"))); // NOI18N
+        btn_kembaliprofileadmin.setIconTextGap(18);
+        btn_kembaliprofileadmin.setMargin(new java.awt.Insets(1, 10, 1, 10));
+        btn_kembaliprofileadmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kembaliprofileadminActionPerformed(evt);
+            }
+        });
+        panelprofileadmin.add(btn_kembaliprofileadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 560, 55, 35));
+
+        cb_statusprofileadmin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Guru BK", "Bagian IT", "Kepala Sekolah" }));
+        cb_statusprofileadmin.setFocusable(false);
+        cb_statusprofileadmin.setLightWeightPopupEnabled(false);
+        cb_statusprofileadmin.setRequestFocusEnabled(false);
+        panelprofileadmin.add(cb_statusprofileadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 530, 30));
 
         bgprofileadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelprofileadmin.png"))); // NOI18N
         panelprofileadmin.add(bgprofileadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -4538,6 +4641,11 @@ System.out.println(e);
                 "No", "NIS", "NK", "Nama", "Jam", "Tanggal", "Status"
             }
         ));
+        tabel_absen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_absenMouseClicked(evt);
+            }
+        });
         tababsen.setViewportView(tabel_absen);
 
         panelabsensi.add(tababsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 1010, 400));
@@ -4561,6 +4669,9 @@ System.out.println(e);
 
         bgabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelabsensi.png"))); // NOI18N
         panelabsensi.add(bgabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        lb_idabsen.setText("jLabel2");
+        panelabsensi.add(lb_idabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, -1, -1));
 
         dataabsensi.add(panelabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
 
@@ -4658,12 +4769,6 @@ System.out.println(e);
         lb_nislapabsen.setForeground(new java.awt.Color(0, 51, 204));
         lb_nislapabsen.setText("Id Walikelas");
         panelanggotakelas.add(lb_nislapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 174, -1, -1));
-
-        txt_searchnisanggotakelas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_searchnisanggotakelasActionPerformed(evt);
-            }
-        });
         panelanggotakelas.add(txt_searchnisanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 400, 30));
 
         lb_idwalasanggotakelas.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
@@ -4860,15 +4965,7 @@ System.out.println(e);
 
     private void btn_logoutMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_logoutMousePressed
         btn_logout.setBackground(new Color(88,163,234));
-        this.setVisible(false);
-        Session.setusername(null);
-        Session.setnipguru(null);
-        Session.setnipadmin(null);
-        Session.setnissiswa(null);
-        Session.setnipwalas(null);
-        Session.setnkkelas(null);
-        login lgn=new login();
-        lgn.setVisible(true);
+        this.logout();
     }//GEN-LAST:event_btn_logoutMousePressed
 
     private void btn_logoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_logoutMouseExited
@@ -4897,6 +4994,7 @@ System.out.println(e);
             Session.setnipadmin(txt_searchadmin.getText());
             switchpanel(profileadmin);
             this.tampilprofileadmin();
+            this.convertstatusadmin();
         }else{
             JOptionPane.showMessageDialog(null, ("Data Tidak Ditemukan"), 
             "Data Profile Admin", JOptionPane.INFORMATION_MESSAGE);
@@ -4933,7 +5031,6 @@ System.out.println(e);
     private void btn_simpanprofilesiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanprofilesiswaActionPerformed
         this.simpanprofilesiswa();
         this.editprofilesiswa(false);
-        
     }//GEN-LAST:event_btn_simpanprofilesiswaActionPerformed
 
     private void btn_lihatwalikelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihatwalikelasActionPerformed
@@ -4958,20 +5055,7 @@ System.out.println(e);
         this.tampilwalas();
         this.editprofilewalas(false);
         txt_searchwalikelas.setText("");
-        
-        /*if(Session.getnipwalas()==null){
-            Session.setnipadmin(null);
-            switchpanel(dataadmin);
-            this.tampiladmin();
-            txt_searchadmin.setText("");
-        }
-        else{
-            Session.setnipguru(null);
-            switchpanel(datawalikelas);
-            this.editprofilewalas(false);
-            this.tampilwalas();
-            txt_searchwalikelas.setText("");
-        }*/
+
     }//GEN-LAST:event_btn_kembaliprofilewalikelasActionPerformed
 
     private void btn_simpanprofilewalikelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanprofilewalikelasActionPerformed
@@ -5119,6 +5203,7 @@ System.out.println(e);
 
     private void btn_scantambahsiswa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_scantambahsiswa1ActionPerformed
         this.walastambahsiswa();
+        this.querynamawalassiswa();
     }//GEN-LAST:event_btn_scantambahsiswa1ActionPerformed
 
     private void btn_simpanformguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanformguruActionPerformed
@@ -5166,7 +5251,6 @@ System.out.println(e);
     }//GEN-LAST:event_btn_lihatkelasActionPerformed
 
     private void btn_hapuskelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapuskelasActionPerformed
-        // TODO add your handling code here:
         this.validasideletedatakelas();
     }//GEN-LAST:event_btn_hapuskelasActionPerformed
 
@@ -5185,18 +5269,6 @@ System.out.println(e);
         // TODO add your handling code here:
         this.tampilkelas();
     }//GEN-LAST:event_btn_refreshkelasActionPerformed
-
-    private void txt_jurusanprofilekelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_jurusanprofilekelasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_jurusanprofilekelasActionPerformed
-
-    private void txt_searchsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_searchsiswaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_searchsiswaActionPerformed
-
-    private void tabkelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabkelasMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tabkelasMouseClicked
 
     private void tabel_kelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_kelasMouseClicked
         // TODO add your handling code here:
@@ -5264,7 +5336,7 @@ System.out.println(e);
     }//GEN-LAST:event_btn_kembaliformkelasActionPerformed
 
     private void btn_hapusadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapusadminActionPerformed
-        //validasideletedataadmin();
+        this.validasideletedataadmin();
     }//GEN-LAST:event_btn_hapusadminActionPerformed
 
     private void btn_kembaliriwayatabsenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliriwayatabsenActionPerformed
@@ -5273,24 +5345,25 @@ System.out.println(e);
         tampilprofilesiswa();
     }//GEN-LAST:event_btn_kembaliriwayatabsenActionPerformed
 
-    private void txt_usernameprofileadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usernameprofileadminActionPerformed
+    private void btn_simpanprofileadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanprofileadminActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_usernameprofileadminActionPerformed
+        this.checkusernameprofileadmin();
+        this.editprofileadmin(false);
+    }//GEN-LAST:event_btn_simpanprofileadminActionPerformed
 
-    private void btn_simpanprofilekelas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanprofilekelas1ActionPerformed
-        // TODO add your handling code here:
-        this.simpandataadmin();
-        this.tampiladmin();
-    }//GEN-LAST:event_btn_simpanprofilekelas1ActionPerformed
-
-    private void btn_editprofilekelas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editprofilekelas1ActionPerformed
-        // TODO add your handling code here:
+    private void btn_editprofileadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editprofileadminActionPerformed
         this.editprofileadmin(true);
-    }//GEN-LAST:event_btn_editprofilekelas1ActionPerformed
+    }//GEN-LAST:event_btn_editprofileadminActionPerformed
 
-    private void btn_kembaliprofilekelas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliprofilekelas1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_kembaliprofilekelas1ActionPerformed
+    private void btn_kembaliprofileadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliprofileadminActionPerformed
+        switchpanel(dataadmin);
+        this.editprofileadmin(false);
+        this.tampiladmin();
+        btn_checkpassprofileadmin.setSelected(false);
+        txt_pass2profileadmin.setVisible(false);
+        txt_passprofileadmin.setVisible(true);
+        txt_searchadmin.setText("");
+    }//GEN-LAST:event_btn_kembaliprofileadminActionPerformed
 
     private void btn_updateabsenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateabsenActionPerformed
         // TODO add your handling code here:
@@ -5305,7 +5378,7 @@ System.out.println(e);
 
     private void btn_cetakanggotakelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakanggotakelasActionPerformed
         // TODO add your handling code here:
-         MessageFormat header = new MessageFormat("ANGGOTA KELAS");
+        MessageFormat header = new MessageFormat("ANGGOTA KELAS");
         try {
             tabel_anggotakelas.print(JTable.PrintMode.FIT_WIDTH, header,null);
         } catch (Exception e) {
@@ -5313,9 +5386,13 @@ System.out.println(e);
         }
     }//GEN-LAST:event_btn_cetakanggotakelasActionPerformed
 
-    private void txt_searchnisanggotakelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_searchnisanggotakelasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_searchnisanggotakelasActionPerformed
+    private void btn_checkpassprofileadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_checkpassprofileadminActionPerformed
+        this.checkpassprofileadmin();
+    }//GEN-LAST:event_btn_checkpassprofileadminActionPerformed
+
+    private void tabel_absenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_absenMouseClicked
+        this.querysearchklikabsen();
+    }//GEN-LAST:event_tabel_absenMouseClicked
 
     
     public static void main(String args[]) {
@@ -5354,6 +5431,7 @@ System.out.println(e);
     private javax.swing.JButton btn_addkelas;
     private javax.swing.JButton btn_cetakanggotakelas;
     private javax.swing.JButton btn_cetakriwayatsiswa;
+    private javax.swing.JToggleButton btn_checkpassprofileadmin;
     private javax.swing.JButton btn_daftarregadmin;
     private javax.swing.JPanel btn_dashboard;
     private javax.swing.JPanel btn_dataabsensi;
@@ -5362,9 +5440,9 @@ System.out.println(e);
     private javax.swing.JPanel btn_datakelas;
     private javax.swing.JPanel btn_datasiswa;
     private javax.swing.JPanel btn_datawalikelas;
+    private javax.swing.JButton btn_editprofileadmin;
     private javax.swing.JButton btn_editprofileguru;
     private javax.swing.JButton btn_editprofilekelas;
-    private javax.swing.JButton btn_editprofilekelas1;
     private javax.swing.JButton btn_editprofilesiswa;
     private javax.swing.JButton btn_editprofilewalikelas;
     private javax.swing.JButton btn_hapusadmin;
@@ -5373,9 +5451,9 @@ System.out.println(e);
     private javax.swing.JButton btn_kembaliformguru;
     private javax.swing.JButton btn_kembaliformkelas;
     private javax.swing.JButton btn_kembaliformwalikelas;
+    private javax.swing.JButton btn_kembaliprofileadmin;
     private javax.swing.JButton btn_kembaliprofileguru;
     private javax.swing.JButton btn_kembaliprofilekelas;
-    private javax.swing.JButton btn_kembaliprofilekelas1;
     private javax.swing.JButton btn_kembaliprofilesiswa;
     private javax.swing.JButton btn_kembaliprofilewalikelas;
     private javax.swing.JButton btn_kembaliregadmin;
@@ -5387,7 +5465,6 @@ System.out.println(e);
     private javax.swing.JButton btn_lihatdatasiswa;
     private javax.swing.JButton btn_lihatguru;
     private javax.swing.JButton btn_lihatkelas;
-    private javax.swing.JButton btn_lihatprofilekelas1;
     private javax.swing.JButton btn_lihatprofilesiswabermasalah;
     private javax.swing.JButton btn_lihatsiswa;
     private javax.swing.JButton btn_lihatwalikelas;
@@ -5413,9 +5490,9 @@ System.out.println(e);
     private javax.swing.JButton btn_simpanformguru;
     private javax.swing.JButton btn_simpanformkelas;
     private javax.swing.JButton btn_simpanformwalikelas;
+    private javax.swing.JButton btn_simpanprofileadmin;
     private javax.swing.JButton btn_simpanprofileguru;
     private javax.swing.JButton btn_simpanprofilekelas;
-    private javax.swing.JButton btn_simpanprofilekelas1;
     private javax.swing.JButton btn_simpanprofilesiswa;
     private javax.swing.JButton btn_simpanprofilewalikelas;
     private javax.swing.JButton btn_simpantambahsiswa;
@@ -5424,12 +5501,13 @@ System.out.println(e);
     private javax.swing.JButton btn_tambahwalikelas;
     private javax.swing.JButton btn_updateabsen;
     private javax.swing.JButton btn_updatestatussiswabermasalah;
+    private javax.swing.JComboBox<String> cb_gendersiswa;
     private javax.swing.JComboBox<String> cb_searchriwayatsiswa;
     private javax.swing.JComboBox<String> cb_siswabermasalah;
     private javax.swing.JComboBox<String> cb_statusdataabsen;
+    private javax.swing.JComboBox<String> cb_statusprofileadmin;
     private javax.swing.JComboBox<String> cb_walasformkelas;
     private javax.swing.JComboBox<String> cb_walasprofilekelas;
-    private javax.swing.JComboBox<String> cb_walasprofilekelas1;
     private javax.swing.JLayeredPane dataabsensi;
     private javax.swing.JLayeredPane dataadmin;
     private javax.swing.JLayeredPane dataanggotakelas;
@@ -5508,6 +5586,7 @@ System.out.println(e);
     private javax.swing.JLabel lb_gambar2;
     private javax.swing.JLabel lb_gambar3;
     private javax.swing.JLabel lb_guru;
+    private javax.swing.JLabel lb_idabsen;
     private javax.swing.JLabel lb_idadminprofileadmin;
     private javax.swing.JLabel lb_idprofilewalikelas;
     private javax.swing.JLabel lb_idregadmin;
@@ -5711,7 +5790,8 @@ System.out.println(e);
     private javax.swing.JTextField txt_notelpprofilewalikelas;
     private javax.swing.JTextField txt_notelpsiswa;
     private javax.swing.JTextField txt_ortusiswa;
-    private javax.swing.JTextField txt_passprofileadmin;
+    private javax.swing.JTextField txt_pass2profileadmin;
+    private javax.swing.JPasswordField txt_passprofileadmin;
     private javax.swing.JPasswordField txt_passwordregadmin;
     private javax.swing.JTextField txt_rfidformsiswa;
     private javax.swing.JTextField txt_rfidsiswa;

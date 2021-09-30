@@ -10,6 +10,7 @@ public class Session {
     public static String nissiswa;
     public static String nipguru;
     public static String nipadmin;
+    public static String editadmin;
     public static String nipwalas;
     public static String nkkelas;
     public static String absen;
@@ -44,6 +45,14 @@ public class Session {
     
     public static String getnipadmin (){
         return nipadmin;
+    }
+    
+    public static void seteditadmin (String editadmin){
+        Session.editadmin = editadmin;
+    }
+    
+    public static String geteditadmin (){
+        return editadmin;
     }
     
     public static void setnipwalas (String nipwalas){

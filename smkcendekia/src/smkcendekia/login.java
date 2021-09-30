@@ -21,7 +21,7 @@ public class login extends javax.swing.JFrame {
     Connection con;
     Statement stat;
     ResultSet rs;
-    String sql,user;
+    String sql,user,nip;
     /**
      * Creates new form login
      */
@@ -52,6 +52,8 @@ public class login extends javax.swing.JFrame {
                         kdbk.username.setText(usernm);
                         kdbk.setVisible(true);
                         user = rs.getString("username");
+                        nip = rs.getString("nip");
+                        Session.seteditadmin(nip);
                         Session.setusername(user);
                         dispose();
                         //
