@@ -2053,6 +2053,7 @@ System.out.println(e);
         tabel_riwayatsiswa = new javax.swing.JTable();
         btn_refreshriwayatsiswa = new javax.swing.JButton();
         btn_kembaliriwayatabsen = new javax.swing.JButton();
+        btn_lihathistory = new javax.swing.JButton();
         bgriwayatsiswa = new javax.swing.JLabel();
         dataguru = new javax.swing.JLayeredPane();
         panelguru = new javax.swing.JPanel();
@@ -2294,8 +2295,9 @@ System.out.println(e);
         tabel_absen = new javax.swing.JTable();
         cb_statusdataabsen = new javax.swing.JComboBox<>();
         btn_updateabsen = new javax.swing.JButton();
-        bgabsensi = new javax.swing.JLabel();
+        btn_refreshdataabsen = new javax.swing.JButton();
         lb_idabsen = new javax.swing.JLabel();
+        bgabsensi = new javax.swing.JLabel();
         datalapabsensi = new javax.swing.JLayeredPane();
         panellapabsensi = new javax.swing.JPanel();
         txt_searchbynis = new javax.swing.JTextField();
@@ -3226,6 +3228,12 @@ System.out.println(e);
         });
         panelriwayatsiswa.add(btn_kembaliriwayatabsen);
         btn_kembaliriwayatabsen.setBounds(50, 573, 55, 35);
+
+        btn_lihathistory.setBackground(new java.awt.Color(255, 255, 255));
+        btn_lihathistory.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_lihathistory.setText("Lihat History");
+        panelriwayatsiswa.add(btn_lihathistory);
+        btn_lihathistory.setBounds(813, 570, 120, 40);
 
         bgriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelriwayatabsen.png"))); // NOI18N
         panelriwayatsiswa.add(bgriwayatsiswa);
@@ -4667,11 +4675,21 @@ System.out.println(e);
         });
         panelabsensi.add(btn_updateabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 100, 30));
 
-        bgabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelabsensi.png"))); // NOI18N
-        panelabsensi.add(bgabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        btn_refreshdataabsen.setBackground(new java.awt.Color(255, 255, 255));
+        btn_refreshdataabsen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/refresh.png"))); // NOI18N
+        btn_refreshdataabsen.setIconTextGap(18);
+        btn_refreshdataabsen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshdataabsenActionPerformed(evt);
+            }
+        });
+        panelabsensi.add(btn_refreshdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 110, 30, 30));
 
         lb_idabsen.setText("jLabel2");
         panelabsensi.add(lb_idabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, -1, -1));
+
+        bgabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelabsensi.png"))); // NOI18N
+        panelabsensi.add(bgabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         dataabsensi.add(panelabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
 
@@ -5394,6 +5412,10 @@ System.out.println(e);
         this.querysearchklikabsen();
     }//GEN-LAST:event_tabel_absenMouseClicked
 
+    private void btn_refreshdataabsenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshdataabsenActionPerformed
+        this.tampilabsen();
+    }//GEN-LAST:event_btn_refreshdataabsenActionPerformed
+
     
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -5464,11 +5486,13 @@ System.out.println(e);
     private javax.swing.JButton btn_lihatanggotakelas;
     private javax.swing.JButton btn_lihatdatasiswa;
     private javax.swing.JButton btn_lihatguru;
+    private javax.swing.JButton btn_lihathistory;
     private javax.swing.JButton btn_lihatkelas;
     private javax.swing.JButton btn_lihatprofilesiswabermasalah;
     private javax.swing.JButton btn_lihatsiswa;
     private javax.swing.JButton btn_lihatwalikelas;
     private javax.swing.JPanel btn_logout;
+    private javax.swing.JButton btn_refreshdataabsen;
     private javax.swing.JButton btn_refreshdataguru;
     private javax.swing.JButton btn_refreshdatasiswa;
     private javax.swing.JButton btn_refreshdatawalikelas;
