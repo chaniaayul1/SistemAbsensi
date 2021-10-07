@@ -407,7 +407,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         piedata.setValue("Izin", izin);
         piedata.setValue("Alpha",alpha);
         piedata.setValue("Terlambat", terlambat);
-        JFreeChart chart=ChartFactory.createPieChart("Persentase Kehadiran", piedata,true,false,false);
+        JFreeChart chart=ChartFactory.createPieChart(" ", piedata,true,false,false);
         final PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
         final PiePlot plot1 = (PiePlot) chart.getPlot();
         plot1.setLabelGenerator(labelGenerator);
@@ -2561,6 +2561,11 @@ System.out.println(e);
         btn_refreshriwayatsiswa = new javax.swing.JButton();
         btn_kembaliriwayatabsen = new javax.swing.JButton();
         btn_lihathistory = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         bgriwayatsiswa = new javax.swing.JLabel();
         dataguru = new javax.swing.JLayeredPane();
         panelguru = new javax.swing.JPanel();
@@ -2825,8 +2830,11 @@ System.out.println(e);
         tababsen = new javax.swing.JScrollPane();
         tabel_absen = new javax.swing.JTable();
         cb_statusdataabsen = new javax.swing.JComboBox<>();
-        bgabsensi = new javax.swing.JLabel();
         lb_idabsen = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        bgabsensi = new javax.swing.JLabel();
         datalapabsensi = new javax.swing.JLayeredPane();
         panellapabsensi = new javax.swing.JPanel();
         txt_searchbynis = new javax.swing.JTextField();
@@ -3267,18 +3275,18 @@ System.out.println(e);
 
         panelsiswa.setLayout(null);
         panelsiswa.add(txt_searchsiswa);
-        txt_searchsiswa.setBounds(190, 110, 710, 30);
+        txt_searchsiswa.setBounds(190, 110, 780, 30);
 
         btn_searchsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_searchsiswa.setText("Search");
+        btn_searchsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2.png"))); // NOI18N
         btn_searchsiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchsiswaActionPerformed(evt);
             }
         });
         panelsiswa.add(btn_searchsiswa);
-        btn_searchsiswa.setBounds(910, 110, 100, 30);
+        btn_searchsiswa.setBounds(980, 110, 30, 30);
 
         btn_lihatsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_lihatsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -3365,57 +3373,57 @@ System.out.println(e);
         jLabel16.setText("jLabel16");
         panelprofilesiswa.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 310, 270));
 
-        txt_rfidsiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_rfidsiswa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_rfidsiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_rfidsiswa.setEnabled(false);
         panelprofilesiswa.add(txt_rfidsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, 470, 30));
 
-        txt_nissiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_nissiswa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_nissiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_nissiswa.setEnabled(false);
         panelprofilesiswa.add(txt_nissiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, 550, 30));
 
-        txt_nksiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_nksiswa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_nksiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_nksiswa.setEnabled(false);
         panelprofilesiswa.add(txt_nksiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 181, 550, 30));
 
-        txt_namasiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_namasiswa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_namasiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_namasiswa.setEnabled(false);
         panelprofilesiswa.add(txt_namasiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 222, 550, 30));
 
-        txt_alamatsiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_alamatsiswa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_alamatsiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_alamatsiswa.setEnabled(false);
         panelprofilesiswa.add(txt_alamatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 265, 550, 60));
 
-        txt_gendersiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_gendersiswa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_gendersiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_gendersiswa.setEnabled(false);
         panelprofilesiswa.add(txt_gendersiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 335, 550, 30));
 
-        txt_notelpsiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_notelpsiswa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_notelpsiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_notelpsiswa.setEnabled(false);
         panelprofilesiswa.add(txt_notelpsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 376, 550, 30));
 
-        txt_emailsiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_emailsiswa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_emailsiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_emailsiswa.setEnabled(false);
         panelprofilesiswa.add(txt_emailsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 417, 550, 30));
 
-        txt_walassiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_walassiswa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_walassiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_walassiswa.setEnabled(false);
         panelprofilesiswa.add(txt_walassiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 457, 550, 30));
 
-        txt_ortusiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_ortusiswa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_ortusiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_ortusiswa.setEnabled(false);
         panelprofilesiswa.add(txt_ortusiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 497, 550, 30));
 
-        txt_noortusiswa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_noortusiswa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_noortusiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_noortusiswa.setEnabled(false);
         panelprofilesiswa.add(txt_noortusiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 538, 550, 30));
@@ -3607,9 +3615,17 @@ System.out.println(e);
 
         txt_rfidformsiswa.setEnabled(false);
         panelformsiswa.add(txt_rfidformsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 760, 30));
+
+        txt_nkformsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformsiswa.add(txt_nkformsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 760, 30));
+
+        txt_nisformsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformsiswa.add(txt_nisformsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 840, 30));
+
+        txt_namaformsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformsiswa.add(txt_namaformsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 840, 30));
+
+        txt_alamatformsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformsiswa.add(txt_alamatformsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 840, 70));
 
         rb1.setBackground(new java.awt.Color(255, 255, 255));
@@ -3621,12 +3637,20 @@ System.out.println(e);
         rb2.setFont(new java.awt.Font("Lucida Bright", 0, 12)); // NOI18N
         rb2.setText("Laki-Laki");
         panelformsiswa.add(rb2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, -1, -1));
+
+        txt_emailformsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformsiswa.add(txt_emailformsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, 840, 30));
 
         txt_idwalasformsiswa.setEnabled(false);
         panelformsiswa.add(txt_idwalasformsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 400, 840, 30));
+
+        txt_telpformsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformsiswa.add(txt_telpformsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 440, 840, 30));
+
+        txt_nortuformsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformsiswa.add(txt_nortuformsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 480, 840, 30));
+
+        txt_noortuformsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformsiswa.add(txt_noortuformsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 520, 840, 30));
 
         btn_scantambahsiswa1.setBackground(new java.awt.Color(255, 255, 255));
@@ -3641,7 +3665,7 @@ System.out.println(e);
         panelformsiswa.add(btn_scantambahsiswa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 130, 70, 30));
 
         btn_simpantambahsiswa.setBackground(new java.awt.Color(255, 255, 255));
-        btn_simpantambahsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_simpantambahsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 1, 14)); // NOI18N
         btn_simpantambahsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/floppy-disk.png"))); // NOI18N
         btn_simpantambahsiswa.setText("Simpan");
         btn_simpantambahsiswa.setIconTextGap(18);
@@ -3690,6 +3714,7 @@ System.out.println(e);
         panelriwayatsiswa.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panel_chartrs.setBackground(new java.awt.Color(255, 255, 255));
+        panel_chartrs.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Presentasi Kehadiran", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
         panel_chartrs.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panel_chartrs.setDoubleBuffered(false);
         panel_chartrs.setFocusable(false);
@@ -3698,54 +3723,54 @@ System.out.println(e);
         panel_chartrs.setRequestFocusEnabled(false);
         panel_chartrs.setVerifyInputWhenFocusTarget(false);
         panel_chartrs.setLayout(new javax.swing.OverlayLayout(panel_chartrs));
-        panelriwayatsiswa.add(panel_chartrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 430, 450));
-        panelriwayatsiswa.add(txt_tanggalriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 185, 160, 30));
+        panelriwayatsiswa.add(panel_chartrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 430, 460));
+        panelriwayatsiswa.add(txt_tanggalriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 150, 30));
 
         txt_tanggal2riwayatsiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_tanggal2riwayatsiswaActionPerformed(evt);
             }
         });
-        panelriwayatsiswa.add(txt_tanggal2riwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(295, 185, 160, 30));
+        panelriwayatsiswa.add(txt_tanggal2riwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 170, 30));
 
-        lb_sampairiwayatsiswa.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        lb_sampairiwayatsiswa.setText("~");
-        panelriwayatsiswa.add(lb_sampairiwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 190, -1, -1));
+        lb_sampairiwayatsiswa.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lb_sampairiwayatsiswa.setText("-");
+        panelriwayatsiswa.add(lb_sampairiwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel2.setText("Tanggal :");
-        panelriwayatsiswa.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 70, 20));
+        jLabel2.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel2.setText("Tanggal ");
+        panelriwayatsiswa.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 195, 70, 20));
 
-        lb_nisrs.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        lb_nisrs.setText("NIPD :");
-        panelriwayatsiswa.add(lb_nisrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 100, 50, 20));
+        lb_nisrs.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_nisrs.setText("NIPD ");
+        panelriwayatsiswa.add(lb_nisrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 50, 20));
 
-        lb_namars.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        lb_namars.setText("Nama :");
+        lb_namars.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_namars.setText("NK");
         panelriwayatsiswa.add(lb_namars, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 125, 50, 20));
 
-        lb_nkrs.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        lb_nkrs.setText("NK :");
-        panelriwayatsiswa.add(lb_nkrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(73, 150, -1, 20));
+        lb_nkrs.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_nkrs.setText("Nama");
+        panelriwayatsiswa.add(lb_nkrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, 20));
 
-        lb_nisriwayatsiswa.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        panelriwayatsiswa.add(lb_nisriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 250, 20));
+        lb_nisriwayatsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        panelriwayatsiswa.add(lb_nisriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 250, 20));
 
-        lb_namariwayatsiswa.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        panelriwayatsiswa.add(lb_namariwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 126, 250, 20));
+        lb_namariwayatsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        panelriwayatsiswa.add(lb_namariwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 125, 250, 20));
 
-        lb_nkriwayatsiswa.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        panelriwayatsiswa.add(lb_nkriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 151, 250, 20));
+        lb_nkriwayatsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        panelriwayatsiswa.add(lb_nkriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 148, 250, 20));
 
         btn_searchriwayatsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchriwayatsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_searchriwayatsiswa.setText("Search");
+        btn_searchriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2.png"))); // NOI18N
         btn_searchriwayatsiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchriwayatsiswaActionPerformed(evt);
             }
         });
-        panelriwayatsiswa.add(btn_searchriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 185, 100, 30));
+        panelriwayatsiswa.add(btn_searchriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 30, 30));
 
         btn_cetakriwayatsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_cetakriwayatsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -3780,7 +3805,7 @@ System.out.println(e);
         });
         tabriwayatsiswa.setViewportView(tabel_riwayatsiswa);
 
-        panelriwayatsiswa.add(tabriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 570, 320));
+        panelriwayatsiswa.add(tabriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 570, 320));
 
         btn_refreshriwayatsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_refreshriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/refresh (1).png"))); // NOI18N
@@ -3789,7 +3814,7 @@ System.out.println(e);
                 btn_refreshriwayatsiswaActionPerformed(evt);
             }
         });
-        panelriwayatsiswa.add(btn_refreshriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 185, 40, 30));
+        panelriwayatsiswa.add(btn_refreshriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 190, 40, 30));
 
         btn_kembaliriwayatabsen.setBackground(new java.awt.Color(255, 255, 255));
         btn_kembaliriwayatabsen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_kembali.png"))); // NOI18N
@@ -3805,6 +3830,27 @@ System.out.println(e);
         btn_lihathistory.setText("Lihat History");
         panelriwayatsiswa.add(btn_lihathistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(813, 570, 120, 40));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText(":");
+        panelriwayatsiswa.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setText(":");
+        panelriwayatsiswa.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setText(":");
+        panelriwayatsiswa.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(118, 193, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setText(":");
+        panelriwayatsiswa.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText(":");
+        panelriwayatsiswa.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 125, -1, -1));
+
+        bgriwayatsiswa.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         bgriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelriwayatabsen.png"))); // NOI18N
         panelriwayatsiswa.add(bgriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -3816,17 +3862,17 @@ System.out.println(e);
         dataguru.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelguru.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panelguru.add(txt_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 690, 30));
+        panelguru.add(txt_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 770, 30));
 
         btn_searchguru.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_searchguru.setText("Search");
+        btn_searchguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2.png"))); // NOI18N
         btn_searchguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchguruActionPerformed(evt);
             }
         });
-        panelguru.add(btn_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 110, 100, 30));
+        panelguru.add(btn_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 110, 30, 30));
 
         tabel_guru.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -3990,37 +4036,37 @@ System.out.println(e);
         lb_titik21.setText(":");
         panelprofileguru.add(lb_titik21, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 130, 20, 30));
 
-        txt_nipprofileguru.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_nipprofileguru.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_nipprofileguru.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_nipprofileguru.setEnabled(false);
         panelprofileguru.add(txt_nipprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, 530, 35));
 
-        txt_jabatanprofileguru.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_jabatanprofileguru.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_jabatanprofileguru.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_jabatanprofileguru.setEnabled(false);
         panelprofileguru.add(txt_jabatanprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 530, 35));
 
-        txt_namaprofileguru.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_namaprofileguru.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_namaprofileguru.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_namaprofileguru.setEnabled(false);
         panelprofileguru.add(txt_namaprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 220, 530, 35));
 
-        txt_emailprofileguru.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_emailprofileguru.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_emailprofileguru.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_emailprofileguru.setEnabled(false);
         panelprofileguru.add(txt_emailprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 270, 530, 35));
 
-        txt_jkprofileguru.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_jkprofileguru.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_jkprofileguru.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_jkprofileguru.setEnabled(false);
         panelprofileguru.add(txt_jkprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 530, 35));
 
-        txt_notelpprofileguru.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_notelpprofileguru.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_notelpprofileguru.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_notelpprofileguru.setEnabled(false);
         panelprofileguru.add(txt_notelpprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 530, 35));
 
-        txt_alamatprofileguru.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_alamatprofileguru.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_alamatprofileguru.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_alamatprofileguru.setEnabled(false);
         panelprofileguru.add(txt_alamatprofileguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, 530, 80));
@@ -4219,17 +4265,17 @@ System.out.println(e);
         datawalikelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelwalikelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panelwalikelas.add(txt_searchwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 690, 30));
+        panelwalikelas.add(txt_searchwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 770, 30));
 
         btn_searchwalikelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchwalikelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_searchwalikelas.setText("Search");
+        btn_searchwalikelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2.png"))); // NOI18N
         btn_searchwalikelas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchwalikelasActionPerformed(evt);
             }
         });
-        panelwalikelas.add(btn_searchwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 110, 100, 30));
+        panelwalikelas.add(btn_searchwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 110, 30, 30));
 
         tabel_walikelas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -4406,42 +4452,42 @@ System.out.println(e);
         lb_titik27.setText(":");
         panelprofilewalikelas.add(lb_titik27, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 222, 20, 30));
 
-        txt_idprofilewalikelas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_idprofilewalikelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_idprofilewalikelas.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_idprofilewalikelas.setEnabled(false);
         panelprofilewalikelas.add(txt_idprofilewalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 125, 530, 35));
 
-        txt_nipprofilewalikelas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_nipprofilewalikelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_nipprofilewalikelas.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_nipprofilewalikelas.setEnabled(false);
         panelprofilewalikelas.add(txt_nipprofilewalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 175, 530, 35));
 
-        txt_nkprofilewalikelas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_nkprofilewalikelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_nkprofilewalikelas.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_nkprofilewalikelas.setEnabled(false);
         panelprofilewalikelas.add(txt_nkprofilewalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 222, 530, 35));
 
-        txt_namaprofilewalikelas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_namaprofilewalikelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_namaprofilewalikelas.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_namaprofilewalikelas.setEnabled(false);
         panelprofilewalikelas.add(txt_namaprofilewalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 270, 530, 35));
 
-        txt_emailprofilewalikelas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_emailprofilewalikelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_emailprofilewalikelas.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_emailprofilewalikelas.setEnabled(false);
         panelprofilewalikelas.add(txt_emailprofilewalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 320, 530, 35));
 
-        txt_jkprofilewalikelas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_jkprofilewalikelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_jkprofilewalikelas.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_jkprofilewalikelas.setEnabled(false);
         panelprofilewalikelas.add(txt_jkprofilewalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 370, 530, 35));
 
-        txt_notelpprofilewalikelas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_notelpprofilewalikelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_notelpprofilewalikelas.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_notelpprofilewalikelas.setEnabled(false);
         panelprofilewalikelas.add(txt_notelpprofilewalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 420, 530, 35));
 
-        txt_alamatprofilewalikelas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_alamatprofilewalikelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_alamatprofilewalikelas.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txt_alamatprofilewalikelas.setEnabled(false);
         panelprofilewalikelas.add(txt_alamatprofilewalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 470, 530, 80));
@@ -4573,8 +4619,14 @@ System.out.println(e);
 
         txt_idformwalikelas.setEnabled(false);
         panelformwalikelas.add(txt_idformwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 840, 30));
+
+        txt_nipformwalikelas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformwalikelas.add(txt_nipformwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 760, 30));
+
+        txt_namaformwalikelas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformwalikelas.add(txt_namaformwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 840, 30));
+
+        txt_emailformwalikelas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformwalikelas.add(txt_emailformwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 840, 30));
 
         rb3.setBackground(new java.awt.Color(255, 255, 255));
@@ -4587,6 +4639,8 @@ System.out.println(e);
         rb4.setText("Laki-Laki");
         panelformwalikelas.add(rb4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, -1, -1));
         panelformwalikelas.add(txt_tlpformwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 840, 30));
+
+        txt_alamatformwalikelas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformwalikelas.add(txt_alamatformwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, 840, 70));
 
         btn_scantambahwalas.setBackground(new java.awt.Color(255, 255, 255));
@@ -4646,17 +4700,17 @@ System.out.println(e);
             }
         });
         panelkelas.add(btn_addkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 120, 30));
-        panelkelas.add(txt_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 700, 30));
+        panelkelas.add(txt_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 770, 30));
 
         btn_searchkelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchkelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_searchkelas.setText("Search");
+        btn_searchkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2.png"))); // NOI18N
         btn_searchkelas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchkelasActionPerformed(evt);
             }
         });
-        panelkelas.add(btn_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 110, 100, 30));
+        panelkelas.add(btn_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 110, 30, 30));
 
         btn_refreshkelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_refreshkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/refresh (1).png"))); // NOI18N
@@ -4769,7 +4823,7 @@ System.out.println(e);
         lb_taprofilekelas.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_taprofilekelas.setForeground(new java.awt.Color(0, 51, 204));
         lb_taprofilekelas.setText("Tahun Ajaran");
-        panelprofilekelas.add(lb_taprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 420, 120, 30));
+        panelprofilekelas.add(lb_taprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 420, 140, 30));
 
         lb_titik8.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
         lb_titik8.setForeground(new java.awt.Color(0, 51, 204));
@@ -4811,9 +4865,11 @@ System.out.println(e);
         lb_titik29.setText(":");
         panelprofilekelas.add(lb_titik29, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 420, 20, 30));
 
+        txt_taprofilekelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_taprofilekelas.setEnabled(false);
         panelprofilekelas.add(txt_taprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 420, 530, 30));
 
+        txt_smtprofilekelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_smtprofilekelas.setEnabled(false);
         panelprofilekelas.add(txt_smtprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 530, 30));
 
@@ -4823,21 +4879,27 @@ System.out.println(e);
         cb_smtprofilekelas.setRequestFocusEnabled(false);
         panelprofilekelas.add(cb_smtprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 530, 30));
 
+        txt_nkprofilekelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_nkprofilekelas.setEnabled(false);
         panelprofilekelas.add(txt_nkprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, 530, 30));
 
+        txt_angkatanprofilekelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_angkatanprofilekelas.setEnabled(false);
         panelprofilekelas.add(txt_angkatanprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 220, 530, 30));
 
+        txt_jurusanprofilekelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_jurusanprofilekelas.setEnabled(false);
         panelprofilekelas.add(txt_jurusanprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 270, 530, 30));
 
+        txt_namaprofilekelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_namaprofilekelas.setEnabled(false);
         panelprofilekelas.add(txt_namaprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 530, 30));
 
+        txt_jmlprofilekelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_jmlprofilekelas.setEnabled(false);
         panelprofilekelas.add(txt_jmlprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 470, 530, 30));
 
+        txt_walasprofilekelas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_walasprofilekelas.setEnabled(false);
         panelprofilekelas.add(txt_walasprofilekelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 530, 30));
 
@@ -4978,10 +5040,20 @@ System.out.println(e);
 
         cb_smtformkelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ganjil", "Genap" }));
         panelformkelas.add(cb_smtformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 380, 840, 30));
+
+        txt_nkformkelas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformkelas.add(txt_nkformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 840, 30));
+
+        txt_tingkatanformkelas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformkelas.add(txt_tingkatanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 840, 30));
+
+        txt_jurusanformkelas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformkelas.add(txt_jurusanformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 840, 30));
+
+        txt_namaformkelas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformkelas.add(txt_namaformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, 840, 30));
+
+        txt_taformkelas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelformkelas.add(txt_taformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 430, 840, 30));
 
         btn_simpanformkelas.setBackground(new java.awt.Color(255, 255, 255));
@@ -5260,17 +5332,17 @@ System.out.println(e);
         dataabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panelabsensi.add(txt_searchdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 430, 30));
+        panelabsensi.add(txt_searchdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 430, 30));
 
         txt_searchtgldataabsen.setToolTipText("");
         txt_searchtgldataabsen.setName(""); // NOI18N
         txt_searchtgldataabsen.setVerifyInputWhenFocusTarget(false);
-        panelabsensi.add(txt_searchtgldataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 200, 30));
+        panelabsensi.add(txt_searchtgldataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 200, 30));
 
         txt_searchtgl2dataabsen.setToolTipText("");
         txt_searchtgl2dataabsen.setName(""); // NOI18N
         txt_searchtgl2dataabsen.setVerifyInputWhenFocusTarget(false);
-        panelabsensi.add(txt_searchtgl2dataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 190, 30));
+        panelabsensi.add(txt_searchtgl2dataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 190, 30));
 
         btn_searchdataabsen.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchdataabsen.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -5280,23 +5352,23 @@ System.out.println(e);
                 btn_searchdataabsenActionPerformed(evt);
             }
         });
-        panelabsensi.add(btn_searchdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 180, 100, 30));
+        panelabsensi.add(btn_searchdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 100, 30));
 
-        nisdataabsensi.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        nisdataabsensi.setText("NIS :");
-        panelabsensi.add(nisdataabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 105, 40, -1));
+        nisdataabsensi.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
+        nisdataabsensi.setText("NIS");
+        panelabsensi.add(nisdataabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 114, 40, -1));
 
-        tgldataabsensi.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        tgldataabsensi.setText("Tanggal : ");
-        panelabsensi.add(tgldataabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 145, -1, -1));
+        tgldataabsensi.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
+        tgldataabsensi.setText("Tanggal");
+        panelabsensi.add(tgldataabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 155, -1, -1));
 
-        statusdatabsensi.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        statusdatabsensi.setText("Status :");
-        panelabsensi.add(statusdatabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 105, -1, -1));
+        statusdatabsensi.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
+        statusdatabsensi.setText("Status ");
+        panelabsensi.add(statusdatabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 109, -1, -1));
 
-        sampaidatabsensi.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        sampaidatabsensi.setText("~");
-        panelabsensi.add(sampaidatabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 145, -1, -1));
+        sampaidatabsensi.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 18)); // NOI18N
+        sampaidatabsensi.setText("-");
+        panelabsensi.add(sampaidatabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 150, -1, -1));
 
         btn_updateabsen.setBackground(new java.awt.Color(255, 255, 255));
         btn_updateabsen.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -5317,7 +5389,7 @@ System.out.println(e);
                 btn_refreshdataabsenActionPerformed(evt);
             }
         });
-        panelabsensi.add(btn_refreshdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 180, 30, 30));
+        panelabsensi.add(btn_refreshdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 30, 30));
 
         tabel_absen.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -5337,7 +5409,7 @@ System.out.println(e);
         });
         tababsen.setViewportView(tabel_absen);
 
-        panelabsensi.add(tababsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 1010, 390));
+        panelabsensi.add(tababsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 1010, 370));
 
         cb_statusdataabsen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hadir", "Sakit", "Izin", "Alpha" }));
         cb_statusdataabsen.setFocusable(false);
@@ -5351,11 +5423,24 @@ System.out.println(e);
         });
         panelabsensi.add(cb_statusdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 100, 350, 30));
 
-        bgabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelabsensi.png"))); // NOI18N
-        panelabsensi.add(bgabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
         lb_idabsen.setText("jLabel2");
         panelabsensi.add(lb_idabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel8.setText(":");
+        panelabsensi.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 100, 10, -1));
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel9.setText(":");
+        panelabsensi.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 10, -1));
+
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel10.setText(":");
+        panelabsensi.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 10, -1));
+
+        bgabsensi.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        bgabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelabsensi.png"))); // NOI18N
+        panelabsensi.add(bgabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         dataabsensi.add(panelabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
 
@@ -5411,11 +5496,11 @@ System.out.println(e);
         cb_siswabermasalah.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         panelsiswabermasalah.add(cb_siswabermasalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 400, 30));
 
-        btn_lihatprofilesiswabermasalah.setText("Search");
-        panelsiswabermasalah.add(btn_lihatprofilesiswabermasalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, -1, 30));
+        btn_lihatprofilesiswabermasalah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2.png"))); // NOI18N
+        panelsiswabermasalah.add(btn_lihatprofilesiswabermasalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 30, 30));
 
-        btn_updatestatussiswabermasalah.setText("Search");
-        panelsiswabermasalah.add(btn_updatestatussiswabermasalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, -1, 30));
+        btn_updatestatussiswabermasalah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2.png"))); // NOI18N
+        panelsiswabermasalah.add(btn_updatestatussiswabermasalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, 30, 30));
 
         tabel_siswabermasalah.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -5492,17 +5577,17 @@ System.out.println(e);
                 btn_refreshanggotakelasActionPerformed(evt);
             }
         });
-        panelanggotakelas.add(btn_refreshanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 170, 40, 30));
+        panelanggotakelas.add(btn_refreshanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 170, 40, 30));
 
         btn_searchanggotakelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchanggotakelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_searchanggotakelas.setText("Search");
+        btn_searchanggotakelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2.png"))); // NOI18N
         btn_searchanggotakelas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchanggotakelasActionPerformed(evt);
             }
         });
-        panelanggotakelas.add(btn_searchanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, 80, 30));
+        panelanggotakelas.add(btn_searchanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, 30, 30));
 
         btn_cetakanggotakelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_cetakanggotakelas.setFont(new java.awt.Font("Roboto Slab SemiBold", 0, 12)); // NOI18N
@@ -6024,32 +6109,9 @@ System.out.println(e);
         this.querydataguruwalas();
     }//GEN-LAST:event_btn_scantambahwalasActionPerformed
 
-    private void btn_searchriwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchriwayatsiswaActionPerformed
-        this.searchriwayatsiswa();
-    }//GEN-LAST:event_btn_searchriwayatsiswaActionPerformed
-
-    private void btn_cetakriwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakriwayatsiswaActionPerformed
-        // TODO add your handling code here:
-        MessageFormat header = new MessageFormat("RIWAYAT ABSEN");
-        try {
-            tabel_riwayatsiswa.print(JTable.PrintMode.FIT_WIDTH, header,null);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, e);
-        }
-        
-    }//GEN-LAST:event_btn_cetakriwayatsiswaActionPerformed
-
-    private void tabel_riwayatsiswaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_riwayatsiswaMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tabel_riwayatsiswaMouseClicked
-
     private void btn_hapussiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapussiswaActionPerformed
         this.validasideletedatasiswa();
     }//GEN-LAST:event_btn_hapussiswaActionPerformed
-
-    private void btn_refreshriwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshriwayatsiswaActionPerformed
-        this.tampilriwayatabsensiswa();
-    }//GEN-LAST:event_btn_refreshriwayatsiswaActionPerformed
 
     private void btn_scantambahadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_scantambahadminActionPerformed
         this.querydataguruadmin();
@@ -6079,13 +6141,6 @@ System.out.println(e);
     private void btn_hapusadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapusadminActionPerformed
         this.validasideletedataadmin();
     }//GEN-LAST:event_btn_hapusadminActionPerformed
-
-    private void btn_kembaliriwayatabsenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliriwayatabsenActionPerformed
-        // TODO add your handling code here:
-        switchpanel(profilesiswa);
-        tampilprofilesiswa();
-        this.editprofilesiswa(false);
-    }//GEN-LAST:event_btn_kembaliriwayatabsenActionPerformed
 
     private void btn_simpanprofileadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanprofileadminActionPerformed
         // TODO add your handling code here:
@@ -6149,10 +6204,6 @@ System.out.println(e);
         // TODO add your handling code here:
     }//GEN-LAST:event_cb_statusdataabsenActionPerformed
 
-    private void txt_tanggal2riwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tanggal2riwayatsiswaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_tanggal2riwayatsiswaActionPerformed
-
     private void btn_searchanggotakelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchanggotakelasActionPerformed
         this.querysearchanggotakelas();
     }//GEN-LAST:event_btn_searchanggotakelasActionPerformed
@@ -6165,6 +6216,40 @@ System.out.println(e);
         switchpanel(profilekelas);
         this.tampilprofilekelas();
     }//GEN-LAST:event_btn_kembalianggotakelasActionPerformed
+
+    private void btn_kembaliriwayatabsenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliriwayatabsenActionPerformed
+        // TODO add your handling code here:
+        switchpanel(profilesiswa);
+        tampilprofilesiswa();
+        this.editprofilesiswa(false);
+    }//GEN-LAST:event_btn_kembaliriwayatabsenActionPerformed
+
+    private void btn_refreshriwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshriwayatsiswaActionPerformed
+        this.tampilriwayatabsensiswa();
+    }//GEN-LAST:event_btn_refreshriwayatsiswaActionPerformed
+
+    private void tabel_riwayatsiswaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_riwayatsiswaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabel_riwayatsiswaMouseClicked
+
+    private void btn_cetakriwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakriwayatsiswaActionPerformed
+        // TODO add your handling code here:
+        MessageFormat header = new MessageFormat("RIWAYAT ABSEN");
+        try {
+            tabel_riwayatsiswa.print(JTable.PrintMode.FIT_WIDTH, header,null);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+
+    }//GEN-LAST:event_btn_cetakriwayatsiswaActionPerformed
+
+    private void btn_searchriwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchriwayatsiswaActionPerformed
+        this.searchriwayatsiswa();
+    }//GEN-LAST:event_btn_searchriwayatsiswaActionPerformed
+
+    private void txt_tanggal2riwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tanggal2riwayatsiswaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_tanggal2riwayatsiswaActionPerformed
 
     
     public static void main(String args[]) {
@@ -6310,6 +6395,7 @@ System.out.println(e);
     private javax.swing.JLabel iconlogout;
     private javax.swing.JLabel iconsiswa;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -6323,10 +6409,14 @@ System.out.println(e);
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
@@ -6337,6 +6427,7 @@ System.out.println(e);
     private javax.swing.JLabel jLabel67;
     private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel69;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel70;
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
@@ -6344,12 +6435,14 @@ System.out.println(e);
     private javax.swing.JLabel jLabel74;
     private javax.swing.JLabel jLabel75;
     private javax.swing.JLabel jLabel78;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
     private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel82;
     private javax.swing.JLabel jLabel83;
     private javax.swing.JLabel jLabel84;
     private javax.swing.JLabel jLabel85;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lb_alamatformguru;
     private javax.swing.JLabel lb_alamatformsiswa;
