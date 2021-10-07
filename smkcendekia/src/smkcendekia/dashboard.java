@@ -28,6 +28,9 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
 
 
 
@@ -81,8 +84,34 @@ public class dashboard extends javax.swing.JFrame {
         new Timer(1000, taskPerformer).start();
     }
     
-    //MENAMPILKAN DATA JUMLAH SISWA
     public void barchart(){
+        DefaultPieDataset piedata=new DefaultPieDataset();
+             piedata.setValue("Hadir", 40);
+             piedata.setValue("Sakit", 2);
+             piedata.setValue("Izin", 1);
+             piedata.setValue("Alpha", 3);
+             piedata.setValue("Terlambat", 2);
+             JFreeChart chart=ChartFactory.createPieChart("Persentase Kehadiran", piedata);
+             PiePlot piePlot=(PiePlot) chart.getPlot();
+             
+             piePlot.setSectionPaint("Hadir",Color.green);
+             piePlot.setSectionPaint("Sakit",Color.yellow);
+             piePlot.setSectionPaint("Izin",Color.blue);
+             piePlot.setSectionPaint("Alpha",Color.red);
+             piePlot.setSectionPaint("Terlambat",Color.orange);
+             ChartPanel barChartPanel=new ChartPanel(chart);
+             barChartPanel.requestFocus(false);
+             barChartPanel.setRequestFocusEnabled(false);
+             barChartPanel.setOpaque(false);
+             jPanel2.add(barChartPanel);
+             jPanel2.requestFocus(false);
+             jPanel2.setRequestFocusEnabled(false);
+             jPanel2.setOpaque(false);
+             jPanel2.setFocusable(false);
+             jPanel2.validate();      
+    }
+    //MENAMPILKAN DATA JUMLAH SISWA
+    /*public void barchart(){
         try{
         DefaultCategoryDataset dcd = new DefaultCategoryDataset();
         dcd.setValue(45.100, "Mac OS","2020");//Value
@@ -100,7 +129,7 @@ public class dashboard extends javax.swing.JFrame {
         }catch (Exception e){
             
         }
-    }
+    }*/
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -148,18 +177,7 @@ public class dashboard extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 340, Short.MAX_VALUE)
-        );
-
+        jPanel2.setLayout(new java.awt.BorderLayout());
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 530, 340));
 
         panel_grafik.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

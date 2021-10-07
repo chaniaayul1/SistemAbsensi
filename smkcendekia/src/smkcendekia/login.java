@@ -36,7 +36,7 @@ public class login extends javax.swing.JFrame {
     public void proseslogin(){
       String userlog,level;
       try {
-            sql = "SELECT * FROM admin WHERE username='"+txt_username.getText()+"' AND password='"+txt_password.getText()+"'";
+            sql = "SELECT * FROM admin WHERE BINARY username='"+txt_username.getText()+"' AND BINARY password='"+txt_password.getText()+"'";
             rs = stat.executeQuery(sql);
             String usernm = txt_username.getText();
             
