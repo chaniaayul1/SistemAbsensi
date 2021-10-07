@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 07, 2021 at 08:21 PM
+-- Generation Time: Sep 30, 2021 at 06:06 PM
 -- Server version: 10.3.29-MariaDB-0+deb10u1
 -- PHP Version: 7.3.29-1~deb10u1
 
@@ -37,126 +37,6 @@ CREATE TABLE `absen` (
   `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `absen`
---
-
-INSERT INTO `absen` (`idabsen`, `idrfid`, `nk`, `nis`, `nama`, `tanggal`, `jam`, `status`) VALUES
-(4, '51871758571', '10TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-05', '14:36:02', 'Hadir'),
-(6, '51871758571', '10TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-06', '18:45:28', 'Alpha'),
-(15, '632745563716', '12TITL1', 'NIS101', 'Rafi Aziizi Muchtar', '2021-10-07', '06:54:28', 'Hadir'),
-(16, '672888867376', '12TITL1', 'NIS103', 'Sutarjo', '2021-10-07', '07:15:14', 'Terlambat'),
-(17, '51871758571', '10TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-07', '07:30:55', 'Alpha'),
-(18, '672888867376', '12TITL1', 'NIS103', 'Sutarjo', '2021-10-06', '07:00:01', 'Hadir');
-
---
--- Triggers `absen`
---
-DELIMITER $$
-CREATE TRIGGER `deletelapabsen` AFTER DELETE ON `absen` FOR EACH ROW IF(old.status='Hadir') THEN
-    UPDATE lapabsen
-    SET hadir= hadir - 1
-    WHERE lapabsen.nis=old.nis;
-ELSEIF(old.status='Terlambat') THEN
-	UPDATE lapabsen
-    SET terlambat= terlambat - 1
-    WHERE lapabsen.nis=old.nis;
-ELSEIF(old.status='Alpha') THEN
-	UPDATE lapabsen
-    SET alpha= alpha - 1
-    WHERE lapabsen.nis=old.nis;
-END IF
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `inserttolapabsen` AFTER INSERT ON `absen` FOR EACH ROW IF(new.status='Hadir') THEN
-    UPDATE lapabsen
-    SET hadir= hadir + 1
-    WHERE lapabsen.nis=new.nis;
-ELSEIF(new.status='Terlambat') THEN
-	UPDATE lapabsen
-    SET terlambat= terlambat + 1
-    WHERE lapabsen.nis=new.nis;
-ELSEIF(new.status='Alpha') THEN
-	UPDATE lapabsen
-    SET alpha= alpha + 1
-    WHERE lapabsen.nis=new.nis;
-END IF
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `updatelapabsen` AFTER UPDATE ON `absen` FOR EACH ROW IF(new.status='Hadir' AND old.status='Sakit') THEN
-    UPDATE lapabsen
-    SET hadir= hadir + 1,sakit=sakit-1
-    WHERE lapabsen.nis=new.nis;
-ELSEIF(new.status='Hadir' AND old.status='Alpha') THEN
-    UPDATE lapabsen
-    SET hadir= hadir + 1,alpha=alpha-1
-    WHERE lapabsen.nis=new.nis;
-ELSEIF(new.status='Hadir' AND old.status='Izin') THEN
-    UPDATE lapabsen
-    SET hadir= hadir + 1,izin=izin-1
-    WHERE lapabsen.nis=new.nis;
-/* UPDATE SAKIT */
-ELSEIF(new.status='Sakit' AND old.status='Hadir') THEN
-	UPDATE lapabsen
-    SET sakit= sakit + 1,hadir = hadir-1
-    WHERE lapabsen.nis=new.nis;
-ELSEIF(new.status='Sakit' AND old.status='Izin') THEN
-	UPDATE lapabsen
-    SET sakit= sakit + 1,izin = izin-1
-    WHERE lapabsen.nis=new.nis;
-ELSEIF(new.status='Sakit' AND old.status='Alpha') THEN
-	UPDATE lapabsen
-    SET sakit= sakit + 1,alpha = alpha-1
-    WHERE lapabsen.nis=new.nis;
-/* UPDATE IZIN */
-ELSEIF(new.status='Izin' AND old.status='Hadir') THEN
-	UPDATE lapabsen
-    SET izin= izin + 1,hadir = hadir-1
-    WHERE lapabsen.nis=new.nis;
-ELSEIF(new.status='Izin' AND old.status='Sakit') THEN
-	UPDATE lapabsen
-    SET izin= izin + 1,sakit = sakit-1
-    WHERE lapabsen.nis=new.nis;
-ELSEIF(new.status='Izin' AND old.status='Alpha') THEN
-	UPDATE lapabsen
-    SET izin= izin + 1,alpha = alpha-1
-    WHERE lapabsen.nis=new.nis;
-/* UPDATE ALPHA */
-ELSEIF(new.status='Alpha' AND old.status='Hadir') THEN
-	UPDATE lapabsen
-    SET alpha= alpha + 1,hadir = hadir-1
-    WHERE lapabsen.nis=new.nis;
-ELSEIF(new.status='Alpha' AND old.status='Sakit') THEN
-	UPDATE lapabsen
-    SET alpha= alpha + 1,sakit = sakit-1
-    WHERE lapabsen.nis=new.nis;
-ELSEIF(new.status='Alpha' AND old.status='Izin') THEN
-	UPDATE lapabsen
-    SET alpha= alpha + 1,izin = izin-1
-    WHERE lapabsen.nis=new.nis;
-/* UPDATE TERLAMBAT */
-ELSEIF(new.status='Hadir' AND old.status='Terlambat') THEN
-	UPDATE lapabsen
-    SET hadir= hadir + 1,terlambat = terlambat-1
-    WHERE lapabsen.nis=new.nis;
-ELSEIF(new.status='Sakit' AND old.status='Terlambat') THEN
-	UPDATE lapabsen
-    SET sakit= sakit + 1,terlambat = terlambat-1
-    WHERE lapabsen.nis=new.nis;
-ELSEIF(new.status='Izin' AND old.status='Terlambat') THEN
-	UPDATE lapabsen
-    SET izin= izin + 1,terlambat = terlambat-1
-    WHERE lapabsen.nis=new.nis;
-ELSEIF(new.status='Alpha' AND old.status='Terlambat') THEN
-	UPDATE lapabsen
-    SET alpha= alpha + 1,terlambat = terlambat-1
-    WHERE lapabsen.nis=new.nis;
-END IF
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -177,9 +57,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`idadmin`, `nip`, `nama`, `username`, `password`, `level`) VALUES
-('ADM001', '3411181123', 'Rafi Aziizi M', 'rafi', '1', 0),
-('ADM002', '3411181122', 'Chania Ayu', 'chania', 'chan', 0),
-('ADM003', '3411181121', 'Rizko Ayundra', 'rizko', 'r', 1);
+('ADM001', '3411181123', 'Rafi Aziizi Muchtar', 'rafi', 'rafi', 0),
+('ADM002', '3411181122', 'Chania Ayu', 'chaniaaa', 'chan', 0);
 
 -- --------------------------------------------------------
 
@@ -204,7 +83,7 @@ CREATE TABLE `guru` (
 INSERT INTO `guru` (`nip`, `jabatan`, `nama`, `email`, `jeniskelamin`, `notlp`, `alamat`) VALUES
 ('3411181121', 'Bagian IT', 'Rizko Ayundra', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang'),
 ('3411181122', 'Bagian IT', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '0811', 'Cikalong'),
-('3411181123', 'Guru BK', 'Rafi Aziizi M', 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi');
+('3411181123', 'Kepala Sekolah', 'Rafi Aziizi Muchtar', 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi');
 
 --
 -- Triggers `guru`
@@ -238,8 +117,6 @@ CREATE TABLE `kelas` (
   `namakelas` varchar(15) NOT NULL,
   `angkatan` int(5) NOT NULL,
   `jurusan` varchar(15) NOT NULL,
-  `semester` varchar(10) NOT NULL,
-  `tahunajaran` varchar(10) NOT NULL,
   `jl` int(3) NOT NULL,
   `jp` int(3) NOT NULL,
   `js` int(3) NOT NULL
@@ -249,11 +126,11 @@ CREATE TABLE `kelas` (
 -- Dumping data for table `kelas`
 --
 
-INSERT INTO `kelas` (`nk`, `idwalikelas`, `namakelas`, `angkatan`, `jurusan`, `semester`, `tahunajaran`, `jl`, `jp`, `js`) VALUES
-('10TITL2', 'WLS001', '2', 10, 'TITL', 'Ganjil', '2021/2022', 1, 0, 1),
-('10TITL3', 'WLS001', '3', 10, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
-('11TITL1', 'WLS003', 'TITL1', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
-('12TITL1', 'WLS003', 'TITL1', 12, 'TITL', 'Ganjil', '2021/2022', 2, 0, 2);
+INSERT INTO `kelas` (`nk`, `idwalikelas`, `namakelas`, `angkatan`, `jurusan`, `jl`, `jp`, `js`) VALUES
+('10TITL2', 'WLS001', '2', 10, 'TITL', 0, 0, 0),
+('10TITL3', 'WLS001', '3', 10, 'TITL', 1, 0, 1),
+('10TITL9', 'WLS003', '9', 10, 'TITL', 0, 0, 0),
+('12TITL1', 'WLS002', 'TITL1', 12, 'TITL', 1, 1, 2);
 
 --
 -- Triggers `kelas`
@@ -275,7 +152,8 @@ DELIMITER ;
 --
 
 CREATE TABLE `lapabsen` (
-  `idlapabsen` varchar(11) NOT NULL,
+  `idlapabsen` int(15) NOT NULL,
+  `idabsen` int(255) NOT NULL,
   `idwalikelas` varchar(15) NOT NULL,
   `nis` varchar(15) NOT NULL,
   `nk` varchar(15) NOT NULL,
@@ -287,14 +165,18 @@ CREATE TABLE `lapabsen` (
   `terlambat` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `lapabsen`
+-- Table structure for table `mnkelas`
 --
 
-INSERT INTO `lapabsen` (`idlapabsen`, `idwalikelas`, `nis`, `nk`, `nama`, `hadir`, `sakit`, `izin`, `alpha`, `terlambat`) VALUES
-('LAP0000002', 'WLS001', 'NIS102', '10TITL2', 'Chania Ayu Lestari', 1, 0, 0, 2, 0),
-('LAP0000003', 'WLS002', 'NIS103', '12TITL1', 'Sutarjo', 1, 0, 0, 0, 1),
-('LAP0000004', 'WLS002', 'NIS101', '12TITL1', 'Rafi Aziizi Muchtar', 1, 0, 0, 0, 0);
+CREATE TABLE `mnkelas` (
+  `idmnkelas` int(10) NOT NULL,
+  `nk` varchar(15) NOT NULL,
+  `idwalikelas` varchar(15) NOT NULL,
+  `nis` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -313,9 +195,9 @@ CREATE TABLE `rfid` (
 --
 
 INSERT INTO `rfid` (`idrfid`, `nis`, `nama`) VALUES
-('51871758571', 'NIS102', 'Chania Ayu Lestari'),
-('632745563716', 'NIS102', 'Rafi Aziizi Muchtar'),
-('672888867376', 'NIS103', 'Sutarjo');
+('1044418927102', 'NIS102', 'Chania'),
+('51871758571', 'NIS103', 'Roki'),
+('672888867376', 'NIS103', 'Rafi Aziizi Muchtar');
 
 -- --------------------------------------------------------
 
@@ -419,131 +301,7 @@ INSERT INTO `rfidlog` (`no`, `idrfid`) VALUES
 (105, '51871758571'),
 (106, '51871758571'),
 (107, '51871758571'),
-(108, '51871758571'),
-(109, '632745563716'),
-(110, '359445304937'),
-(111, '359445304937'),
-(112, '359445304937'),
-(113, '359445304937'),
-(114, '359445304937'),
-(115, '632745563716'),
-(116, '632745563716'),
-(117, '632745563716'),
-(118, '632745563716'),
-(119, '632745563716'),
-(120, '672888867376'),
-(121, '672888867376'),
-(122, '632745563716'),
-(123, '632745563716'),
-(124, '51871758571'),
-(125, '51871758571'),
-(126, '51871758571'),
-(127, '51871758571'),
-(128, '632745563716'),
-(129, '632745563716'),
-(130, '672888867376'),
-(131, '672888867376'),
-(132, '359445304937'),
-(133, '359445304937'),
-(134, '359445304937'),
-(135, '359445304937'),
-(136, '359445304937'),
-(137, '359445304937'),
-(138, '359445304937'),
-(139, '672888867376'),
-(140, '672888867376'),
-(141, '51871758571'),
-(142, '51871758571'),
-(143, '51871758571'),
-(144, '51871758571'),
-(145, '51871758571'),
-(146, '672888867376'),
-(147, '672888867376'),
-(148, '672888867376'),
-(149, '359445304937'),
-(150, '359445304937'),
-(151, '632745563716'),
-(152, '632745563716'),
-(153, '632745563716'),
-(154, '359445304937'),
-(155, '359445304937'),
-(156, '632745563716'),
-(157, '632745563716'),
-(158, '359445304937'),
-(159, '359445304937'),
-(160, '359445304937'),
-(161, '51871758571'),
-(162, '51871758571'),
-(163, '672888867376'),
-(164, '672888867376'),
-(165, '672888867376'),
-(166, '672888867376'),
-(167, '672888867376'),
-(168, '51871758571'),
-(169, '51871758571'),
-(170, '672888867376'),
-(171, '672888867376'),
-(172, '672888867376'),
-(173, '672888867376'),
-(174, '672888867376'),
-(175, '51871758571'),
-(176, '51871758571'),
-(177, '359445304937'),
-(178, '359445304937'),
-(179, '359445304937'),
-(180, '359445304937'),
-(181, '672888867376'),
-(182, '359445304937'),
-(183, '359445304937'),
-(184, '672888867376'),
-(185, '672888867376'),
-(186, '51871758571'),
-(187, '51871758571'),
-(188, '359445304937'),
-(189, '359445304937'),
-(190, '632745563716'),
-(191, '632745563716'),
-(192, '359445304937'),
-(193, '359445304937'),
-(194, '632745563716'),
-(195, '632745563716'),
-(196, '359445304937'),
-(197, '359445304937'),
-(198, '632745563716'),
-(199, '632745563716'),
-(200, '632745563716'),
-(201, '632745563716'),
-(202, '632745563716'),
-(203, '632745563716'),
-(204, '632745563716'),
-(205, '632745563716'),
-(206, '632745563716'),
-(207, '632745563716'),
-(208, '632745563716'),
-(209, '359445304937'),
-(210, '359445304937'),
-(211, '359445304937'),
-(212, '359445304937'),
-(213, '359445304937'),
-(214, '359445304937'),
-(215, '359445304937'),
-(216, '359445304937'),
-(217, '359445304937'),
-(218, '359445304937'),
-(219, '359445304937'),
-(220, '359445304937'),
-(221, '359445304937'),
-(222, '359445304937'),
-(223, '632745563716'),
-(224, '632745563716'),
-(225, '359445304937'),
-(226, '359445304937'),
-(227, '359445304937'),
-(228, '359445304937'),
-(229, '632745563716'),
-(230, '632745563716'),
-(231, '672888867376'),
-(232, '672888867376');
+(108, '51871758571');
 
 -- --------------------------------------------------------
 
@@ -570,15 +328,15 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`nis`, `idrfid`, `nk`, `idwalikelas`, `nama`, `alamat`, `jeniskelamin`, `email`, `notlp`, `namaortu`, `noortu`) VALUES
-('NIS101', '632745563716', '12TITL1', 'WLS003', 'Rafi Aziizi Muchtar', 'Cikampek', 'Laki-Laki', 'rafi@gmail.com', '081282407414', 'Koko', '0823323132'),
-('NIS102', '51871758571', '10TITL2', 'WLS002', 'Chania Ayu Lestari', 'Cikalong', 'Laki-Laki', 'chania@gmail.com', '08424231', 'Cika', '0983231'),
-('NIS103', '672888867376', '12TITL1', 'WLS003', 'Sutarjo', 'Karawang', 'Laki-Laki', 'strj@gmail.com', '08442', 'Sutini', '093323');
+('NIS101', '672888867376', '12TITL1', 'WLS002', 'Rafi Aziizi Muchtar', 'Cimahi', 'Perempuan', 'rafi@gmail.com', '081282407414', 'Sukino', '08174925763'),
+('NIS102', '1044418927102', '10TITL3', 'WLS002', 'Chania', 'Cikalong', 'Laki-Laki', 'chania@gmail.com', '083421', 'Koko', '0844'),
+('NIS103', '51871758571', '12TITL1', 'WLS002', 'Roki', 'Cikampek', 'Laki-Laki', 'Roki@gmail.com', '0811233', 'Kaka', '033213');
 
 --
 -- Triggers `siswa`
 --
 DELIMITER $$
-CREATE TRIGGER `deletejumlahjk` AFTER DELETE ON `siswa` FOR EACH ROW IF(old.jeniskelamin='Laki-Laki') THEN
+CREATE TRIGGER `deletejumlahjk` AFTER DELETE ON `siswa` FOR EACH ROW IF(jeniskelamin='Laki-Laki') THEN
     UPDATE kelas
     SET jl= kelas.jl - 1,js=js-1
     WHERE kelas.nk=old.nk;
@@ -587,10 +345,6 @@ ELSE
     SET jp= kelas.jp - 1,js=js-1
     WHERE kelas.nk=old.nk;
 END IF
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `deleterfid` AFTER DELETE ON `siswa` FOR EACH ROW DELETE from rfid WHERE idrfid = old.idrfid
 $$
 DELIMITER ;
 DELIMITER $$
@@ -645,38 +399,6 @@ ELSE
 END IF
 $$
 DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `updaterfid` AFTER UPDATE ON `siswa` FOR EACH ROW IF(new.idrfid!=old.idrfid AND new.nis!=old.nis AND new.nama!=old.nama) THEN
-    UPDATE rfid
-    SET idrfid=new.idrfid,nis=new.nis,nama=new.nama
-    WHERE nis=old.nis;
-ELSEIF(new.idrfid!=old.idrfid AND new.nis!=old.nis) THEN
-    UPDATE rfid
-    SET idrfid=new.idrfid,nis=new.nis
-    WHERE nis=old.nis;
-ELSEIF(new.idrfid!=old.idrfid AND new.nama!=old.nama) THEN
-    UPDATE rfid
-    SET idrfid=new.idrfid,nama=new.nama
-    WHERE nis=old.nis;
-ELSEIF(new.nis!=old.nis AND new.nama!=old.nama) THEN
-    UPDATE rfid
-    SET nis=new.nis,nama=new.nama
-    WHERE nis=old.nis;
-ELSEIF(new.idrfid!=old.idrfid) THEN
-    UPDATE rfid
-    SET idrfid=new.idrfid
-    WHERE nis=old.nis;
-ELSEIF(new.nis!=old.nis) THEN
-    UPDATE rfid
-    SET nis=new.nis
-    WHERE nis=old.nis;
-ELSEIF(new.nama!=old.nama) THEN
-    UPDATE rfid
-    SET nama=new.nama
-    WHERE nis=old.nis;
-END IF
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -699,7 +421,7 @@ CREATE TABLE `walikelas` (
 --
 
 INSERT INTO `walikelas` (`idwalikelas`, `nip`, `nama`, `email`, `jeniskelamin`, `notlp`, `alamat`) VALUES
-('WLS001', '3411181123', 'Rafi Aziizi M', 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi'),
+('WLS001', '3411181123', 'Rafi Aziizi Muchtar', 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi'),
 ('WLS002', '3411181122', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '0811', 'Cikalong'),
 ('WLS003', '3411181121', 'Rizko Ayundra', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang');
 
@@ -743,7 +465,17 @@ ALTER TABLE `lapabsen`
   ADD PRIMARY KEY (`idlapabsen`),
   ADD KEY `nis` (`nis`,`nk`),
   ADD KEY `idwalas` (`idwalikelas`),
+  ADD KEY `idabsen` (`idabsen`),
   ADD KEY `nk` (`nk`);
+
+--
+-- Indexes for table `mnkelas`
+--
+ALTER TABLE `mnkelas`
+  ADD PRIMARY KEY (`idmnkelas`),
+  ADD KEY `nk` (`nk`),
+  ADD KEY `nip` (`idwalikelas`),
+  ADD KEY `nis` (`nis`);
 
 --
 -- Indexes for table `rfid`
@@ -782,12 +514,22 @@ ALTER TABLE `walikelas`
 -- AUTO_INCREMENT for table `absen`
 --
 ALTER TABLE `absen`
-  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+--
+-- AUTO_INCREMENT for table `lapabsen`
+--
+ALTER TABLE `lapabsen`
+  MODIFY `idlapabsen` int(15) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `mnkelas`
+--
+ALTER TABLE `mnkelas`
+  MODIFY `idmnkelas` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `rfidlog`
 --
 ALTER TABLE `rfidlog`
-  MODIFY `no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=233;
+  MODIFY `no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 --
 -- Constraints for dumped tables
 --
@@ -819,6 +561,14 @@ ALTER TABLE `lapabsen`
   ADD CONSTRAINT `lapabsen_ibfk_1` FOREIGN KEY (`idwalikelas`) REFERENCES `walikelas` (`idwalikelas`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `lapabsen_ibfk_2` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `lapabsen_ibfk_3` FOREIGN KEY (`nk`) REFERENCES `kelas` (`nk`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `mnkelas`
+--
+ALTER TABLE `mnkelas`
+  ADD CONSTRAINT `mnkelas_ibfk_2` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `mnkelas_ibfk_3` FOREIGN KEY (`idwalikelas`) REFERENCES `walikelas` (`idwalikelas`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `mnkelas_ibfk_4` FOREIGN KEY (`nk`) REFERENCES `kelas` (`nk`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `siswa`
