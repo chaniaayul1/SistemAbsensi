@@ -2554,7 +2554,6 @@ System.out.println(e);
         lb_nisriwayatsiswa = new javax.swing.JLabel();
         lb_namariwayatsiswa = new javax.swing.JLabel();
         lb_nkriwayatsiswa = new javax.swing.JLabel();
-        btn_searchriwayatsiswa = new javax.swing.JButton();
         btn_cetakriwayatsiswa = new javax.swing.JButton();
         tabriwayatsiswa = new javax.swing.JScrollPane();
         tabel_riwayatsiswa = new javax.swing.JTable();
@@ -2566,6 +2565,7 @@ System.out.println(e);
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        btn_searchriwayatsiswa = new javax.swing.JButton();
         bgriwayatsiswa = new javax.swing.JLabel();
         dataguru = new javax.swing.JLayeredPane();
         panelguru = new javax.swing.JPanel();
@@ -3275,18 +3275,19 @@ System.out.println(e);
 
         panelsiswa.setLayout(null);
         panelsiswa.add(txt_searchsiswa);
-        txt_searchsiswa.setBounds(190, 110, 780, 30);
+        txt_searchsiswa.setBounds(190, 109, 808, 34);
 
         btn_searchsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_searchsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2.png"))); // NOI18N
+        btn_searchsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2_1.png"))); // NOI18N
+        btn_searchsiswa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         btn_searchsiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchsiswaActionPerformed(evt);
             }
         });
         panelsiswa.add(btn_searchsiswa);
-        btn_searchsiswa.setBounds(980, 110, 30, 30);
+        btn_searchsiswa.setBounds(1000, 110, 30, 30);
 
         btn_lihatsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_lihatsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -3323,6 +3324,7 @@ System.out.println(e);
                 "No", "NIS", "Jenis Kelamin", "Nama"
             }
         ));
+        tabel_siswa.setPreferredSize(new java.awt.Dimension(375, 80));
         tabel_siswa.setRowHeight(20);
         tabel_siswa.setRowMargin(2);
         tabel_siswa.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -3333,17 +3335,18 @@ System.out.println(e);
         tabsiswa.setViewportView(tabel_siswa);
 
         panelsiswa.add(tabsiswa);
-        tabsiswa.setBounds(50, 160, 1010, 380);
+        tabsiswa.setBounds(50, 170, 1010, 370);
 
         btn_refreshdatasiswa.setBackground(new java.awt.Color(255, 255, 255));
-        btn_refreshdatasiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/refresh (1).png"))); // NOI18N
+        btn_refreshdatasiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refresh1.png"))); // NOI18N
+        btn_refreshdatasiswa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         btn_refreshdatasiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_refreshdatasiswaActionPerformed(evt);
             }
         });
         panelsiswa.add(btn_refreshdatasiswa);
-        btn_refreshdatasiswa.setBounds(1020, 110, 40, 30);
+        btn_refreshdatasiswa.setBounds(1030, 110, 30, 30);
 
         btn_tambahsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_tambahsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -3354,7 +3357,7 @@ System.out.println(e);
             }
         });
         panelsiswa.add(btn_tambahsiswa);
-        btn_tambahsiswa.setBounds(50, 110, 130, 30);
+        btn_tambahsiswa.setBounds(50, 109, 130, 34);
 
         bgsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelsiswa.png"))); // NOI18N
         panelsiswa.add(bgsiswa);
@@ -3724,18 +3727,18 @@ System.out.println(e);
         panel_chartrs.setVerifyInputWhenFocusTarget(false);
         panel_chartrs.setLayout(new javax.swing.OverlayLayout(panel_chartrs));
         panelriwayatsiswa.add(panel_chartrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 430, 460));
-        panelriwayatsiswa.add(txt_tanggalriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 150, 30));
+        panelriwayatsiswa.add(txt_tanggalriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 188, 190, 34));
 
         txt_tanggal2riwayatsiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_tanggal2riwayatsiswaActionPerformed(evt);
             }
         });
-        panelriwayatsiswa.add(txt_tanggal2riwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 170, 30));
+        panelriwayatsiswa.add(txt_tanggal2riwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 188, 190, 34));
 
         lb_sampairiwayatsiswa.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lb_sampairiwayatsiswa.setText("-");
-        panelriwayatsiswa.add(lb_sampairiwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, -1, -1));
+        panelriwayatsiswa.add(lb_sampairiwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 10, -1));
 
         jLabel2.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         jLabel2.setText("Tanggal ");
@@ -3761,16 +3764,6 @@ System.out.println(e);
 
         lb_nkriwayatsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelriwayatsiswa.add(lb_nkriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 148, 250, 20));
-
-        btn_searchriwayatsiswa.setBackground(new java.awt.Color(255, 255, 255));
-        btn_searchriwayatsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_searchriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2.png"))); // NOI18N
-        btn_searchriwayatsiswa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_searchriwayatsiswaActionPerformed(evt);
-            }
-        });
-        panelriwayatsiswa.add(btn_searchriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 30, 30));
 
         btn_cetakriwayatsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_cetakriwayatsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -3808,13 +3801,14 @@ System.out.println(e);
         panelriwayatsiswa.add(tabriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 570, 320));
 
         btn_refreshriwayatsiswa.setBackground(new java.awt.Color(255, 255, 255));
-        btn_refreshriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/refresh (1).png"))); // NOI18N
+        btn_refreshriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refresh1.png"))); // NOI18N
+        btn_refreshriwayatsiswa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         btn_refreshriwayatsiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_refreshriwayatsiswaActionPerformed(evt);
             }
         });
-        panelriwayatsiswa.add(btn_refreshriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 190, 40, 30));
+        panelriwayatsiswa.add(btn_refreshriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 190, 30, 30));
 
         btn_kembaliriwayatabsen.setBackground(new java.awt.Color(255, 255, 255));
         btn_kembaliriwayatabsen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_kembali.png"))); // NOI18N
@@ -3850,6 +3844,17 @@ System.out.println(e);
         jLabel6.setText(":");
         panelriwayatsiswa.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 125, -1, -1));
 
+        btn_searchriwayatsiswa.setBackground(new java.awt.Color(255, 255, 255));
+        btn_searchriwayatsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_searchriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2_1.png"))); // NOI18N
+        btn_searchriwayatsiswa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        btn_searchriwayatsiswa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_searchriwayatsiswaActionPerformed(evt);
+            }
+        });
+        panelriwayatsiswa.add(btn_searchriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 190, 30, 30));
+
         bgriwayatsiswa.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         bgriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelriwayatabsen.png"))); // NOI18N
         panelriwayatsiswa.add(bgriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -3862,17 +3867,18 @@ System.out.println(e);
         dataguru.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelguru.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panelguru.add(txt_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 770, 30));
+        panelguru.add(txt_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 108, 828, 34));
 
         btn_searchguru.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_searchguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2.png"))); // NOI18N
+        btn_searchguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2_1.png"))); // NOI18N
+        btn_searchguru.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         btn_searchguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchguruActionPerformed(evt);
             }
         });
-        panelguru.add(btn_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 110, 30, 30));
+        panelguru.add(btn_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 110, 30, 30));
 
         tabel_guru.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -3935,13 +3941,14 @@ System.out.println(e);
         panelguru.add(brn_hapusguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(923, 570, 140, 40));
 
         btn_refreshdataguru.setBackground(new java.awt.Color(255, 255, 255));
-        btn_refreshdataguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/refresh (1).png"))); // NOI18N
+        btn_refreshdataguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refresh1.png"))); // NOI18N
+        btn_refreshdataguru.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         btn_refreshdataguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_refreshdataguruActionPerformed(evt);
             }
         });
-        panelguru.add(btn_refreshdataguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 110, 40, 30));
+        panelguru.add(btn_refreshdataguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 110, 30, 30));
 
         btn_tambahguru.setBackground(new java.awt.Color(255, 255, 255));
         btn_tambahguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -3952,7 +3959,7 @@ System.out.println(e);
                 btn_tambahguruActionPerformed(evt);
             }
         });
-        panelguru.add(btn_tambahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 150, 30));
+        panelguru.add(btn_tambahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 108, 110, 34));
 
         bgguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelguru.png"))); // NOI18N
         panelguru.add(bgguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -4265,17 +4272,18 @@ System.out.println(e);
         datawalikelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelwalikelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panelwalikelas.add(txt_searchwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 770, 30));
+        panelwalikelas.add(txt_searchwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 108, 828, 34));
 
         btn_searchwalikelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchwalikelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_searchwalikelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2.png"))); // NOI18N
+        btn_searchwalikelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2_1.png"))); // NOI18N
+        btn_searchwalikelas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         btn_searchwalikelas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchwalikelasActionPerformed(evt);
             }
         });
-        panelwalikelas.add(btn_searchwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 110, 30, 30));
+        panelwalikelas.add(btn_searchwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 110, 30, 30));
 
         tabel_walikelas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -4338,13 +4346,14 @@ System.out.println(e);
         panelwalikelas.add(brn_hapuswalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(923, 570, 140, 40));
 
         btn_refreshdatawalikelas.setBackground(new java.awt.Color(255, 255, 255));
-        btn_refreshdatawalikelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/refresh (1).png"))); // NOI18N
+        btn_refreshdatawalikelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refreshlagi.png"))); // NOI18N
+        btn_refreshdatawalikelas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         btn_refreshdatawalikelas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_refreshdatawalikelasActionPerformed(evt);
             }
         });
-        panelwalikelas.add(btn_refreshdatawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 110, 40, 30));
+        panelwalikelas.add(btn_refreshdatawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 110, 30, 30));
 
         btn_tambahwalikelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_tambahwalikelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -4355,7 +4364,7 @@ System.out.println(e);
                 btn_tambahwalikelasActionPerformed(evt);
             }
         });
-        panelwalikelas.add(btn_tambahwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 150, 30));
+        panelwalikelas.add(btn_tambahwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 108, 110, 34));
 
         bgwalikelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelwalikelas.png"))); // NOI18N
         panelwalikelas.add(bgwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -4699,27 +4708,30 @@ System.out.println(e);
                 btn_addkelasActionPerformed(evt);
             }
         });
-        panelkelas.add(btn_addkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 120, 30));
-        panelkelas.add(txt_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 770, 30));
+        panelkelas.add(btn_addkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 108, 110, 34));
+        panelkelas.add(txt_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 108, 830, 34));
 
         btn_searchkelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchkelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_searchkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2.png"))); // NOI18N
+        btn_searchkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2_1.png"))); // NOI18N
+        btn_searchkelas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         btn_searchkelas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchkelasActionPerformed(evt);
             }
         });
-        panelkelas.add(btn_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 110, 30, 30));
+        panelkelas.add(btn_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 110, 30, 30));
 
         btn_refreshkelas.setBackground(new java.awt.Color(255, 255, 255));
-        btn_refreshkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/refresh (1).png"))); // NOI18N
+        btn_refreshkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refreshlagi.png"))); // NOI18N
+        btn_refreshkelas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        btn_refreshkelas.setBorderPainted(false);
         btn_refreshkelas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_refreshkelasActionPerformed(evt);
             }
         });
-        panelkelas.add(btn_refreshkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 110, 60, 30));
+        panelkelas.add(btn_refreshkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 110, 32, 32));
 
         tabkelas.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -5346,13 +5358,14 @@ System.out.println(e);
 
         btn_searchdataabsen.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchdataabsen.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_searchdataabsen.setText("Search");
+        btn_searchdataabsen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2_1.png"))); // NOI18N
+        btn_searchdataabsen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         btn_searchdataabsen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchdataabsenActionPerformed(evt);
             }
         });
-        panelabsensi.add(btn_searchdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 100, 30));
+        panelabsensi.add(btn_searchdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 190, 30, 30));
 
         nisdataabsensi.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         nisdataabsensi.setText("NIS");
@@ -5364,11 +5377,11 @@ System.out.println(e);
 
         statusdatabsensi.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         statusdatabsensi.setText("Status ");
-        panelabsensi.add(statusdatabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 109, -1, -1));
+        panelabsensi.add(statusdatabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
 
         sampaidatabsensi.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 18)); // NOI18N
         sampaidatabsensi.setText("-");
-        panelabsensi.add(sampaidatabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 150, -1, -1));
+        panelabsensi.add(sampaidatabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 150, -1, -1));
 
         btn_updateabsen.setBackground(new java.awt.Color(255, 255, 255));
         btn_updateabsen.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -5379,10 +5392,11 @@ System.out.println(e);
                 btn_updateabsenActionPerformed(evt);
             }
         });
-        panelabsensi.add(btn_updateabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 140, -1, 30));
+        panelabsensi.add(btn_updateabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, -1, 30));
 
         btn_refreshdataabsen.setBackground(new java.awt.Color(255, 255, 255));
-        btn_refreshdataabsen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/refresh.png"))); // NOI18N
+        btn_refreshdataabsen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refreshlagi.png"))); // NOI18N
+        btn_refreshdataabsen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         btn_refreshdataabsen.setIconTextGap(18);
         btn_refreshdataabsen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -5409,7 +5423,7 @@ System.out.println(e);
         });
         tababsen.setViewportView(tabel_absen);
 
-        panelabsensi.add(tababsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 1010, 370));
+        panelabsensi.add(tababsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 1010, 360));
 
         cb_statusdataabsen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hadir", "Sakit", "Izin", "Alpha" }));
         cb_statusdataabsen.setFocusable(false);
@@ -5421,14 +5435,14 @@ System.out.println(e);
                 cb_statusdataabsenActionPerformed(evt);
             }
         });
-        panelabsensi.add(cb_statusdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 100, 350, 30));
+        panelabsensi.add(cb_statusdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 280, 30));
 
         lb_idabsen.setText("jLabel2");
         panelabsensi.add(lb_idabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel8.setText(":");
-        panelabsensi.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 100, 10, -1));
+        panelabsensi.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 197, 10, -1));
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel9.setText(":");
@@ -6243,13 +6257,13 @@ System.out.println(e);
 
     }//GEN-LAST:event_btn_cetakriwayatsiswaActionPerformed
 
-    private void btn_searchriwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchriwayatsiswaActionPerformed
-        this.searchriwayatsiswa();
-    }//GEN-LAST:event_btn_searchriwayatsiswaActionPerformed
-
     private void txt_tanggal2riwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tanggal2riwayatsiswaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_tanggal2riwayatsiswaActionPerformed
+
+    private void btn_searchriwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchriwayatsiswaActionPerformed
+        this.searchriwayatsiswa();
+    }//GEN-LAST:event_btn_searchriwayatsiswaActionPerformed
 
     
     public static void main(String args[]) {
