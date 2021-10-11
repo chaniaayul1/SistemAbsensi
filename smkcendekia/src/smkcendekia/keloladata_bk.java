@@ -5,26 +5,19 @@
  */
 package smkcendekia;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import javax.swing.JLayeredPane;
 import java.awt.Color;
 import java.awt.HeadlessException;
-import java.awt.LayoutManager;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
@@ -1040,6 +1033,171 @@ public class keloladata_bk extends javax.swing.JFrame {
         }
     }
     
+    public void tampilanggotawalikelas(){
+        model = new DefaultTableModel ( );
+        tabel_anggotawalikelas.setModel(model);
+        lb_idanggotawalikelas.setText(txt_idprofilewalikelas.getText());
+        lb_namaanggotawalikelas.setText(txt_namaprofilewalikelas.getText());
+        lb_nkanggotawalikelas.setText(txt_nkprofilewalikelas.getText());
+        model.addColumn("No");
+        model.addColumn("NIS");
+        model.addColumn("Nama");
+        model.addColumn("Jenis Kelamin");  
+
+         try{
+           stat = con.createStatement( );
+           sql  = "Select * from siswa where idwalikelas='"+txt_idprofilewalikelas.getText()+"'";
+           rs   = stat.executeQuery(sql);
+           int no = 1;
+           while(rs.next ()){
+                Object[ ] obj = new Object[4];
+                obj[0] = Integer.toString(no);
+                obj[1] = rs.getString("nis");
+                obj[2] = rs.getString("nama");
+                obj[3] = rs.getString("jeniskelamin");
+                model.addRow(obj);
+                no++;
+            }
+            this.chartanggotawalikelas();
+            tabel_anggotawalikelas.setModel(model);
+                    
+        } catch (SQLException e) {
+            System.out.println(e);
+      }
+    }
+    
+    public void chartanggotawalikelas(){
+        int laki = 0,perempuan = 0;
+        int hadir = 0,sakit = 0,izin = 0,alpha = 0,terlambat = 0;
+        try{
+           stat = con.createStatement( );
+           //sql  = "Select * from siswa where idwalikelas='"+txt_idprofilewalikelas.getText()+"' and jeniskelamin='Laki-Laki' or jeniskelamin='Perempuan'";
+           sql  = "Select * from lapabsen where idwalikelas='"+lb_idanggotawalikelas.getText()+"'";
+           rs   = stat.executeQuery(sql);
+           /*while(rs.next ()){
+               if(rs.getString("jeniskelamin").equals("Laki-Laki")){
+                   laki=laki+1;
+               }
+               else if(rs.getString("jeniskelamin").equals("Perempuan")){
+                   perempuan=perempuan+1;
+               }
+               else{
+                   laki=0;
+                   perempuan=0;
+               }   
+            }*/
+           while(rs.next ()){
+                hadir = rs.getInt("hadir")+hadir;
+                sakit = rs.getInt("sakit")+sakit;
+                izin = rs.getInt("izin")+izin;
+                alpha = rs.getInt("alpha")+alpha;
+                terlambat =rs.getInt("terlambat")+terlambat;
+            } 
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        DefaultPieDataset piedata=new DefaultPieDataset();
+        //piedata.setValue("Laki-Laki", laki);
+        //piedata.setValue("Perempuan", perempuan);
+        piedata.setValue("Hadir", hadir);
+        piedata.setValue("Sakit", sakit);
+        piedata.setValue("Izin", izin);
+        piedata.setValue("Alpha",alpha);
+        piedata.setValue("Terlambat", terlambat);
+        JFreeChart chart=ChartFactory.createPieChart(null, piedata,true,false,false);
+        final PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
+        final PiePlot plot1 = (PiePlot) chart.getPlot();
+        plot1.setLabelGenerator(labelGenerator);
+        PiePlot piePlot=(PiePlot) chart.getPlot();
+        chart.getPlot().setBackgroundPaint( Color.white);
+        chart.getPlot().setOutlinePaint(null);
+        piePlot.setSectionPaint("Hadir",Color.green);
+        piePlot.setSectionPaint("Sakit",Color.yellow);
+        piePlot.setSectionPaint("Izin",Color.blue);
+        piePlot.setSectionPaint("Alpha",Color.red);
+        piePlot.setSectionPaint("Terlambat",Color.orange);
+        //piePlot.setSectionPaint("Laki-Laki",Color.blue);
+        //piePlot.setSectionPaint("Perempuan",Color.pink);
+        ChartPanel barChartPanel=new ChartPanel(chart);
+        panel_chartaw.removeAll();
+        panel_chartaw.add(barChartPanel);
+        panel_chartaw.validate();
+    }
+    
+    public void searchanggotawalikelas(){
+        int row = tabel_anggotawalikelas.getRowCount();
+        for(int a=0;a<row;a++){
+            model.removeRow(0);
+        }
+        if(txt_searchanggotawalikelas.getText().equals("")){
+            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+            "Pesan", JOptionPane.ERROR_MESSAGE);
+            this.tampilanggotawalikelas();
+        }
+        else{
+            try{
+               stat = con.createStatement( );
+               sql  = "Select * from siswa WHERE idwalikelas='"+lb_idanggotawalikelas.getText()+"' AND nis='"+txt_searchanggotawalikelas.getText()+"'";
+               rs   = stat.executeQuery(sql);
+
+               int no=1;
+               while(rs.next ()){
+                    Object[ ] obj = new Object[4];
+                    obj[0] = Integer.toString(no);
+                    obj[1] = rs.getString("nis");
+                    obj[2] = rs.getString("nama");
+                    obj[3] = rs.getString("jeniskelamin");
+                    model.addRow(obj);
+                    no++;
+                }
+               this.chartsiswaanggotawalikelas();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+            "Pesan", JOptionPane.ERROR_MESSAGE);
+                this.tampilanggotawalikelas();
+            }
+        }
+    }
+    
+    public void chartsiswaanggotawalikelas(){
+        int hadir = 0,sakit = 0,izin = 0,alpha = 0,terlambat = 0;
+        try{
+           stat = con.createStatement( );
+           sql  = "Select * from lapabsen where nis='"+txt_searchanggotawalikelas.getText()+"' and idwalikelas='"+lb_idanggotawalikelas.getText()+"'";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+                hadir = rs.getInt("hadir");
+                sakit = rs.getInt("sakit");
+                izin = rs.getInt("izin");
+                alpha = rs.getInt("alpha");
+                terlambat =rs.getInt("terlambat");
+            }      
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        DefaultPieDataset piedata=new DefaultPieDataset();
+        piedata.setValue("Hadir", hadir);
+        piedata.setValue("Sakit", sakit);
+        piedata.setValue("Izin", izin);
+        piedata.setValue("Alpha",alpha);
+        piedata.setValue("Terlambat", terlambat);
+        JFreeChart chart=ChartFactory.createPieChart(" ", piedata,true,false,false);
+        final PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
+        final PiePlot plot1 = (PiePlot) chart.getPlot();
+        plot1.setLabelGenerator(labelGenerator);
+        PiePlot piePlot=(PiePlot) chart.getPlot();
+        chart.getPlot().setBackgroundPaint( Color.white);
+        chart.getPlot().setOutlinePaint(null);
+        piePlot.setSectionPaint("Hadir",Color.green);
+        piePlot.setSectionPaint("Sakit",Color.yellow);
+        piePlot.setSectionPaint("Izin",Color.blue);
+        piePlot.setSectionPaint("Alpha",Color.red);
+        piePlot.setSectionPaint("Terlambat",Color.orange);
+        ChartPanel barChartPanel=new ChartPanel(chart);
+        panel_chartaw.removeAll();
+        panel_chartaw.add(barChartPanel);
+        panel_chartaw.validate();
+    }
     // VOID SIMPAN GURU
     public void simpanprofilewalas(){
         try {
@@ -1434,7 +1592,7 @@ System.out.println(e);
         piedata.setValue("Izin", izin);
         piedata.setValue("Alpha",alpha);
         piedata.setValue("Terlambat", terlambat);
-        JFreeChart chart=ChartFactory.createPieChart("Persentase Kehadiran Siswa per Kelas", piedata,true,false,false);
+        JFreeChart chart=ChartFactory.createPieChart(null, piedata,true,false,false);
         final PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
         final PiePlot plot1 = (PiePlot) chart.getPlot();
         plot1.setLabelGenerator(labelGenerator);
@@ -1447,9 +1605,9 @@ System.out.println(e);
         piePlot.setSectionPaint("Alpha",Color.red);
         piePlot.setSectionPaint("Terlambat",Color.orange);
         ChartPanel barChartPanel=new ChartPanel(chart);
-        panel_chartanggotakelas.removeAll();
-        panel_chartanggotakelas.add(barChartPanel);
-        panel_chartanggotakelas.validate();
+        panel_chartak.removeAll();
+        panel_chartak.add(barChartPanel);
+        panel_chartak.validate();
     }
     
     public void convernamawalaskelas() throws SQLException{
@@ -1497,7 +1655,7 @@ System.out.println(e);
         for(int a=0;a<row;a++){
             model.removeRow(0);
         }
-        if(txt_searchnisanggotakelas.getText().equals("")){
+        if(txt_searchanggotakelas.getText().equals("")){
             JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
             "Pesan", JOptionPane.ERROR_MESSAGE);
             this.tampilanggotakelas();
@@ -1505,7 +1663,7 @@ System.out.println(e);
         else{
             try{
                stat = con.createStatement( );
-               sql  = "Select * from siswa WHERE nk='"+lb_nkak.getText()+"' AND nis='"+txt_searchnisanggotakelas.getText()+"'";
+               sql  = "Select * from siswa WHERE nk='"+lb_nkak.getText()+"' AND nis='"+txt_searchanggotakelas.getText()+"'";
                rs   = stat.executeQuery(sql);
 
                int no=1;
@@ -1524,6 +1682,46 @@ System.out.println(e);
                 this.tampilanggotakelas();
             }
         }
+    }
+    
+    public void chartsiswaanggotakelas(){
+        int hadir = 0,sakit = 0,izin = 0,alpha = 0,terlambat = 0;
+        try{
+           stat = con.createStatement( );
+           sql  = "Select * from lapabsen where nis='"+txt_searchanggotakelas.getText()+"' and nk='"+lb_nkak.getText()+"'";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+                hadir = rs.getInt("hadir");
+                sakit = rs.getInt("sakit");
+                izin = rs.getInt("izin");
+                alpha = rs.getInt("alpha");
+                terlambat =rs.getInt("terlambat");
+            }      
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        DefaultPieDataset piedata=new DefaultPieDataset();
+        piedata.setValue("Hadir", hadir);
+        piedata.setValue("Sakit", sakit);
+        piedata.setValue("Izin", izin);
+        piedata.setValue("Alpha",alpha);
+        piedata.setValue("Terlambat", terlambat);
+        JFreeChart chart=ChartFactory.createPieChart(" ", piedata,true,false,false);
+        final PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
+        final PiePlot plot1 = (PiePlot) chart.getPlot();
+        plot1.setLabelGenerator(labelGenerator);
+        PiePlot piePlot=(PiePlot) chart.getPlot();
+        chart.getPlot().setBackgroundPaint( Color.white);
+        chart.getPlot().setOutlinePaint(null);
+        piePlot.setSectionPaint("Hadir",Color.green);
+        piePlot.setSectionPaint("Sakit",Color.yellow);
+        piePlot.setSectionPaint("Izin",Color.blue);
+        piePlot.setSectionPaint("Alpha",Color.red);
+        piePlot.setSectionPaint("Terlambat",Color.orange);
+        ChartPanel barChartPanel=new ChartPanel(chart);
+        panel_chartak.removeAll();
+        panel_chartak.add(barChartPanel);
+        panel_chartak.validate();
     }
     
     public void querysearchkelas(){
@@ -2204,6 +2402,145 @@ System.out.println(e);
             System.out.println(e);
       }
     }
+    
+    public void searchlapabsen(){
+        String value = cb_lapabsen.getSelectedItem().toString();
+        if (value.equals("Berdasarkan Nama Walikelas")){
+            if(txt_searchlapabsen.getText().equals("")){
+                JOptionPane.showMessageDialog(null, ("Isi Kolom Pencarian"), 
+                    "Pesan", JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+                int row = tabel_lapabsen.getRowCount();
+                for(int a=0;a<row;a++){
+                    model.removeRow(0);
+                }
+                try{
+                    Object[ ] obj = new Object[11];
+                    stat = con.createStatement( );
+                    sql  = "SELECT la.*, w.nama FROM lapabsen AS la INNER JOIN walikelas AS w ON la.idwalikelas = w.idwalikelas WHERE w.nama='"+txt_searchlapabsen.getText()+"'";
+                    rs   = stat.executeQuery(sql);
+                        int no=1;
+                        while(rs.next ()){
+                        
+                            obj[0] = Integer.toString(no);
+                            obj[1] = rs.getString("idlapabsen");
+                            obj[2] = rs.getString("w.nama");
+                            obj[3] = rs.getString("nis");
+                            obj[4] = rs.getString("nk");
+                            obj[5] = rs.getString("nama");
+                            obj[6] = rs.getString("hadir");
+                            obj[7] = rs.getString("sakit");
+                            obj[8] = rs.getString("izin");
+                            obj[9] = rs.getString("alpha");
+                            obj[10] = rs.getString("terlambat");
+                            model.addRow(obj);
+                            no++;
+                        }
+                    if (model.getRowCount()==0){
+                        JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+                        "Pesan", JOptionPane.ERROR_MESSAGE);
+                        this.tampillapabsen();
+                    }
+                    } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+                    "Pesan", JOptionPane.ERROR_MESSAGE);  
+                }
+            } 
+        }
+        else if(value.equals("Berdasarkan NK")){
+            if(txt_searchlapabsen.getText().equals("")){
+                JOptionPane.showMessageDialog(null, ("Isi Kolom Pencarian"), 
+                    "Pesan", JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+                int row = tabel_lapabsen.getRowCount();
+                for(int a=0;a<row;a++){
+                    model.removeRow(0);
+                }
+                try{
+                    stat = con.createStatement( );
+                    sql  = "SELECT la.*, w.nama FROM lapabsen AS la INNER JOIN walikelas AS w ON la.idwalikelas = w.idwalikelas WHERE la.nk='"+txt_searchlapabsen.getText()+"'";
+                       rs   = stat.executeQuery(sql);
+
+                       int no=1;
+                       while(rs.next ()){
+                        Object[ ] obj = new Object[11];
+                        obj[0] = Integer.toString(no);
+                        obj[1] = rs.getString("idlapabsen");
+                        obj[2] = rs.getString("w.nama");
+                        obj[3] = rs.getString("nis");
+                        obj[4] = rs.getString("nk");
+                        obj[5] = rs.getString("nama");
+                        obj[6] = rs.getString("hadir");
+                        obj[7] = rs.getString("sakit");
+                        obj[8] = rs.getString("izin");
+                        obj[9] = rs.getString("alpha");
+                        obj[10] = rs.getString("terlambat");
+                        model.addRow(obj);
+                        no++;
+                    }
+                    if (model.getRowCount()==0){
+                        JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+                    "Pesan", JOptionPane.ERROR_MESSAGE);
+                        this.tampillapabsen();
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+                    "Pesan", JOptionPane.ERROR_MESSAGE);  
+                }
+            }
+        }
+        else if(value.equals("Berdasarkan NIS")){
+            if(txt_searchlapabsen.getText().equals("")){
+                JOptionPane.showMessageDialog(null, ("Isi Kolom Pencarian"), 
+                    "Pesan", JOptionPane.ERROR_MESSAGE); 
+            }
+            else{ 
+                int row = tabel_lapabsen.getRowCount();
+                for(int a=0;a<row;a++){
+                    model.removeRow(0);
+                }
+                try{
+                    stat = con.createStatement();
+                    sql  = "SELECT la.*, w.nama FROM lapabsen AS la INNER JOIN walikelas AS w ON la.idwalikelas = w.idwalikelas WHERE la.nis='"+txt_searchlapabsen.getText()+"'";
+                    rs   = stat.executeQuery(sql);
+
+                    int no=1;
+                    while(rs.next ()){
+                        Object[ ] obj = new Object[11];
+                        obj[0] = Integer.toString(no);
+                        obj[1] = rs.getString("idlapabsen");
+                        obj[2] = rs.getString("w.nama");
+                        obj[3] = rs.getString("nis");
+                        obj[4] = rs.getString("nk");
+                        obj[5] = rs.getString("nama");
+                        obj[6] = rs.getString("hadir");
+                        obj[7] = rs.getString("sakit");
+                        obj[8] = rs.getString("izin");
+                        obj[9] = rs.getString("alpha");
+                        obj[10] = rs.getString("terlambat");
+                        model.addRow(obj);
+                        no++;
+                    }
+                if (model.getRowCount()==0){
+                            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+                    "Pesan", JOptionPane.ERROR_MESSAGE);
+                            this.tampillapabsen();
+                }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+                    "Pesan", JOptionPane.ERROR_MESSAGE);  
+                }
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, ("Pilih Format Pencarian"), 
+            "Pesan", JOptionPane.ERROR_MESSAGE);  
+        }
+        
+     }
+
     //==============================PERIPHERAL================================//
     //SWITCH PANEL
     public void switchpanel(JLayeredPane panel){
@@ -2380,6 +2717,15 @@ System.out.println(e);
         tab_lapabsen.getViewport().setOpaque(false);
         tab_lapabsen.setViewportBorder(null);
         tabel_lapabsen.setShowGrid(true);
+        
+        //SETTING TRANSPARASI SCROLLPANE TABEL ANGGOTA WALIKELAS
+        ((DefaultTableCellRenderer)tabel_anggotawalikelas.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
+        tabel_anggotawalikelas.setGridColor(Color.BLACK);
+        tabel_anggotawalikelas.setForeground(Color.BLACK);
+        tabanggotawalikelas.setOpaque(false);
+        tabanggotawalikelas.getViewport().setOpaque(false);
+        tabanggotawalikelas.setViewportBorder(null);
+        tabel_anggotawalikelas.setShowGrid(true);
     }
   
     //RESET ALL PANEL
@@ -2547,13 +2893,13 @@ System.out.println(e);
         txt_tanggalriwayatsiswa = new javax.swing.JTextField();
         txt_tanggal2riwayatsiswa = new javax.swing.JTextField();
         lb_sampairiwayatsiswa = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lb_tglrs = new javax.swing.JLabel();
         lb_nisrs = new javax.swing.JLabel();
         lb_namars = new javax.swing.JLabel();
         lb_nkrs = new javax.swing.JLabel();
         lb_nisriwayatsiswa = new javax.swing.JLabel();
-        lb_namariwayatsiswa = new javax.swing.JLabel();
         lb_nkriwayatsiswa = new javax.swing.JLabel();
+        lb_namariwayatsiswa = new javax.swing.JLabel();
         btn_cetakriwayatsiswa = new javax.swing.JButton();
         tabriwayatsiswa = new javax.swing.JScrollPane();
         tabel_riwayatsiswa = new javax.swing.JTable();
@@ -2705,6 +3051,28 @@ System.out.println(e);
         btn_simpanformwalikelas = new javax.swing.JButton();
         btn_kembaliformwalikelas = new javax.swing.JButton();
         bgtambahwalikelas = new javax.swing.JLabel();
+        anggota_walikelas = new javax.swing.JLayeredPane();
+        panelanggotawalikelas = new javax.swing.JPanel();
+        panel_chartaw = new javax.swing.JPanel();
+        lb_idwalikelasaw = new javax.swing.JLabel();
+        lb_namaaw = new javax.swing.JLabel();
+        lb_nkaw = new javax.swing.JLabel();
+        lb_nisaw = new javax.swing.JLabel();
+        lb_idanggotawalikelas = new javax.swing.JLabel();
+        lb_namaanggotawalikelas = new javax.swing.JLabel();
+        lb_nkanggotawalikelas = new javax.swing.JLabel();
+        txt_searchanggotawalikelas = new javax.swing.JTextField();
+        btn_cetakanggotawalikelas = new javax.swing.JButton();
+        tabanggotawalikelas = new javax.swing.JScrollPane();
+        tabel_anggotawalikelas = new javax.swing.JTable();
+        btn_refreshanggotawalikelas = new javax.swing.JButton();
+        btn_kembalianggotawalikelas = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        btn_searchanggotawalikelas = new javax.swing.JButton();
+        bganggotawalikelas = new javax.swing.JLabel();
         datakelas = new javax.swing.JLayeredPane();
         panelkelas = new javax.swing.JPanel();
         btn_addkelas = new javax.swing.JButton();
@@ -2830,15 +3198,17 @@ System.out.println(e);
         tababsen = new javax.swing.JScrollPane();
         tabel_absen = new javax.swing.JTable();
         cb_statusdataabsen = new javax.swing.JComboBox<>();
-        lb_idabsen = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         bgabsensi = new javax.swing.JLabel();
+        lb_idabsen = new javax.swing.JLabel();
         datalapabsensi = new javax.swing.JLayeredPane();
         panellapabsensi = new javax.swing.JPanel();
-        txt_searchbynis = new javax.swing.JTextField();
-        txt_tglakhir = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        cb_lapabsen = new javax.swing.JComboBox<>();
+        txt_searchlapabsen = new javax.swing.JTextField();
+        btn_searchlapabsen = new javax.swing.JButton();
         tab_lapabsen = new javax.swing.JScrollPane();
         tabel_lapabsen = new javax.swing.JTable();
         bglapabsensi = new javax.swing.JLabel();
@@ -2853,14 +3223,14 @@ System.out.println(e);
         bglapabsensi1 = new javax.swing.JLabel();
         dataanggotakelas = new javax.swing.JLayeredPane();
         panelanggotakelas = new javax.swing.JPanel();
-        panel_chartanggotakelas = new javax.swing.JPanel();
+        panel_chartak = new javax.swing.JPanel();
         tab_anggotakelas = new javax.swing.JScrollPane();
         tabel_anggotakelas = new javax.swing.JTable();
         lb_nkak = new javax.swing.JLabel();
         lb_iwak = new javax.swing.JLabel();
         lb_nkanggotakelas = new javax.swing.JLabel();
         lb_nisanggotakelas = new javax.swing.JLabel();
-        txt_searchnisanggotakelas = new javax.swing.JTextField();
+        txt_searchanggotakelas = new javax.swing.JTextField();
         lb_idwalasanggotakelas = new javax.swing.JLabel();
         btn_refreshanggotakelas = new javax.swing.JButton();
         btn_searchanggotakelas = new javax.swing.JButton();
@@ -3338,7 +3708,7 @@ System.out.println(e);
         tabsiswa.setBounds(50, 170, 1010, 370);
 
         btn_refreshdatasiswa.setBackground(new java.awt.Color(255, 255, 255));
-        btn_refreshdatasiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refresh1.png"))); // NOI18N
+        btn_refreshdatasiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refreshlagi.png"))); // NOI18N
         btn_refreshdatasiswa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         btn_refreshdatasiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -3717,7 +4087,7 @@ System.out.println(e);
         panelriwayatsiswa.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panel_chartrs.setBackground(new java.awt.Color(255, 255, 255));
-        panel_chartrs.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Presentasi Kehadiran", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
+        panel_chartrs.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Persentase Kehadiran Siswa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
         panel_chartrs.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panel_chartrs.setDoubleBuffered(false);
         panel_chartrs.setFocusable(false);
@@ -3740,12 +4110,12 @@ System.out.println(e);
         lb_sampairiwayatsiswa.setText("-");
         panelriwayatsiswa.add(lb_sampairiwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 10, -1));
 
-        jLabel2.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        jLabel2.setText("Tanggal ");
-        panelriwayatsiswa.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 195, 70, 20));
+        lb_tglrs.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_tglrs.setText("Tanggal ");
+        panelriwayatsiswa.add(lb_tglrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 195, 70, 20));
 
         lb_nisrs.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        lb_nisrs.setText("NIPD ");
+        lb_nisrs.setText("NIS");
         panelriwayatsiswa.add(lb_nisrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 50, 20));
 
         lb_namars.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
@@ -3759,11 +4129,11 @@ System.out.println(e);
         lb_nisriwayatsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         panelriwayatsiswa.add(lb_nisriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 250, 20));
 
-        lb_namariwayatsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        panelriwayatsiswa.add(lb_namariwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 125, 250, 20));
-
         lb_nkriwayatsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        panelriwayatsiswa.add(lb_nkriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 148, 250, 20));
+        panelriwayatsiswa.add(lb_nkriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 125, 250, 20));
+
+        lb_namariwayatsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        panelriwayatsiswa.add(lb_namariwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 250, 20));
 
         btn_cetakriwayatsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_cetakriwayatsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -3797,12 +4167,14 @@ System.out.println(e);
             }
         });
         tabriwayatsiswa.setViewportView(tabel_riwayatsiswa);
+        if (tabel_riwayatsiswa.getColumnModel().getColumnCount() > 0) {
+            tabel_riwayatsiswa.getColumnModel().getColumn(2).setHeaderValue("NK");
+        }
 
         panelriwayatsiswa.add(tabriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 570, 320));
 
         btn_refreshriwayatsiswa.setBackground(new java.awt.Color(255, 255, 255));
-        btn_refreshriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refresh1.png"))); // NOI18N
-        btn_refreshriwayatsiswa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        btn_refreshriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refreshlagi.png"))); // NOI18N
         btn_refreshriwayatsiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_refreshriwayatsiswaActionPerformed(evt);
@@ -3847,13 +4219,13 @@ System.out.println(e);
         btn_searchriwayatsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchriwayatsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_searchriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2_1.png"))); // NOI18N
-        btn_searchriwayatsiswa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        btn_searchriwayatsiswa.setContentAreaFilled(false);
         btn_searchriwayatsiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchriwayatsiswaActionPerformed(evt);
             }
         });
-        panelriwayatsiswa.add(btn_searchriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 190, 30, 30));
+        panelriwayatsiswa.add(btn_searchriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 190, 30, 30));
 
         bgriwayatsiswa.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         bgriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelriwayatabsen.png"))); // NOI18N
@@ -3941,7 +4313,7 @@ System.out.println(e);
         panelguru.add(brn_hapusguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(923, 570, 140, 40));
 
         btn_refreshdataguru.setBackground(new java.awt.Color(255, 255, 255));
-        btn_refreshdataguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refresh1.png"))); // NOI18N
+        btn_refreshdataguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refreshlagi.png"))); // NOI18N
         btn_refreshdataguru.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         btn_refreshdataguru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -4529,7 +4901,12 @@ System.out.println(e);
 
         btn_lihatdatasiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_lihatdatasiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_lihatdatasiswa.setText("Lihat Siswa");
+        btn_lihatdatasiswa.setText("Anggota Siswa");
+        btn_lihatdatasiswa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_lihatdatasiswaActionPerformed(evt);
+            }
+        });
         panelprofilewalikelas.add(btn_lihatdatasiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 570, 140, 40));
 
         btn_kembaliprofilewalikelas.setBackground(new java.awt.Color(255, 255, 255));
@@ -4542,7 +4919,7 @@ System.out.println(e);
                 btn_kembaliprofilewalikelasActionPerformed(evt);
             }
         });
-        panelprofilewalikelas.add(btn_kembaliprofilewalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 560, 55, 35));
+        panelprofilewalikelas.add(btn_kembaliprofilewalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 570, 55, 35));
 
         bgprofilewalikelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelprofilewalas.png"))); // NOI18N
         panelprofilewalikelas.add(bgprofilewalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -4693,6 +5070,148 @@ System.out.println(e);
         form_walikelas.add(panelformwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
 
         LayerPane.add(form_walikelas, "card4");
+
+        anggota_walikelas.setEnabled(false);
+        anggota_walikelas.setMinimumSize(new java.awt.Dimension(1366, 768));
+        anggota_walikelas.setOpaque(true);
+        anggota_walikelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelanggotawalikelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panel_chartaw.setBackground(new java.awt.Color(255, 255, 255));
+        panel_chartaw.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Persentase Kehadiran Siswa per Wali Kelas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
+        panel_chartaw.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        panel_chartaw.setDoubleBuffered(false);
+        panel_chartaw.setFocusable(false);
+        panel_chartaw.setInheritsPopupMenu(true);
+        panel_chartaw.setOpaque(false);
+        panel_chartaw.setRequestFocusEnabled(false);
+        panel_chartaw.setVerifyInputWhenFocusTarget(false);
+        panel_chartaw.setLayout(new javax.swing.OverlayLayout(panel_chartaw));
+        panelanggotawalikelas.add(panel_chartaw, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 430, 460));
+
+        lb_idwalikelasaw.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_idwalikelasaw.setText("ID Walikelas");
+        panelanggotawalikelas.add(lb_idwalikelasaw, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 80, 20));
+
+        lb_namaaw.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_namaaw.setText("Nama");
+        panelanggotawalikelas.add(lb_namaaw, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 125, 50, 20));
+
+        lb_nkaw.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_nkaw.setText("NK");
+        panelanggotawalikelas.add(lb_nkaw, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, 20));
+
+        lb_nisaw.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_nisaw.setText("NIS");
+        panelanggotawalikelas.add(lb_nisaw, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 195, -1, 20));
+
+        lb_idanggotawalikelas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        panelanggotawalikelas.add(lb_idanggotawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 250, 20));
+
+        lb_namaanggotawalikelas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        panelanggotawalikelas.add(lb_namaanggotawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 125, 250, 20));
+
+        lb_nkanggotawalikelas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        panelanggotawalikelas.add(lb_nkanggotawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 148, 250, 20));
+        panelanggotawalikelas.add(txt_searchanggotawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 410, 30));
+
+        btn_cetakanggotawalikelas.setBackground(new java.awt.Color(255, 255, 255));
+        btn_cetakanggotawalikelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_cetakanggotawalikelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/iconcetakdata.png"))); // NOI18N
+        btn_cetakanggotawalikelas.setText("Cetak");
+        btn_cetakanggotawalikelas.setIconTextGap(18);
+        btn_cetakanggotawalikelas.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        btn_cetakanggotawalikelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cetakanggotawalikelasActionPerformed(evt);
+            }
+        });
+        panelanggotawalikelas.add(btn_cetakanggotawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 570, 120, 40));
+
+        tabel_anggotawalikelas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "No", "NIS", "Nama", "Jenis Kelamin"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabel_anggotawalikelas.setRowHeight(20);
+        tabel_anggotawalikelas.setRowMargin(2);
+        tabel_anggotawalikelas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_anggotawalikelasMouseClicked(evt);
+            }
+        });
+        tabanggotawalikelas.setViewportView(tabel_anggotawalikelas);
+
+        panelanggotawalikelas.add(tabanggotawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 570, 320));
+
+        btn_refreshanggotawalikelas.setBackground(new java.awt.Color(255, 255, 255));
+        btn_refreshanggotawalikelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refreshlagi.png"))); // NOI18N
+        btn_refreshanggotawalikelas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        btn_refreshanggotawalikelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshanggotawalikelasActionPerformed(evt);
+            }
+        });
+        panelanggotawalikelas.add(btn_refreshanggotawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 190, 30, 30));
+
+        btn_kembalianggotawalikelas.setBackground(new java.awt.Color(255, 255, 255));
+        btn_kembalianggotawalikelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_kembali.png"))); // NOI18N
+        btn_kembalianggotawalikelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kembalianggotawalikelasActionPerformed(evt);
+            }
+        });
+        panelanggotawalikelas.add(btn_kembalianggotawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 573, 55, -1));
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel13.setText(":");
+        panelanggotawalikelas.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, -1, -1));
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setText(":");
+        panelanggotawalikelas.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, -1, -1));
+
+        jLabel28.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel28.setText(":");
+        panelanggotawalikelas.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 125, -1, -1));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel19.setText(":");
+        panelanggotawalikelas.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 195, -1, -1));
+
+        btn_searchanggotawalikelas.setBackground(new java.awt.Color(255, 255, 255));
+        btn_searchanggotawalikelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_searchanggotawalikelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2_1.png"))); // NOI18N
+        btn_searchanggotawalikelas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        btn_searchanggotawalikelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_searchanggotawalikelasActionPerformed(evt);
+            }
+        });
+        panelanggotawalikelas.add(btn_searchanggotawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 190, 30, 30));
+
+        bganggotawalikelas.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        bganggotawalikelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/paneldaftaranggotasiswa.png"))); // NOI18N
+        panelanggotawalikelas.add(bganggotawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        anggota_walikelas.add(panelanggotawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
+
+        LayerPane.add(anggota_walikelas, "card2");
 
         datakelas.setOpaque(true);
         datakelas.setPreferredSize(new java.awt.Dimension(1107, 658));
@@ -4943,7 +5462,7 @@ System.out.println(e);
 
         btn_lihatanggotakelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_lihatanggotakelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_lihatanggotakelas.setText("Lihat Siswa");
+        btn_lihatanggotakelas.setText("Anggota Kelas");
         btn_lihatanggotakelas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_lihatanggotakelasActionPerformed(evt);
@@ -5437,9 +5956,6 @@ System.out.println(e);
         });
         panelabsensi.add(cb_statusdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 280, 30));
 
-        lb_idabsen.setText("jLabel2");
-        panelabsensi.add(lb_idabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, -1, -1));
-
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel8.setText(":");
         panelabsensi.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 197, 10, -1));
@@ -5456,6 +5972,9 @@ System.out.println(e);
         bgabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelabsensi.png"))); // NOI18N
         panelabsensi.add(bgabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        lb_idabsen.setText("jLabel2");
+        panelabsensi.add(lb_idabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, -1, -1));
+
         dataabsensi.add(panelabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
 
         LayerPane.add(dataabsensi, "card4");
@@ -5465,8 +5984,27 @@ System.out.println(e);
         datalapabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panellapabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panellapabsensi.add(txt_searchbynis, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 400, 30));
-        panellapabsensi.add(txt_tglakhir, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 400, 30));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refreshlagi.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        panellapabsensi.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 190, 30, 30));
+
+        cb_lapabsen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--pilih--", "Berdasarkan Nama Walikelas", "Berdasarkan NK", "Berdasarkan NIS" }));
+        cb_lapabsen.setLightWeightPopupEnabled(false);
+        panellapabsensi.add(cb_lapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 400, 30));
+        panellapabsensi.add(txt_searchlapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 400, 30));
+
+        btn_searchlapabsen.setText("Search");
+        btn_searchlapabsen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_searchlapabsenActionPerformed(evt);
+            }
+        });
+        panellapabsensi.add(btn_searchlapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 70, 30));
 
         tabel_lapabsen.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -5492,7 +6030,7 @@ System.out.println(e);
             tabel_lapabsen.getColumnModel().getColumn(0).setPreferredWidth(15);
         }
 
-        panellapabsensi.add(tab_lapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 1010, 400));
+        panellapabsensi.add(tab_lapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 1010, 390));
 
         bglapabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panellapabsensi.png"))); // NOI18N
         panellapabsensi.add(bglapabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -5543,9 +6081,10 @@ System.out.println(e);
 
         panelanggotakelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panel_chartanggotakelas.setBackground(new java.awt.Color(255, 255, 255));
-        panel_chartanggotakelas.setLayout(new javax.swing.OverlayLayout(panel_chartanggotakelas));
-        panelanggotakelas.add(panel_chartanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 120, 460, 440));
+        panel_chartak.setBackground(new java.awt.Color(255, 255, 255));
+        panel_chartak.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Persentase Kehadiran per Kelas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
+        panel_chartak.setLayout(new javax.swing.OverlayLayout(panel_chartak));
+        panelanggotakelas.add(panel_chartak, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 120, 460, 440));
 
         tabel_anggotakelas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -5577,7 +6116,7 @@ System.out.println(e);
         lb_nisanggotakelas.setForeground(new java.awt.Color(0, 51, 204));
         lb_nisanggotakelas.setText("Id Walikelas");
         panelanggotakelas.add(lb_nisanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
-        panelanggotakelas.add(txt_searchnisanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 290, 30));
+        panelanggotakelas.add(txt_searchanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 350, 30));
 
         lb_idwalasanggotakelas.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         lb_idwalasanggotakelas.setForeground(new java.awt.Color(0, 51, 204));
@@ -5585,13 +6124,13 @@ System.out.println(e);
         panelanggotakelas.add(lb_idwalasanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 175, -1, -1));
 
         btn_refreshanggotakelas.setBackground(new java.awt.Color(255, 255, 255));
-        btn_refreshanggotakelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/refresh (1).png"))); // NOI18N
+        btn_refreshanggotakelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refreshlagi.png"))); // NOI18N
         btn_refreshanggotakelas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_refreshanggotakelasActionPerformed(evt);
             }
         });
-        panelanggotakelas.add(btn_refreshanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 170, 40, 30));
+        panelanggotakelas.add(btn_refreshanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 170, 30, 30));
 
         btn_searchanggotakelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchanggotakelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -5601,7 +6140,7 @@ System.out.println(e);
                 btn_searchanggotakelasActionPerformed(evt);
             }
         });
-        panelanggotakelas.add(btn_searchanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, 30, 30));
+        panelanggotakelas.add(btn_searchanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 170, 30, 30));
 
         btn_cetakanggotakelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_cetakanggotakelas.setFont(new java.awt.Font("Roboto Slab SemiBold", 0, 12)); // NOI18N
@@ -6220,6 +6759,7 @@ System.out.println(e);
 
     private void btn_searchanggotakelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchanggotakelasActionPerformed
         this.querysearchanggotakelas();
+        this.chartsiswaanggotakelas();
     }//GEN-LAST:event_btn_searchanggotakelasActionPerformed
 
     private void btn_refreshanggotakelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshanggotakelasActionPerformed
@@ -6265,6 +6805,44 @@ System.out.println(e);
         this.searchriwayatsiswa();
     }//GEN-LAST:event_btn_searchriwayatsiswaActionPerformed
 
+    private void btn_cetakanggotawalikelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakanggotawalikelasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_cetakanggotawalikelasActionPerformed
+
+    private void tabel_anggotawalikelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_anggotawalikelasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabel_anggotawalikelasMouseClicked
+
+    private void btn_refreshanggotawalikelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshanggotawalikelasActionPerformed
+        this.tampilanggotawalikelas();
+        this.chartanggotawalikelas();
+    }//GEN-LAST:event_btn_refreshanggotawalikelasActionPerformed
+
+    private void btn_kembalianggotawalikelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembalianggotawalikelasActionPerformed
+        switchpanel(profilewalikelas);
+        this.tampilprofilewalas();
+        this.editprofilewalas(false);
+        
+    }//GEN-LAST:event_btn_kembalianggotawalikelasActionPerformed
+
+    private void btn_searchanggotawalikelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchanggotawalikelasActionPerformed
+        this.searchanggotawalikelas();
+    }//GEN-LAST:event_btn_searchanggotawalikelasActionPerformed
+
+    private void btn_lihatdatasiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihatdatasiswaActionPerformed
+        switchpanel(anggota_walikelas);
+        this.tampilanggotawalikelas();
+        txt_searchanggotawalikelas.setText("");
+    }//GEN-LAST:event_btn_lihatdatasiswaActionPerformed
+
+    private void btn_searchlapabsenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchlapabsenActionPerformed
+        this.searchlapabsen();
+    }//GEN-LAST:event_btn_searchlapabsenActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.tampillapabsen();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -6278,9 +6856,11 @@ System.out.println(e);
     private javax.swing.JLabel Background;
     public javax.swing.JLayeredPane LayerPane;
     private javax.swing.JPanel PanelUtama;
+    private javax.swing.JLayeredPane anggota_walikelas;
     private javax.swing.JLabel bgabsensi;
     private javax.swing.JLabel bgadmin;
     private javax.swing.JLabel bganggotakelas;
+    private javax.swing.JLabel bganggotawalikelas;
     private javax.swing.JLabel bgformkelas;
     private javax.swing.JLabel bgguru;
     private javax.swing.JLabel bglapabsensi;
@@ -6301,6 +6881,7 @@ System.out.println(e);
     private javax.swing.JButton brn_hapuswalikelas;
     private javax.swing.JButton btn_addkelas;
     private javax.swing.JButton btn_cetakanggotakelas;
+    private javax.swing.JButton btn_cetakanggotawalikelas;
     private javax.swing.JButton btn_cetakriwayatsiswa;
     private javax.swing.JToggleButton btn_checkpassprofileadmin;
     private javax.swing.JButton btn_daftarregadmin;
@@ -6320,6 +6901,7 @@ System.out.println(e);
     private javax.swing.JButton btn_hapuskelas;
     private javax.swing.JButton btn_hapussiswa;
     private javax.swing.JButton btn_kembalianggotakelas;
+    private javax.swing.JButton btn_kembalianggotawalikelas;
     private javax.swing.JButton btn_kembaliformguru;
     private javax.swing.JButton btn_kembaliformkelas;
     private javax.swing.JButton btn_kembaliformwalikelas;
@@ -6343,6 +6925,7 @@ System.out.println(e);
     private javax.swing.JButton btn_lihatwalikelas;
     private javax.swing.JPanel btn_logout;
     private javax.swing.JButton btn_refreshanggotakelas;
+    private javax.swing.JButton btn_refreshanggotawalikelas;
     private javax.swing.JButton btn_refreshdataabsen;
     private javax.swing.JButton btn_refreshdataguru;
     private javax.swing.JButton btn_refreshdatasiswa;
@@ -6357,9 +6940,11 @@ System.out.println(e);
     private javax.swing.JButton btn_scantambahsiswa1;
     private javax.swing.JButton btn_scantambahwalas;
     private javax.swing.JButton btn_searchanggotakelas;
+    private javax.swing.JButton btn_searchanggotawalikelas;
     private javax.swing.JButton btn_searchdataabsen;
     private javax.swing.JButton btn_searchguru;
     private javax.swing.JButton btn_searchkelas;
+    private javax.swing.JButton btn_searchlapabsen;
     private javax.swing.JButton btn_searchriwayatsiswa;
     private javax.swing.JButton btn_searchsiswa;
     private javax.swing.JButton btn_searchwalikelas;
@@ -6378,6 +6963,7 @@ System.out.println(e);
     private javax.swing.JButton btn_updateabsen;
     private javax.swing.JButton btn_updatestatussiswabermasalah;
     private javax.swing.JComboBox<String> cb_gendersiswa;
+    private javax.swing.JComboBox<String> cb_lapabsen;
     private javax.swing.JComboBox<String> cb_siswabermasalah;
     private javax.swing.JComboBox<String> cb_smtformkelas;
     private javax.swing.JComboBox<String> cb_smtprofilekelas;
@@ -6408,14 +6994,17 @@ System.out.println(e);
     private javax.swing.JLabel iconlapabsen;
     private javax.swing.JLabel iconlogout;
     private javax.swing.JLabel iconsiswa;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -6423,6 +7012,7 @@ System.out.println(e);
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -6475,10 +7065,12 @@ System.out.println(e);
     private javax.swing.JLabel lb_guru;
     private javax.swing.JLabel lb_idabsen;
     private javax.swing.JLabel lb_idadminprofileadmin;
+    private javax.swing.JLabel lb_idanggotawalikelas;
     private javax.swing.JLabel lb_idprofilewalikelas;
     private javax.swing.JLabel lb_idregadmin;
     private javax.swing.JLabel lb_idwalasanggotakelas;
     private javax.swing.JLabel lb_idwalasformsiswa;
+    private javax.swing.JLabel lb_idwalikelasaw;
     private javax.swing.JLabel lb_iwak;
     private javax.swing.JLabel lb_jabatanformguru;
     private javax.swing.JLabel lb_jabatanprofileguru;
@@ -6490,6 +7082,8 @@ System.out.println(e);
     private javax.swing.JLabel lb_jmlprofilekelas;
     private javax.swing.JLabel lb_jurusanformkelas;
     private javax.swing.JLabel lb_jurusanprofilekelas;
+    private javax.swing.JLabel lb_namaanggotawalikelas;
+    private javax.swing.JLabel lb_namaaw;
     private javax.swing.JLabel lb_namaformguru;
     private javax.swing.JLabel lb_namaformkelas;
     private javax.swing.JLabel lb_namaformsiswa;
@@ -6511,11 +7105,14 @@ System.out.println(e);
     private javax.swing.JLabel lb_nipprofilewalikelas;
     private javax.swing.JLabel lb_nipregadmin;
     private javax.swing.JLabel lb_nisanggotakelas;
+    private javax.swing.JLabel lb_nisaw;
     private javax.swing.JLabel lb_nisformsiswa;
     private javax.swing.JLabel lb_nisriwayatsiswa;
     private javax.swing.JLabel lb_nisrs;
     private javax.swing.JLabel lb_nkak;
     private javax.swing.JLabel lb_nkanggotakelas;
+    private javax.swing.JLabel lb_nkanggotawalikelas;
+    private javax.swing.JLabel lb_nkaw;
     private javax.swing.JLabel lb_nkformkelas;
     private javax.swing.JLabel lb_nkformsiswa;
     private javax.swing.JLabel lb_nkprofilekelas;
@@ -6539,6 +7136,7 @@ System.out.println(e);
     private javax.swing.JLabel lb_taformkelas;
     private javax.swing.JLabel lb_taprofilekelas;
     private javax.swing.JLabel lb_telpformsiswa;
+    private javax.swing.JLabel lb_tglrs;
     private javax.swing.JLabel lb_tingkatanformkelas;
     private javax.swing.JLabel lb_tingkatprofilekelas;
     private javax.swing.JLabel lb_titik1;
@@ -6581,11 +7179,13 @@ System.out.println(e);
     private javax.swing.JLabel lblogout;
     private javax.swing.JLabel lbsiswa;
     private javax.swing.JLabel nisdataabsensi;
-    private javax.swing.JPanel panel_chartanggotakelas;
+    private javax.swing.JPanel panel_chartak;
+    private javax.swing.JPanel panel_chartaw;
     private javax.swing.JPanel panel_chartrs;
     private javax.swing.JPanel panelabsensi;
     private javax.swing.JPanel paneladmin;
     private javax.swing.JPanel panelanggotakelas;
+    private javax.swing.JPanel panelanggotawalikelas;
     private javax.swing.JPanel panelbutton;
     private javax.swing.JPanel panelformguru;
     private javax.swing.JPanel panelformkelas;
@@ -6625,9 +7225,11 @@ System.out.println(e);
     private javax.swing.JScrollPane tab_siswabermasalah;
     private javax.swing.JScrollPane tababsen;
     private javax.swing.JScrollPane tabadmin;
+    private javax.swing.JScrollPane tabanggotawalikelas;
     private javax.swing.JTable tabel_absen;
     private javax.swing.JTable tabel_admin;
     private javax.swing.JTable tabel_anggotakelas;
+    private javax.swing.JTable tabel_anggotawalikelas;
     private javax.swing.JTable tabel_guru;
     private javax.swing.JTable tabel_kelas;
     private javax.swing.JTable tabel_lapabsen;
@@ -6707,11 +7309,12 @@ System.out.println(e);
     private javax.swing.JTextField txt_rfidformsiswa;
     private javax.swing.JTextField txt_rfidsiswa;
     private javax.swing.JTextField txt_searchadmin;
-    private javax.swing.JTextField txt_searchbynis;
+    private javax.swing.JTextField txt_searchanggotakelas;
+    private javax.swing.JTextField txt_searchanggotawalikelas;
     private javax.swing.JTextField txt_searchdataabsen;
     private javax.swing.JTextField txt_searchguru;
     private javax.swing.JTextField txt_searchkelas;
-    private javax.swing.JTextField txt_searchnisanggotakelas;
+    private javax.swing.JTextField txt_searchlapabsen;
     private javax.swing.JTextField txt_searchsiswa;
     private javax.swing.JTextField txt_searchtgl2dataabsen;
     private javax.swing.JTextField txt_searchtgldataabsen;
@@ -6724,7 +7327,6 @@ System.out.println(e);
     private javax.swing.JTextField txt_tanggalriwayatsiswa;
     private javax.swing.JTextField txt_taprofilekelas;
     private javax.swing.JTextField txt_telpformsiswa;
-    private javax.swing.JTextField txt_tglakhir;
     private javax.swing.JTextField txt_tingkatanformkelas;
     private javax.swing.JTextField txt_tlpformguru;
     private javax.swing.JTextField txt_tlpformwalikelas;
