@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -2540,7 +2541,96 @@ System.out.println(e);
         }
         
      }
+    
+    //========================== DATA SEMESTER ==============================//
+    //PROSEDUR MENAMPILKAN DATA SEMESTER DI TABEL
+    
+     public void tambahsemester(){
+        String tampilan = "yyyy-MM-dd";
+        SimpleDateFormat format = new SimpleDateFormat(tampilan);
+        String tanggalawal = String.valueOf(format.format(jdc_tglawalsemester.getDate()));
+        String tanggalakhir = String.valueOf(format.format(jdc_tglakhirsemester.getDate()));
+        try {
+            if (cb_namasemester.getSelectedItem().equals("") || cb_statussemester.getSelectedItem().equals("") ||
+                    txt_tahunajaransemester.getText().equals("") ||tanggalawal.equals("")
+                    || tanggalakhir.equals("")){
+                JOptionPane.showMessageDialog(this, "Data Tidak Boleh Kosong","Pesan",JOptionPane.ERROR_MESSAGE);
+            } else {
+                //Digunakan untuk memanggil JDBC driver
+                stat = con.createStatement();
+                this.getwalaskelas();
+                String simpan = "insert into semester values ('"+cb_namasemester.getSelectedItem().toString()
+                        +"','"+cb_statussemester.getSelectedItem().toString()
+                        +"','"+txt_tahunajaransemester.getText()
+                        +"','"+tanggalawal
+                        +"','"+tanggalakhir
+                        +"')";
+                stat = con.createStatement();
+                int SA =stat.executeUpdate(simpan);
+                JOptionPane.showMessageDialog(this,"Data Semester Berhasil disimpan!");
+                this.hapuslayar();
+            }
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(null, ("Data Semester Gagal ditambahkan"), 
+          "Tambah Data Semester", JOptionPane.ERROR_MESSAGE);
+          System.out.println(e);
+        }
+    }
+    public void tampilsemester(){        
+        model = new DefaultTableModel ( );
+        tabel_absen.setModel(model);
+        model.addColumn("no");
+        model.addColumn("Nama");
+        model.addColumn("Status");
+        model.addColumn("Tahun Ajaran");
+        model.addColumn("Tanggal Pertama");
+        model.addColumn("Tanggal Kedua");
 
+         try{
+           stat = con.createStatement( );
+           sql  = "Select * from semester";
+           rs   = stat.executeQuery(sql);
+           int no =1;
+           while(rs.next ()){
+                Object[ ] obj = new Object[6];
+                obj[0] = Integer.toString(no);
+                obj[1] = rs.getString("nama");
+                obj[2] = rs.getString("status");
+                obj[3] = rs.getString("tahunajaran");
+                obj[4] = rs.getString("tanggalpertama");
+                obj[5] = rs.getString("tanggalterakhir");
+                model.addRow(obj);
+                no++;
+            }
+            
+             tabel_semester.setModel(model);
+        } catch (SQLException e) {
+            System.out.println(e);
+      }
+    }
+    
+        //HAPUS DATA SEMESTER
+    public void deletedatasemester(){
+        model = new DefaultTableModel ( );
+        tabel_absen.setModel(model);
+        model.addColumn("no");
+        model.addColumn("Nama");
+        model.addColumn("Status");
+        model.addColumn("Tahun Ajaran");
+        model.addColumn("Tanggal Pertama");
+        model.addColumn("Tanggal Kedua");
+        try {
+            stat = con.createStatement( );
+            con.createStatement().executeUpdate("DELETE FROM semester WHERE idadmin='"+saveadm.getText()+"'");
+            rs   = stat.executeQuery(sql);
+            int no=1;
+            this.tampiladmin();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
+            "Delete Data Semester Gagal", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(ex);
+        }
+    }
     //==============================PERIPHERAL================================//
     //SWITCH PANEL
     public void switchpanel(JLayeredPane panel){
@@ -3246,6 +3336,33 @@ System.out.println(e);
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         bganggotakelas = new javax.swing.JLabel();
+        kelola_semester = new javax.swing.JLayeredPane();
+        panelkelola_semester = new javax.swing.JPanel();
+        tabsemester = new javax.swing.JScrollPane();
+        tabel_semester = new javax.swing.JTable();
+        jTextField1 = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        lb_nama = new javax.swing.JLabel();
+        lb_status = new javax.swing.JLabel();
+        lb_tahunajar = new javax.swing.JLabel();
+        lb_tglpertama = new javax.swing.JLabel();
+        lb_tglakhiir = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        txt_tahunajaransemester = new javax.swing.JTextField();
+        cb_statussemester = new javax.swing.JComboBox<>();
+        cb_namasemester = new javax.swing.JComboBox<>();
+        btn_simpansemester = new javax.swing.JButton();
+        jdc_tglakhirsemester = new com.toedter.calendar.JDateChooser();
+        jdc_tglawalsemester = new com.toedter.calendar.JDateChooser();
+        btn_editsemester = new javax.swing.JButton();
+        btn_hapussemester = new javax.swing.JButton();
+        lb_idabsen1 = new javax.swing.JLabel();
+        lb_svdata = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -5646,7 +5763,7 @@ System.out.println(e);
         paneladmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txt_searchadmin.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        paneladmin.add(txt_searchadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, 750, 30));
+        paneladmin.add(txt_searchadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 880, 30));
 
         btn_lihatadmin.setBackground(new java.awt.Color(255, 255, 255));
         btn_lihatadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -5666,7 +5783,7 @@ System.out.println(e);
                 btn_registrasiActionPerformed(evt);
             }
         });
-        paneladmin.add(btn_registrasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 120, 30));
+        paneladmin.add(btn_registrasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 120, 30));
 
         btn_hapusadmin.setBackground(new java.awt.Color(255, 255, 255));
         btn_hapusadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -5720,9 +5837,15 @@ System.out.println(e);
 
         paneladmin.add(tabadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 1010, 390));
 
+        btn_kelolasemesterdataadmin.setBackground(new java.awt.Color(255, 255, 255));
         btn_kelolasemesterdataadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_kelolasemesterdataadmin.setText("Kelola Semester");
-        paneladmin.add(btn_kelolasemesterdataadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, 30));
+        btn_kelolasemesterdataadmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kelolasemesterdataadminActionPerformed(evt);
+            }
+        });
+        paneladmin.add(btn_kelolasemesterdataadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 570, -1, 40));
 
         bgadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/paneladmin.png"))); // NOI18N
         paneladmin.add(bgadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -6238,6 +6361,180 @@ System.out.println(e);
         dataanggotakelas.add(panelanggotakelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
 
         LayerPane.add(dataanggotakelas, "card4");
+
+        kelola_semester.setOpaque(true);
+        kelola_semester.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelkelola_semester.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tabel_semester.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "No", "Nama", "Status", "Tahun Ajaran", "Tanggal Pertama", "Tanggal Terakhir"
+            }
+        ));
+        tabel_semester.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_semesterMouseClicked(evt);
+            }
+        });
+        tabsemester.setViewportView(tabel_semester);
+
+        panelkelola_semester.add(tabsemester, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, 560, 510));
+
+        jTextField1.setBackground(new java.awt.Color(102, 102, 255));
+        jTextField1.setFont(new java.awt.Font("Zilla Slab SemiBold", 1, 14)); // NOI18N
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setText("FORM SEMESTER");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        panelkelola_semester.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 150, -1));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lb_nama.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        lb_nama.setForeground(new java.awt.Color(0, 51, 204));
+        lb_nama.setText("Nama");
+        jPanel1.add(lb_nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+
+        lb_status.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        lb_status.setForeground(new java.awt.Color(0, 51, 204));
+        lb_status.setText("Status ");
+        jPanel1.add(lb_status, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
+
+        lb_tahunajar.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        lb_tahunajar.setForeground(new java.awt.Color(0, 51, 204));
+        lb_tahunajar.setText("Tahun Ajaran ");
+        jPanel1.add(lb_tahunajar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
+
+        lb_tglpertama.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        lb_tglpertama.setForeground(new java.awt.Color(0, 51, 204));
+        lb_tglpertama.setText("Tanggal Pertama");
+        jPanel1.add(lb_tglpertama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+
+        lb_tglakhiir.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        lb_tglakhiir.setForeground(new java.awt.Color(0, 51, 204));
+        lb_tglakhiir.setText("Tanggal Terakhir");
+        jPanel1.add(lb_tglakhiir, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+
+        jLabel34.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel34.setText(":");
+        jPanel1.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 103, -1, 10));
+
+        jLabel35.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel35.setText(":");
+        jPanel1.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 153, -1, 10));
+
+        jLabel36.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel36.setText(":");
+        jPanel1.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 203, -1, 10));
+
+        jLabel37.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel37.setText(":");
+        jPanel1.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 253, -1, 10));
+
+        jLabel38.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel38.setText(":");
+        jPanel1.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 53, -1, 10));
+        jPanel1.add(txt_tahunajaransemester, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 147, 290, 25));
+
+        cb_statussemester.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--pilih--", "Ganjil", "Genap" }));
+        cb_statussemester.setLightWeightPopupEnabled(false);
+        cb_statussemester.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_statussemesterActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cb_statussemester, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 97, 290, 25));
+
+        cb_namasemester.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--pilih--", "Semester 1", "Semester 2" }));
+        cb_namasemester.setLightWeightPopupEnabled(false);
+        cb_namasemester.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_namasemesterActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cb_namasemester, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 47, 290, 25));
+
+        btn_simpansemester.setBackground(new java.awt.Color(255, 255, 255));
+        btn_simpansemester.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_simpansemester.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/floppy-disk.png"))); // NOI18N
+        btn_simpansemester.setText("Simpan");
+        btn_simpansemester.setIconTextGap(18);
+        btn_simpansemester.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        btn_simpansemester.setRequestFocusEnabled(false);
+        btn_simpansemester.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_simpansemesterActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_simpansemester, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 460, 140, 35));
+
+        jdc_tglakhirsemester.setBackground(new java.awt.Color(255, 255, 255));
+        jdc_tglakhirsemester.setAutoscrolls(true);
+        jdc_tglakhirsemester.setFocusCycleRoot(true);
+        jdc_tglakhirsemester.setFocusTraversalPolicyProvider(true);
+        jdc_tglakhirsemester.setOpaque(false);
+        jPanel1.add(jdc_tglakhirsemester, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 247, 290, 25));
+
+        jdc_tglawalsemester.setBackground(new java.awt.Color(255, 255, 255));
+        jdc_tglawalsemester.setAutoscrolls(true);
+        jdc_tglawalsemester.setDoubleBuffered(false);
+        jdc_tglawalsemester.setOpaque(false);
+        jPanel1.add(jdc_tglawalsemester, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 197, 290, 25));
+
+        btn_editsemester.setBackground(new java.awt.Color(255, 255, 255));
+        btn_editsemester.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_editsemester.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/edit.png"))); // NOI18N
+        btn_editsemester.setText("Edit");
+        btn_editsemester.setIconTextGap(18);
+        btn_editsemester.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanel1.add(btn_editsemester, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 460, 120, 35));
+
+        btn_hapussemester.setBackground(new java.awt.Color(255, 255, 255));
+        btn_hapussemester.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_hapussemester.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/delete.png"))); // NOI18N
+        btn_hapussemester.setText("Hapus");
+        btn_hapussemester.setIconTextGap(18);
+        btn_hapussemester.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        btn_hapussemester.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapussemesterActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_hapussemester, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 120, 35));
+
+        panelkelola_semester.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 450, 510));
+
+        lb_idabsen1.setText("jLabel2");
+        panelkelola_semester.add(lb_idabsen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, -1, -1));
+
+        lb_svdata.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        lb_svdata.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelabsensi.png"))); // NOI18N
+        lb_svdata.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0))));
+        panelkelola_semester.add(lb_svdata, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jLabel33.setText("jLabel33");
+        panelkelola_semester.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 100, -1, -1));
+
+        kelola_semester.add(panelkelola_semester, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
+
+        LayerPane.add(kelola_semester, "card4");
 
         PanelUtama.add(LayerPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 110, 1107, 658));
 
@@ -6911,6 +7208,39 @@ System.out.println(e);
         this.tampillapabsen();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void cb_statussemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_statussemesterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_statussemesterActionPerformed
+
+    private void tabel_semesterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_semesterMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabel_semesterMouseClicked
+
+    private void btn_simpansemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpansemesterActionPerformed
+        // TODO add your handling code here:
+        this.tambahsemester();
+        this.tampilsemester();
+        this.hapuslayar();
+    }//GEN-LAST:event_btn_simpansemesterActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void cb_namasemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_namasemesterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_namasemesterActionPerformed
+
+    private void btn_kelolasemesterdataadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kelolasemesterdataadminActionPerformed
+        // TODO add your handling code here:
+        switchpanel(kelola_semester);
+        this.tampilsemester();
+    }//GEN-LAST:event_btn_kelolasemesterdataadminActionPerformed
+
+    private void btn_hapussemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapussemesterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_hapussemesterActionPerformed
+
     
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -6966,8 +7296,10 @@ System.out.println(e);
     private javax.swing.JButton btn_editprofilekelas;
     private javax.swing.JButton btn_editprofilesiswa;
     private javax.swing.JButton btn_editprofilewalikelas;
+    private javax.swing.JButton btn_editsemester;
     private javax.swing.JButton btn_hapusadmin;
     private javax.swing.JButton btn_hapuskelas;
+    private javax.swing.JButton btn_hapussemester;
     private javax.swing.JButton btn_hapussiswa;
     private javax.swing.JButton btn_kelolasemesterdataadmin;
     private javax.swing.JButton btn_kembalianggotakelas;
@@ -7026,6 +7358,7 @@ System.out.println(e);
     private javax.swing.JButton btn_simpanprofilekelas;
     private javax.swing.JButton btn_simpanprofilesiswa;
     private javax.swing.JButton btn_simpanprofilewalikelas;
+    private javax.swing.JButton btn_simpansemester;
     private javax.swing.JButton btn_simpantambahsiswa;
     private javax.swing.JButton btn_tambahguru;
     private javax.swing.JButton btn_tambahsiswa;
@@ -7034,11 +7367,13 @@ System.out.println(e);
     private javax.swing.JButton btn_updatestatussiswabermasalah;
     private javax.swing.JComboBox<String> cb_gendersiswa;
     private javax.swing.JComboBox<String> cb_lapabsen;
+    private javax.swing.JComboBox<String> cb_namasemester;
     private javax.swing.JComboBox<String> cb_siswabermasalah;
     private javax.swing.JComboBox<String> cb_smtformkelas;
     private javax.swing.JComboBox<String> cb_smtprofilekelas;
     private javax.swing.JComboBox<String> cb_statusdataabsen;
     private javax.swing.JComboBox<String> cb_statusprofileadmin;
+    private javax.swing.JComboBox<String> cb_statussemester;
     private javax.swing.JComboBox<String> cb_walasformkelas;
     private javax.swing.JComboBox<String> cb_walasprofilekelas;
     private javax.swing.JLayeredPane dataabsensi;
@@ -7091,6 +7426,12 @@ System.out.println(e);
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel56;
@@ -7124,7 +7465,12 @@ System.out.println(e);
     private javax.swing.JLabel jLabel84;
     private javax.swing.JLabel jLabel85;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextField1;
+    private com.toedter.calendar.JDateChooser jdc_tglakhirsemester;
+    private com.toedter.calendar.JDateChooser jdc_tglawalsemester;
+    private javax.swing.JLayeredPane kelola_semester;
     private javax.swing.JLabel lb_alamatformguru;
     private javax.swing.JLabel lb_alamatformsiswa;
     private javax.swing.JLabel lb_alamatformwalikelas;
@@ -7141,6 +7487,7 @@ System.out.println(e);
     private javax.swing.JLabel lb_gambar3;
     private javax.swing.JLabel lb_guru;
     private javax.swing.JLabel lb_idabsen;
+    private javax.swing.JLabel lb_idabsen1;
     private javax.swing.JLabel lb_idadminprofileadmin;
     private javax.swing.JLabel lb_idanggotawalikelas;
     private javax.swing.JLabel lb_idprofilewalikelas;
@@ -7159,6 +7506,7 @@ System.out.println(e);
     private javax.swing.JLabel lb_jmlprofilekelas;
     private javax.swing.JLabel lb_jurusanformkelas;
     private javax.swing.JLabel lb_jurusanprofilekelas;
+    private javax.swing.JLabel lb_nama;
     private javax.swing.JLabel lb_namaanggotawalikelas;
     private javax.swing.JLabel lb_namaaw;
     private javax.swing.JLabel lb_namaformguru;
@@ -7208,11 +7556,16 @@ System.out.println(e);
     private javax.swing.JLabel lb_sampairiwayatsiswa;
     private javax.swing.JLabel lb_smtformkelas;
     private javax.swing.JLabel lb_smtprofilekelas;
+    private javax.swing.JLabel lb_status;
     private javax.swing.JLabel lb_statusprofileadmin;
     private javax.swing.JLabel lb_statusregadmin;
+    private javax.swing.JLabel lb_svdata;
     private javax.swing.JLabel lb_taformkelas;
+    private javax.swing.JLabel lb_tahunajar;
     private javax.swing.JLabel lb_taprofilekelas;
     private javax.swing.JLabel lb_telpformsiswa;
+    private javax.swing.JLabel lb_tglakhiir;
+    private javax.swing.JLabel lb_tglpertama;
     private javax.swing.JLabel lb_tglrs;
     private javax.swing.JLabel lb_tingkatanformkelas;
     private javax.swing.JLabel lb_tingkatprofilekelas;
@@ -7271,6 +7624,7 @@ System.out.println(e);
     private javax.swing.JPanel panelformwalikelas;
     private javax.swing.JPanel panelguru;
     private javax.swing.JPanel panelkelas;
+    private javax.swing.JPanel panelkelola_semester;
     private javax.swing.JPanel panellapabsensi;
     private javax.swing.JPanel panelprofileadmin;
     private javax.swing.JPanel panelprofileguru;
@@ -7311,12 +7665,14 @@ System.out.println(e);
     private javax.swing.JTable tabel_kelas;
     private javax.swing.JTable tabel_lapabsen;
     private javax.swing.JTable tabel_riwayatsiswa;
+    private javax.swing.JTable tabel_semester;
     private javax.swing.JTable tabel_siswa;
     private javax.swing.JTable tabel_siswabermasalah;
     private javax.swing.JTable tabel_walikelas;
     private javax.swing.JScrollPane tabguru;
     private javax.swing.JScrollPane tabkelas;
     private javax.swing.JScrollPane tabriwayatsiswa;
+    private javax.swing.JScrollPane tabsemester;
     private javax.swing.JScrollPane tabsiswa;
     private javax.swing.JScrollPane tabwalikelas;
     private javax.swing.JLabel tgldataabsensi;
@@ -7400,6 +7756,7 @@ System.out.println(e);
     private javax.swing.JTextField txt_smtprofilekelas;
     private javax.swing.JTextField txt_statusprofileadmin;
     private javax.swing.JTextField txt_taformkelas;
+    private javax.swing.JTextField txt_tahunajaransemester;
     private javax.swing.JTextField txt_tanggal2riwayatsiswa;
     private javax.swing.JTextField txt_tanggalriwayatsiswa;
     private javax.swing.JTextField txt_taprofilekelas;
