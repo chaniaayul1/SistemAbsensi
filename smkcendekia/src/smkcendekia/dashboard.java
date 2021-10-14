@@ -6,32 +6,26 @@
 package smkcendekia;
 
 import java.awt.Color;
-import java.awt.Composite;
-import java.awt.CompositeContext;
-import java.awt.GridLayout;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.ColorModel;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import static javafx.application.ConditionalFeature.SWT;
 import javax.swing.Timer;
-import javax.swing.table.TableColumn;
-import jdk.nashorn.tools.Shell;
-import javax.swing.JFrame;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.PieSectionLabelGenerator;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.general.DefaultPieDataset;
-
+import org.jfree.data.general.AbstractDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 
 /**
@@ -39,7 +33,10 @@ import org.jfree.data.general.DefaultPieDataset;
  * @author chani
  */
 public class dashboard extends javax.swing.JFrame {
-
+    Connection con;
+    Statement stat;
+    ResultSet rs,rs1,rs2;
+    String sql;
     /**
      * Creates new form dashboard
      */
@@ -49,16 +46,20 @@ public class dashboard extends javax.swing.JFrame {
         initComponents();
         tanggal();
         tampil_jam();
-        barchart();
+        this.username.setText(Session.getusername());
+        
+        koneksi DB = new koneksi();
+        DB.config();
+        con = DB.con;
+        stat = DB.stm;
+
+        //RUN QUERY DEFAULT
+        queryjumlahsiswa();
+        queryjumlahguru();
+        queryjumlahkelas();
+        chartsemuaabsensisiswa();
     }
 
-    
-    public void tanggal(){
-        Date dates = new Date();
-        SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
-        txt_tanggal.setText(s.format(dates));
-    }
-    
     public void tampil_jam(){
         ActionListener taskPerformer = new ActionListener() {
             @Override
@@ -84,62 +85,26 @@ public class dashboard extends javax.swing.JFrame {
         new Timer(1000, taskPerformer).start();
     }
     
-    public void barchart(){
-        DefaultPieDataset piedata=new DefaultPieDataset();
-             piedata.setValue("Hadir", 40);
-             piedata.setValue("Sakit", 2);
-             piedata.setValue("Izin", 1);
-             piedata.setValue("Alpha", 3);
-             piedata.setValue("Terlambat", 2);
-             JFreeChart chart=ChartFactory.createPieChart("Persentase Kehadiran", piedata);
-             PiePlot piePlot=(PiePlot) chart.getPlot();
-             
-             piePlot.setSectionPaint("Hadir",Color.green);
-             piePlot.setSectionPaint("Sakit",Color.yellow);
-             piePlot.setSectionPaint("Izin",Color.blue);
-             piePlot.setSectionPaint("Alpha",Color.red);
-             piePlot.setSectionPaint("Terlambat",Color.orange);
-             ChartPanel barChartPanel=new ChartPanel(chart);
-             barChartPanel.requestFocus(false);
-             barChartPanel.setRequestFocusEnabled(false);
-             barChartPanel.setOpaque(false);
-             jPanel2.add(barChartPanel);
-             jPanel2.requestFocus(false);
-             jPanel2.setRequestFocusEnabled(false);
-             jPanel2.setOpaque(false);
-             jPanel2.setFocusable(false);
-             jPanel2.validate();      
-    }
-    //MENAMPILKAN DATA JUMLAH SISWA
-    /*public void barchart(){
-        try{
-        DefaultCategoryDataset dcd = new DefaultCategoryDataset();
-        dcd.setValue(45.100, "Mac OS","2020");//Value
-        dcd.setValue(60.100, "Windows","2020");
-        dcd.setValue(35.100, "Linux","2020");
-        dcd.setValue(15.100, "lainnya","2020");
-         
-        JFreeChart freeChart = ChartFactory.createBarChart("Pengguna Browser Tahun Ini","Tahun","Data pengguna Sistem Operasi (%)", dcd, PlotOrientation.VERTICAL,true, true,true); //String arg0,String arg1,String arg2,Category Datasheet,Plot Orientation,boolean arg4,boolean arg5,boolean arg6
-        ChartFrame cf = new ChartFrame("Data Pengguna Sistem Operasi Tahun 2020 (hanya ilustrasi)",freeChart);
-         
-        cf.setSize(700,500);
-        cf.setVisible(true);
-        cf.setLocationRelativeTo(null);
-            
-        }catch (Exception e){
-            
-        }
-    }*/
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
         paneldashboard = new javax.swing.JPanel();
-        panel_grafik = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        username = new javax.swing.JLabel();
+        Scrollpane = new javax.swing.JScrollPane();
+        panelgrafik = new javax.swing.JPanel();
+        Paneljumlahsiswa = new javax.swing.JPanel();
+        lb_jumlahsiswa = new javax.swing.JLabel();
+        lb_siswa = new javax.swing.JLabel();
+        Paneljumlahguru = new javax.swing.JPanel();
+        lb_jumlahguru = new javax.swing.JLabel();
+        lb_guru = new javax.swing.JLabel();
+        paneljumlahkelas = new javax.swing.JPanel();
+        lb_jumlahkelas = new javax.swing.JLabel();
+        lb_kelas = new javax.swing.JLabel();
+        chartabsensissiwa = new javax.swing.JPanel();
+        chartabsensikelas = new javax.swing.JPanel();
         panel_waktu = new javax.swing.JPanel();
         lbl_tanggal = new javax.swing.JLabel();
         txt_tanggal = new javax.swing.JLabel();
@@ -159,31 +124,99 @@ public class dashboard extends javax.swing.JFrame {
         btn_kelolaabsen = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        background = new javax.swing.JLabel();
 
         jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
+        setFocusable(false);
+        setMinimumSize(new java.awt.Dimension(1366, 768));
+        setSize(new java.awt.Dimension(1366, 768));
 
+        paneldashboard.setFocusable(false);
+        paneldashboard.setOpaque(false);
         paneldashboard.setPreferredSize(new java.awt.Dimension(1366, 768));
         paneldashboard.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panel_grafik.setBackground(new java.awt.Color(255, 255, 255));
-        panel_grafik.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        panel_grafik.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        username.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        username.setForeground(new java.awt.Color(255, 255, 255));
+        username.setText("INI USERNAME");
+        paneldashboard.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 35, 190, 40));
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        Scrollpane.setBackground(new java.awt.Color(255, 255, 255));
+        Scrollpane.setBorder(null);
+        Scrollpane.setOpaque(false);
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setLayout(new java.awt.BorderLayout());
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 530, 340));
+        panelgrafik.setBackground(new java.awt.Color(255, 255, 255));
+        panelgrafik.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panel_grafik.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        panel_grafik.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 550));
+        Paneljumlahsiswa.setBackground(new java.awt.Color(162, 32, 195));
+        Paneljumlahsiswa.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        paneldashboard.add(panel_grafik, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 950, 550));
+        lb_jumlahsiswa.setBackground(new java.awt.Color(255, 255, 255));
+        lb_jumlahsiswa.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lb_jumlahsiswa.setForeground(new java.awt.Color(255, 255, 255));
+        Paneljumlahsiswa.add(lb_jumlahsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 60, 50));
+
+        lb_siswa.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lb_siswa.setForeground(new java.awt.Color(255, 255, 255));
+        lb_siswa.setText("SISWA");
+        Paneljumlahsiswa.add(lb_siswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 80, 50));
+
+        panelgrafik.add(Paneljumlahsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 260, 50));
+
+        Paneljumlahguru.setBackground(new java.awt.Color(0, 179, 131));
+        Paneljumlahguru.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lb_jumlahguru.setBackground(new java.awt.Color(255, 255, 255));
+        lb_jumlahguru.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lb_jumlahguru.setForeground(new java.awt.Color(255, 255, 255));
+        Paneljumlahguru.add(lb_jumlahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 60, 50));
+
+        lb_guru.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lb_guru.setForeground(new java.awt.Color(255, 255, 255));
+        lb_guru.setText("GURU");
+        Paneljumlahguru.add(lb_guru, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 80, 50));
+
+        panelgrafik.add(Paneljumlahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 260, 50));
+
+        paneljumlahkelas.setBackground(new java.awt.Color(227, 162, 21));
+        paneljumlahkelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lb_jumlahkelas.setBackground(new java.awt.Color(255, 255, 255));
+        lb_jumlahkelas.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lb_jumlahkelas.setForeground(new java.awt.Color(255, 255, 255));
+        paneljumlahkelas.add(lb_jumlahkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 60, 50));
+
+        lb_kelas.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lb_kelas.setForeground(new java.awt.Color(255, 255, 255));
+        lb_kelas.setText("KELAS");
+        paneljumlahkelas.add(lb_kelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 80, 50));
+
+        panelgrafik.add(paneljumlahkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 260, 50));
+
+        chartabsensissiwa.setBackground(new java.awt.Color(255, 255, 255));
+        chartabsensissiwa.setLayout(new javax.swing.OverlayLayout(chartabsensissiwa));
+        panelgrafik.add(chartabsensissiwa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 260, 270));
+
+        chartabsensikelas.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout chartabsensikelasLayout = new javax.swing.GroupLayout(chartabsensikelas);
+        chartabsensikelas.setLayout(chartabsensikelasLayout);
+        chartabsensikelasLayout.setHorizontalGroup(
+            chartabsensikelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 260, Short.MAX_VALUE)
+        );
+        chartabsensikelasLayout.setVerticalGroup(
+            chartabsensikelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 260, Short.MAX_VALUE)
+        );
+
+        panelgrafik.add(chartabsensikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 260, 260));
+
+        Scrollpane.setViewportView(panelgrafik);
+
+        paneldashboard.add(Scrollpane, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 950, 550));
 
         panel_waktu.setBackground(new java.awt.Color(255, 255, 255));
         panel_waktu.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -368,20 +401,128 @@ public class dashboard extends javax.swing.JFrame {
 
         paneldashboard.add(btn_kelolaabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 690, 300, 50));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/dashboard.png"))); // NOI18N
-        paneldashboard.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1366, 768));
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/dashboard.png"))); // NOI18N
+        paneldashboard.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1366, 768));
 
-        jLabel3.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Kelola Admin");
-        paneldashboard.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        getContentPane().add(paneldashboard);
-        paneldashboard.setBounds(0, 0, 1366, 768);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(paneldashboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(paneldashboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void tanggal(){
+        
+        Date dates = new Date();
+        SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
+        txt_tanggal.setText(s.format(dates));
+    }
+    
+    public void queryjumlahsiswa(){
+        try{
+           stat = con.createStatement( );
+           sql  = "SELECT COUNT(*) from siswa";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+                Object[ ] obj = new Object[1];
+                obj[0] = rs.getString("COUNT(*)");
+                lb_jumlahsiswa.setText((String) obj[0]);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void queryjumlahguru(){
+        try{
+           stat = con.createStatement( );
+           sql  = "SELECT COUNT(*) from guru";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+                Object[ ] obj = new Object[1];
+                obj[0] = rs.getString("COUNT(*)");
+                lb_jumlahguru.setText((String) obj[0]);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void queryjumlahkelas(){
+        try{
+           stat = con.createStatement( );
+           sql  = "SELECT COUNT(*) from kelas";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+                Object[ ] obj = new Object[1];
+                obj[0] = rs.getString("COUNT(*)");
+                lb_jumlahkelas.setText((String) obj[0]);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void chartsemuaabsensisiswa(){
+        int hadir = 0,sakit = 0,izin = 0,alpha = 0,terlambat = 0;
+        try{
+           stat = con.createStatement( );
+           sql  = "Select hadir,sakit,izin,alpha,terlambat from lapabsen";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+                hadir = rs.getInt("hadir")+hadir;
+                sakit = rs.getInt("sakit")+sakit;
+                izin = rs.getInt("izin")+izin;
+                alpha = rs.getInt("alpha")+alpha;
+                terlambat =rs.getInt("terlambat")+terlambat;
+            }      
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        
+        final String series1 = "Hadir";
+        final String series2 = "Sakit";
+        final String series3 = "Izin";
+        final String series4 = "Alpha";
+        final String series5 = "Terlambat";
+        
+
+        final String category1 = "Semua Siswa";
+        
+        
+        DefaultCategoryDataset ctdata=new DefaultCategoryDataset();
+        ctdata.setValue(hadir, "Hadir", "Semua Siswa");
+        ctdata.setValue(sakit, "Sakit", "Semua Siswa");
+        ctdata.setValue(izin, "Izin", "Semua Siswa");
+        ctdata.setValue(alpha, "Alpha", "Semua Siswa");
+        ctdata.setValue(terlambat, "Terlambat", "Semua Siswa");
+        JFreeChart chart=ChartFactory.createBarChart("Presensi Siswa", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, false, true);
+        //final PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
+        //final PiePlot plot1 = (PiePlot) chart.getPlot();
+        //plot1.setLabelGenerator(labelGenerator);
+        //PiePlot piePlot=(PiePlot) chart.getPlot();
+        //chart.getPlot().setBackgroundPaint( Color.white);
+        //chart.getPlot().setOutlinePaint(null);
+        //piePlot.setSectionPaint("Hadir",Color.green);
+        //piePlot.setSectionPaint("Sakit",Color.yellow);
+        //piePlot.setSectionPaint("Izin",Color.blue);
+        //piePlot.setSectionPaint("Alpha",Color.red);
+        //piePlot.setSectionPaint("Terlambat",Color.orange);
+        ChartPanel barChartPanel=new ChartPanel(chart);
+        chartabsensissiwa.removeAll();
+        chartabsensissiwa.add(barChartPanel);
+        chartabsensissiwa.validate();
+    }
     private void btn_kelolaabsenMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_kelolaabsenMouseEntered
         // TODO add your handling code here:
         btn_kelolaabsen.setBackground(new Color(63,138,209));
@@ -473,37 +614,47 @@ public class dashboard extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new dashboard().setVisible(true);
+                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Paneljumlahguru;
+    private javax.swing.JPanel Paneljumlahsiswa;
+    private javax.swing.JScrollPane Scrollpane;
+    private javax.swing.JLabel background;
     private javax.swing.JPanel btn_kelolaabsen;
     private javax.swing.JPanel btn_keluar;
     private javax.swing.JPanel btn_siswabermasalah;
+    private javax.swing.JPanel chartabsensikelas;
+    private javax.swing.JPanel chartabsensissiwa;
     private com.toedter.calendar.JCalendar jCalendar1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lb_guru;
+    private javax.swing.JLabel lb_jumlahguru;
+    private javax.swing.JLabel lb_jumlahkelas;
+    private javax.swing.JLabel lb_jumlahsiswa;
+    private javax.swing.JLabel lb_kelas;
+    private javax.swing.JLabel lb_siswa;
     private javax.swing.JLabel lbl_tanggal;
     private javax.swing.JLabel lbl_waktu;
-    private javax.swing.JPanel panel_grafik;
     private javax.swing.JPanel panel_waktu;
     private javax.swing.JPanel paneldashboard;
+    private javax.swing.JPanel panelgrafik;
+    private javax.swing.JPanel paneljumlahkelas;
     private javax.swing.JLabel txt_jam;
     private javax.swing.JLabel txt_tanggal;
+    public javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
 }
