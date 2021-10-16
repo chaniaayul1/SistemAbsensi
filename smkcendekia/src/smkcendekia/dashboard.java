@@ -13,18 +13,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.Timer;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.labels.PieSectionLabelGenerator;
-import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
-import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 
@@ -37,27 +35,53 @@ public class dashboard extends javax.swing.JFrame {
     Statement stat;
     ResultSet rs,rs1,rs2;
     String sql;
-    /**
-     * Creates new form dashboard
-     */
-
-
+    String tanggalpert,tanggalakh;
+    int hadirhr,sakithr,izinhr,alphahr,terlambathr = 0;
+    int allhadir,allsakit,allizin,allalpha,allterlambat = 0;
+    int hadir10,sakit10,izin10,alpha10,terlambat10 = 0;
+    int hadir11,sakit11,izin11,alpha11,terlambat11 = 0;
+    int hadir12,sakit12,izin12,alpha12,terlambat12 = 0;
+    int hadirtitl,sakittitl,izintitl,alphatitl,terlambattitl=0;
+    int hadirbdp,sakitbdp,izinbdp,alphabdp,terlambatbdp ;
+    int hadirotkp,sakitotkp,izinotkp,alphaotkp,terlambatotkp = 0;
+    
     public dashboard() {
-        initComponents();
-        tanggal();
-        tampil_jam();
+        initComponents();       
         this.username.setText(Session.getusername());
-        
         koneksi DB = new koneksi();
         DB.config();
         con = DB.con;
         stat = DB.stm;
 
         //RUN QUERY DEFAULT
+        defaulttanggal();
+        tanggal();
+        tampil_jam();
+        
+        //QUERY TOTAL SISWA,GURU,KELAS
         queryjumlahsiswa();
         queryjumlahguru();
         queryjumlahkelas();
-        chartsemuaabsensisiswa();
+        
+        //ABSENSI SISWA HARIAN
+        dataabsensisiswaharian();
+        chartsemuasiswaharian();
+        
+        //ABSENSI SISWA
+        dataabsensisiswa();
+        chartsemuasiswa();
+        
+        //ABSENSI ANGKATAN
+        dataabsensiangkatan10();
+        dataabsensiangkatan11();
+        dataabsensiangkatan12();
+        chartangkatan();
+        
+        //ABSENSI JURUSAN
+        dataabsensijurusantitl();
+        dataabsensijurusanbdp();
+        dataabsensijurusanotkp();
+        chartjurusan();
     }
 
     public void tampil_jam(){
@@ -92,19 +116,18 @@ public class dashboard extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         paneldashboard = new javax.swing.JPanel();
         username = new javax.swing.JLabel();
-        Scrollpane = new javax.swing.JScrollPane();
-        panelgrafik = new javax.swing.JPanel();
-        Paneljumlahsiswa = new javax.swing.JPanel();
-        lb_jumlahsiswa = new javax.swing.JLabel();
-        lb_siswa = new javax.swing.JLabel();
-        Paneljumlahguru = new javax.swing.JPanel();
-        lb_jumlahguru = new javax.swing.JLabel();
-        lb_guru = new javax.swing.JLabel();
         paneljumlahkelas = new javax.swing.JPanel();
         lb_jumlahkelas = new javax.swing.JLabel();
-        lb_kelas = new javax.swing.JLabel();
-        chartabsensissiwa = new javax.swing.JPanel();
-        chartabsensikelas = new javax.swing.JPanel();
+        Paneljumlahguru = new javax.swing.JPanel();
+        lb_jumlahguru = new javax.swing.JLabel();
+        Paneljumlahsiswa = new javax.swing.JPanel();
+        lb_jumlahsiswa = new javax.swing.JLabel();
+        Scrollpane = new javax.swing.JScrollPane();
+        panelgrafik = new javax.swing.JPanel();
+        chartabsensiharian = new javax.swing.JPanel();
+        chartabsensijurusan = new javax.swing.JPanel();
+        chartabsensiangkatan = new javax.swing.JPanel();
+        chartabsensisiswa = new javax.swing.JPanel();
         panel_waktu = new javax.swing.JPanel();
         lbl_tanggal = new javax.swing.JLabel();
         txt_tanggal = new javax.swing.JLabel();
@@ -143,27 +166,16 @@ public class dashboard extends javax.swing.JFrame {
         username.setText("INI USERNAME");
         paneldashboard.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 35, 190, 40));
 
-        Scrollpane.setBackground(new java.awt.Color(255, 255, 255));
-        Scrollpane.setBorder(null);
-        Scrollpane.setOpaque(false);
+        paneljumlahkelas.setBackground(new java.awt.Color(227, 162, 21));
+        paneljumlahkelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panelgrafik.setBackground(new java.awt.Color(255, 255, 255));
-        panelgrafik.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        lb_jumlahkelas.setBackground(new java.awt.Color(255, 255, 255));
+        lb_jumlahkelas.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lb_jumlahkelas.setForeground(new java.awt.Color(255, 255, 255));
+        lb_jumlahkelas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        paneljumlahkelas.add(lb_jumlahkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 160, 50));
 
-        Paneljumlahsiswa.setBackground(new java.awt.Color(162, 32, 195));
-        Paneljumlahsiswa.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lb_jumlahsiswa.setBackground(new java.awt.Color(255, 255, 255));
-        lb_jumlahsiswa.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lb_jumlahsiswa.setForeground(new java.awt.Color(255, 255, 255));
-        Paneljumlahsiswa.add(lb_jumlahsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 60, 50));
-
-        lb_siswa.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lb_siswa.setForeground(new java.awt.Color(255, 255, 255));
-        lb_siswa.setText("SISWA");
-        Paneljumlahsiswa.add(lb_siswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 80, 50));
-
-        panelgrafik.add(Paneljumlahsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 260, 50));
+        paneldashboard.add(paneljumlahkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 120, 260, 50));
 
         Paneljumlahguru.setBackground(new java.awt.Color(0, 179, 131));
         Paneljumlahguru.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -171,76 +183,73 @@ public class dashboard extends javax.swing.JFrame {
         lb_jumlahguru.setBackground(new java.awt.Color(255, 255, 255));
         lb_jumlahguru.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lb_jumlahguru.setForeground(new java.awt.Color(255, 255, 255));
-        Paneljumlahguru.add(lb_jumlahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 60, 50));
+        lb_jumlahguru.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Paneljumlahguru.add(lb_jumlahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 160, 50));
 
-        lb_guru.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lb_guru.setForeground(new java.awt.Color(255, 255, 255));
-        lb_guru.setText("GURU");
-        Paneljumlahguru.add(lb_guru, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 80, 50));
+        paneldashboard.add(Paneljumlahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, 260, 50));
 
-        panelgrafik.add(Paneljumlahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 260, 50));
+        Paneljumlahsiswa.setBackground(new java.awt.Color(162, 32, 195));
+        Paneljumlahsiswa.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        paneljumlahkelas.setBackground(new java.awt.Color(227, 162, 21));
-        paneljumlahkelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        lb_jumlahsiswa.setBackground(new java.awt.Color(255, 255, 255));
+        lb_jumlahsiswa.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lb_jumlahsiswa.setForeground(new java.awt.Color(255, 255, 255));
+        lb_jumlahsiswa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Paneljumlahsiswa.add(lb_jumlahsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 160, 50));
 
-        lb_jumlahkelas.setBackground(new java.awt.Color(255, 255, 255));
-        lb_jumlahkelas.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lb_jumlahkelas.setForeground(new java.awt.Color(255, 255, 255));
-        paneljumlahkelas.add(lb_jumlahkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 60, 50));
+        paneldashboard.add(Paneljumlahsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 260, 50));
 
-        lb_kelas.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lb_kelas.setForeground(new java.awt.Color(255, 255, 255));
-        lb_kelas.setText("KELAS");
-        paneljumlahkelas.add(lb_kelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 80, 50));
+        Scrollpane.setBackground(new java.awt.Color(255, 255, 255));
+        Scrollpane.setBorder(null);
+        Scrollpane.setOpaque(false);
 
-        panelgrafik.add(paneljumlahkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 260, 50));
+        panelgrafik.setBackground(new java.awt.Color(255, 255, 255));
+        panelgrafik.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        chartabsensissiwa.setBackground(new java.awt.Color(255, 255, 255));
-        chartabsensissiwa.setLayout(new javax.swing.OverlayLayout(chartabsensissiwa));
-        panelgrafik.add(chartabsensissiwa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 260, 270));
+        chartabsensiharian.setBackground(new java.awt.Color(255, 255, 255));
+        chartabsensiharian.setLayout(new javax.swing.OverlayLayout(chartabsensiharian));
+        panelgrafik.add(chartabsensiharian, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 440, 420));
 
-        chartabsensikelas.setBackground(new java.awt.Color(255, 255, 255));
+        chartabsensijurusan.setBackground(new java.awt.Color(255, 255, 255));
+        chartabsensijurusan.setLayout(new javax.swing.OverlayLayout(chartabsensijurusan));
+        panelgrafik.add(chartabsensijurusan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 440, 420));
 
-        javax.swing.GroupLayout chartabsensikelasLayout = new javax.swing.GroupLayout(chartabsensikelas);
-        chartabsensikelas.setLayout(chartabsensikelasLayout);
-        chartabsensikelasLayout.setHorizontalGroup(
-            chartabsensikelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 260, Short.MAX_VALUE)
-        );
-        chartabsensikelasLayout.setVerticalGroup(
-            chartabsensikelasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 260, Short.MAX_VALUE)
-        );
+        chartabsensiangkatan.setBackground(new java.awt.Color(255, 255, 255));
+        chartabsensiangkatan.setLayout(new javax.swing.OverlayLayout(chartabsensiangkatan));
+        panelgrafik.add(chartabsensiangkatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 440, 440, 420));
 
-        panelgrafik.add(chartabsensikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 260, 260));
+        chartabsensisiswa.setBackground(new java.awt.Color(255, 255, 255));
+        chartabsensisiswa.setLayout(new javax.swing.OverlayLayout(chartabsensisiswa));
+        panelgrafik.add(chartabsensisiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 0, 440, 420));
 
         Scrollpane.setViewportView(panelgrafik);
 
-        paneldashboard.add(Scrollpane, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 950, 550));
+        paneldashboard.add(Scrollpane, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 950, 480));
 
         panel_waktu.setBackground(new java.awt.Color(255, 255, 255));
         panel_waktu.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         panel_waktu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbl_tanggal.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 14)); // NOI18N
+        lbl_tanggal.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 24)); // NOI18N
         lbl_tanggal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_tanggal.setText("Tanggal");
         lbl_tanggal.setToolTipText("");
-        panel_waktu.add(lbl_tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, -1, -1));
+        panel_waktu.add(lbl_tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 390, -1));
 
         txt_tanggal.setBackground(new java.awt.Color(102, 255, 102));
-        txt_tanggal.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 18)); // NOI18N
+        txt_tanggal.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 24)); // NOI18N
         txt_tanggal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        panel_waktu.add(txt_tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 190, 33));
+        panel_waktu.add(txt_tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 270, 40));
 
-        lbl_waktu.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 14)); // NOI18N
+        lbl_waktu.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 24)); // NOI18N
+        lbl_waktu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_waktu.setText("Waktu ");
-        panel_waktu.add(lbl_waktu, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 125, -1, -1));
+        panel_waktu.add(lbl_waktu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 380, -1));
 
         txt_jam.setBackground(new java.awt.Color(255, 51, 51));
         txt_jam.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 24)); // NOI18N
         txt_jam.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        panel_waktu.add(txt_jam, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 150, 40));
+        panel_waktu.add(txt_jam, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 270, 40));
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/icon_jam.png"))); // NOI18N
@@ -248,7 +257,7 @@ public class dashboard extends javax.swing.JFrame {
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/icon_calender.png"))); // NOI18N
-        panel_waktu.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 40, 40));
+        panel_waktu.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 40, 40));
 
         jLabel13.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 12)); // NOI18N
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -433,7 +442,7 @@ public class dashboard extends javax.swing.JFrame {
            while(rs.next ()){
                 Object[ ] obj = new Object[1];
                 obj[0] = rs.getString("COUNT(*)");
-                lb_jumlahsiswa.setText((String) obj[0]);
+                lb_jumlahsiswa.setText((String) obj[0]+" SISWA");
             }
             
         } catch (SQLException e) {
@@ -449,7 +458,7 @@ public class dashboard extends javax.swing.JFrame {
            while(rs.next ()){
                 Object[ ] obj = new Object[1];
                 obj[0] = rs.getString("COUNT(*)");
-                lb_jumlahguru.setText((String) obj[0]);
+                lb_jumlahguru.setText((String) obj[0]+" GURU");
             }
             
         } catch (SQLException e) {
@@ -465,7 +474,7 @@ public class dashboard extends javax.swing.JFrame {
            while(rs.next ()){
                 Object[ ] obj = new Object[1];
                 obj[0] = rs.getString("COUNT(*)");
-                lb_jumlahkelas.setText((String) obj[0]);
+                lb_jumlahkelas.setText((String) obj[0]+" KELAS");
             }
             
         } catch (SQLException e) {
@@ -473,56 +482,372 @@ public class dashboard extends javax.swing.JFrame {
         }
     }
     
-    public void chartsemuaabsensisiswa(){
-        int hadir = 0,sakit = 0,izin = 0,alpha = 0,terlambat = 0;
+    public void defaulttanggal(){
         try{
            stat = con.createStatement( );
-           sql  = "Select hadir,sakit,izin,alpha,terlambat from lapabsen";
+           sql  = "Select * from semester order by idsemester desc";
            rs   = stat.executeQuery(sql);
            while(rs.next ()){
-                hadir = rs.getInt("hadir")+hadir;
-                sakit = rs.getInt("sakit")+sakit;
-                izin = rs.getInt("izin")+izin;
-                alpha = rs.getInt("alpha")+alpha;
-                terlambat =rs.getInt("terlambat")+terlambat;
+               Object[ ] obj = new Object[1];
+                tanggalpert=rs.getString("tanggalpertama");
+                tanggalakh=rs.getString("tanggalterakhir");
             }      
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
-        final String series1 = "Hadir";
-        final String series2 = "Sakit";
-        final String series3 = "Izin";
-        final String series4 = "Alpha";
-        final String series5 = "Terlambat";
-        
-
-        final String category1 = "Semua Siswa";
-        
-        
-        DefaultCategoryDataset ctdata=new DefaultCategoryDataset();
-        ctdata.setValue(hadir, "Hadir", "Semua Siswa");
-        ctdata.setValue(sakit, "Sakit", "Semua Siswa");
-        ctdata.setValue(izin, "Izin", "Semua Siswa");
-        ctdata.setValue(alpha, "Alpha", "Semua Siswa");
-        ctdata.setValue(terlambat, "Terlambat", "Semua Siswa");
-        JFreeChart chart=ChartFactory.createBarChart("Presensi Siswa", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, false, true);
-        //final PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
-        //final PiePlot plot1 = (PiePlot) chart.getPlot();
-        //plot1.setLabelGenerator(labelGenerator);
-        //PiePlot piePlot=(PiePlot) chart.getPlot();
-        //chart.getPlot().setBackgroundPaint( Color.white);
-        //chart.getPlot().setOutlinePaint(null);
-        //piePlot.setSectionPaint("Hadir",Color.green);
-        //piePlot.setSectionPaint("Sakit",Color.yellow);
-        //piePlot.setSectionPaint("Izin",Color.blue);
-        //piePlot.setSectionPaint("Alpha",Color.red);
-        //piePlot.setSectionPaint("Terlambat",Color.orange);
-        ChartPanel barChartPanel=new ChartPanel(chart);
-        chartabsensissiwa.removeAll();
-        chartabsensissiwa.add(barChartPanel);
-        chartabsensissiwa.validate();
     }
+    
+    // CHART SEMUA SISWA HARIAN
+    public void dataabsensisiswaharian(){
+        try{
+           stat = con.createStatement( );
+           sql  = "Select status from absen WHERE tanggal=CURDATE()";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+               Object[] obj=new Object[1];
+               obj[0]=rs.getString("status");
+               if(obj[0].equals("Hadir")){
+                   hadirhr=hadirhr+1;
+               }
+               else if(obj[0].equals("Sakit")){
+                   sakithr=sakithr+1;
+               }
+               else if(obj[0].equals("Izin")){
+                   izinhr=izinhr+1;
+               }
+               else if(obj[0].equals("Alpha")){
+                   alphahr=alphahr+1;
+               }
+               else if(obj[0].equals("Terlambat")){
+                   terlambathr=terlambathr+1;
+               }
+            }      
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void chartsemuasiswaharian(){
+        DefaultCategoryDataset ctdata=new DefaultCategoryDataset();
+        ctdata.setValue(hadirhr, "Hadir", "Kehadiran Siswa Harian");
+        ctdata.setValue(sakithr, "Sakit", "Kehadiran Siswa Harian");
+        ctdata.setValue(izinhr, "Izin", "Kehadiran Siswa Harian");
+        ctdata.setValue(alphahr, "Alpha", "Kehadiran Siswa Harian");
+        ctdata.setValue(terlambathr, "Terlambat", "Kehadiran Siswa Harian");
+        JFreeChart chart=ChartFactory.createBarChart("Presensi Semua Siswa Harian", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, true);
+        chart.getPlot().setBackgroundPaint( Color.white);
+        ChartPanel barChartPanel=new ChartPanel(chart);
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.getRenderer().setSeriesPaint(0, Color.green);
+        plot.getRenderer().setSeriesPaint(1, Color.yellow);
+        plot.getRenderer().setSeriesPaint(2, Color.blue);
+        plot.getRenderer().setSeriesPaint(3, Color.red);
+        plot.getRenderer().setSeriesPaint(4, Color.orange);
+        plot.getRenderer().setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator("{3}", NumberFormat.getPercentInstance()));
+        plot.getRenderer().setDefaultItemLabelsVisible(true);
+        chartabsensiharian.removeAll();
+        chartabsensiharian.add(barChartPanel);
+        chartabsensiharian.validate();
+    }
+    
+    // CHART SEMUA SISWA
+    public void dataabsensisiswa(){
+        try{
+           stat = con.createStatement( );
+           sql  = "Select status from absen WHERE tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakh+"'";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+               Object[] obj=new Object[1];
+               obj[0]=rs.getString("status");
+               if(obj[0].equals("Hadir")){
+                   allhadir=allhadir+1;
+               }
+               else if(obj[0].equals("Sakit")){
+                   allsakit=allsakit+1;
+               }
+               else if(obj[0].equals("Izin")){
+                   allizin=allizin+1;
+               }
+               else if(obj[0].equals("Alpha")){
+                   allalpha=allalpha+1;
+               }
+               else if(obj[0].equals("Terlambat")){
+                   allterlambat=allterlambat+1;
+               }
+            }      
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+                             
+    }
+    
+    public void chartsemuasiswa(){
+        DefaultCategoryDataset ctdata=new DefaultCategoryDataset();
+        ctdata.setValue(allhadir, "Hadir", "Kehadiran Siswa");
+        ctdata.setValue(allsakit, "Sakit", "Kehadiran Siswa");
+        ctdata.setValue(allizin, "Izin", "Kehadiran Siswa");
+        ctdata.setValue(allalpha, "Alpha", "Kehadiran Siswa");
+        ctdata.setValue(allterlambat, "Terlambat", "Kehadiran Siswa");
+        JFreeChart chart=ChartFactory.createBarChart("Presensi Semua Siswa", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, true);
+        chart.getPlot().setBackgroundPaint( Color.white);
+        ChartPanel barChartPanel=new ChartPanel(chart);
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.getRenderer().setSeriesPaint(0, Color.green);
+        plot.getRenderer().setSeriesPaint(1, Color.yellow);
+        plot.getRenderer().setSeriesPaint(2, Color.blue);
+        plot.getRenderer().setSeriesPaint(3, Color.red);
+        plot.getRenderer().setSeriesPaint(4, Color.orange);
+        plot.getRenderer().setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator("{3}", NumberFormat.getPercentInstance()));
+        plot.getRenderer().setDefaultItemLabelsVisible(true);
+        chartabsensisiswa.removeAll();
+        chartabsensisiswa.add(barChartPanel);
+        chartabsensisiswa.validate();
+    }
+    
+    // CHART ANGKATAN
+    public void dataabsensiangkatan10(){
+        try{
+           stat = con.createStatement( );
+            sql  = "Select status from absen WHERE tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakh+"' AND substr(nk, 1, 2) = '10'";
+           rs   = stat.executeQuery(sql);
+           
+           while(rs.next ()){
+               Object[] obj=new Object[1];
+               obj[0]=rs.getString("status");
+               if(obj[0].equals("Hadir")){
+                   hadir10=hadir10+1;
+               }
+               else if(obj[0].equals("Sakit")){
+                   sakit10=sakit10+1;
+               }
+               else if(obj[0].equals("Izin")){
+                   izin10=izin10+1;
+               }
+               else if(obj[0].equals("Alpha")){
+                   alpha10=alpha10+1;
+               }
+               else if(obj[0].equals("Terlambat")){
+                   terlambat10=terlambat10+1;
+               }
+               
+            }      
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void dataabsensiangkatan11(){
+        try{
+           stat = con.createStatement( );
+           sql  = "Select status from absen WHERE tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakh+"' AND substr(nk, 1, 2) = '11'";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+               Object[] obj=new Object[1];
+               obj[0]=rs.getString("status");
+               if(obj[0].equals("Hadir")){
+                   hadir11=hadir11+1;
+               }
+               else if(obj[0].equals("Sakit")){
+                   sakit11=sakit11+1;
+               }
+               else if(obj[0].equals("Izin")){
+                   izin11=izin11+1;
+               }
+               else if(obj[0].equals("Alpha")){
+                   alpha11=alpha11+1;
+               }
+               else if(obj[0].equals("Terlambat")){
+                   terlambat11=terlambat11+1;
+               }
+            }      
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void dataabsensiangkatan12(){
+        try{
+           stat = con.createStatement( );
+           sql  = "Select status from absen WHERE tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakh+"' AND substr(nk, 1, 2) = '12'";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+               Object[] obj=new Object[1];
+               obj[0]=rs.getString("status");
+               if(obj[0].equals("Hadir")){
+                   hadir12=hadir12+1;
+               }
+               else if(obj[0].equals("Sakit")){
+                   sakit12=sakit12+1;
+               }
+               else if(obj[0].equals("Izin")){
+                   izin12=izin12+1;
+               }
+               else if(obj[0].equals("Alpha")){
+                   alpha12=alpha12+1;
+               }
+               else if(obj[0].equals("Terlambat")){
+                   terlambat12=terlambat12+1;
+               }
+            }      
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void chartangkatan(){                
+        DefaultCategoryDataset ctdata=new DefaultCategoryDataset();
+        ctdata.setValue(hadir10, "Hadir", "Angkatan 10");
+        ctdata.setValue(sakit10, "Sakit", "Angkatan 10");
+        ctdata.setValue(izin10, "Izin", "Angkatan 10");
+        ctdata.setValue(alpha10, "Alpha", "Angkatan 10");
+        ctdata.setValue(terlambat10, "Terlambat", "Angkatan 10");
+        ctdata.setValue(hadir11, "Hadir", "Angkatan 11");
+        ctdata.setValue(sakit11, "Sakit", "Angkatan 11");
+        ctdata.setValue(izin11, "Izin", "Angkatan 11");
+        ctdata.setValue(alpha11, "Alpha", "Angkatan 11");
+        ctdata.setValue(terlambat11, "Terlambat", "Angkatan 11");
+        ctdata.setValue(hadir12, "Hadir", "Angkatan 12");
+        ctdata.setValue(sakit12, "Sakit", "Angkatan 12");
+        ctdata.setValue(izin12, "Izin", "Angkatan 12");
+        ctdata.setValue(alpha12, "Alpha", "Angkatan 12");
+        ctdata.setValue(terlambat12, "Terlambat", "Angkatan 12");
+        JFreeChart chart=ChartFactory.createBarChart("Presensi Siswa per Angkatan", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, true);
+        chart.getPlot().setBackgroundPaint( Color.white);
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.getRenderer().setSeriesPaint(0, Color.green);
+        plot.getRenderer().setSeriesPaint(1, Color.yellow);
+        plot.getRenderer().setSeriesPaint(2, Color.blue);
+        plot.getRenderer().setSeriesPaint(3, Color.red);
+        plot.getRenderer().setSeriesPaint(4, Color.orange);
+        plot.getRenderer().setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator("{3}", NumberFormat.getPercentInstance()));
+        plot.getRenderer().setDefaultItemLabelsVisible(true);
+        ChartPanel barChartPanel=new ChartPanel(chart);        
+        chartabsensiangkatan.removeAll();
+        chartabsensiangkatan.add(barChartPanel);
+        chartabsensiangkatan.validate();
+    }
+    
+    //CHART PER JURUSAN
+    public void dataabsensijurusantitl(){
+        try{
+           stat = con.createStatement( );
+           sql  = "Select status from absen WHERE tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakh+"' AND nk LIKE '%TITL%'";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+               Object[] obj=new Object[1];
+               obj[0]=rs.getString("status");
+               if(obj[0].equals("Hadir")){
+                   hadirtitl=hadirtitl+1;
+               }
+               else if(obj[0].equals("Sakit")){
+                   sakittitl=sakittitl+1;
+               }
+               else if(obj[0].equals("Izin")){
+                   izintitl=izintitl+1;
+               }
+               else if(obj[0].equals("Alpha")){
+                   alphatitl=alphatitl+1;
+               }
+               else if(obj[0].equals("Terlambat")){
+                   terlambattitl=terlambattitl+1;
+               }
+            }      
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void dataabsensijurusanbdp(){
+        try{
+           stat = con.createStatement( );
+           sql  = "Select status from absen WHERE tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakh+"' AND nk LIKE '%BDP%'";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+               Object[] obj=new Object[1];
+               obj[0]=rs.getString("status");
+               if(obj[0].equals("Hadir")){
+                   hadirbdp=hadirbdp+1;
+               }
+               else if(obj[0].equals("Sakit")){
+                   sakitbdp=sakitbdp+1;
+               }
+               else if(obj[0].equals("Izin")){
+                   izinbdp=izinbdp+1;
+               }
+               else if(obj[0].equals("Alpha")){
+                   alphabdp=alphabdp+1;
+               }
+               else if(obj[0].equals("Terlambat")){
+                   terlambatbdp=terlambatbdp+1;
+               }
+            }      
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void dataabsensijurusanotkp(){
+        try{
+           stat = con.createStatement( );
+           sql  = "Select status from absen WHERE tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakh+"' AND nk LIKE '%OTKP%'";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+               Object[] obj=new Object[1];
+               obj[0]=rs.getString("status");
+               if(obj[0].equals("Hadir")){
+                   hadirotkp=hadirotkp+1;
+               }
+               else if(obj[0].equals("Sakit")){
+                   sakitotkp=sakitotkp+1;
+               }
+               else if(obj[0].equals("Izin")){
+                   izinotkp=izinotkp+1;
+               }
+               else if(obj[0].equals("Alpha")){
+                   alphaotkp=alphaotkp+1;
+               }
+               else if(obj[0].equals("Terlambat")){
+                   terlambatotkp=terlambatotkp+1;
+               }
+            }      
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void chartjurusan(){                
+        DefaultCategoryDataset ctdata=new DefaultCategoryDataset();
+        ctdata.setValue(hadirtitl, "Hadir", "TITL");
+        ctdata.setValue(sakittitl, "Sakit", "TITL");
+        ctdata.setValue(izintitl, "Izin", "TITL");
+        ctdata.setValue(alphatitl, "Alpha", "TITL");
+        ctdata.setValue(terlambattitl, "Terlambat", "TITL");
+        ctdata.setValue(hadirbdp, "Hadir", "BDP");
+        ctdata.setValue(sakitbdp, "Sakit", "BDP");
+        ctdata.setValue(izinbdp, "Izin", "BDP");
+        ctdata.setValue(alphabdp, "Alpha", "BDP");
+        ctdata.setValue(terlambatbdp, "Terlambat", "BDP");
+        ctdata.setValue(hadirotkp, "Hadir", "OTKP");
+        ctdata.setValue(sakitotkp, "Sakit", "OTKP");
+        ctdata.setValue(izinotkp, "Izin", "OTKP");
+        ctdata.setValue(alphaotkp, "Alpha", "OTKP");
+        ctdata.setValue(terlambatotkp, "Terlambat", "OTKP");
+        JFreeChart chart=ChartFactory.createBarChart("Presensi Siswa per Jurusan", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, true);
+        chart.getPlot().setBackgroundPaint( Color.white);
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.getRenderer().setSeriesPaint(0, Color.green);
+        plot.getRenderer().setSeriesPaint(1, Color.yellow);
+        plot.getRenderer().setSeriesPaint(2, Color.blue);
+        plot.getRenderer().setSeriesPaint(3, Color.red);
+        plot.getRenderer().setSeriesPaint(4, Color.orange);
+        plot.getRenderer().setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator("{3}", NumberFormat.getPercentInstance()));
+        plot.getRenderer().setDefaultItemLabelsVisible(true);
+        ChartPanel barChartPanel=new ChartPanel(chart);        
+        chartabsensijurusan.removeAll();
+        chartabsensijurusan.add(barChartPanel);
+        chartabsensijurusan.validate();
+    }
+    
     private void btn_kelolaabsenMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_kelolaabsenMouseEntered
         // TODO add your handling code here:
         btn_kelolaabsen.setBackground(new Color(63,138,209));
@@ -627,8 +952,10 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel btn_kelolaabsen;
     private javax.swing.JPanel btn_keluar;
     private javax.swing.JPanel btn_siswabermasalah;
-    private javax.swing.JPanel chartabsensikelas;
-    private javax.swing.JPanel chartabsensissiwa;
+    private javax.swing.JPanel chartabsensiangkatan;
+    private javax.swing.JPanel chartabsensiharian;
+    private javax.swing.JPanel chartabsensijurusan;
+    private javax.swing.JPanel chartabsensisiswa;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -641,12 +968,9 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JLabel lb_guru;
     private javax.swing.JLabel lb_jumlahguru;
     private javax.swing.JLabel lb_jumlahkelas;
     private javax.swing.JLabel lb_jumlahsiswa;
-    private javax.swing.JLabel lb_kelas;
-    private javax.swing.JLabel lb_siswa;
     private javax.swing.JLabel lbl_tanggal;
     private javax.swing.JLabel lbl_waktu;
     private javax.swing.JPanel panel_waktu;

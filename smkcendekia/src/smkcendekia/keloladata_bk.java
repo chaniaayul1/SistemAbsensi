@@ -497,6 +497,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         String value = cb_gendersiswa.getSelectedItem().toString();
         gendersiswa=value;
     }
+    
     //PROSEDUR MENCARI DATA SISWA PADA TABEL
     public void querysearchsiswa(){
         int row = tabel_siswa.getRowCount();
@@ -2334,7 +2335,7 @@ System.out.println(e);
         int i = tabel_absen.getSelectedRow();
         if(i>-1){
             txt_searchdataabsen.setText(model.getValueAt(i, 0).toString());
-            lb_idabsen.setText(model.getValueAt(i, 0).toString());
+            lb_idabsen.setText(model.getValueAt(i, 1).toString());
             idabsen=lb_idabsen.getText();
             txt_searchtgldataabsen.setText(model.getValueAt(i, 4).toString());
         }
@@ -2681,6 +2682,7 @@ System.out.println(e);
             System.out.println(ex);
         }
     }
+    
     public void querysearchkliksemester(){
         int i = tabel_semester.getSelectedRow();
         if(i>-1){
