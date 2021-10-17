@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 07, 2021 at 08:21 PM
+-- Generation Time: Oct 17, 2021 at 12:02 PM
 -- Server version: 10.3.29-MariaDB-0+deb10u1
 -- PHP Version: 7.3.29-1~deb10u1
 
@@ -42,12 +42,19 @@ CREATE TABLE `absen` (
 --
 
 INSERT INTO `absen` (`idabsen`, `idrfid`, `nk`, `nis`, `nama`, `tanggal`, `jam`, `status`) VALUES
-(4, '51871758571', '10TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-05', '14:36:02', 'Hadir'),
-(6, '51871758571', '10TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-06', '18:45:28', 'Alpha'),
-(15, '632745563716', '12TITL1', 'NIS101', 'Rafi Aziizi Muchtar', '2021-10-07', '06:54:28', 'Hadir'),
-(16, '672888867376', '12TITL1', 'NIS103', 'Sutarjo', '2021-10-07', '07:15:14', 'Terlambat'),
-(17, '51871758571', '10TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-07', '07:30:55', 'Alpha'),
-(18, '672888867376', '12TITL1', 'NIS103', 'Sutarjo', '2021-10-06', '07:00:01', 'Hadir');
+(2, '672888867376', '12BDP1', 'NIS103', 'Sutarjo', '2021-10-09', '20:06:44', 'Alpha'),
+(3, '51871758571', '11TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-09', '20:06:56', 'Hadir'),
+(4, '632745563716', '12BDP1', 'NIS101', 'Rafi Aziizi Muchtar', '2021-10-12', '08:53:48', 'Izin'),
+(5, '51871758571', '11TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-12', '08:53:48', 'Alpha'),
+(6, '672888867376', '12BDP1', 'NIS103', 'Sutarjo', '2021-10-12', '08:53:48', 'Sakit'),
+(7, '51871758571', '11TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-14', '06:51:21', 'Hadir'),
+(8, '632745563716', '12BDP1', 'NIS101', 'Rafi Aziizi Muchtar', '2021-10-14', '06:52:01', 'Hadir'),
+(9, '672888867376', '12BDP1', 'NIS103', 'Sutarjo', '2021-10-14', '08:03:14', 'Alpha'),
+(10, '632745563716', '12BDP1', 'NIS101', 'Rafi Aziizi Muchtar', '2021-10-16', '07:30:03', 'Izin'),
+(11, '51871758571', '11TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-16', '07:30:03', 'Sakit'),
+(50, '632745563716', '12BDP1', 'NIS101', 'Rafi Aziizi Muchtar', '2021-10-17', '10:55:14', 'Alpha'),
+(51, '51871758571', '11TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-17', '10:55:14', 'Alpha'),
+(52, '672888867376', '12BDP1', 'NIS103', 'Sutarjo', '2021-10-17', '10:55:14', 'Alpha');
 
 --
 -- Triggers `absen`
@@ -203,7 +210,7 @@ CREATE TABLE `guru` (
 
 INSERT INTO `guru` (`nip`, `jabatan`, `nama`, `email`, `jeniskelamin`, `notlp`, `alamat`) VALUES
 ('3411181121', 'Bagian IT', 'Rizko Ayundra', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang'),
-('3411181122', 'Bagian IT', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '0811', 'Cikalong'),
+('3411181122', 'Bagian IT', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '08112', 'Cikalong'),
 ('3411181123', 'Guru BK', 'Rafi Aziizi M', 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi');
 
 --
@@ -229,6 +236,23 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `historyabsen`
+--
+
+CREATE TABLE `historyabsen` (
+  `idabsen` int(255) NOT NULL,
+  `idrfid` varchar(15) NOT NULL,
+  `nk` varchar(15) NOT NULL,
+  `nis` varchar(15) NOT NULL,
+  `nama` varchar(45) NOT NULL,
+  `tanggal` date NOT NULL,
+  `jam` time NOT NULL,
+  `status` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `kelas`
 --
 
@@ -250,10 +274,10 @@ CREATE TABLE `kelas` (
 --
 
 INSERT INTO `kelas` (`nk`, `idwalikelas`, `namakelas`, `angkatan`, `jurusan`, `semester`, `tahunajaran`, `jl`, `jp`, `js`) VALUES
-('10TITL2', 'WLS001', '2', 10, 'TITL', 'Ganjil', '2021/2022', 1, 0, 1),
-('10TITL3', 'WLS001', '3', 10, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
 ('11TITL1', 'WLS003', 'TITL1', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
-('12TITL1', 'WLS003', 'TITL1', 12, 'TITL', 'Ganjil', '2021/2022', 2, 0, 2);
+('11TITL2', 'WLS003', '2', 11, 'TITL', 'Ganjil', '2021/2022', 0, 1, 1),
+('11TITL3', 'WLS001', '3', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
+('12BDP1', 'WLS002', '1', 12, 'BDP', 'Ganjil', '2021/2022', 2, 0, 2);
 
 --
 -- Triggers `kelas`
@@ -261,6 +285,10 @@ INSERT INTO `kelas` (`nk`, `idwalikelas`, `namakelas`, `angkatan`, `jurusan`, `s
 DELIMITER $$
 CREATE TRIGGER `updatedatakelas` AFTER UPDATE ON `kelas` FOR EACH ROW IF (old.idwalikelas!=new.idwalikelas) THEN
 	UPDATE siswa
+	SET    idwalikelas = new.idwalikelas,
+		nk = new.nk
+	WHERE  nk=new.nk;
+    UPDATE lapabsen
 	SET    idwalikelas = new.idwalikelas,
 		nk = new.nk
 	WHERE  nk=new.nk;
@@ -292,9 +320,9 @@ CREATE TABLE `lapabsen` (
 --
 
 INSERT INTO `lapabsen` (`idlapabsen`, `idwalikelas`, `nis`, `nk`, `nama`, `hadir`, `sakit`, `izin`, `alpha`, `terlambat`) VALUES
-('LAP0000002', 'WLS001', 'NIS102', '10TITL2', 'Chania Ayu Lestari', 1, 0, 0, 2, 0),
-('LAP0000003', 'WLS002', 'NIS103', '12TITL1', 'Sutarjo', 1, 0, 0, 0, 1),
-('LAP0000004', 'WLS002', 'NIS101', '12TITL1', 'Rafi Aziizi Muchtar', 1, 0, 0, 0, 0);
+('LAP0000002', 'WLS003', 'NIS102', '11TITL2', 'Chania Ayu Lestari', 2, 1, 0, 2, 0),
+('LAP0000003', 'WLS002', 'NIS103', '12BDP1', 'Sutarjo', 0, 1, 0, 3, 0),
+('LAP0000004', 'WLS002', 'NIS101', '12BDP1', 'Rafi Aziizi Muchtar', 1, 0, 2, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -543,7 +571,48 @@ INSERT INTO `rfidlog` (`no`, `idrfid`) VALUES
 (229, '632745563716'),
 (230, '632745563716'),
 (231, '672888867376'),
-(232, '672888867376');
+(232, '672888867376'),
+(233, '51871758571'),
+(234, '51871758571'),
+(235, '51871758571'),
+(236, '51871758571'),
+(237, '51871758571'),
+(238, '51871758571'),
+(239, '51871758571'),
+(240, '51871758571'),
+(241, '51871758571'),
+(242, '51871758571'),
+(243, '51871758571'),
+(244, '51871758571'),
+(245, '51871758571'),
+(246, '51871758571'),
+(247, '51871758571'),
+(248, '51871758571'),
+(249, '51871758571'),
+(250, '51871758571');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `semester`
+--
+
+CREATE TABLE `semester` (
+  `idsemester` varchar(15) NOT NULL,
+  `nama` varchar(15) NOT NULL,
+  `status` varchar(15) NOT NULL,
+  `tahunajaran` varchar(15) NOT NULL,
+  `tanggalpertama` date NOT NULL,
+  `tanggalterakhir` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `semester`
+--
+
+INSERT INTO `semester` (`idsemester`, `nama`, `status`, `tahunajaran`, `tanggalpertama`, `tanggalterakhir`) VALUES
+('SMT002', 'Semester 1', 'Ganjil', '2021/2022', '2021-08-30', '2022-04-19'),
+('SMT003', 'Semester 2', 'Genap', '2021/2022', '2021-05-19', '2022-10-19');
 
 -- --------------------------------------------------------
 
@@ -570,9 +639,9 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`nis`, `idrfid`, `nk`, `idwalikelas`, `nama`, `alamat`, `jeniskelamin`, `email`, `notlp`, `namaortu`, `noortu`) VALUES
-('NIS101', '632745563716', '12TITL1', 'WLS003', 'Rafi Aziizi Muchtar', 'Cikampek', 'Laki-Laki', 'rafi@gmail.com', '081282407414', 'Koko', '0823323132'),
-('NIS102', '51871758571', '10TITL2', 'WLS002', 'Chania Ayu Lestari', 'Cikalong', 'Laki-Laki', 'chania@gmail.com', '08424231', 'Cika', '0983231'),
-('NIS103', '672888867376', '12TITL1', 'WLS003', 'Sutarjo', 'Karawang', 'Laki-Laki', 'strj@gmail.com', '08442', 'Sutini', '093323');
+('NIS101', '632745563716', '12BDP1', 'WLS002', 'Rafi Aziizi Muchtar', 'Cikampek', 'Laki-Laki', 'rafi@gmail.com', '081282407414', 'Koko', '0823323132'),
+('NIS102', '51871758571', '11TITL2', 'WLS003', 'Chania Ayu Lestari', 'Cikalong', 'Perempuan', 'chania@gmail.com', '08424231', 'Cika', '0983231'),
+('NIS103', '672888867376', '12BDP1', 'WLS002', 'Sutarjo', 'Karawang', 'Laki-Laki', 'strj@gmail.com', '08442', 'Sutini', '093323');
 
 --
 -- Triggers `siswa`
@@ -700,7 +769,7 @@ CREATE TABLE `walikelas` (
 
 INSERT INTO `walikelas` (`idwalikelas`, `nip`, `nama`, `email`, `jeniskelamin`, `notlp`, `alamat`) VALUES
 ('WLS001', '3411181123', 'Rafi Aziizi M', 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi'),
-('WLS002', '3411181122', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '0811', 'Cikalong'),
+('WLS002', '3411181122', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '08112', 'Cikalong'),
 ('WLS003', '3411181121', 'Rizko Ayundra', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang');
 
 --
@@ -759,6 +828,12 @@ ALTER TABLE `rfidlog`
   ADD PRIMARY KEY (`no`);
 
 --
+-- Indexes for table `semester`
+--
+ALTER TABLE `semester`
+  ADD PRIMARY KEY (`idsemester`);
+
+--
 -- Indexes for table `siswa`
 --
 ALTER TABLE `siswa`
@@ -782,12 +857,12 @@ ALTER TABLE `walikelas`
 -- AUTO_INCREMENT for table `absen`
 --
 ALTER TABLE `absen`
-  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 --
 -- AUTO_INCREMENT for table `rfidlog`
 --
 ALTER TABLE `rfidlog`
-  MODIFY `no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=233;
+  MODIFY `no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=251;
 --
 -- Constraints for dumped tables
 --
