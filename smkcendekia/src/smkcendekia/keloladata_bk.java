@@ -2334,8 +2334,8 @@ System.out.println(e);
     public void querysearchklikabsen(){
         int i = tabel_absen.getSelectedRow();
         if(i>-1){
-            txt_searchdataabsen.setText(model.getValueAt(i, 0).toString());
-            lb_idabsen.setText(model.getValueAt(i, 1).toString());
+            txt_searchdataabsen.setText(model.getValueAt(i, 1).toString());
+            lb_idabsen.setText(model.getValueAt(i, 0).toString());
             idabsen=lb_idabsen.getText();
             txt_searchtgldataabsen.setText(model.getValueAt(i, 4).toString());
         }
@@ -7185,6 +7185,7 @@ System.out.println(e);
         this.setVisible(false);
         dashboard ds = new dashboard();
         ds.setVisible(true);
+        ds.notifikasialphasemester();
     }//GEN-LAST:event_btn_dashboardMouseClicked
 
     private void btn_kembaliformkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliformkelasActionPerformed

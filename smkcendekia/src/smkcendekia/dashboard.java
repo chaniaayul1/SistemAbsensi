@@ -16,6 +16,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -69,6 +70,7 @@ public class dashboard extends javax.swing.JFrame {
         defaulttanggal();
         tanggal();
         tampil_jam();
+        
         
         //QUERY TOTAL SISWA,GURU,KELAS
         queryjumlahsiswa();
@@ -247,32 +249,26 @@ public class dashboard extends javax.swing.JFrame {
         panelgrafik.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         chartabsensiharian.setBackground(new java.awt.Color(255, 255, 255));
-        chartabsensiharian.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         chartabsensiharian.setLayout(new javax.swing.OverlayLayout(chartabsensiharian));
-        panelgrafik.add(chartabsensiharian, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 450, 420));
+        panelgrafik.add(chartabsensiharian, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 450, 420));
 
         chartabsensijurusan.setBackground(new java.awt.Color(255, 255, 255));
-        chartabsensijurusan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         chartabsensijurusan.setLayout(new javax.swing.OverlayLayout(chartabsensijurusan));
         panelgrafik.add(chartabsensijurusan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 900, 450, 420));
 
         chartabsensiangkatan.setBackground(new java.awt.Color(255, 255, 255));
-        chartabsensiangkatan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         chartabsensiangkatan.setLayout(new javax.swing.OverlayLayout(chartabsensiangkatan));
         panelgrafik.add(chartabsensiangkatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 900, 450, 420));
 
         chartabsensisiswa.setBackground(new java.awt.Color(255, 255, 255));
-        chartabsensisiswa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         chartabsensisiswa.setLayout(new javax.swing.OverlayLayout(chartabsensisiswa));
         panelgrafik.add(chartabsensisiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, 450, 420));
 
         chartabsensimingguan.setBackground(new java.awt.Color(255, 255, 255));
-        chartabsensimingguan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         chartabsensimingguan.setLayout(new javax.swing.OverlayLayout(chartabsensimingguan));
         panelgrafik.add(chartabsensimingguan, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 0, 450, 420));
 
         chartabsensibulanan.setBackground(new java.awt.Color(255, 255, 255));
-        chartabsensibulanan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         chartabsensibulanan.setLayout(new javax.swing.OverlayLayout(chartabsensibulanan));
         panelgrafik.add(chartabsensibulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 450, 420));
 
@@ -469,7 +465,7 @@ public class dashboard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     public void tanggal(){
         
         Date dates = new Date();
@@ -540,6 +536,26 @@ public class dashboard extends javax.swing.JFrame {
         }
     }
     
+    public void notifikasimingguan(){
+        
+    }
+    
+    public void notifikasialphasemester(){
+        try{
+           stat = con.createStatement( );
+           sql  = "SELECT * FROM lapabsen WHERE alpha>=3 ";
+           rs   = stat.executeQuery(sql);
+           if (rs.next() ) {    
+                JOptionPane.showMessageDialog(null, ("Terdapat siswa bermasalah dengan absensi"), 
+                    "Lihat Data Absensi Gagal", JOptionPane.INFORMATION_MESSAGE);
+            }
+           else{
+           }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        
+    }
     // CHART SEMUA SISWA HARIAN
     public void dataabsensisiswaharianotkp(){
         try{
@@ -602,7 +618,7 @@ public class dashboard extends javax.swing.JFrame {
     public void dataabsensisiswahariantitl(){
         try{
            stat = con.createStatement( );
-           sql  = "Select status from absen WHERE tanggal=CURDATE() and nk LIKE '%OTKP%'";
+           sql  = "Select status from absen WHERE tanggal=CURDATE() and nk LIKE '%TITL%'";
            rs   = stat.executeQuery(sql);
            while(rs.next ()){
                Object[] obj=new Object[1];
@@ -645,7 +661,7 @@ public class dashboard extends javax.swing.JFrame {
         ctdata.setValue(izinhrotkp, "Izin", "OTKP");
         ctdata.setValue(alphahrotkp, "Alpha", "OTKP");
         ctdata.setValue(terlambathrotkp, "Terlambat", "OTKP");
-        JFreeChart chart=ChartFactory.createBarChart("Presensi Semua Siswa per Hari", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, true);
+        JFreeChart chart=ChartFactory.createBarChart("Presensi Siswa per Hari ini", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, true);
         chart.getPlot().setBackgroundPaint( Color.white);
         ChartPanel barChartPanel=new ChartPanel(chart);
         CategoryPlot plot = chart.getCategoryPlot();
@@ -662,10 +678,10 @@ public class dashboard extends javax.swing.JFrame {
     }
     
     // CHART SEMUA SISWA MINGGUAN
-   public void dataabsensisiswamingguanotkp(){
+    public void dataabsensisiswamingguanotkp(){
         try{
            stat = con.createStatement( );
-           sql  = "SELECT status FROM absen WHERE WEEKOFYEAR(tanggal)=WEEKOFYEAR(CURDATE()) AND WEEKDAY(tanggal)  BETWEEN 1 AND 5 and nk LIKE '%OTKP%'";
+           sql  = "SELECT status FROM absen WHERE WEEKOFYEAR(tanggal)=WEEKOFYEAR(CURDATE()) and nk LIKE '%OTKP%'";
            rs   = stat.executeQuery(sql);
            while(rs.next ()){
                Object[] obj=new Object[1];
@@ -695,7 +711,7 @@ public class dashboard extends javax.swing.JFrame {
     public void dataabsensisiswamingguanbdp(){
         try{
            stat = con.createStatement( );
-           sql  = "SELECT status FROM absen WHERE WEEKOFYEAR(tanggal)=WEEKOFYEAR(CURDATE()) AND WEEKDAY(tanggal)  BETWEEN 1 AND 5 and nk LIKE '%BDP%'";
+           sql  = "SELECT status FROM absen WHERE WEEKOFYEAR(tanggal)=WEEKOFYEAR(CURDATE()) and nk LIKE '%BDP%'";
            rs   = stat.executeQuery(sql);
            while(rs.next ()){
                Object[] obj=new Object[1];
@@ -722,10 +738,10 @@ public class dashboard extends javax.swing.JFrame {
     }
     
     
-     public void dataabsensisiswamingguantitl(){
+    public void dataabsensisiswamingguantitl(){
         try{
            stat = con.createStatement( );
-           sql  = "SELECT status FROM absen WHERE WEEKOFYEAR(tanggal)=WEEKOFYEAR(CURDATE()) AND WEEKDAY(tanggal)  BETWEEN 1 AND 5 and nk LIKE '%TITL%'";
+           sql  = "SELECT status FROM absen WHERE WEEKOFYEAR(tanggal)=WEEKOFYEAR(CURDATE()) and nk LIKE '%TITL%'";
            rs   = stat.executeQuery(sql);
            while(rs.next ()){
                Object[] obj=new Object[1];
@@ -769,7 +785,7 @@ public class dashboard extends javax.swing.JFrame {
         ctdata.setValue(izinmgotkp, "Izin", "OTKP");
         ctdata.setValue(alphamgotkp, "Alpha", "OTKP");
         ctdata.setValue(terlambatmgotkp, "Terlambat", "OTKP");
-        JFreeChart chart=ChartFactory.createBarChart("Presensi Semua Siswa per Minggu", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart chart=ChartFactory.createBarChart("Presensi Siswa per Minggu ini", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, false);
         chart.getPlot().setBackgroundPaint( Color.white);
         ChartPanel barChartPanel=new ChartPanel(chart);
         CategoryPlot plot = chart.getCategoryPlot();
@@ -879,7 +895,7 @@ public class dashboard extends javax.swing.JFrame {
     }
     
     
-      public void chartsemuasiswabulanan(){
+    public void chartsemuasiswabulanan(){
         DefaultCategoryDataset ctdata=new DefaultCategoryDataset();
         ctdata.setValue(hadirblntitl, "Hadir", "TITL");
         ctdata.setValue(sakitblntitl, "Sakit", "TITL");
@@ -896,7 +912,7 @@ public class dashboard extends javax.swing.JFrame {
         ctdata.setValue(izinblnotkp, "Izin", "OTKP");
         ctdata.setValue(alphablnotkp, "Alpha", "OTKP");
         ctdata.setValue(terlambatblnotkp, "Terlambat", "OTKP");
-        JFreeChart chart=ChartFactory.createBarChart("Presensi Semua Siswa per Bulan", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, true);
+        JFreeChart chart=ChartFactory.createBarChart("Presensi Siswa per Bulan ini", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, true);
         chart.getPlot().setBackgroundPaint( Color.white);
         ChartPanel barChartPanel=new ChartPanel(chart);
         CategoryPlot plot = chart.getCategoryPlot();
@@ -951,7 +967,7 @@ public class dashboard extends javax.swing.JFrame {
         ctdata.setValue(allizin, "Izin", "Kehadiran Siswa");
         ctdata.setValue(allalpha, "Alpha", "Kehadiran Siswa");
         ctdata.setValue(allterlambat, "Terlambat", "Kehadiran Siswa");
-        JFreeChart chart=ChartFactory.createBarChart("Presensi Semua Siswa", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, true);
+        JFreeChart chart=ChartFactory.createBarChart("Presensi Siswa per Semester ini", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, true);
         chart.getPlot().setBackgroundPaint( Color.white);
         ChartPanel barChartPanel=new ChartPanel(chart);
         CategoryPlot plot = chart.getCategoryPlot();
