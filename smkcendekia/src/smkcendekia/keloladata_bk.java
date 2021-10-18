@@ -18,6 +18,7 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
@@ -67,35 +68,88 @@ public class keloladata_bk extends javax.swing.JFrame {
     
     //==================================SISWA=================================//
     //FUNGSI ATAU PROSEDUR MENAMPILKAN DATA SISWA PADA TABEL
-    public void tampilsiswa(){        
-        model = new DefaultTableModel ( );
-        tabel_siswa.setModel(model);
-        model.addColumn("No");
-        model.addColumn("NIS");
-        model.addColumn("NK");
-        model.addColumn("Jenis Kelamin");
-        model.addColumn("Nama");
-
-         try{
-           stat = con.createStatement( );
-           sql  = "Select siswa.* from siswa";
-           rs   = stat.executeQuery(sql);
-           int no=1;
-           while(rs.next ()){
-                Object[ ] obj = new Object[5];
-                obj[0] = Integer.toString(no);
-                obj[1] = rs.getString("nis");
-                obj[2] = rs.getString("NK");
-                obj[3] = rs.getString("jeniskelamin");
-                obj[4] = rs.getString("nama");
-                model.addRow(obj);
-                no++;
-            }
-            
-             tabel_siswa.setModel(model);
-        } catch (SQLException e) {
-            System.out.println(e);
-      }
+    
+    public void formattabelsiswa(){
+        if (tabel_siswa.getColumnModel().getColumnCount() > 0) {
+                    tabel_siswa.getColumnModel().getColumn(0).setMinWidth(70);
+                    tabel_siswa.getColumnModel().getColumn(0).setMaxWidth(70);
+                    tabel_siswa.getColumnModel().getColumn(1).setMinWidth(175);
+                    tabel_siswa.getColumnModel().getColumn(1).setMaxWidth(150);
+                    tabel_siswa.getColumnModel().getColumn(2).setMinWidth(350);
+                    tabel_siswa.getColumnModel().getColumn(2).setMaxWidth(350);
+                    tabel_siswa.getColumnModel().getColumn(3).setMinWidth(175);
+                    tabel_siswa.getColumnModel().getColumn(3).setMaxWidth(175);
+                    tabel_siswa.getColumnModel().getColumn(4).setMinWidth(150);
+                    tabel_siswa.getColumnModel().getColumn(4).setMaxWidth(150);
+                    tabel_siswa.getColumnModel().getColumn(5).setMinWidth(100);
+                    tabel_siswa.getColumnModel().getColumn(5).setMaxWidth(100);
+                }
+    }
+    
+    public void tampilsiswa(){
+        String value = cb_formatsiswa.getSelectedItem().toString();
+        if(value.equals("Aktif")){
+            model = new DefaultTableModel ( );
+            tabel_siswa.setModel(model);
+            model.addColumn("No");
+            model.addColumn("NIS");
+            model.addColumn("Nama");
+            model.addColumn("NK");
+            model.addColumn("Jenis Kelamin");
+            model.addColumn("Status");
+             try{
+               stat = con.createStatement( );
+               sql  = "Select * from siswa where status='Aktif'";
+               rs   = stat.executeQuery(sql);
+               int no=1;
+               while(rs.next ()){
+                    Object[ ] obj = new Object[6];
+                    obj[0] = Integer.toString(no);
+                    obj[1] = rs.getString("nis");
+                    obj[2] = rs.getString("nama");
+                    obj[3] = rs.getString("nk");
+                    obj[4] = rs.getString("jeniskelamin");
+                    obj[5] = rs.getString("status");
+                    this.formattabelsiswa();
+                    model.addRow(obj);
+                    no++;
+                }
+                 tabel_siswa.setModel(model);
+            } catch (SQLException e) {
+                System.out.println(e);
+          }
+        }
+        else{
+            model = new DefaultTableModel ( );
+            tabel_siswa.setModel(model);
+            model.addColumn("No");
+            model.addColumn("NIS");
+            model.addColumn("Nama");
+            model.addColumn("NK");
+            model.addColumn("Jenis Kelamin");
+            model.addColumn("Status");
+             try{
+               stat = con.createStatement( );
+               sql  = "Select * from siswa where status='Pasif'";
+               rs   = stat.executeQuery(sql);
+               int no=1;
+               while(rs.next ()){
+                    Object[ ] obj = new Object[6];
+                    obj[0] = Integer.toString(no);
+                    obj[1] = rs.getString("nis");
+                    obj[2] = rs.getString("nama");
+                    obj[3] = rs.getString("nk");
+                    obj[4] = rs.getString("jeniskelamin");
+                    obj[5] = rs.getString("status");
+                    this.formattabelsiswa();
+                    model.addRow(obj);
+                    no++;
+                }
+                 tabel_siswa.setModel(model);
+            } catch (SQLException e) {
+                System.out.println(e);
+          }
+        }
     }
     
     //PROSEDUR MENGHAPUS DATA SISWA PADA TABEL
@@ -104,26 +158,27 @@ public class keloladata_bk extends javax.swing.JFrame {
         tabel_siswa.setModel(model);
         model.addColumn("No");
         model.addColumn("NIS");
+        model.addColumn("Nama");
         model.addColumn("NK");
         model.addColumn("Jenis Kelamin");
-        model.addColumn("Nama");
+        model.addColumn("Status");
         try {
             stat = con.createStatement( );
-            con.createStatement().executeUpdate("DELETE FROM siswa WHERE nis='"+txt_searchsiswa.getText()+"'");
+            con.createStatement().executeUpdate("UPDATE siswa SET status='Pasif' WHERE nis='"+txt_searchsiswa.getText()+"'");
             rs   = stat.executeQuery(sql);
             int no=1;
             while(rs.next ()){
-                Object[ ] obj = new Object[5];
+                Object[ ] obj = new Object[6];
                 obj[0] = Integer.toString(no);
                 obj[1] = rs.getString("nis");
-                obj[2] = rs.getString("nk");
-                obj[3] = rs.getString("jeniskelamin");
-                obj[4] = rs.getString("nama");
+                obj[2] = rs.getString("nama");
+                obj[3] = rs.getString("nk");
+                obj[4] = rs.getString("jeniskelamin");
+                obj[5] = rs.getString("status");
                 model.addRow(obj);
                 no++;
             }
             this.deletedatarfid();
-
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
             "Delete Data Siswa Gagal", JOptionPane.INFORMATION_MESSAGE);
@@ -133,7 +188,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     public void deletedatarfid(){
         try {
             stat = con.createStatement( );
-            con.createStatement().executeUpdate("DELETE FROM rfid WHERE nis='"+txt_searchsiswa.getText()+"'");
+            con.createStatement().executeUpdate("UPDATE rfid SET status='Pasif' WHERE nis='"+txt_searchsiswa.getText()+"'");
             rs   = stat.executeQuery(sql);
             } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
@@ -143,14 +198,19 @@ public class keloladata_bk extends javax.swing.JFrame {
     
     //PROSEDUR VALIDASI HAPUS DATA SISWA PADA TABEL
     public void validasideletedatasiswa(){
-        int jwbn=JOptionPane.showConfirmDialog(null, "Benarkah anda ingin menghapus data ini?", "Hapus Data Siswa",JOptionPane.YES_NO_OPTION);
-        if (jwbn==JOptionPane.YES_OPTION){
-            this.deletedatasiswa();
-            this.tampilsiswa();
-            txt_searchsiswa.setText("");
+        if(!txt_searchsiswa.getText().equals("")){
+           int jwbn=JOptionPane.showConfirmDialog(null, "Benarkah anda ingin menghapus data ini?", "Hapus Data Siswa",JOptionPane.YES_NO_OPTION);
+            if (jwbn==JOptionPane.YES_OPTION){
+                this.deletedatasiswa();
+                this.tampilsiswa();
+                txt_searchsiswa.setText("");
+            }
+            else if(jwbn==JOptionPane.NO_OPTION){
+            } 
         }
-        else if(jwbn==JOptionPane.NO_OPTION){
-            
+        else{
+            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+            "Delete Data Siswa Gagal", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
@@ -183,7 +243,7 @@ public class keloladata_bk extends javax.swing.JFrame {
                         +"','"+txt_telpformsiswa.getText()
                         +"','"+txt_nortuformsiswa.getText()
                         +"','"+txt_noortuformsiswa.getText()
-                        +"')";
+                        +"','Aktif')";
                 stat = con.createStatement();
                 int SA =stat.executeUpdate(simpan);
                 this.tambahlapabsensiswa();
@@ -316,7 +376,7 @@ public class keloladata_bk extends javax.swing.JFrame {
             sql  = "SELECT s.*,w.nama from siswa as s inner join walikelas as w ON s.idwalikelas=w.idwalikelas where s.nis='"+Session.getnissiswa()+"'";
             rs   = stat.executeQuery(sql);
             while(rs.next ()){
-                Object[ ] obj = new Object[11];
+                Object[ ] obj = new Object[12];
                 obj[0] =rs.getString("idrfid");
                 txt_rfidsiswa.setText((String) obj[0]);
                 obj[1] =rs.getString("nis");
@@ -328,6 +388,12 @@ public class keloladata_bk extends javax.swing.JFrame {
                 obj[4] =rs.getString("alamat");
                 txt_alamatsiswa.setText((String) obj[4]);
                 obj[5] =rs.getString("jeniskelamin");
+                if(obj[5].equals("Laki-Laki")){
+                    cb_gendersiswa.setSelectedIndex(0);
+                }
+                else{
+                    cb_gendersiswa.setSelectedIndex(1);
+                }
                 txt_gendersiswa.setText((String) obj[5]);
                 obj[6] =rs.getString("notlp");
                 txt_notelpsiswa.setText((String) obj[6]);
@@ -338,7 +404,14 @@ public class keloladata_bk extends javax.swing.JFrame {
                 obj[9] =rs.getString("namaortu");
                 txt_ortusiswa.setText((String) obj[9]);
                 obj[10] =rs.getString("noortu");
-                txt_noortusiswa.setText((String) obj[10]); 
+                txt_noortusiswa.setText((String) obj[10]);
+                obj[11]=rs.getString("status");
+                if(obj[11].equals("Aktif")){
+                    cb_statussiswa.setSelectedIndex(0);
+                }
+                else{
+                    cb_statussiswa.setSelectedIndex(1);
+                }
             }
             
         } catch (SQLException ex) {
@@ -351,20 +424,29 @@ public class keloladata_bk extends javax.swing.JFrame {
     public void tampilriwayatabsensiswa(){
         model = new DefaultTableModel ( );
         tabel_riwayatsiswa.setModel(model);
-        lb_nisriwayatsiswa.setText(Session.getnissiswa());
-        lb_namariwayatsiswa.setText(txt_namasiswa.getText());
-        lb_nkriwayatsiswa.setText(txt_nksiswa.getText());
         model.addColumn("No");
         model.addColumn("Tanggal");
         model.addColumn("Jam");
         model.addColumn("Status");  
-
+        try{
+           stat = con.createStatement( );
+           sql  = "Select * from siswa where nis='"+Session.getnissiswa()+"'";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){                
+                lb_nisriwayatsiswa.setText(rs.getString("nis"));
+                lb_namariwayatsiswa.setText(rs.getString("nama"));
+                lb_nkriwayatsiswa.setText(rs.getString("nk"));
+            }                    
+        } catch (SQLException e) {
+            System.out.println(e);
+      } 
          try{
            stat = con.createStatement( );
            sql  = "Select * from absen where nis='"+Session.getnissiswa()+"'";
            rs   = stat.executeQuery(sql);
            int no = 1;
            while(rs.next ()){
+                
                 Object[ ] obj = new Object[4];
                 obj[0] = Integer.toString(no);
                 obj[1] = rs.getString("tanggal");
@@ -437,6 +519,7 @@ public class keloladata_bk extends javax.swing.JFrame {
             txt_gendersiswa.setEnabled(false);
             cb_gendersiswa.setVisible(true);
             cb_gendersiswa.setEnabled(true);
+            cb_statussiswa.setEnabled(true);
         }
         else{
             btn_scanprofilesiswa.setEnabled(false);
@@ -454,6 +537,7 @@ public class keloladata_bk extends javax.swing.JFrame {
             txt_gendersiswa.setEnabled(false);
             cb_gendersiswa.setVisible(false);
             cb_gendersiswa.setEnabled(false);
+            cb_statussiswa.setEnabled(false);
         }
     }
     
@@ -476,11 +560,12 @@ public class keloladata_bk extends javax.swing.JFrame {
             con.createStatement().executeUpdate("UPDATE siswa set   nis='"+txt_nissiswa.getText()+"', "                                                                       
                                                                         + "nama='"+txt_namasiswa.getText()+"', "
                                                                         + "alamat='"+txt_alamatsiswa.getText()+"', "
-                                                                        + "jeniskelamin='"+gendersiswa+"', "
+                                                                        + "jeniskelamin='"+cb_gendersiswa.getSelectedItem().toString()+"', "
                                                                         + "email='"+txt_emailsiswa.getText()+"', "
                                                                         + "notlp='"+txt_notelpsiswa.getText()+"', "
                                                                         + "namaortu='"+txt_ortusiswa.getText()+"', "        
-                                                                        + "noortu='"+txt_noortusiswa.getText()+"'"
+                                                                        + "noortu='"+txt_noortusiswa.getText()+"',"
+                                                                        + "status='"+cb_statussiswa.getSelectedItem().toString()+"'"
                                                                         + "WHERE nis='"+txt_searchsiswa.getText()+"'");
             rs   = stat.executeQuery(sql);
             JOptionPane.showMessageDialog(null, ("Data Siswa Berhasil di Update"), 
@@ -2841,6 +2926,7 @@ System.out.println(e);
         ((DefaultTableCellRenderer)tabel_siswa.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
         tabel_siswa.setGridColor(Color.BLACK);
         tabel_siswa.setForeground(Color.BLACK);
+        ((DefaultTableCellRenderer)tabel_siswa.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         tabsiswa.setOpaque(false);
         tabsiswa.getViewport().setOpaque(false);
         tabsiswa.setViewportBorder(null);
@@ -2850,6 +2936,7 @@ System.out.println(e);
         ((DefaultTableCellRenderer)tabel_guru.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
         tabel_guru.setGridColor(Color.BLACK);
         tabel_guru.setForeground(Color.BLACK);
+        ((DefaultTableCellRenderer)tabel_guru.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         tabguru.setOpaque(false);
         tabguru.getViewport().setOpaque(false);
         tabguru.setViewportBorder(null);
@@ -2859,6 +2946,7 @@ System.out.println(e);
         ((DefaultTableCellRenderer)tabel_walikelas.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
         tabel_walikelas.setGridColor(Color.BLACK);
         tabel_walikelas.setForeground(Color.BLACK);
+        ((DefaultTableCellRenderer)tabel_walikelas.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         tabwalikelas.setOpaque(false);
         tabwalikelas.getViewport().setOpaque(false);
         tabwalikelas.setViewportBorder(null);
@@ -2868,6 +2956,7 @@ System.out.println(e);
         ((DefaultTableCellRenderer)tabel_kelas.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
         tabel_kelas.setGridColor(Color.BLACK);
         tabel_kelas.setForeground(Color.BLACK);
+        ((DefaultTableCellRenderer)tabel_kelas.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         tabkelas.setOpaque(false);
         tabkelas.getViewport().setOpaque(false);
         tabkelas.setViewportBorder(null);
@@ -2877,6 +2966,7 @@ System.out.println(e);
         ((DefaultTableCellRenderer)tabel_admin.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
         tabel_admin.setGridColor(Color.BLACK);
         tabel_admin.setForeground(Color.BLACK);
+        ((DefaultTableCellRenderer)tabel_admin.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         tabadmin.setOpaque(true);        
         tabadmin.getViewport().setOpaque(false);
         tabadmin.setViewportBorder(null);
@@ -2886,6 +2976,7 @@ System.out.println(e);
         ((DefaultTableCellRenderer)tabel_absen.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
         tabel_absen.setGridColor(Color.BLACK);
         tabel_absen.setForeground(Color.BLACK);
+        ((DefaultTableCellRenderer)tabel_absen.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         tababsen.setOpaque(false);
         tababsen.getViewport().setOpaque(false);
         tababsen.setViewportBorder(null);
@@ -2895,6 +2986,7 @@ System.out.println(e);
         ((DefaultTableCellRenderer)tabel_riwayatsiswa.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
         tabel_riwayatsiswa.setGridColor(Color.BLACK);
         tabel_riwayatsiswa.setForeground(Color.BLACK);
+        ((DefaultTableCellRenderer)tabel_riwayatsiswa.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         tabriwayatsiswa.setOpaque(false);
         tabriwayatsiswa.getViewport().setOpaque(false);
         tabriwayatsiswa.setViewportBorder(null);
@@ -2904,6 +2996,7 @@ System.out.println(e);
         ((DefaultTableCellRenderer)tabel_anggotakelas.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
         tabel_anggotakelas.setGridColor(Color.BLACK);
         tabel_anggotakelas.setForeground(Color.BLACK);
+        ((DefaultTableCellRenderer)tabel_anggotakelas.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         tab_anggotakelas.setOpaque(false);
         tab_anggotakelas.getViewport().setOpaque(false);
         tab_anggotakelas.setViewportBorder(null);
@@ -2912,6 +3005,7 @@ System.out.println(e);
         ((DefaultTableCellRenderer)tabel_lapabsen.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
         tabel_lapabsen.setGridColor(Color.BLACK);
         tabel_lapabsen.setForeground(Color.BLACK);
+        ((DefaultTableCellRenderer)tabel_lapabsen.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         tab_lapabsen.setOpaque(false);
         tab_lapabsen.getViewport().setOpaque(false);
         tab_lapabsen.setViewportBorder(null);
@@ -2921,6 +3015,7 @@ System.out.println(e);
         ((DefaultTableCellRenderer)tabel_anggotawalikelas.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
         tabel_anggotawalikelas.setGridColor(Color.BLACK);
         tabel_anggotawalikelas.setForeground(Color.BLACK);
+        ((DefaultTableCellRenderer)tabel_anggotawalikelas.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         tabanggotawalikelas.setOpaque(false);
         tabanggotawalikelas.getViewport().setOpaque(false);
         tabanggotawalikelas.setViewportBorder(null);
@@ -3016,6 +3111,8 @@ System.out.println(e);
         datasiswa = new javax.swing.JLayeredPane();
         panelsiswa = new javax.swing.JPanel();
         txt_searchsiswa = new javax.swing.JTextField();
+        cb_formatsiswa = new javax.swing.JComboBox<>();
+        btn_riwayatsiswa = new javax.swing.JButton();
         btn_searchsiswa = new javax.swing.JButton();
         btn_lihatsiswa = new javax.swing.JButton();
         btn_hapussiswa = new javax.swing.JButton();
@@ -3038,11 +3135,11 @@ System.out.println(e);
         txt_walassiswa = new javax.swing.JTextField();
         txt_ortusiswa = new javax.swing.JTextField();
         txt_noortusiswa = new javax.swing.JTextField();
+        cb_statussiswa = new javax.swing.JComboBox<>();
         cb_gendersiswa = new javax.swing.JComboBox<>();
         btn_editprofilesiswa = new javax.swing.JToggleButton();
         btn_scanprofilesiswa = new javax.swing.JButton();
         btn_simpanprofilesiswa = new javax.swing.JButton();
-        btn_riwayatabsen = new javax.swing.JButton();
         btn_kembaliprofilesiswa = new javax.swing.JButton();
         bgprofilesiswa = new javax.swing.JLabel();
         form_siswa = new javax.swing.JLayeredPane();
@@ -3888,7 +3985,28 @@ System.out.println(e);
 
         panelsiswa.setLayout(null);
         panelsiswa.add(txt_searchsiswa);
-        txt_searchsiswa.setBounds(190, 109, 808, 34);
+        txt_searchsiswa.setBounds(348, 110, 630, 34);
+
+        cb_formatsiswa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aktif", "Pasif" }));
+        cb_formatsiswa.setLightWeightPopupEnabled(false);
+        cb_formatsiswa.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_formatsiswaItemStateChanged(evt);
+            }
+        });
+        panelsiswa.add(cb_formatsiswa);
+        cb_formatsiswa.setBounds(50, 110, 280, 34);
+
+        btn_riwayatsiswa.setBackground(new java.awt.Color(255, 255, 255));
+        btn_riwayatsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_riwayatsiswa.setText("Riwayat Absen");
+        btn_riwayatsiswa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_riwayatsiswaActionPerformed(evt);
+            }
+        });
+        panelsiswa.add(btn_riwayatsiswa);
+        btn_riwayatsiswa.setBounds(780, 590, 130, 40);
 
         btn_searchsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -3900,7 +4018,7 @@ System.out.println(e);
             }
         });
         panelsiswa.add(btn_searchsiswa);
-        btn_searchsiswa.setBounds(1000, 110, 30, 30);
+        btn_searchsiswa.setBounds(985, 110, 34, 34);
 
         btn_lihatsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_lihatsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -3911,7 +4029,7 @@ System.out.println(e);
             }
         });
         panelsiswa.add(btn_lihatsiswa);
-        btn_lihatsiswa.setBounds(770, 570, 120, 40);
+        btn_lihatsiswa.setBounds(780, 540, 130, 40);
 
         btn_hapussiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_hapussiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -3924,19 +4042,27 @@ System.out.println(e);
             }
         });
         panelsiswa.add(btn_hapussiswa);
-        btn_hapussiswa.setBounds(930, 570, 120, 40);
+        btn_hapussiswa.setBounds(920, 590, 130, 40);
 
         tabel_siswa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "No", "NIS", "Jenis Kelamin", "Nama"
+                "No", "NIS", "Nama", "Jenis Kelamin", "Status"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tabel_siswa.setPreferredSize(new java.awt.Dimension(375, 80));
         tabel_siswa.setRowHeight(20);
         tabel_siswa.setRowMargin(2);
@@ -3946,9 +4072,13 @@ System.out.println(e);
             }
         });
         tabsiswa.setViewportView(tabel_siswa);
+        if (tabel_siswa.getColumnModel().getColumnCount() > 0) {
+            tabel_siswa.getColumnModel().getColumn(0).setMinWidth(30);
+            tabel_siswa.getColumnModel().getColumn(0).setMaxWidth(30);
+        }
 
         panelsiswa.add(tabsiswa);
-        tabsiswa.setBounds(50, 170, 1010, 370);
+        tabsiswa.setBounds(50, 170, 1010, 360);
 
         btn_refreshdatasiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_refreshdatasiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refreshlagi.png"))); // NOI18N
@@ -3959,18 +4089,18 @@ System.out.println(e);
             }
         });
         panelsiswa.add(btn_refreshdatasiswa);
-        btn_refreshdatasiswa.setBounds(1030, 110, 30, 30);
+        btn_refreshdatasiswa.setBounds(1025, 110, 34, 34);
 
         btn_tambahsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_tambahsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_tambahsiswa.setText("Add Siswa");
+        btn_tambahsiswa.setText("Tambah Siswa");
         btn_tambahsiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_tambahsiswaActionPerformed(evt);
             }
         });
         panelsiswa.add(btn_tambahsiswa);
-        btn_tambahsiswa.setBounds(50, 109, 130, 34);
+        btn_tambahsiswa.setBounds(920, 540, 130, 40);
 
         bgsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelsiswa.png"))); // NOI18N
         panelsiswa.add(bgsiswa);
@@ -4044,6 +4174,11 @@ System.out.println(e);
         txt_noortusiswa.setEnabled(false);
         panelprofilesiswa.add(txt_noortusiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 538, 550, 30));
 
+        cb_statussiswa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aktif", "Pasif" }));
+        cb_statussiswa.setEnabled(false);
+        cb_statussiswa.setLightWeightPopupEnabled(false);
+        panelprofilesiswa.add(cb_statussiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 580, 250, 30));
+
         cb_gendersiswa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-Laki", "Perempuan" }));
         cb_gendersiswa.setFocusable(false);
         cb_gendersiswa.setLightWeightPopupEnabled(false);
@@ -4083,16 +4218,6 @@ System.out.println(e);
             }
         });
         panelprofilesiswa.add(btn_simpanprofilesiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 590, 130, 40));
-
-        btn_riwayatabsen.setBackground(new java.awt.Color(255, 255, 255));
-        btn_riwayatabsen.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_riwayatabsen.setText("Riwayat Absen");
-        btn_riwayatabsen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_riwayatabsenActionPerformed(evt);
-            }
-        });
-        panelprofilesiswa.add(btn_riwayatabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 590, 120, 40));
 
         btn_kembaliprofilesiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_kembaliprofilesiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -6924,6 +7049,7 @@ System.out.println(e);
 
     private void btn_simpanprofilesiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanprofilesiswaActionPerformed
         this.simpanprofilesiswa();
+        btn_editprofilesiswa.setSelected(false);
         this.editprofilesiswa(false);
     }//GEN-LAST:event_btn_simpanprofilesiswaActionPerformed
 
@@ -7174,11 +7300,19 @@ System.out.println(e);
         this.querydataguruadmin();
     }//GEN-LAST:event_btn_scantambahadminActionPerformed
 
-    private void btn_riwayatabsenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_riwayatabsenActionPerformed
+    private void btn_riwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_riwayatsiswaActionPerformed
         // TODO add your handling code here:
-        switchpanel(riwayat_siswa);
-        this.tampilriwayatabsensiswa();
-    }//GEN-LAST:event_btn_riwayatabsenActionPerformed
+        if(txt_searchsiswa.getText().equals("")){
+            JOptionPane.showMessageDialog(null, ("Data Riwayat Absensi Siswa Tidak Ditemukan"), 
+            "Riwayat Absensi Siswa", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            txt_tanggalriwayatsiswa.setText("");
+            txt_tanggal2riwayatsiswa.setText("");
+            switchpanel(riwayat_siswa);
+            this.tampilriwayatabsensiswa();
+        }
+    }//GEN-LAST:event_btn_riwayatsiswaActionPerformed
 
     private void btn_dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dashboardMouseClicked
         // TODO add your handling code here:
@@ -7273,9 +7407,9 @@ System.out.println(e);
 
     private void btn_kembaliriwayatabsenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliriwayatabsenActionPerformed
         // TODO add your handling code here:
-        switchpanel(profilesiswa);
-        tampilprofilesiswa();
-        this.editprofilesiswa(false);
+        switchpanel(datasiswa);
+        tampilsiswa();
+        txt_searchsiswa.setText("");
     }//GEN-LAST:event_btn_kembaliriwayatabsenActionPerformed
 
     private void btn_refreshriwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshriwayatsiswaActionPerformed
@@ -7447,6 +7581,18 @@ System.out.println(e);
         this.editsemester(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void cb_formatsiswaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_formatsiswaItemStateChanged
+        String value = cb_formatsiswa.getSelectedItem().toString();
+        if(value.equals("Aktif")){
+            this.tampilsiswa();
+            btn_hapussiswa.setEnabled(true);
+        }
+        else{
+            this.tampilsiswa();
+            btn_hapussiswa.setEnabled(false);
+        }
+    }//GEN-LAST:event_cb_formatsiswaItemStateChanged
+
     
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -7541,7 +7687,7 @@ System.out.println(e);
     private javax.swing.JButton btn_refreshkelas;
     private javax.swing.JButton btn_refreshriwayatsiswa;
     private javax.swing.JButton btn_registrasi;
-    private javax.swing.JButton btn_riwayatabsen;
+    private javax.swing.JButton btn_riwayatsiswa;
     private javax.swing.JButton btn_scanprofilesiswa;
     private javax.swing.JButton btn_scantambahadmin;
     private javax.swing.JButton btn_scantambahsiswa;
@@ -7571,6 +7717,7 @@ System.out.println(e);
     private javax.swing.JButton btn_tambahwalikelas;
     private javax.swing.JButton btn_updateabsen;
     private javax.swing.JButton btn_updatestatussiswabermasalah;
+    private javax.swing.JComboBox<String> cb_formatsiswa;
     private javax.swing.JComboBox<String> cb_gendersiswa;
     private javax.swing.JComboBox<String> cb_lapabsen;
     private javax.swing.JComboBox<String> cb_namasemester;
@@ -7580,6 +7727,7 @@ System.out.println(e);
     private javax.swing.JComboBox<String> cb_statusdataabsen;
     private javax.swing.JComboBox<String> cb_statusprofileadmin;
     private javax.swing.JComboBox<String> cb_statussemester;
+    private javax.swing.JComboBox<String> cb_statussiswa;
     private javax.swing.JComboBox<String> cb_walasformkelas;
     private javax.swing.JComboBox<String> cb_walasprofilekelas;
     private javax.swing.JLayeredPane dataabsensi;
