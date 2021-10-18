@@ -7,6 +7,21 @@
         <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>
     </Component>
+    <Container class="javax.swing.JPanel" name="jPanel1">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -224,10 +239,15 @@
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder/>
+                      </Border>
+                    </Property>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="20" y="0" width="440" height="420"/>
+                      <AbsoluteConstraints x="10" y="0" width="450" height="420"/>
                     </Constraint>
                   </Constraints>
                   <LayoutCode>
@@ -263,10 +283,15 @@
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder/>
+                      </Border>
+                    </Property>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="20" y="440" width="440" height="420"/>
+                      <AbsoluteConstraints x="20" y="900" width="450" height="420"/>
                     </Constraint>
                   </Constraints>
                   <LayoutCode>
@@ -302,10 +327,15 @@
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder/>
+                      </Border>
+                    </Property>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="480" y="440" width="440" height="420"/>
+                      <AbsoluteConstraints x="480" y="900" width="450" height="420"/>
                     </Constraint>
                   </Constraints>
                   <LayoutCode>
@@ -341,10 +371,15 @@
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder/>
+                      </Border>
+                    </Property>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="480" y="0" width="440" height="420"/>
+                      <AbsoluteConstraints x="480" y="450" width="450" height="420"/>
                     </Constraint>
                   </Constraints>
                   <LayoutCode>
@@ -368,6 +403,94 @@
                             </ExpressionProvider>
                             <Parameters>
                               <CodeExpression id="7_chartabsensisiswa"/>
+                            </Parameters>
+                          </ExpressionOrigin>
+                        </CodeExpression>
+                      </Parameters>
+                    </CodeStatement>
+                  </LayoutCode>
+                </Container>
+                <Container class="javax.swing.JPanel" name="chartabsensimingguan">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder/>
+                      </Border>
+                    </Property>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="480" y="0" width="450" height="420"/>
+                    </Constraint>
+                  </Constraints>
+                  <LayoutCode>
+                    <CodeStatement>
+                      <CodeExpression id="9_chartabsensimingguan">
+                        <CodeVariable name="chartabsensimingguan" type="8194" declaredType="javax.swing.JPanel"/>
+                        <ExpressionOrigin>
+                          <ExpressionProvider type="ComponentRef">
+                            <ComponentRef name="chartabsensimingguan"/>
+                          </ExpressionProvider>
+                        </ExpressionOrigin>
+                      </CodeExpression>
+                      <StatementProvider type="CodeMethod">
+                        <CodeMethod name="setLayout" class="java.awt.Container" parameterTypes="java.awt.LayoutManager"/>
+                      </StatementProvider>
+                      <Parameters>
+                        <CodeExpression id="10">
+                          <ExpressionOrigin>
+                            <ExpressionProvider type="CodeConstructor">
+                              <CodeConstructor class="javax.swing.OverlayLayout" parameterTypes="java.awt.Container"/>
+                            </ExpressionProvider>
+                            <Parameters>
+                              <CodeExpression id="9_chartabsensimingguan"/>
+                            </Parameters>
+                          </ExpressionOrigin>
+                        </CodeExpression>
+                      </Parameters>
+                    </CodeStatement>
+                  </LayoutCode>
+                </Container>
+                <Container class="javax.swing.JPanel" name="chartabsensibulanan">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder/>
+                      </Border>
+                    </Property>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="20" y="450" width="450" height="420"/>
+                    </Constraint>
+                  </Constraints>
+                  <LayoutCode>
+                    <CodeStatement>
+                      <CodeExpression id="11_chartabsensibulanan">
+                        <CodeVariable name="chartabsensibulanan" type="8194" declaredType="javax.swing.JPanel"/>
+                        <ExpressionOrigin>
+                          <ExpressionProvider type="ComponentRef">
+                            <ComponentRef name="chartabsensibulanan"/>
+                          </ExpressionProvider>
+                        </ExpressionOrigin>
+                      </CodeExpression>
+                      <StatementProvider type="CodeMethod">
+                        <CodeMethod name="setLayout" class="java.awt.Container" parameterTypes="java.awt.LayoutManager"/>
+                      </StatementProvider>
+                      <Parameters>
+                        <CodeExpression id="12">
+                          <ExpressionOrigin>
+                            <ExpressionProvider type="CodeConstructor">
+                              <CodeConstructor class="javax.swing.OverlayLayout" parameterTypes="java.awt.Container"/>
+                            </ExpressionProvider>
+                            <Parameters>
+                              <CodeExpression id="11_chartabsensibulanan"/>
                             </Parameters>
                           </ExpressionOrigin>
                         </CodeExpression>
@@ -542,28 +665,6 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="com.toedter.calendar.JCalendar" name="jCalendar1">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                    <LineBorder roundedCorners="true"/>
-                  </Border>
-                </Property>
-                <Property name="autoscrolls" type="boolean" value="true"/>
-                <Property name="doubleBuffered" type="boolean" value="false"/>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Roboto Slab SemiBold" size="8" style="0"/>
-                </Property>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="220" width="370" height="180"/>
-                </Constraint>
-              </Constraints>
-            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="btn_keluar">
@@ -587,11 +688,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
-                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="152" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="jLabel4" alignment="1" pref="290" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -613,6 +710,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="Logout"/>
               </Properties>
             </Component>
@@ -639,11 +737,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
-                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="97" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="jLabel7" alignment="1" pref="290" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -665,6 +759,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="Kelola Absen"/>
               </Properties>
             </Component>

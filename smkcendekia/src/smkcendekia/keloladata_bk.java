@@ -5,7 +5,7 @@
  */
 package smkcendekia;
 
-import com.toedter.calendar.JDateChooser;
+//import com.toedter.calendar.JDateChooser;
 import javax.swing.JLayeredPane;
 import java.awt.Color;
 import java.awt.HeadlessException;
@@ -45,7 +45,7 @@ public class keloladata_bk extends javax.swing.JFrame {
     int leveluser3;
     koneksi k;
     DefaultTableModel model;
-    JDateChooser jd=new JDateChooser();
+    //JDateChooser jd=new JDateChooser();
     
     //KONSTRUKTOR
     public keloladata_bk() {
@@ -7185,7 +7185,6 @@ System.out.println(e);
         this.setVisible(false);
         dashboard ds = new dashboard();
         ds.setVisible(true);
-                        
     }//GEN-LAST:event_btn_dashboardMouseClicked
 
     private void btn_kembaliformkelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliformkelasActionPerformed
