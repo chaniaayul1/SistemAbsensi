@@ -553,7 +553,6 @@ public class keloladata_bk extends javax.swing.JFrame {
         }
         catch (SQLException ex) {            
         }
-        this.updatejkprofilesiswa();
         try {
             // TODO add your handling code here:
             stat = con.createStatement( );
@@ -576,11 +575,6 @@ public class keloladata_bk extends javax.swing.JFrame {
             "Data Profile Siswa Error", JOptionPane.INFORMATION_MESSAGE);
             System.out.println(ex);
         }
-    }
-    
-    public void updatejkprofilesiswa(){
-        String value = cb_gendersiswa.getSelectedItem().toString();
-        gendersiswa=value;
     }
     
     //PROSEDUR MENCARI DATA SISWA PADA TABEL
