@@ -8,9 +8,11 @@ package smkcendekia;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.prefs.Preferences;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +24,10 @@ public class login extends javax.swing.JFrame {
     Statement stat;
     ResultSet rs;
     String sql,user,nip;
+    Preferences preference;
+    boolean rememberPreferences;
+    
+    
     /**
      * Creates new form login
      */
@@ -32,15 +38,33 @@ public class login extends javax.swing.JFrame {
         con = DB.con;
         stat = DB.stm;
     }
-    
+    public void rememberMe(){
+        preference = Preferences.userNodeForPackage(this.getClass());
+        rememberPreferences = preference.getBoolean("rememberMe", Boolean.valueOf(""));
+        if (rememberPreferences){
+            txt_username.setText(preference.get("User",""));
+            txt_password.setText(preference.get("password", ""));
+            remember.setSelected(rememberPreferences);
+        }
+    }
     public void proseslogin(){
       String userlog,level;
+      PreparedStatement ps;
       try {
             sql = "SELECT * FROM admin WHERE BINARY username='"+txt_username.getText()+"' AND BINARY password='"+txt_password.getText()+"'";
             rs = stat.executeQuery(sql);
             String usernm = txt_username.getText();
-            
+            ps = con.prepareStatement("SELECT * FROM admin where username='"+txt_username.getText()+"'and password = '"+txt_password+"'");
             if (rs.next()) {
+                if(remember.isSelected() && !rememberPreferences){
+                    preference.put("username",txt_username.getText());
+                    preference.put("password",txt_password.getText());
+                    preference.putBoolean("rememberMe",true);
+                } else if (!remember.isSelected() && rememberPreferences){
+                    preference.put("Username","");
+                    preference.put("password","");
+                    preference.putBoolean("rememberMe",false);
+                }
                 if (null == rs.getString("level")) {
                     //
                 } else switch (rs.getString("level")) {
@@ -106,6 +130,7 @@ public class login extends javax.swing.JFrame {
         txt_username = new javax.swing.JTextField();
         txt_password = new javax.swing.JPasswordField();
         btn_login = new javax.swing.JButton();
+        remember = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -143,6 +168,11 @@ public class login extends javax.swing.JFrame {
             }
         });
         panel_login.add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 530, 520, 40));
+
+        remember.setBackground(new java.awt.Color(255, 255, 255));
+        remember.setFont(new java.awt.Font("Roboto Slab", 0, 11)); // NOI18N
+        remember.setText("Remind Me Later");
+        panel_login.add(remember, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 490, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/login.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -221,6 +251,7 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JButton btn_login;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel panel_login;
+    private javax.swing.JCheckBox remember;
     private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables

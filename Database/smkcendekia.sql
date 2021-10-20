@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 17, 2021 at 12:31 PM
+-- Generation Time: Oct 19, 2021 at 09:29 AM
 -- Server version: 10.3.29-MariaDB-0+deb10u1
 -- PHP Version: 7.3.29-1~deb10u1
 
@@ -36,25 +36,6 @@ CREATE TABLE `absen` (
   `jam` time NOT NULL,
   `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `absen`
---
-
-INSERT INTO `absen` (`idabsen`, `idrfid`, `nk`, `nis`, `nama`, `tanggal`, `jam`, `status`) VALUES
-(2, '672888867376', '12BDP1', 'NIS103', 'Sutarjo', '2021-10-09', '20:06:44', 'Alpha'),
-(3, '51871758571', '11TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-09', '20:06:56', 'Hadir'),
-(4, '632745563716', '12BDP1', 'NIS101', 'Rafi Aziizi Muchtar', '2021-10-12', '08:53:48', 'Izin'),
-(5, '51871758571', '11TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-12', '08:53:48', 'Alpha'),
-(6, '672888867376', '12BDP1', 'NIS103', 'Sutarjo', '2021-10-12', '08:53:48', 'Sakit'),
-(7, '51871758571', '11TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-14', '06:51:21', 'Hadir'),
-(8, '632745563716', '12BDP1', 'NIS101', 'Rafi Aziizi Muchtar', '2021-10-14', '06:52:01', 'Hadir'),
-(9, '672888867376', '12BDP1', 'NIS103', 'Sutarjo', '2021-10-14', '08:03:14', 'Alpha'),
-(10, '632745563716', '12BDP1', 'NIS101', 'Rafi Aziizi Muchtar', '2021-10-16', '07:30:03', 'Izin'),
-(11, '51871758571', '11TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-16', '07:30:03', 'Sakit'),
-(50, '632745563716', '12BDP1', 'NIS101', 'Rafi Aziizi Muchtar', '2021-10-17', '10:55:14', 'Alpha'),
-(51, '51871758571', '11TITL2', 'NIS102', 'Chania Ayu Lestari', '2021-10-17', '10:55:14', 'Alpha'),
-(52, '672888867376', '12BDP1', 'NIS103', 'Sutarjo', '2021-10-17', '10:55:14', 'Alpha');
 
 --
 -- Triggers `absen`
@@ -275,9 +256,9 @@ CREATE TABLE `kelas` (
 
 INSERT INTO `kelas` (`nk`, `idwalikelas`, `namakelas`, `angkatan`, `jurusan`, `semester`, `tahunajaran`, `jl`, `jp`, `js`) VALUES
 ('11TITL1', 'WLS003', 'TITL1', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
-('11TITL2', 'WLS003', '2', 11, 'TITL', 'Ganjil', '2021/2022', 0, 1, 1),
+('11TITL2', 'WLS003', '2', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
 ('11TITL3', 'WLS001', '3', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
-('12BDP1', 'WLS002', '1', 12, 'BDP', 'Ganjil', '2021/2022', 2, 0, 2);
+('12BDP1', 'WLS002', '1', 12, 'BDP', 'Ganjil', '2021/2022', -1, 1, 0);
 
 --
 -- Triggers `kelas`
@@ -320,9 +301,7 @@ CREATE TABLE `lapabsen` (
 --
 
 INSERT INTO `lapabsen` (`idlapabsen`, `idwalikelas`, `nis`, `nk`, `nama`, `hadir`, `sakit`, `izin`, `alpha`, `terlambat`) VALUES
-('LAP0000002', 'WLS003', 'NIS102', '11TITL2', 'Chania Ayu Lestari', 2, 1, 0, 2, 0),
-('LAP0000003', 'WLS002', 'NIS103', '12BDP1', 'Sutarjo', 0, 1, 0, 3, 0),
-('LAP0000004', 'WLS002', 'NIS101', '12BDP1', 'Rafi Aziizi Muchtar', 1, 0, 2, 1, 0);
+('LAP0000001', 'WLS002', '2021.10.001', '12BDP1', 'Rafi Aziizi Muchtar', 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -333,17 +312,16 @@ INSERT INTO `lapabsen` (`idlapabsen`, `idwalikelas`, `nis`, `nk`, `nama`, `hadir
 CREATE TABLE `rfid` (
   `idrfid` varchar(15) NOT NULL,
   `nis` varchar(15) NOT NULL,
-  `nama` varchar(45) NOT NULL
+  `nama` varchar(45) NOT NULL,
+  `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `rfid`
 --
 
-INSERT INTO `rfid` (`idrfid`, `nis`, `nama`) VALUES
-('51871758571', 'NIS102', 'Chania Ayu Lestari'),
-('632745563716', 'NIS102', 'Rafi Aziizi Muchtar'),
-('672888867376', 'NIS103', 'Sutarjo');
+INSERT INTO `rfid` (`idrfid`, `nis`, `nama`, `status`) VALUES
+('51871758571', '2021.10.001', 'Rafi Aziizi Muchtar', 'Pasif');
 
 -- --------------------------------------------------------
 
@@ -631,17 +609,16 @@ CREATE TABLE `siswa` (
   `email` varchar(45) NOT NULL,
   `notlp` varchar(15) NOT NULL,
   `namaortu` varchar(15) NOT NULL,
-  `noortu` varchar(15) NOT NULL
+  `noortu` varchar(15) NOT NULL,
+  `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `siswa`
 --
 
-INSERT INTO `siswa` (`nis`, `idrfid`, `nk`, `idwalikelas`, `nama`, `alamat`, `jeniskelamin`, `email`, `notlp`, `namaortu`, `noortu`) VALUES
-('NIS101', '632745563716', '12BDP1', 'WLS002', 'Rafi Aziizi Muchtar', 'Cikampek', 'Laki-Laki', 'rafi@gmail.com', '081282407414', 'Koko', '0823323132'),
-('NIS102', '51871758571', '11TITL2', 'WLS003', 'Chania Ayu Lestari', 'Cikalong', 'Perempuan', 'chania@gmail.com', '08424231', 'Cika', '0983231'),
-('NIS103', '672888867376', '12BDP1', 'WLS002', 'Sutarjo', 'Karawang', 'Laki-Laki', 'strj@gmail.com', '08442', 'Sutini', '093323');
+INSERT INTO `siswa` (`nis`, `idrfid`, `nk`, `idwalikelas`, `nama`, `alamat`, `jeniskelamin`, `email`, `notlp`, `namaortu`, `noortu`, `status`) VALUES
+('2021.10.001', '51871758571', '12BDP1', 'WLS002', 'Rafi Aziizi Muchtar', 'Cikampek', 'Perempuan', 'rafiaziizi69@gmail.com', '08128423', 'Kaka', '08232131', 'Pasif');
 
 --
 -- Triggers `siswa`
@@ -659,27 +636,7 @@ END IF
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `deleterfid` AFTER DELETE ON `siswa` FOR EACH ROW DELETE from rfid WHERE idrfid = old.idrfid
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `updatejk` AFTER UPDATE ON `siswa` FOR EACH ROW IF (new.nis!=old.nis AND new.jeniskelamin!=old.jeniskelamin) THEN
-	IF(new.jeniskelamin='Laki-Laki') THEN
-    	UPDATE kelas
-    	SET jl= jl
-    	WHERE kelas.nk=old.nk;
-        UPDATE kelas
-    	SET jl= jl +1,jp=jp-1
-    	WHERE kelas.nk=old.nk;
-	ELSE
-    	UPDATE kelas
-    	SET jp= jp
-    	WHERE kelas.nk=old.nk;
-        UPDATE kelas
-    	SET jp= jp +1,jl=jl-1
-    	WHERE kelas.nk=old.nk;      
-	END IF;
-ELSEIF (new.nis!=old.nis) THEN
+CREATE TRIGGER `updatejknis` AFTER UPDATE ON `siswa` FOR EACH ROW IF (new.nis!=old.nis) THEN
 	IF(old.jeniskelamin='Laki-Laki') THEN
     	UPDATE kelas
     	SET jl= jl
@@ -689,12 +646,16 @@ ELSEIF (new.nis!=old.nis) THEN
     	SET jp= jp
     	WHERE kelas.nk=old.nk;      
 	END IF;
-ELSEIF (new.jeniskelamin!=old.jeniskelamin) THEN
+END IF
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `updatejksiswa` AFTER UPDATE ON `siswa` FOR EACH ROW IF (new.jeniskelamin!=old.jeniskelamin AND old.status='Aktif') THEN
 	IF(new.jeniskelamin='Laki-Laki') THEN
     	UPDATE kelas
     	SET jl= jl +1,jp=jp-1
     	WHERE kelas.nk=old.nk;
-	ELSE
+	ELSEIF(new.jeniskelamin='Perempuan')THEN
     	UPDATE kelas
     	SET jp= jp +1,jl=jl-1
     	WHERE kelas.nk=old.nk;      
@@ -703,14 +664,32 @@ END IF
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `updatejumlahjk` AFTER INSERT ON `siswa` FOR EACH ROW IF(new.jeniskelamin='Laki-Laki') THEN
-    UPDATE kelas
-    SET jl= kelas.jl + 1,js=kelas.js+1
-    WHERE kelas.nk=new.nk;
-ELSE
-    UPDATE kelas
-    SET jp= kelas.jp + 1,js=kelas.js+1
-    WHERE kelas.nk=new.nk;
+CREATE TRIGGER `updatejkstatus` AFTER UPDATE ON `siswa` FOR EACH ROW IF  (new.status='Pasif' AND old.status='Aktif') THEN
+    IF(old.jeniskelamin='Laki-Laki') THEN
+        UPDATE kelas
+        SET jl= jl-1,js=js-1
+        WHERE kelas.nk=old.nk;
+    ELSE
+        UPDATE kelas
+        SET jp= jp-1,js=js-1
+        WHERE kelas.nk=old.nk;      
+    END IF;
+ELSEIF (new.status='Aktif' AND old.status='Pasif') THEN
+     IF(new.jeniskelamin='Laki-Laki') THEN
+        UPDATE kelas
+        SET jl=jl,js=js
+        WHERE kelas.nk=old.nk;
+        UPDATE kelas
+        SET jl= jl+1,js=js+1
+        WHERE kelas.nk=old.nk;
+     ELSE
+        UPDATE kelas
+        SET jp=jp
+        WHERE kelas.nk=old.nk;
+        UPDATE kelas
+        SET jp= jp+1,js=js+1
+        WHERE kelas.nk=old.nk;      
+    END IF;
 END IF
 $$
 DELIMITER ;
@@ -857,7 +836,7 @@ ALTER TABLE `walikelas`
 -- AUTO_INCREMENT for table `absen`
 --
 ALTER TABLE `absen`
-  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 --
 -- AUTO_INCREMENT for table `rfidlog`
 --
