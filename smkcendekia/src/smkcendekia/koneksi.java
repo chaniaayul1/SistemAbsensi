@@ -18,8 +18,8 @@ public class koneksi {
     public void config(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost/smkcendekia","root","");
-            //con=DriverManager.getConnection("jdbc:mysql://192.168.0.104/smkcendekia","cendekia","smkcendekia");
+            //con=DriverManager.getConnection("jdbc:mysql://localhost/smkcendekia","root","");
+            con=DriverManager.getConnection("jdbc:mysql://192.168.1.102/smkcendekia","cendekia","smkcendekia");
             //con=DriverManager.getConnection("jdbc:mysql://192.168.0.100/smkcendekia","cendekia","smkcendekia");
             stm = con.createStatement();
         } catch (ClassNotFoundException | SQLException e) {

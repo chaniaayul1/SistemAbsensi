@@ -232,7 +232,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[930, 4091]"/>
+                  <Dimension value="[930, 5500]"/>
                 </Property>
               </Properties>
 

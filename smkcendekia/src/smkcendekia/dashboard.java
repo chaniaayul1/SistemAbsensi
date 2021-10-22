@@ -912,7 +912,7 @@ public class dashboard extends javax.swing.JFrame {
         Scrollpane.setOpaque(false);
 
         panelgrafik.setBackground(new java.awt.Color(255, 255, 255));
-        panelgrafik.setPreferredSize(new java.awt.Dimension(930, 4091));
+        panelgrafik.setPreferredSize(new java.awt.Dimension(930, 5500));
         panelgrafik.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelchartabsharian.setBackground(new java.awt.Color(255, 255, 255));
@@ -5029,7 +5029,7 @@ public class dashboard extends javax.swing.JFrame {
     public void defaulttanggal(){
         try{
            stat = con.createStatement( );
-           sql  = "Select * from semester order by idsemester desc";
+           sql  = "Select * from semester order by idsemester asc";
            rs   = stat.executeQuery(sql);
            while(rs.next ()){
                Object[ ] obj = new Object[1];
@@ -5154,11 +5154,11 @@ public class dashboard extends javax.swing.JFrame {
                    mgterlambat=mgterlambat+1;
                }
             }      
-            totalhadir = Integer.toString(hrhadir);
-            totalsakit = Integer.toString(hrsakit);
-            totalizin  = Integer.toString(hrizin);
-            totalalpha = Integer.toString(hralpha);
-            totalterlambat = Integer.toString(hrterlambat);
+            totalhadir = Integer.toString(mghadir);
+            totalsakit = Integer.toString(mgsakit);
+            totalizin  = Integer.toString(mgizin);
+            totalalpha = Integer.toString(mgalpha);
+            totalterlambat = Integer.toString(mgterlambat);
             lb_ham.setText(totalhadir);
             lb_sam.setText(totalsakit);
             lb_iam.setText(totalizin);
@@ -5218,11 +5218,11 @@ public class dashboard extends javax.swing.JFrame {
                    blnterlambat=blnterlambat+1;
                }
             }
-            totalhadir = Integer.toString(hrhadir);
-            totalsakit = Integer.toString(hrsakit);
-            totalizin  = Integer.toString(hrizin);
-            totalalpha = Integer.toString(hralpha);
-            totalterlambat = Integer.toString(hrterlambat);
+            totalhadir = Integer.toString(blnhadir);
+            totalsakit = Integer.toString(blnsakit);
+            totalizin  = Integer.toString(blnizin);
+            totalalpha = Integer.toString(blnalpha);
+            totalterlambat = Integer.toString(blnterlambat);
             lb_hab.setText(totalhadir);
             lb_sab.setText(totalsakit);
             lb_iab.setText(totalizin);
@@ -5294,8 +5294,7 @@ public class dashboard extends javax.swing.JFrame {
             lb_tas.setText(totalterlambat);
         } catch (SQLException e) {
             System.out.println(e);
-        }
-                             
+        }                     
     }
         
     public void chartsemuasiswa(){
@@ -5462,7 +5461,7 @@ public class dashboard extends javax.swing.JFrame {
         ctdata.setValue(hrizinotkp, "Izin", "OTKP");
         ctdata.setValue(hralphaotkp, "Alpha", "OTKP");
         ctdata.setValue(hrterlambatotkp, "Terlambat", "OTKP");
-        JFreeChart chart=ChartFactory.createBarChart("Presensi Siswa per Hari ini", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, true);
+        JFreeChart chart=ChartFactory.createBarChart("Presensi Siswa Setiap Jurusan per Hari ini", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, true);
         chart.getPlot().setBackgroundPaint( Color.white);
         ChartPanel barChartPanel=new ChartPanel(chart);
         CategoryPlot plot = chart.getCategoryPlot();
@@ -5616,7 +5615,7 @@ public class dashboard extends javax.swing.JFrame {
         ctdata.setValue(mgizinotkp, "Izin", "OTKP");
         ctdata.setValue(mgalphaotkp, "Alpha", "OTKP");
         ctdata.setValue(mgterlambatotkp, "Terlambat", "OTKP");
-        JFreeChart chart=ChartFactory.createBarChart("Presensi Siswa Mingguan per Jurusan", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart chart=ChartFactory.createBarChart("Presensi Siswa Setiap Jurusan per Minggu ini", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, false);
         chart.getPlot().setBackgroundPaint( Color.white);
         ChartPanel barChartPanel=new ChartPanel(chart);
         CategoryPlot plot = chart.getCategoryPlot();
@@ -5928,7 +5927,7 @@ public class dashboard extends javax.swing.JFrame {
         ctdata.setValue(izinotkp, "Izin", "OTKP");
         ctdata.setValue(alphaotkp, "Alpha", "OTKP");
         ctdata.setValue(terlambatotkp, "Terlambat", "OTKP");
-        JFreeChart chart=ChartFactory.createBarChart("Presensi Siswa per Jurusan", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, true);
+        JFreeChart chart=ChartFactory.createBarChart("Presensi Siswa Setiap Jurusan per Semester", "Status", "Jumlah",ctdata, PlotOrientation.VERTICAL, true, true, true);
         chart.getPlot().setBackgroundPaint( Color.white);
         CategoryPlot plot = chart.getCategoryPlot();
         plot.getRenderer().setSeriesPaint(0, Color.green);
