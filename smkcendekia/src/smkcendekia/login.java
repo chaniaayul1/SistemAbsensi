@@ -65,6 +65,7 @@ public class login extends javax.swing.JFrame {
                     preference.put("password","");
                     preference.putBoolean("rememberMe",false);
                 }
+                
                 if (null == rs.getString("level")) {
                     //
                 } else switch (rs.getString("level")) {
@@ -131,6 +132,7 @@ public class login extends javax.swing.JFrame {
         txt_password = new javax.swing.JPasswordField();
         btn_login = new javax.swing.JButton();
         remember = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -170,9 +172,18 @@ public class login extends javax.swing.JFrame {
         panel_login.add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 530, 520, 40));
 
         remember.setBackground(new java.awt.Color(255, 255, 255));
-        remember.setFont(new java.awt.Font("Roboto Slab", 0, 11)); // NOI18N
+        remember.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
         remember.setText("Remind Me Later");
         panel_login.add(remember, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 490, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
+        jLabel2.setText("Belum Punya Akun?");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        panel_login.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 580, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/login.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -212,6 +223,11 @@ public class login extends javax.swing.JFrame {
         this.proseslogin();
     }//GEN-LAST:event_btn_loginMousePressed
 
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null,"Hubungi Guru BK untu Menjadi Admin");
+    }//GEN-LAST:event_jLabel2MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -250,6 +266,7 @@ public class login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_login;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel panel_login;
     private javax.swing.JCheckBox remember;
     private javax.swing.JPasswordField txt_password;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 19, 2021 at 09:29 AM
+-- Generation Time: Oct 22, 2021 at 04:55 PM
 -- Server version: 10.3.29-MariaDB-0+deb10u1
 -- PHP Version: 7.3.29-1~deb10u1
 
@@ -36,6 +36,16 @@ CREATE TABLE `absen` (
   `jam` time NOT NULL,
   `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `absen`
+--
+
+INSERT INTO `absen` (`idabsen`, `idrfid`, `nk`, `nis`, `nama`, `tanggal`, `jam`, `status`) VALUES
+(66, '632745563716', '12BDP1', '2021.10.002', 'Chania', '2021-10-19', '11:53:32', 'Alpha'),
+(67, '632745563716', '12BDP1', '2021.10.002', 'Chania', '2021-10-20', '08:09:59', 'Alpha'),
+(68, '632745563716', '12BDP1', '2021.10.002', 'Chania', '2021-10-21', '08:01:09', 'Alpha'),
+(69, '632745563716', '12BDP1', '2021.10.002', 'Chania', '2021-10-22', '05:30:00', 'Hadir');
 
 --
 -- Triggers `absen`
@@ -157,17 +167,18 @@ CREATE TABLE `admin` (
   `nama` varchar(45) NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
-  `level` int(2) NOT NULL
+  `level` int(2) NOT NULL,
+  `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`idadmin`, `nip`, `nama`, `username`, `password`, `level`) VALUES
-('ADM001', '3411181123', 'Rafi Aziizi M', 'rafi', '1', 0),
-('ADM002', '3411181122', 'Chania Ayu', 'chania', 'chan', 0),
-('ADM003', '3411181121', 'Rizko Ayundra', 'rizko', 'r', 1);
+INSERT INTO `admin` (`idadmin`, `nip`, `nama`, `username`, `password`, `level`, `status`) VALUES
+('ADM001', '3411181123', 'Rafi Aziizi M', 'rafi', '1', 0, 'Aktif'),
+('ADM002', '3411181122', 'Chania Ayu', 'chania', 'chan', 0, 'Aktif'),
+('ADM003', '3411181121', 'Rizko Ayundra', 'rizko', 'r', 1, 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -182,17 +193,19 @@ CREATE TABLE `guru` (
   `email` varchar(45) NOT NULL,
   `jeniskelamin` varchar(15) NOT NULL,
   `notlp` varchar(15) NOT NULL,
-  `alamat` varchar(45) NOT NULL
+  `alamat` varchar(45) NOT NULL,
+  `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `guru`
 --
 
-INSERT INTO `guru` (`nip`, `jabatan`, `nama`, `email`, `jeniskelamin`, `notlp`, `alamat`) VALUES
-('3411181121', 'Bagian IT', 'Rizko Ayundra', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang'),
-('3411181122', 'Bagian IT', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '08112', 'Cikalong'),
-('3411181123', 'Guru BK', 'Rafi Aziizi M', 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi');
+INSERT INTO `guru` (`nip`, `jabatan`, `nama`, `email`, `jeniskelamin`, `notlp`, `alamat`, `status`) VALUES
+('3411181111', 'Bagian TI', 'Dandi Rusdani', 'dandi@gmail.com', 'Laki-Laki', '08128240844', 'Cimahi', 'Aktif'),
+('3411181121', 'Bagian IT', 'Rizko Ayundra', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang', 'Aktif'),
+('3411181122', 'Bagian IT', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '08112', 'Cikalong', 'Aktif'),
+('3411181123', 'Guru BK', 'Rafi Aziizi M', 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi', 'Aktif');
 
 --
 -- Triggers `guru`
@@ -258,7 +271,7 @@ INSERT INTO `kelas` (`nk`, `idwalikelas`, `namakelas`, `angkatan`, `jurusan`, `s
 ('11TITL1', 'WLS003', 'TITL1', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
 ('11TITL2', 'WLS003', '2', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
 ('11TITL3', 'WLS001', '3', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
-('12BDP1', 'WLS002', '1', 12, 'BDP', 'Ganjil', '2021/2022', -1, 1, 0);
+('12BDP1', 'WLS003', '1', 12, 'BDP', 'Ganjil', '2021/2022', -1, 1, 0);
 
 --
 -- Triggers `kelas`
@@ -293,15 +306,17 @@ CREATE TABLE `lapabsen` (
   `sakit` int(3) NOT NULL,
   `izin` int(3) NOT NULL,
   `alpha` int(3) NOT NULL,
-  `terlambat` int(3) NOT NULL
+  `terlambat` int(3) NOT NULL,
+  `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `lapabsen`
 --
 
-INSERT INTO `lapabsen` (`idlapabsen`, `idwalikelas`, `nis`, `nk`, `nama`, `hadir`, `sakit`, `izin`, `alpha`, `terlambat`) VALUES
-('LAP0000001', 'WLS002', '2021.10.001', '12BDP1', 'Rafi Aziizi Muchtar', 0, 0, 0, 0, 0);
+INSERT INTO `lapabsen` (`idlapabsen`, `idwalikelas`, `nis`, `nk`, `nama`, `hadir`, `sakit`, `izin`, `alpha`, `terlambat`, `status`) VALUES
+('LAP0000001', 'WLS003', '2021.10.001', '12BDP1', 'Rafi Aziizi Muchtar', 0, 0, 0, 0, 0, 'Pasif'),
+('LAP0000002', 'WLS003', '2021.10.002', '12BDP1', 'Chania', 1, 0, 0, 3, 0, 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -321,7 +336,8 @@ CREATE TABLE `rfid` (
 --
 
 INSERT INTO `rfid` (`idrfid`, `nis`, `nama`, `status`) VALUES
-('51871758571', '2021.10.001', 'Rafi Aziizi Muchtar', 'Pasif');
+('51871758571', '2021.10.001', 'Rafi Aziizi Muchtar', 'Pasif'),
+('632745563716', '2021.10.002', 'Chania', 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -567,7 +583,10 @@ INSERT INTO `rfidlog` (`no`, `idrfid`) VALUES
 (247, '51871758571'),
 (248, '51871758571'),
 (249, '51871758571'),
-(250, '51871758571');
+(250, '51871758571'),
+(251, '632745563716'),
+(252, '632745563716'),
+(253, '632745563716');
 
 -- --------------------------------------------------------
 
@@ -590,7 +609,7 @@ CREATE TABLE `semester` (
 
 INSERT INTO `semester` (`idsemester`, `nama`, `status`, `tahunajaran`, `tanggalpertama`, `tanggalterakhir`) VALUES
 ('SMT002', 'Semester 1', 'Ganjil', '2021/2022', '2021-08-30', '2022-04-19'),
-('SMT003', 'Semester 2', 'Genap', '2021/2022', '2021-05-19', '2022-10-19');
+('SMT003', 'Semester 2', 'Genap', '2021/2022', '2021-05-19', '2022-01-19');
 
 -- --------------------------------------------------------
 
@@ -618,7 +637,8 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`nis`, `idrfid`, `nk`, `idwalikelas`, `nama`, `alamat`, `jeniskelamin`, `email`, `notlp`, `namaortu`, `noortu`, `status`) VALUES
-('2021.10.001', '51871758571', '12BDP1', 'WLS002', 'Rafi Aziizi Muchtar', 'Cikampek', 'Perempuan', 'rafiaziizi69@gmail.com', '08128423', 'Kaka', '08232131', 'Pasif');
+('2021.10.001', '51871758571', '12BDP1', 'WLS003', 'Rafi Aziizi Muchtar', 'Cikampek', 'Perempuan', 'rafiaziizi69@gmail.com', '08128423', 'Kaka', '08232131', 'Pasif'),
+('2021.10.002', '632745563716', '12BDP1', 'WLS003', 'Chania', 'Cikampek', 'Perempuan', 'chania@gmail.com', '08231', 'Kaka', '02831231', 'Aktif');
 
 --
 -- Triggers `siswa`
@@ -739,17 +759,19 @@ CREATE TABLE `walikelas` (
   `email` varchar(45) NOT NULL,
   `jeniskelamin` varchar(15) NOT NULL,
   `notlp` varchar(15) NOT NULL,
-  `alamat` varchar(45) NOT NULL
+  `alamat` varchar(45) NOT NULL,
+  `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `walikelas`
 --
 
-INSERT INTO `walikelas` (`idwalikelas`, `nip`, `nama`, `email`, `jeniskelamin`, `notlp`, `alamat`) VALUES
-('WLS001', '3411181123', 'Rafi Aziizi M', 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi'),
-('WLS002', '3411181122', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '08112', 'Cikalong'),
-('WLS003', '3411181121', 'Rizko Ayundra', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang');
+INSERT INTO `walikelas` (`idwalikelas`, `nip`, `nama`, `email`, `jeniskelamin`, `notlp`, `alamat`, `status`) VALUES
+('WLS001', '3411181123', 'Rafi Aziizi M', 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi', 'Aktif'),
+('WLS002', '3411181122', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '08112', 'Cikalong', 'Aktif'),
+('WLS003', '3411181121', 'Rizko Ayundra', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang', 'Aktif'),
+('WLS004', '3411181111', 'Dandi Rusdani', 'dandi@gmail.com', 'Laki-Laki', '08128240844', 'Cimahi', 'Pasif');
 
 --
 -- Indexes for dumped tables
@@ -836,12 +858,12 @@ ALTER TABLE `walikelas`
 -- AUTO_INCREMENT for table `absen`
 --
 ALTER TABLE `absen`
-  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 --
 -- AUTO_INCREMENT for table `rfidlog`
 --
 ALTER TABLE `rfidlog`
-  MODIFY `no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=251;
+  MODIFY `no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
 --
 -- Constraints for dumped tables
 --
