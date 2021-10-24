@@ -277,16 +277,15 @@ public class keloladata_bk extends javax.swing.JFrame {
     }
     
     public void walastambahsiswa(){
-        try{ System.out.println("ChaniaAyurafiiiiiiiiiiiiii");
+        try{
            Object[ ] obj = new Object[1];
            stat = con.createStatement( );
-           sql  = "Select idwalikelas from kelas where nk='"+txt_nkformsiswa.getText()+"' AND status ='Aktif' ";
+           sql  = "Select idwalikelas from kelas where nk='"+txt_nkformsiswa.getText()+"'";
            rs   = stat.executeQuery(sql);
            while(rs.next ()){ 
                 obj[0] = rs.getString("idwalikelas");
                 wlssiswa=(String) obj[0];
             }
-           
            if (obj[0]==null){
                JOptionPane.showMessageDialog(this, "Data Kelas Tidak Ditemukan","Pesan",JOptionPane.ERROR_MESSAGE);
            }
@@ -374,7 +373,8 @@ public class keloladata_bk extends javax.swing.JFrame {
     public void tampilprofilesiswa(){
         try {
             stat = con.createStatement( );
-            sql  = "SELECT s.*,w.nama from siswa as s inner join walikelas as w ON s.idwalikelas=w.idwalikelas where s.nis='"+Session.getnissiswa()+"'";
+            //sql  = "SELECT s.*,w.nama from siswa as s inner join walikelas as w ON s.idwalikelas=w.idwalikelas where s.nis='"+Session.getnissiswa()+"'";
+            sql="SELECT * from siswa WHERE nis='"+Session.getnissiswa()+"'";
             rs   = stat.executeQuery(sql);
             while(rs.next ()){
                 Object[ ] obj = new Object[12];
@@ -400,7 +400,7 @@ public class keloladata_bk extends javax.swing.JFrame {
                 txt_notelpsiswa.setText((String) obj[6]);
                 obj[7] =rs.getString("email");
                 txt_emailsiswa.setText((String) obj[7]);
-                obj[8] =rs.getString("w.nama");
+                obj[8] =rs.getString("idwalikelas");
                 txt_walassiswa.setText((String) obj[8]);
                 obj[9] =rs.getString("namaortu");
                 txt_ortusiswa.setText((String) obj[9]);
@@ -420,8 +420,28 @@ public class keloladata_bk extends javax.swing.JFrame {
             "Lihat Profile Siswa Gagal", JOptionPane.INFORMATION_MESSAGE);
             System.out.println(ex);
         }
+        if (txt_walassiswa.getText().equals("")){
+            txt_walassiswa.setText("Tidak Ada");
+        }
+        else{
+            try {
+                stat = con.createStatement( );
+                sql="SELECT nama from walikelas WHERE idwalikelas='"+txt_walassiswa.getText()+"'";
+                rs   = stat.executeQuery(sql);
+                while(rs.next ()){
+                    Object[ ] obj = new Object[1];
+                    obj[0] =rs.getString("nama");
+                    txt_walassiswa.setText((String) obj[0]);
+                }
+            } catch (SQLException ex) {
+    //            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+    //            "Lihat Profile Wali Kelas Gagal", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println(ex);
+            }
+        }
     }
     
+    //CHART RIWAYAT ABSENSI SEMESTER INI
     public void tampilriwayatabsensiswa(){
         model = new DefaultTableModel ( );
         tabel_riwayatsiswa.setModel(model);
@@ -465,7 +485,6 @@ public class keloladata_bk extends javax.swing.JFrame {
       } 
     }
     
-    //CHART RIWAYAT SISWA
     public void chartriwayatsiswa(){
         int hadir = 0,sakit = 0,izin = 0,alpha = 0,terlambat = 0;
         this.querysemesterterkini();
@@ -518,6 +537,89 @@ public class keloladata_bk extends javax.swing.JFrame {
         panel_chartrs.removeAll();
         panel_chartrs.add(barChartPanel);
         panel_chartrs.validate();
+    }
+    
+//CHART RIWAYAT ABSENSI SELAMA SEKOLAH
+    public void tampilriwayatabsensiswa2(){
+        model = new DefaultTableModel ( );
+        tabel_riwayatsiswa2.setModel(model);
+        model.addColumn("No");
+        model.addColumn("NK");
+        model.addColumn("Tanggal");
+        model.addColumn("Jam");
+        model.addColumn("Status");  
+        try{
+           stat = con.createStatement( );
+           sql  = "Select * from historyabsen where nis='"+Session.getnissiswa()+"'";
+           rs   = stat.executeQuery(sql);
+           int no = 1;
+           while(rs.next ()){
+                
+                Object[ ] obj = new Object[5];
+                obj[0] = Integer.toString(no);
+                obj[1] = rs.getString("nk");
+                obj[2] = rs.getString("tanggal");
+                obj[3] = rs.getString("jam");
+                obj[4] = rs.getString("status");
+                model.addRow(obj);
+                no++;
+            }
+            this.chartriwayatsiswa2();                    
+        } catch (SQLException e) {
+            System.out.println(e);
+      } 
+    }
+    
+    public void chartriwayatsiswa2(){
+        int hadir = 0,sakit = 0,izin = 0,alpha = 0,terlambat = 0;
+        try{
+           stat = con.createStatement( );
+           sql  = "Select status from historyabsen WHERE nis='"+lb_nisriwayatsiswa.getText()+"'";
+           rs   = stat.executeQuery(sql);
+           while(rs.next ()){
+               Object[] obj=new Object[1];
+               obj[0]=rs.getString("status");
+               if(obj[0].equals("Hadir")){
+                   hadir=hadir+1;
+               }
+               else if(obj[0].equals("Sakit")){
+                   sakit=sakit+1;
+               }
+               else if(obj[0].equals("Izin")){
+                   izin=izin+1;
+               }
+               else if(obj[0].equals("Alpha")){
+                   alpha=alpha+1;
+               }
+               else if(obj[0].equals("Terlambat")){
+                   terlambat=terlambat+1;
+               }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        DefaultPieDataset piedata=new DefaultPieDataset();
+        piedata.setValue("Hadir", hadir);
+        piedata.setValue("Sakit", sakit);
+        piedata.setValue("Izin", izin);
+        piedata.setValue("Alpha",alpha);
+        piedata.setValue("Terlambat", terlambat);
+        JFreeChart chart=ChartFactory.createPieChart(" ", piedata,true,false,false);
+        final PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
+        final PiePlot plot1 = (PiePlot) chart.getPlot();
+        plot1.setLabelGenerator(labelGenerator);
+        PiePlot piePlot=(PiePlot) chart.getPlot();
+        chart.getPlot().setBackgroundPaint( Color.white);
+        chart.getPlot().setOutlinePaint(null);
+        piePlot.setSectionPaint("Hadir",Color.green);
+        piePlot.setSectionPaint("Sakit",Color.yellow);
+        piePlot.setSectionPaint("Izin",Color.blue);
+        piePlot.setSectionPaint("Alpha",Color.red);
+        piePlot.setSectionPaint("Terlambat",Color.orange);
+        ChartPanel barChartPanel=new ChartPanel(chart);
+        panel_chartrs2.removeAll();
+        panel_chartrs2.add(barChartPanel);
+        panel_chartrs2.validate();
     }
     
     //PROSEDUR EDIT DAN SIMPAN PROFILE SISWA
@@ -655,30 +757,60 @@ public class keloladata_bk extends javax.swing.JFrame {
     }
     
     public void searchriwayatsiswa(){
-        int row = tabel_riwayatsiswa.getRowCount();
-        for(int a=0;a<row;a++){
-            model.removeRow(0);
-        }
-        
-        try{
-           stat = con.createStatement( );
-           sql  = "SELECT * FROM absen WHERE (tanggal BETWEEN '"+txt_tanggalriwayatsiswa.getText()+"' AND '"+txt_tanggal2riwayatsiswa.getText()+"') AND nis='"+Session.getnissiswa()+"'";
-                   
-           rs   = stat.executeQuery(sql);
-
-           int no=1;
-           while(rs.next ()){
-                Object[ ] obj = new Object[4];
-                obj[0] = Integer.toString(no);
-                obj[1] = rs.getString("tanggal");
-                obj[2] = rs.getString("jam");
-                obj[3] = rs.getString("status");
-                model.addRow(obj);
-                no++;
+        String value = cb_formatriwayatsiswa.getSelectedItem().toString();
+        if (value.equals("Semester ini")){
+            int row = tabel_riwayatsiswa.getRowCount();
+            for(int a=0;a<row;a++){
+                model.removeRow(0);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
+
+            try{
+               stat = con.createStatement( );
+               sql  = "SELECT * FROM absen WHERE (tanggal BETWEEN '"+txt_tanggalriwayatsiswa.getText()+"' AND '"+txt_tanggal2riwayatsiswa.getText()+"') AND nis='"+Session.getnissiswa()+"'";
+
+               rs   = stat.executeQuery(sql);
+
+               int no=1;
+               while(rs.next ()){
+                    Object[ ] obj = new Object[4];
+                    obj[0] = Integer.toString(no);
+                    obj[1] = rs.getString("tanggal");
+                    obj[2] = rs.getString("jam");
+                    obj[3] = rs.getString("status");
+                    model.addRow(obj);
+                    no++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        else{
+            int row = tabel_riwayatsiswa2.getRowCount();
+            for(int a=0;a<row;a++){
+                model.removeRow(0);
+            }
+
+            try{
+               stat = con.createStatement( );
+               sql  = "SELECT * FROM historyabsen WHERE (tanggal BETWEEN '"+txt_tanggalriwayatsiswa.getText()+"' AND '"+txt_tanggal2riwayatsiswa.getText()+"') AND nis='"+Session.getnissiswa()+"'";
+
+               rs   = stat.executeQuery(sql);
+
+               int no=1;
+               while(rs.next ()){
+                    Object[ ] obj = new Object[5];
+                    obj[0] = Integer.toString(no);
+                    obj[1]=  rs.getString("nk");
+                    obj[2] = rs.getString("tanggal");
+                    obj[3] = rs.getString("jam");
+                    obj[4] = rs.getString("status");
+                    model.addRow(obj);
+                    no++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }     
     }
     
     public void Autonumberlapabsen(){
@@ -1183,6 +1315,27 @@ public class keloladata_bk extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
             "Delete Data Wali Kelas Gagal", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(ex);
+        }
+        try {
+            stat = con.createStatement( );
+            con.createStatement().executeUpdate("UPDATE kelas SET idwalikelas=NULL WHERE idwalikelas='"+txt_searchwalikelas.getText()+"'");
+            rs   = stat.executeQuery(sql);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
+            "Delete Data Wali Kelas Gagal", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(ex);
+        }
+        try {
+            stat = con.createStatement( );
+            con.createStatement().executeUpdate("UPDATE lapabsen SET idwalikelas=NULL WHERE idwalikelas='"+txt_searchwalikelas.getText()+"'");
+            rs   = stat.executeQuery(sql);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
+            "Delete Data Wali Kelas Gagal", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(ex);
         }
     }
     
@@ -1356,18 +1509,6 @@ public class keloladata_bk extends javax.swing.JFrame {
            //sql  = "Select * from siswa where idwalikelas='"+txt_idprofilewalikelas.getText()+"' and jeniskelamin='Laki-Laki' or jeniskelamin='Perempuan'";
            sql  = "Select * from lapabsen where idwalikelas='"+lb_idanggotawalikelas.getText()+"'";
            rs   = stat.executeQuery(sql);
-           /*while(rs.next ()){
-               if(rs.getString("jeniskelamin").equals("Laki-Laki")){
-                   laki=laki+1;
-               }
-               else if(rs.getString("jeniskelamin").equals("Perempuan")){
-                   perempuan=perempuan+1;
-               }
-               else{
-                   laki=0;
-                   perempuan=0;
-               }   
-            }*/
            while(rs.next ()){
                 hadir = rs.getInt("hadir")+hadir;
                 sakit = rs.getInt("sakit")+sakit;
@@ -1508,21 +1649,41 @@ public class keloladata_bk extends javax.swing.JFrame {
     }
     
     public void simpanprofilewalas2(){
-        try {
-            // TODO add your handling code here:
-            stat = con.createStatement( );
-            con.createStatement().executeUpdate("UPDATE guru set nama='"+txt_namaprofilewalikelas.getText()+"', "
-                                                                        + "email='"+txt_emailprofilewalikelas.getText()+"', "
-                                                                        + "jeniskelamin='"+txt_jkprofilewalikelas.getText()+"', "
-                                                                        + "notlp='"+txt_notelpprofilewalikelas.getText()+"', "
-                                                                        + "alamat='"+txt_alamatprofilewalikelas.getText()+"'"
-                                                                        + "WHERE nip='"+txt_nipprofilewalikelas.getText()+"'");
-            rs   = stat.executeQuery(sql);
+        String value=cb_statusprofilewalas.getSelectedItem().toString();
+        if (value.equals("Aktif")){
+            try {
+                stat = con.createStatement( );
+                con.createStatement().executeUpdate("UPDATE guru set nama='"+txt_namaprofilewalikelas.getText()+"', "
+                                                                            + "email='"+txt_emailprofilewalikelas.getText()+"', "
+                                                                            + "jeniskelamin='"+txt_jkprofilewalikelas.getText()+"', "
+                                                                            + "notlp='"+txt_notelpprofilewalikelas.getText()+"', "
+                                                                            + "alamat='"+txt_alamatprofilewalikelas.getText()+"',"
+                                                                            + "status='"+cb_statusprofilewalas.getSelectedItem().toString()+"'"
+                                                                            + "WHERE nip='"+txt_nipprofilewalikelas.getText()+"'");
+                rs   = stat.executeQuery(sql);
 
-        }catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ("Data Guru Gagal di Update"), 
-            "Data Profile Guru", JOptionPane.ERROR_MESSAGE);
-            System.out.println(ex);
+            }catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ("Data Guru Gagal di Update"), 
+                "Data Profile Guru", JOptionPane.ERROR_MESSAGE);
+                System.out.println(ex);
+            }
+        }
+        else{
+            try {
+                stat = con.createStatement( );
+                con.createStatement().executeUpdate("UPDATE guru set nama='"+txt_namaprofilewalikelas.getText()+"', "
+                                                                            + "email='"+txt_emailprofilewalikelas.getText()+"', "
+                                                                            + "jeniskelamin='"+txt_jkprofilewalikelas.getText()+"', "
+                                                                            + "notlp='"+txt_notelpprofilewalikelas.getText()+"', "
+                                                                            + "alamat='"+txt_alamatprofilewalikelas.getText()+"'"
+                                                                            + "WHERE nip='"+txt_nipprofilewalikelas.getText()+"'");
+                rs   = stat.executeQuery(sql);
+
+            }catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ("Data Guru Gagal di Update"), 
+                "Data Profile Guru", JOptionPane.ERROR_MESSAGE);
+                System.out.println(ex);
+            }
         }
     }
     
@@ -1643,14 +1804,15 @@ public class keloladata_bk extends javax.swing.JFrame {
                   + "SUM(CASE WHEN siswa.jeniskelamin='Perempuan' THEN 1 ELSE 0 END) AS Wanita, "
                   + "COUNT(CASE WHEN siswa.jeniskelamin THEN 1 ELSE 0 END) AS JumlahSiswa "
                   + "FROM siswa join kelas,walikelas WHERE siswa.nk=kelas.nk GROUP BY siswa.jeniskelamin"; */
-          sql="SELECT k.*, w.nama FROM kelas AS k INNER JOIN walikelas AS w ON k.idwalikelas = w.idwalikelas";
+          //sql="SELECT k.*, w.nama FROM kelas AS k INNER JOIN walikelas AS w ON k.idwalikelas = w.idwalikelas";
+          sql="SELECT * from kelas";
           rs   = stat.executeQuery(sql);
            int no =1;
           while(rs.next ()){
                 Object[ ] obj = new Object[6];
                 obj[0] = Integer.toString(no);
                 obj[1] = rs.getString("nk");
-                obj[2] = rs.getString("nama");
+                obj[2] = rs.getString("idwalikelas");
                 obj[3] = rs.getString("jl");
                 obj[4] = rs.getString("jp");
                 obj[5] = rs.getString("js");
@@ -1738,7 +1900,8 @@ System.out.println(e);
     public void tampilprofilekelas(){
         try {
             stat = con.createStatement( );
-            sql  = "SELECT kelas.*, walikelas.nama from kelas INNER join walikelas WHERE kelas.nk='"+Session.getnkkelas()+"' AND kelas.idwalikelas = walikelas.idwalikelas";
+            //sql  = "SELECT kelas.*, walikelas.nama from kelas INNER join walikelas WHERE kelas.nk='"+Session.getnkkelas()+"' AND kelas.idwalikelas = walikelas.idwalikelas";
+            sql="SELECT kelas.* from kelas WHERE kelas.nk='"+Session.getnkkelas()+"'";
             saveadmkelas.setText(sql);
             rs   = stat.executeQuery(sql);
             while(rs.next ()){
@@ -1751,7 +1914,7 @@ System.out.println(e);
                 txt_jurusanprofilekelas.setText((String) obj[2]);
                 obj[3] =rs.getString("namakelas");
                 txt_namaprofilekelas.setText((String) obj[3]);
-                obj[4] =rs.getString("nama");
+                obj[4] =rs.getString("idwalikelas");
                 txt_walasprofilekelas.setText((String) obj[4]);
                 obj[5] =rs.getString("js");
                 txt_jmlprofilekelas.setText((String) obj[5]);
@@ -1764,7 +1927,21 @@ System.out.println(e);
 //            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
 //            "Lihat Profile Wali Kelas Gagal", JOptionPane.INFORMATION_MESSAGE);
             System.out.println(ex);
-        } 
+        }
+        try {
+            stat = con.createStatement( );
+            sql="SELECT nama from walikelas WHERE idwalikelas='"+txt_walasprofilekelas.getText()+"'";
+            rs   = stat.executeQuery(sql);
+            while(rs.next ()){
+                Object[ ] obj = new Object[1];
+                obj[0] =rs.getString("nama");
+                txt_walasprofilekelas.setText((String) obj[0]);
+            }
+        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+//            "Lihat Profile Wali Kelas Gagal", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(ex);
+        }
     }
     
     //PROSEDUR EDIT DAN SIMPAN PROFILE KELAS
@@ -1808,10 +1985,10 @@ System.out.println(e);
     }
     
     public void simpanprofilekelas(){
-         try {
-            // TODO add your handling code here:
+        this.convernamawalaskelas();
+        try {
             stat = con.createStatement( );
-            this.convernamawalaskelas();
+            
             con.createStatement().executeUpdate("UPDATE kelas set   nk='"+txt_nkprofilekelas.getText()+"', "
                                                                         + "idwalikelas='"+wlsprofkelas+"', "
                                                                         + "angkatan='"+txt_angkatanprofilekelas.getText()+"', "
@@ -1820,13 +1997,35 @@ System.out.println(e);
                                                                         + "semester='"+cb_smtprofilekelas.getSelectedItem().toString()+"', "
                                                                         + "tahunajaran='"+txt_taprofilekelas.getText()+"' "
                                                                         + "WHERE nk='"+Session.getnkkelas()+"'");
-            rs   = stat.executeQuery(sql);
-            
-            this.tampilprofilekelas();
-            
+            rs   = stat.executeQuery(sql);            
             JOptionPane.showMessageDialog(null, ("Data Kelas Berhasil di Update"), 
             "Data Profile Kelas", JOptionPane.INFORMATION_MESSAGE);
         }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data Kelas Gagal di Update"), 
+            "Data Profile Kelas Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex);
+        }
+         try {
+            stat = con.createStatement( );
+            con.createStatement().executeUpdate("UPDATE siswa set   nk='"+txt_nkprofilekelas.getText()+"', "
+                                                                    + "idwalikelas='"+wlsprofkelas+"'"
+                                                                    + "WHERE nk='"+txt_nkprofilekelas.getText()+"'");
+            rs   = stat.executeQuery(sql);
+            this.convernamawalaskelas();
+            txt_walasprofilekelas.setText(cb_walasprofilekelas.getSelectedItem().toString());
+            this.tampilprofilekelas();
+         }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data Kelas Gagal di Update"), 
+            "Data Profile Kelas Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex);
+        }
+         try {
+            stat = con.createStatement( );
+            con.createStatement().executeUpdate("UPDATE lapabsen set   nk='"+txt_nkprofilekelas.getText()+"', "
+                                                                    + "idwalikelas='"+wlsprofkelas+"'"
+                                                                    + "WHERE nk='"+txt_nkprofilekelas.getText()+"'");
+            rs   = stat.executeQuery(sql);
+         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data Kelas Gagal di Update"), 
             "Data Profile Kelas Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(ex);
@@ -1904,13 +2103,18 @@ System.out.println(e);
         panel_chartak.validate();
     }
     
-    public void convernamawalaskelas() throws SQLException{
-        String value = cb_walasprofilekelas.getSelectedItem().toString();
+    public void convernamawalaskelas(){
+        
+        try {
+            String value = cb_walasprofilekelas.getSelectedItem().toString();
             sql  = "Select idwalikelas from walikelas WHERE nama='"+value+"'";
             rs   = stat.executeQuery(sql);
              while(rs.next ()){
                 wlsprofkelas=(rs.getString("idwalikelas"));
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
+        }       
     }
     
     public void getwalasprofilekelas(){
@@ -2074,6 +2278,7 @@ System.out.println(e);
                     tabel_admin.getColumnModel().getColumn(5).setMaxWidth(100);
                 }
     }
+    
     public void tampiladmin(){        
         model = new DefaultTableModel ( );
         tabel_admin.setModel(model);
@@ -2499,6 +2704,7 @@ System.out.println(e);
     
     //PROSEDUR MENCARI DATA ABSEN PADA TABEL BY NIS
     public void querysearchabsen(){
+        this.querysemesterterkini();
         //QUERY TANGGAL PERTAMA
         if(txt_searchdataabsen.getText().equals("") && txt_searchtgl2dataabsen.getText().equals("")){
             int row = tabel_absen.getRowCount();
@@ -2536,7 +2742,7 @@ System.out.println(e);
             }
             try{
                stat = con.createStatement( );
-               sql  = "Select * from absen WHERE nis='"+txt_searchdataabsen.getText()+"'";
+               sql  = "Select * from absen WHERE tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakhr+"' AND nis='"+txt_searchdataabsen.getText()+"' ";
                rs   = stat.executeQuery(sql);
 
                while(rs.next ()){
@@ -2670,7 +2876,7 @@ System.out.println(e);
          try{
           stat = con.createStatement( );
           
-          sql="SELECT la.*, w.nama FROM lapabsen AS la INNER JOIN walikelas AS w ON la.idwalikelas = w.idwalikelas";
+          sql="SELECT la.*, w.nama FROM lapabsen AS la INNER JOIN walikelas AS w ON la.idwalikelas = w.idwalikelas AND la.status='Aktif'";
           rs   = stat.executeQuery(sql);
            int no =1;
           while(rs.next ()){
@@ -2857,6 +3063,22 @@ System.out.println(e);
         
      }
     
+    public void simpanlapabsen(){
+        try{
+          stat = con.createStatement( );
+          con.createStatement( ).executeUpdate("INSERT INTO historylapabsen SELECT idlapabsen,idwalikelas,nis,nk,nama,hadir,sakit,izin,alpha,terlambat,status FROM lapabsen");
+          rs   = stat.executeQuery(sql);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        try{
+          stat = con.createStatement( );
+          con.createStatement( ).executeUpdate("UPDATE lapabsen SET hadir='0',izin='0',sakit='0',alpha='0',terlambat='0'");
+          rs   = stat.executeQuery(sql);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
     //========================== DATA SEMESTER ==============================//
     //PROSEDUR MENAMPILKAN DATA SEMESTER DI TABEL
     
@@ -2996,15 +3218,11 @@ System.out.println(e);
     public void querysemesterterkini(){
         try{
            stat = con.createStatement( );
-           sql  = "Select * from semester order by idsemester asc";
+           sql  = "Select * from semester order by idsemester desc";
            rs   = stat.executeQuery(sql);
-           while(rs.next ()){
-               Object[ ] obj = new Object[1];
-                tanggalpert=rs.getString("tanggalpertama");
-                System.out.println(tanggalpert);
-                tanggalakhr=rs.getString("tanggalterakhir");
-                System.out.println(tanggalakhr);
-            }      
+           rs.first();
+           tanggalpert=rs.getString("tanggalpertama");
+           tanggalakhr=rs.getString("tanggalterakhir");                 
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -3162,6 +3380,7 @@ System.out.println(e);
            }
     }
     
+    
     //SET TABLE
     public void settable(){
         //SETTING TRANSPARASI SCROLLPANE TABEL SISWA
@@ -3233,6 +3452,16 @@ System.out.println(e);
         tabriwayatsiswa.getViewport().setOpaque(false);
         tabriwayatsiswa.setViewportBorder(null);
         tabel_riwayatsiswa.setShowGrid(true);
+        
+        //SETTING TRANSPARASI SCROLLPANE RIWAYAT ABSENSI
+        ((DefaultTableCellRenderer)tabel_riwayatsiswa2.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
+        tabel_riwayatsiswa2.setGridColor(Color.BLACK);
+        tabel_riwayatsiswa2.setForeground(Color.BLACK);
+        ((DefaultTableCellRenderer)tabel_riwayatsiswa2.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        tabriwayatsiswa2.setOpaque(false);
+        tabriwayatsiswa2.getViewport().setOpaque(false);
+        tabriwayatsiswa2.setViewportBorder(null);
+        tabel_riwayatsiswa2.setShowGrid(true);
         
         //SETTING TRANSPARASI SCROLLPANE TABLE ANGGOTA KELAS
         ((DefaultTableCellRenderer)tabel_anggotakelas.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
@@ -3453,9 +3682,11 @@ System.out.println(e);
         riwayat_siswa = new javax.swing.JLayeredPane();
         panelriwayatsiswa = new javax.swing.JPanel();
         panel_chartrs = new javax.swing.JPanel();
+        panel_chartrs2 = new javax.swing.JPanel();
         txt_tanggalriwayatsiswa = new javax.swing.JTextField();
         txt_tanggal2riwayatsiswa = new javax.swing.JTextField();
         lb_sampairiwayatsiswa = new javax.swing.JLabel();
+        lb_formatrs = new javax.swing.JLabel();
         lb_tglrs = new javax.swing.JLabel();
         lb_nisrs = new javax.swing.JLabel();
         lb_namars = new javax.swing.JLabel();
@@ -3463,13 +3694,15 @@ System.out.println(e);
         lb_nisriwayatsiswa = new javax.swing.JLabel();
         lb_nkriwayatsiswa = new javax.swing.JLabel();
         lb_namariwayatsiswa = new javax.swing.JLabel();
+        cb_formatriwayatsiswa = new javax.swing.JComboBox<>();
         btn_cetakriwayatsiswa = new javax.swing.JButton();
         tabriwayatsiswa = new javax.swing.JScrollPane();
         tabel_riwayatsiswa = new javax.swing.JTable();
+        tabriwayatsiswa2 = new javax.swing.JScrollPane();
+        tabel_riwayatsiswa2 = new javax.swing.JTable();
         btn_refreshriwayatsiswa = new javax.swing.JButton();
         btn_kembaliriwayatabsen = new javax.swing.JButton();
-        btn_lihathistory = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel92 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -3788,6 +4021,7 @@ System.out.println(e);
         jLabel2 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         btn_cetaklapabsen = new javax.swing.JButton();
+        btn_simpanlapabsen = new javax.swing.JButton();
         jLabel27 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         bglapabsensi = new javax.swing.JLabel();
@@ -4894,43 +5128,68 @@ System.out.println(e);
         panel_chartrs.setVerifyInputWhenFocusTarget(false);
         panel_chartrs.setLayout(new javax.swing.OverlayLayout(panel_chartrs));
         panelriwayatsiswa.add(panel_chartrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 430, 460));
-        panelriwayatsiswa.add(txt_tanggalriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 188, 190, 34));
+
+        panel_chartrs2.setBackground(new java.awt.Color(255, 255, 255));
+        panel_chartrs2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Persentase Kehadiran Siswa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
+        panel_chartrs2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        panel_chartrs2.setDoubleBuffered(false);
+        panel_chartrs2.setFocusable(false);
+        panel_chartrs2.setInheritsPopupMenu(true);
+        panel_chartrs2.setOpaque(false);
+        panel_chartrs2.setRequestFocusEnabled(false);
+        panel_chartrs2.setVerifyInputWhenFocusTarget(false);
+        panel_chartrs2.setLayout(new javax.swing.OverlayLayout(panel_chartrs2));
+        panelriwayatsiswa.add(panel_chartrs2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 430, 460));
+        panelriwayatsiswa.add(txt_tanggalriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 170, 25));
 
         txt_tanggal2riwayatsiswa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_tanggal2riwayatsiswaActionPerformed(evt);
             }
         });
-        panelriwayatsiswa.add(txt_tanggal2riwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 188, 190, 34));
+        panelriwayatsiswa.add(txt_tanggal2riwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 200, 150, 25));
 
         lb_sampairiwayatsiswa.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lb_sampairiwayatsiswa.setText("-");
-        panelriwayatsiswa.add(lb_sampairiwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 10, -1));
+        panelriwayatsiswa.add(lb_sampairiwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, 10, 20));
+
+        lb_formatrs.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        lb_formatrs.setText("Berdasarkan");
+        panelriwayatsiswa.add(lb_formatrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 173, 100, 20));
 
         lb_tglrs.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         lb_tglrs.setText("Tanggal ");
-        panelriwayatsiswa.add(lb_tglrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 195, 70, 20));
+        panelriwayatsiswa.add(lb_tglrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 203, 70, 20));
 
         lb_nisrs.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         lb_nisrs.setText("NIS");
-        panelriwayatsiswa.add(lb_nisrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 50, 20));
+        panelriwayatsiswa.add(lb_nisrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 50, 20));
 
         lb_namars.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         lb_namars.setText("NK");
-        panelriwayatsiswa.add(lb_namars, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 125, 50, 20));
+        panelriwayatsiswa.add(lb_namars, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 117, 50, 20));
 
         lb_nkrs.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         lb_nkrs.setText("Nama");
-        panelriwayatsiswa.add(lb_nkrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, 20));
+        panelriwayatsiswa.add(lb_nkrs, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 145, -1, 20));
 
         lb_nisriwayatsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        panelriwayatsiswa.add(lb_nisriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 250, 20));
+        panelriwayatsiswa.add(lb_nisriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 250, 20));
 
         lb_nkriwayatsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        panelriwayatsiswa.add(lb_nkriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 125, 250, 20));
+        panelriwayatsiswa.add(lb_nkriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 117, 250, 20));
 
         lb_namariwayatsiswa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        panelriwayatsiswa.add(lb_namariwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 250, 20));
+        panelriwayatsiswa.add(lb_namariwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 145, 250, 20));
+
+        cb_formatriwayatsiswa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semester ini", "Seluruh Absensi" }));
+        cb_formatriwayatsiswa.setLightWeightPopupEnabled(false);
+        cb_formatriwayatsiswa.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_formatriwayatsiswaItemStateChanged(evt);
+            }
+        });
+        panelriwayatsiswa.add(cb_formatriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 370, 25));
 
         btn_cetakriwayatsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_cetakriwayatsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -4965,10 +5224,50 @@ System.out.println(e);
         });
         tabriwayatsiswa.setViewportView(tabel_riwayatsiswa);
         if (tabel_riwayatsiswa.getColumnModel().getColumnCount() > 0) {
-            tabel_riwayatsiswa.getColumnModel().getColumn(2).setHeaderValue("NK");
+            tabel_riwayatsiswa.getColumnModel().getColumn(0).setResizable(false);
+            tabel_riwayatsiswa.getColumnModel().getColumn(1).setResizable(false);
+            tabel_riwayatsiswa.getColumnModel().getColumn(2).setResizable(false);
+            tabel_riwayatsiswa.getColumnModel().getColumn(3).setResizable(false);
         }
 
         panelriwayatsiswa.add(tabriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 570, 320));
+
+        tabel_riwayatsiswa2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "No", "NK", "Tanggal", "Jam", "Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabel_riwayatsiswa2.setRowHeight(20);
+        tabel_riwayatsiswa2.setRowMargin(2);
+        tabel_riwayatsiswa2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_riwayatsiswa2MouseClicked(evt);
+            }
+        });
+        tabriwayatsiswa2.setViewportView(tabel_riwayatsiswa2);
+        if (tabel_riwayatsiswa2.getColumnModel().getColumnCount() > 0) {
+            tabel_riwayatsiswa2.getColumnModel().getColumn(0).setResizable(false);
+            tabel_riwayatsiswa2.getColumnModel().getColumn(1).setResizable(false);
+            tabel_riwayatsiswa2.getColumnModel().getColumn(2).setResizable(false);
+            tabel_riwayatsiswa2.getColumnModel().getColumn(3).setResizable(false);
+            tabel_riwayatsiswa2.getColumnModel().getColumn(4).setResizable(false);
+        }
+
+        panelriwayatsiswa.add(tabriwayatsiswa2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 570, 320));
 
         btn_refreshriwayatsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_refreshriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refreshlagi.png"))); // NOI18N
@@ -4977,7 +5276,7 @@ System.out.println(e);
                 btn_refreshriwayatsiswaActionPerformed(evt);
             }
         });
-        panelriwayatsiswa.add(btn_refreshriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 190, 30, 30));
+        panelriwayatsiswa.add(btn_refreshriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 200, 30, 30));
 
         btn_kembaliriwayatabsen.setBackground(new java.awt.Color(255, 255, 255));
         btn_kembaliriwayatabsen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_kembali.png"))); // NOI18N
@@ -4988,30 +5287,25 @@ System.out.println(e);
         });
         panelriwayatsiswa.add(btn_kembaliriwayatabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 573, 55, -1));
 
-        btn_lihathistory.setBackground(new java.awt.Color(255, 255, 255));
-        btn_lihathistory.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_lihathistory.setText("Lihat History");
-        panelriwayatsiswa.add(btn_lihathistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(813, 570, 120, 40));
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText(":");
-        panelriwayatsiswa.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, -1, -1));
+        jLabel92.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel92.setText(":");
+        panelriwayatsiswa.add(jLabel92, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 173, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText(":");
-        panelriwayatsiswa.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, -1, -1));
+        panelriwayatsiswa.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setText(":");
-        panelriwayatsiswa.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(118, 193, -1, -1));
+        panelriwayatsiswa.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 203, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText(":");
-        panelriwayatsiswa.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, -1, -1));
+        panelriwayatsiswa.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 145, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText(":");
-        panelriwayatsiswa.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 125, -1, -1));
+        panelriwayatsiswa.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 117, -1, -1));
 
         btn_searchriwayatsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchriwayatsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -5022,7 +5316,7 @@ System.out.println(e);
                 btn_searchriwayatsiswaActionPerformed(evt);
             }
         });
-        panelriwayatsiswa.add(btn_searchriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 190, 30, 30));
+        panelriwayatsiswa.add(btn_searchriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 200, 30, 30));
 
         bgriwayatsiswa.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         bgriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelriwayatabsen.png"))); // NOI18N
@@ -6922,6 +7216,14 @@ System.out.println(e);
         btn_cetaklapabsen.setMargin(new java.awt.Insets(1, 1, 1, 1));
         panellapabsensi.add(btn_cetaklapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 590, 120, 40));
 
+        btn_simpanlapabsen.setText("Simpan Lap Absen");
+        btn_simpanlapabsen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_simpanlapabsenActionPerformed(evt);
+            }
+        });
+        panellapabsensi.add(btn_simpanlapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(813, 590, 120, 40));
+
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(0, 51, 204));
         jLabel27.setText(":");
@@ -7325,6 +7627,7 @@ System.out.println(e);
         switchpanel(datasiswa);
         this.tampilsiswa();
         this.editprofilesiswa(false);
+        cb_formatsiswa.setSelectedIndex(0);
         txt_searchsiswa.setText("");
     }//GEN-LAST:event_btn_datasiswaMouseClicked
 
@@ -7556,6 +7859,7 @@ System.out.println(e);
     private void btn_kembaliprofilewalikelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliprofilewalikelasActionPerformed
         // TODO add your handling code here:
         switchpanel(datawalikelas);
+        cb_formatwalikelas.setSelectedIndex(0);
         this.tampilwalas();
         this.editprofilewalas(false);
         txt_searchwalikelas.setText("");
@@ -7563,7 +7867,6 @@ System.out.println(e);
     }//GEN-LAST:event_btn_kembaliprofilewalikelasActionPerformed
 
     private void btn_simpanprofilewalikelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanprofilewalikelasActionPerformed
-        // TODO add your handling code here:
         this.simpanprofilewalas();
         this.editprofilewalas(false);
     }//GEN-LAST:event_btn_simpanprofilewalikelasActionPerformed
@@ -7800,8 +8103,11 @@ System.out.println(e);
         else{
             txt_tanggalriwayatsiswa.setText("");
             txt_tanggal2riwayatsiswa.setText("");
+            cb_formatriwayatsiswa.setSelectedIndex(0);
             switchpanel(riwayat_siswa);
             this.tampilriwayatabsensiswa();
+            panel_chartrs2.setVisible(false);
+            tabriwayatsiswa2.setVisible(false);
         }
     }//GEN-LAST:event_btn_riwayatsiswaActionPerformed
 
@@ -8051,12 +8357,14 @@ System.out.println(e);
     private void btn_editsemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editsemesterActionPerformed
         if (btn_editsemester.isSelected() && txt_searchsemester.getText()!=null){
             this.editsemester(true);
+            btn_simpansemester.setEnabled(false);
             if(txt_idsemester.getText().equals("")){
             JOptionPane.showMessageDialog(null, ("Klik data Semester pada table terlebih dahulu"), 
             "Data Semester", JOptionPane.INFORMATION_MESSAGE);
                 this.editsemester(false);
                 btn_editsemester.setSelected(false);
                 txt_searchsemester.setText("");
+                btn_simpansemester.setEnabled(true);
             }
         }
         else{
@@ -8064,6 +8372,7 @@ System.out.println(e);
             this.autonumbersemester();
             btn_editsemester.setSelected(false);
             this.editsemester(false);
+            btn_simpansemester.setEnabled(true);
         }
     }//GEN-LAST:event_btn_editsemesterActionPerformed
 
@@ -8115,6 +8424,32 @@ System.out.println(e);
     private void txt_gendersiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_gendersiswaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_gendersiswaActionPerformed
+
+    private void tabel_riwayatsiswa2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_riwayatsiswa2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabel_riwayatsiswa2MouseClicked
+
+    private void cb_formatriwayatsiswaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_formatriwayatsiswaItemStateChanged
+        String value = cb_formatriwayatsiswa.getSelectedItem().toString();
+        if(value.equals("Semester ini")){
+            tabriwayatsiswa.setVisible(true);
+            panel_chartrs.setVisible(true);
+            tabriwayatsiswa2.setVisible(false);
+            panel_chartrs2.setVisible(false);
+            this.tampilriwayatabsensiswa();
+        }
+        else{
+            tabriwayatsiswa.setVisible(false);
+            panel_chartrs.setVisible(false);
+            tabriwayatsiswa2.setVisible(true);
+            panel_chartrs2.setVisible(true);
+            this.tampilriwayatabsensiswa2();
+        }
+    }//GEN-LAST:event_cb_formatriwayatsiswaItemStateChanged
+
+    private void btn_simpanlapabsenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanlapabsenActionPerformed
+        this.simpanlapabsen();
+    }//GEN-LAST:event_btn_simpanlapabsenActionPerformed
 
     
     public static void main(String args[]) {
@@ -8195,7 +8530,6 @@ System.out.println(e);
     private javax.swing.JButton btn_lihatanggotakelas;
     private javax.swing.JButton btn_lihatdatasiswa;
     private javax.swing.JButton btn_lihatguru;
-    private javax.swing.JButton btn_lihathistory;
     private javax.swing.JButton btn_lihatkelas;
     private javax.swing.JButton btn_lihatprofilesiswabermasalah;
     private javax.swing.JButton btn_lihatsiswa;
@@ -8228,6 +8562,7 @@ System.out.println(e);
     private javax.swing.JButton btn_simpanformguru;
     private javax.swing.JButton btn_simpanformkelas;
     private javax.swing.JButton btn_simpanformwalikelas;
+    private javax.swing.JButton btn_simpanlapabsen;
     private javax.swing.JButton btn_simpanprofileadmin;
     private javax.swing.JButton btn_simpanprofileguru;
     private javax.swing.JButton btn_simpanprofilekelas;
@@ -8241,6 +8576,7 @@ System.out.println(e);
     private javax.swing.JButton btn_updateabsen;
     private javax.swing.JButton btn_updatestatussiswabermasalah;
     private javax.swing.JComboBox<String> cb_formatguru;
+    private javax.swing.JComboBox<String> cb_formatriwayatsiswa;
     private javax.swing.JComboBox<String> cb_formatsiswa;
     private javax.swing.JComboBox<String> cb_formatwalikelas;
     private javax.swing.JComboBox<String> cb_gendersiswa;
@@ -8305,7 +8641,6 @@ System.out.println(e);
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -8374,6 +8709,7 @@ System.out.println(e);
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel90;
     private javax.swing.JLabel jLabel91;
+    private javax.swing.JLabel jLabel92;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLayeredPane kelola_semester;
@@ -8389,6 +8725,7 @@ System.out.println(e);
     private javax.swing.JLabel lb_emailformwalikelas;
     private javax.swing.JLabel lb_emailprofileguru;
     private javax.swing.JLabel lb_emailprofilewalikelas;
+    private javax.swing.JLabel lb_formatrs;
     private javax.swing.JLabel lb_gambar;
     private javax.swing.JLabel lb_gambar1;
     private javax.swing.JLabel lb_gambar2;
@@ -8526,6 +8863,7 @@ System.out.println(e);
     private javax.swing.JPanel panel_chartak;
     private javax.swing.JPanel panel_chartaw;
     private javax.swing.JPanel panel_chartrs;
+    private javax.swing.JPanel panel_chartrs2;
     private javax.swing.JPanel panelabsensi;
     private javax.swing.JPanel paneladmin;
     private javax.swing.JPanel panelanggotakelas;
@@ -8580,6 +8918,7 @@ System.out.println(e);
     private javax.swing.JTable tabel_kelas;
     private javax.swing.JTable tabel_lapabsen;
     private javax.swing.JTable tabel_riwayatsiswa;
+    private javax.swing.JTable tabel_riwayatsiswa2;
     private javax.swing.JTable tabel_semester;
     private javax.swing.JTable tabel_siswa;
     private javax.swing.JTable tabel_siswabermasalah;
@@ -8587,6 +8926,7 @@ System.out.println(e);
     private javax.swing.JScrollPane tabguru;
     private javax.swing.JScrollPane tabkelas;
     private javax.swing.JScrollPane tabriwayatsiswa;
+    private javax.swing.JScrollPane tabriwayatsiswa2;
     private javax.swing.JScrollPane tabsemester;
     private javax.swing.JScrollPane tabsiswa;
     private javax.swing.JScrollPane tabwalikelas;

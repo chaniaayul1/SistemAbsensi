@@ -42,9 +42,8 @@ public class login extends javax.swing.JFrame {
         preference = Preferences.userNodeForPackage(this.getClass());
         rememberPreferences = preference.getBoolean("rememberMe", Boolean.valueOf(""));
         if (rememberPreferences){
-            txt_username.setText(preference.get("User",""));
+            txt_username.setText(preference.get("username",""));
             txt_password.setText(preference.get("password", ""));
-            remember.setSelected(rememberPreferences);
         }
     }
     public void proseslogin(){
@@ -54,7 +53,7 @@ public class login extends javax.swing.JFrame {
             sql = "SELECT * FROM admin WHERE BINARY username='"+txt_username.getText()+"' AND BINARY password='"+txt_password.getText()+"'";
             rs = stat.executeQuery(sql);
             String usernm = txt_username.getText();
-            ps = con.prepareStatement("SELECT * FROM admin where username='"+txt_username.getText()+"'and password = '"+txt_password+"'");
+            ps = con.prepareStatement("SELECT * FROM admin where username='"+txt_username.getText()+"' and password ='"+txt_password+"'");
             if (rs.next()) {
                 if(remember.isSelected() && !rememberPreferences){
                     preference.put("username",txt_username.getText());
