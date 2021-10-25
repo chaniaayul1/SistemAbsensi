@@ -3858,10 +3858,12 @@ System.out.println(e);
         btn_refreshdatawalikelas = new javax.swing.JButton();
         cb_formatwalikelas = new javax.swing.JComboBox<>();
         jTextField6 = new javax.swing.JTextField();
+        jTextField11 = new javax.swing.JTextField();
+        jPanel7 = new javax.swing.JPanel();
+        btn_lihatwalikelas = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         btn_tambahwalikelas = new javax.swing.JButton();
         brn_hapuswalikelas = new javax.swing.JButton();
-        btn_lihatwalikelas = new javax.swing.JButton();
         bgwalikelas = new javax.swing.JLabel();
         lb_nipwalikelas = new javax.swing.JLabel();
         profilewalikelas = new javax.swing.JLayeredPane();
@@ -5984,9 +5986,31 @@ System.out.println(e);
 
         jTextField6.setFont(new java.awt.Font("Roboto Slab", 1, 12)); // NOI18N
         jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setText("CRUD");
+        jTextField6.setText("Kelola Data");
         jTextField6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        panelwalikelas.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(626, 552, 110, -1));
+        panelwalikelas.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 552, 110, -1));
+
+        jTextField11.setFont(new java.awt.Font("Roboto Slab", 1, 12)); // NOI18N
+        jTextField11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField11.setText("CRUD");
+        jTextField11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        panelwalikelas.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 552, 110, -1));
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_lihatwalikelas.setBackground(new java.awt.Color(255, 255, 255));
+        btn_lihatwalikelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_lihatwalikelas.setText("Profile Walikelas");
+        btn_lihatwalikelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_lihatwalikelasActionPerformed(evt);
+            }
+        });
+        jPanel7.add(btn_lihatwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 130, 40));
+
+        panelwalikelas.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 560, 170, 70));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -6001,7 +6025,7 @@ System.out.println(e);
                 btn_tambahwalikelasActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_tambahwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 130, 40));
+        jPanel1.add(btn_tambahwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 130, 40));
 
         brn_hapuswalikelas.setBackground(new java.awt.Color(255, 255, 255));
         brn_hapuswalikelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -6014,19 +6038,9 @@ System.out.println(e);
                 brn_hapuswalikelasActionPerformed(evt);
             }
         });
-        jPanel1.add(brn_hapuswalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 130, 40));
+        jPanel1.add(brn_hapuswalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 130, 40));
 
-        btn_lihatwalikelas.setBackground(new java.awt.Color(255, 255, 255));
-        btn_lihatwalikelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
-        btn_lihatwalikelas.setText("Profile Walikelas");
-        btn_lihatwalikelas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_lihatwalikelasActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btn_lihatwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 130, 40));
-
-        panelwalikelas.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 560, 450, 70));
+        panelwalikelas.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(775, 560, 290, 70));
 
         bgwalikelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelwalikelas.png"))); // NOI18N
         panelwalikelas.add(bgwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -8942,8 +8956,10 @@ System.out.println(e);
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
+    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
