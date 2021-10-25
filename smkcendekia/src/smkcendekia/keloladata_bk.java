@@ -183,6 +183,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
             "Delete Data Siswa Gagal", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(ex);
         }
     }
     
@@ -681,8 +682,8 @@ public class keloladata_bk extends javax.swing.JFrame {
                                                                         + "email='"+txt_emailsiswa.getText()+"', "
                                                                         + "notlp='"+txt_notelpsiswa.getText()+"', "
                                                                         + "namaortu='"+txt_ortusiswa.getText()+"', "        
-                                                                        + "noortu='"+txt_noortusiswa.getText()+"',"
-                                                                        + "status='"+cb_statussiswa.getSelectedItem().toString()+"'"
+                                                                        + "noortu='"+txt_noortusiswa.getText()+"'"
+                                                                        //+ "status='"+cb_statussiswa.getSelectedItem().toString()+"'"
                                                                         + "WHERE nis='"+txt_searchsiswa.getText()+"'");
             rs   = stat.executeQuery(sql);
             JOptionPane.showMessageDialog(null, ("Data Siswa Berhasil di Update"), 
@@ -1231,7 +1232,8 @@ public class keloladata_bk extends javax.swing.JFrame {
             
             try{
               stat = con.createStatement( );
-              sql  = "Select w.*, k.nk from walikelas as w join kelas as k where w.idwalikelas = k.idwalikelas AND status='Aktif'";
+              //sql  = "Select w.*, k.nk from walikelas as w join kelas as k where w.idwalikelas = k.idwalikelas AND status='Aktif'";
+              sql="SELECT * FROM walikelas WHERE status='Aktif'";
               rs   = stat.executeQuery(sql);
               int no=1;
               while(rs.next ()){
@@ -1239,6 +1241,13 @@ public class keloladata_bk extends javax.swing.JFrame {
                    obj[0] = Integer.toString(no);
                    obj[1] = rs.getString("idwalikelas");
                    obj[2] = rs.getString("nk");
+                   obj[2] = rs.getString("nk");
+                   if (obj[2]==null){
+                       obj[2] = "Tidak Terdaftar";
+                   }
+                   else{
+                       obj[2] = obj[2];
+                   }
                    obj[3] = rs.getString("nip");
                    obj[4] = rs.getString("nama");
                    obj[5] = rs.getString("jeniskelamin");
@@ -1252,7 +1261,7 @@ public class keloladata_bk extends javax.swing.JFrame {
            } catch (SQLException e) {
                System.out.println(e);
            }
-        }  
+        }
         else{
              model = new DefaultTableModel ( );
             tabel_walikelas.setModel(model);
@@ -1266,7 +1275,8 @@ public class keloladata_bk extends javax.swing.JFrame {
             
             try{
               stat = con.createStatement( );
-              sql  = "Select w.*, k.nk from walikelas as w join kelas as k where w.idwalikelas = k.idwalikelas AND status='Pasif'";
+              //sql  = "Select w.*, k.nk from walikelas as w join kelas as k where w.idwalikelas = k.idwalikelas AND status='Pasif'";
+              sql="SELECT * FROM walikelas WHERE status='Pasif'";
               rs   = stat.executeQuery(sql);
               int no=1;
               while(rs.next ()){
@@ -1274,6 +1284,12 @@ public class keloladata_bk extends javax.swing.JFrame {
                    obj[0] = Integer.toString(no);
                    obj[1] = rs.getString("idwalikelas");
                    obj[2] = rs.getString("nk");
+                   if (obj[2]==null){
+                       obj[2] = "Tidak Terdaftar";
+                   }
+                   else{
+                       obj[2] = obj[2];
+                   }
                    obj[3] = rs.getString("nip");
                    obj[4] = rs.getString("nama");
                    obj[5] = rs.getString("jeniskelamin");
@@ -1303,7 +1319,7 @@ public class keloladata_bk extends javax.swing.JFrame {
             System.out.println(lb_nipwalikelas.getText());
         try {
             stat = con.createStatement( );
-            con.createStatement().executeUpdate("UPDATE walikelas SET status='Pasif' WHERE idwalikelas='"+txt_searchwalikelas.getText()+"'");
+            con.createStatement().executeUpdate("UPDATE walikelas SET status='Pasif',nk=NULL WHERE idwalikelas='"+txt_searchwalikelas.getText()+"'");
             rs   = stat.executeQuery(sql);
             int no=1;
             while(rs.next ()){
@@ -1396,7 +1412,7 @@ public class keloladata_bk extends javax.swing.JFrame {
                 String simpan = "insert into walikelas values ('"+txt_idformwalikelas.getText()
                         +"','"+txt_nipformwalikelas.getText()
                         +"','"+txt_namaformwalikelas.getText()
-                        +"','"+txt_emailformwalikelas.getText()
+                        +"',NULL,'"+txt_emailformwalikelas.getText()
                         +"','"+jeniskelamin
                         +"','"+txt_tlpformwalikelas.getText()
                         +"','"+txt_alamatformwalikelas.getText()
@@ -1409,6 +1425,7 @@ public class keloladata_bk extends javax.swing.JFrame {
         } catch (Exception e) {
           JOptionPane.showMessageDialog(null, ("Data Wali Kelas Gagal ditambahkan/NIP Tidak Terdaftar"), 
             "Tambah Data Walikelas", JOptionPane.ERROR_MESSAGE);
+          System.out.println(e);
         }
     }
     
@@ -1630,27 +1647,55 @@ public class keloladata_bk extends javax.swing.JFrame {
     
     // VOID SIMPAN GURU
     public void simpanprofilewalas(){
-        try {
-            // TODO add your handling code here:
-            stat = con.createStatement( );
-            con.createStatement().executeUpdate("UPDATE walikelas set   idwalikelas='"+txt_idprofilewalikelas.getText()+"', "
-                                                                        + "nip='"+txt_nipprofilewalikelas.getText()+"', "
-                                                                        + "nama='"+txt_namaprofilewalikelas.getText()+"', "
-                                                                        + "email='"+txt_emailprofilewalikelas.getText()+"', "
-                                                                        + "jeniskelamin='"+txt_jkprofilewalikelas.getText()+"', "
-                                                                        + "notlp='"+txt_notelpprofilewalikelas.getText()+"', "
-                                                                        + "alamat='"+txt_alamatprofilewalikelas.getText()+"',"
-                                                                        + "status='"+cb_statusprofilewalas.getSelectedItem().toString()+"'"
-                                                                        + "WHERE idwalikelas='"+txt_searchwalikelas.getText()+"'");
-            rs   = stat.executeQuery(sql);
-            this.simpanprofilewalas2();
-            this.tampilprofilewalas();
-            JOptionPane.showMessageDialog(null, ("Data Walikelas Berhasil di Update"), 
-            "Data Profile Walikelas", JOptionPane.INFORMATION_MESSAGE);
-        }catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ("Data Walikelas Gagal di Update"), 
-            "Data Profile walikelas Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println(ex);
+        String value = cb_statusprofilewalas.getSelectedItem().toString();
+        if (value.equals("Aktif")){
+            try {
+                // TODO add your handling code here:
+                stat = con.createStatement( );
+                con.createStatement().executeUpdate("UPDATE walikelas set   idwalikelas='"+txt_idprofilewalikelas.getText()+"', "
+                                                                            + "nip='"+txt_nipprofilewalikelas.getText()+"', "
+                                                                            + "nama='"+txt_namaprofilewalikelas.getText()+"', "
+                                                                            + "email='"+txt_emailprofilewalikelas.getText()+"', "
+                                                                            + "jeniskelamin='"+txt_jkprofilewalikelas.getText()+"', "
+                                                                            + "notlp='"+txt_notelpprofilewalikelas.getText()+"', "
+                                                                            + "alamat='"+txt_alamatprofilewalikelas.getText()+"',"
+                                                                            + "status='Aktif'"
+                                                                            + "WHERE idwalikelas='"+txt_searchwalikelas.getText()+"'");
+                rs   = stat.executeQuery(sql);
+                this.simpanprofilewalas2();
+                this.tampilprofilewalas();
+                JOptionPane.showMessageDialog(null, ("Data Walikelas Berhasil di Update"), 
+                "Data Profile Walikelas", JOptionPane.INFORMATION_MESSAGE);
+            }catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ("Data Walikelas Gagal di Update"), 
+                "Data Profile walikelas Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println(ex);
+            }
+        }
+        else{
+            try {
+                // TODO add your handling code here:
+                stat = con.createStatement( );
+                con.createStatement().executeUpdate("UPDATE walikelas set   idwalikelas='"+txt_idprofilewalikelas.getText()+"', "
+                                                                            + "nip='"+txt_nipprofilewalikelas.getText()+"', "
+                                                                            + "nama='"+txt_namaprofilewalikelas.getText()+"', "
+                                                                            + "nk=NULL, "
+                                                                            + "email='"+txt_emailprofilewalikelas.getText()+"', "
+                                                                            + "jeniskelamin='"+txt_jkprofilewalikelas.getText()+"', "
+                                                                            + "notlp='"+txt_notelpprofilewalikelas.getText()+"', "
+                                                                            + "alamat='"+txt_alamatprofilewalikelas.getText()+"',"
+                                                                            + "status='Pasif'"
+                                                                            + "WHERE idwalikelas='"+txt_searchwalikelas.getText()+"'");
+                rs   = stat.executeQuery(sql);
+                this.simpanprofilewalas2();
+                this.tampilprofilewalas();
+                JOptionPane.showMessageDialog(null, ("Data Walikelas Berhasil di Update"), 
+                "Data Profile Walikelas", JOptionPane.INFORMATION_MESSAGE);
+            }catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ("Data Walikelas Gagal di Update"), 
+                "Data Profile walikelas Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println(ex);
+            }
         }
     }
     
@@ -2032,6 +2077,16 @@ System.out.println(e);
                                                                     + "WHERE nk='"+txt_nkprofilekelas.getText()+"'");
             rs   = stat.executeQuery(sql);
          }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data Kelas Gagal di Update"), 
+            "Data Profile Kelas Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex);
+        }
+        try {
+            stat = con.createStatement( );
+            con.createStatement().executeUpdate("UPDATE walikelas set   nk='"+txt_nkprofilekelas.getText()+"'"
+                                                                    + "WHERE idwalikelas='"+wlsprofkelas+"'");
+            rs   = stat.executeQuery(sql);
+        }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data Kelas Gagal di Update"), 
             "Data Profile Kelas Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(ex);
