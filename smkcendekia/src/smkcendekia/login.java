@@ -50,10 +50,10 @@ public class login extends javax.swing.JFrame {
       String userlog,level;
       PreparedStatement ps;
       try {
-            sql = "SELECT * FROM admin WHERE BINARY username='"+txt_username.getText()+"' AND BINARY password='"+txt_password.getText()+"'";
+            sql = "SELECT * FROM admin WHERE BINARY username='"+txt_username.getText()+"' AND BINARY password=MD5('"+txt_password.getText()+"') AND status='Aktif'";
             rs = stat.executeQuery(sql);
             String usernm = txt_username.getText();
-            ps = con.prepareStatement("SELECT * FROM admin where username='"+txt_username.getText()+"' and password ='"+txt_password+"'");
+            //ps = con.prepareStatement("SELECT * FROM admin where username='"+txt_username.getText()+"' and password = MD5('"+txt_password.getText()+"')";
             if (rs.next()) {
                 if(remember.isSelected() && !rememberPreferences){
                     preference.put("username",txt_username.getText());
@@ -131,6 +131,7 @@ public class login extends javax.swing.JFrame {
         txt_password = new javax.swing.JPasswordField();
         btn_login = new javax.swing.JButton();
         remember = new javax.swing.JCheckBox();
+        lb_lupapass = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -174,6 +175,15 @@ public class login extends javax.swing.JFrame {
         remember.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
         remember.setText("Remind Me Later");
         panel_login.add(remember, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 490, -1, -1));
+
+        lb_lupapass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_lupapass.setText("Lupa Password ?");
+        lb_lupapass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lb_lupapassMouseClicked(evt);
+            }
+        });
+        panel_login.add(lb_lupapass, new org.netbeans.lib.awtextra.AbsoluteConstraints(765, 580, 110, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
         jLabel2.setText("Belum Punya Akun?");
@@ -227,6 +237,12 @@ public class login extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null,"Hubungi Guru BK untu Menjadi Admin");
     }//GEN-LAST:event_jLabel2MouseClicked
 
+    private void lb_lupapassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_lupapassMouseClicked
+        lupapassword lp=new lupapassword();
+        lp.setVisible(true);
+        lp.setLocationRelativeTo(null);
+    }//GEN-LAST:event_lb_lupapassMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -266,6 +282,7 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JButton btn_login;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lb_lupapass;
     private javax.swing.JPanel panel_login;
     private javax.swing.JCheckBox remember;
     private javax.swing.JPasswordField txt_password;
