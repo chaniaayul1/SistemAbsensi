@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 24, 2021 at 06:18 PM
+-- Generation Time: Oct 26, 2021 at 09:57 PM
 -- Server version: 10.3.29-MariaDB-0+deb10u1
 -- PHP Version: 7.3.29-1~deb10u1
 
@@ -42,8 +42,10 @@ CREATE TABLE `absen` (
 --
 
 INSERT INTO `absen` (`idabsen`, `idrfid`, `nk`, `nis`, `nama`, `tanggal`, `jam`, `status`) VALUES
-(1, '632745563716', '12BDP1', '2021.10.002', 'Chania', '2021-10-24', '10:50:36', 'Hadir'),
-(2, '632745563716', '12BDP1', '2021.10.002', 'Chania', '2021-01-06', '05:55:30', 'Hadir');
+(1, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-24', '10:50:36', 'Hadir'),
+(2, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-01-06', '05:55:30', 'Hadir'),
+(4, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-25', '06:41:38', 'Hadir'),
+(5, '51871758571', '12BDP1', '2021.10.001', 'Rafi Aziizi Muchtar', '2021-10-26', '08:44:37', 'Alpha');
 
 --
 -- Triggers `absen`
@@ -164,7 +166,7 @@ CREATE TABLE `admin` (
   `nip` varchar(15) NOT NULL,
   `nama` varchar(45) NOT NULL,
   `username` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL,
+  `password` varchar(50) NOT NULL,
   `level` int(2) NOT NULL,
   `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -174,9 +176,10 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`idadmin`, `nip`, `nama`, `username`, `password`, `level`, `status`) VALUES
-('ADM001', '3411181123', 'Rafi Aziizi M', 'rafi', '1', 0, 'Aktif'),
+('ADM001', '3411181123', 'Rafi Aziizi M', 'rafi', 'c4ca4238a0b923820dcc509a6f75849b', 0, 'Aktif'),
 ('ADM002', '3411181122', 'Chania Ayu', 'chania', 'chan', 0, 'Aktif'),
-('ADM003', '3411181121', 'Rizko Ayundra', 'rizko', 'r', 1, 'Aktif');
+('ADM003', '3411181121', 'Rizko Ayundra', 'rizko', 'r', 0, 'Aktif'),
+('ADM004', '31', 'Yoman', '1', 'c81e728d9d4c2f636f067f89cc14862c', 0, 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -200,6 +203,7 @@ CREATE TABLE `guru` (
 --
 
 INSERT INTO `guru` (`nip`, `jabatan`, `nama`, `email`, `jeniskelamin`, `notlp`, `alamat`, `status`) VALUES
+('31', 'OB', 'Yoman', 'yo@gmail.com', 'Laki-Laki', '081282408414', 'weqdsadsa', 'Aktif'),
 ('3411181111', 'Bagian TI', 'Dandi Rusdani', 'dandi@gmail.com', 'Laki-Laki', '08128240844', 'Cimahi', 'Aktif'),
 ('3411181121', 'Bagian IT', 'Rizko Ayundra', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang', 'Aktif'),
 ('3411181122', 'Bagian IT', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '08112', 'Cikalong', 'Aktif'),
@@ -247,8 +251,10 @@ CREATE TABLE `historyabsen` (
 --
 
 INSERT INTO `historyabsen` (`idabsen`, `idrfid`, `nk`, `nis`, `nama`, `tanggal`, `jam`, `status`) VALUES
-(1, '632745563716', '12BDP1', '2021.10.002', 'Chania', '2021-10-24', '10:50:36', 'Alpha'),
-(2, '632745563716', '11BDP1', '2021.10.002', 'Chania', '2021-01-06', '05:55:30', 'Hadir');
+(1, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-24', '10:50:36', 'Alpha'),
+(2, '632745563716', '11BDP1', '2021.10.002', 'Chania Ayuu', '2021-01-06', '05:55:30', 'Hadir'),
+(3, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-25', '06:41:38', 'Hadir'),
+(4, '51871758571', '12BDP1', '2021.10.001', 'Rafi Aziizi Muchtar', '2021-10-26', '08:44:37', 'Alpha');
 
 -- --------------------------------------------------------
 
@@ -276,7 +282,7 @@ CREATE TABLE `historylapabsen` (
 
 INSERT INTO `historylapabsen` (`idlapabsen`, `idwalikelas`, `nis`, `nk`, `nama`, `hadir`, `sakit`, `izin`, `alpha`, `terlambat`, `status`) VALUES
 ('LAP0000001', 'WLS001', '2021.10.001', '12BDS1', 'Rafi Aziizi Muchtar', 0, 0, 0, 0, 0, 'Pasif'),
-('LAP0000002', 'WLS001', '2021.10.002', '12BDS1', 'Chania', 1, 0, 0, 2, 0, 'Aktif');
+('LAP0000002', 'WLS001', '2021.10.002', '12BDS1', 'Chania Ayuu', 1, 0, 0, 2, 0, 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -305,7 +311,7 @@ INSERT INTO `kelas` (`nk`, `idwalikelas`, `namakelas`, `angkatan`, `jurusan`, `s
 ('11TITL1', NULL, 'TITL1', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
 ('11TITL2', NULL, '2', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
 ('11TITL3', NULL, '3', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
-('12BDP1', 'WLS001', '1', 12, 'BDP', 'Ganjil', '2021/2022', -1, 2, 1);
+('12BDP1', 'WLS004', '1', 12, 'BDP', 'Ganjil', '2021/2022', 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -332,8 +338,8 @@ CREATE TABLE `lapabsen` (
 --
 
 INSERT INTO `lapabsen` (`idlapabsen`, `idwalikelas`, `nis`, `nk`, `nama`, `hadir`, `sakit`, `izin`, `alpha`, `terlambat`, `status`) VALUES
-('LAP0000001', 'WLS001', '2021.10.001', '12BDP1', 'Rafi Aziizi Muchtar', 0, 0, 0, 0, 0, 'Pasif'),
-('LAP0000002', 'WLS001', '2021.10.002', '12BDP1', 'Chania', 1, 0, 0, -1, 0, 'Aktif');
+('LAP0000001', 'WLS004', '2021.10.001', '12BDP1', 'Rafi Aziizi Muchtar', 0, 0, 0, 1, 0, 'Pasif'),
+('LAP0000002', 'WLS004', '2021.10.002', '12BDP1', 'Chania Ayuu', 2, 0, 0, 0, 0, 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -354,7 +360,7 @@ CREATE TABLE `rfid` (
 
 INSERT INTO `rfid` (`idrfid`, `nis`, `nama`, `status`) VALUES
 ('51871758571', '2021.10.001', 'Rafi Aziizi Muchtar', 'Pasif'),
-('632745563716', '2021.10.002', 'Chania Ayuaa', 'Aktif');
+('632745563716', '2021.10.002', 'Chania Ayuu', 'Pasif');
 
 -- --------------------------------------------------------
 
@@ -654,12 +660,26 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`nis`, `idrfid`, `nk`, `idwalikelas`, `nama`, `alamat`, `jeniskelamin`, `email`, `notlp`, `namaortu`, `noortu`, `status`) VALUES
-('2021.10.001', '51871758571', '12BDP1', 'WLS001', 'Rafi Aziizi Muchtar', 'Cikampek', 'Perempuan', 'rafiaziizi69@gmail.com', '08128423', 'Kaka', '08232131', 'Pasif'),
-('2021.10.002', '632745563716', '12BDP1', 'WLS001', 'Chania Ayuaa', 'Cikampek', 'Perempuan', 'chania@gmail.com', '08231', 'Kaka', '02831231', 'Aktif');
+('2021.10.001', '51871758571', '12BDP1', 'WLS004', 'Rafi Aziizi Muchtar', 'Cikampek', 'Perempuan', 'rafiaziizi69@gmail.com', '08128423', 'Kaka', '08232131', 'Pasif'),
+('2021.10.002', '632745563716', '12BDP1', 'WLS004', 'Chania Ayuu', 'Cikampek', 'Perempuan', 'chania@gmail.com', '08231', 'Kaka', '02831231', 'Aktif');
 
 --
 -- Triggers `siswa`
 --
+DELIMITER $$
+CREATE TRIGGER `updatedatalapabsen` AFTER UPDATE ON `siswa` FOR EACH ROW IF (new.status!=old.status) THEN
+	IF (new.status='Aktif') THEN
+    	UPDATE lapabsen
+        set status=new.status
+        WHERE nis=new.nis;
+    ELSEIF (new.status='Pasif') THEN
+    	UPDATE lapabsen
+        SET status=new.status
+        WHERE nis=new.nis;
+    END IF;
+END IF
+$$
+DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `updatejknis` AFTER UPDATE ON `siswa` FOR EACH ROW IF (new.nis!=old.nis) THEN
 	IF(old.jeniskelamin='Laki-Laki') THEN
@@ -675,57 +695,123 @@ END IF
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `updatejksiswa` AFTER UPDATE ON `siswa` FOR EACH ROW IF (new.jeniskelamin!=old.jeniskelamin AND old.status='Aktif') THEN
-	IF(new.jeniskelamin='Laki-Laki') THEN
-    	UPDATE kelas
-    	SET jl= jl +1,jp=jp-1
-    	WHERE kelas.nk=old.nk;
-	ELSEIF(new.jeniskelamin='Perempuan')THEN
-    	UPDATE kelas
-    	SET jp= jp +1,jl=jl-1
-    	WHERE kelas.nk=old.nk;      
+CREATE TRIGGER `updatejumlahsiswa` AFTER UPDATE ON `siswa` FOR EACH ROW IF (new.status!=old.status) THEN
+	IF(new.status='Aktif') THEN
+    	IF (new.jeniskelamin!=old.jeniskelamin) THEN
+        	IF (new.jeniskelamin='Laki-Laki') THEN
+    			UPDATE kelas
+    			SET jl= jl+1,js=js+1
+    			WHERE kelas.nk=old.nk;
+            ELSEIF (new.jeniskelamin='Perempuan') THEN
+            	UPDATE kelas
+    			SET jp= jp+1,js=js+1
+    			WHERE kelas.nk=old.nk;
+         	END IF;
+        ELSEIF (new.jeniskelamin=old.jeniskelamin) THEN
+        	IF (old.jeniskelamin='Laki-Laki') THEN
+    			UPDATE kelas
+    			SET jl= jl+1,js=js+1
+    			WHERE kelas.nk=old.nk;
+            ELSEIF (old.jeniskelamin='Perempuan') THEN
+            	UPDATE kelas
+    			SET jp= jp+1,js=js+1
+    			WHERE kelas.nk=old.nk;
+         	END IF;
+        END IF;
+	ELSEIF(new.status='Pasif')THEN
+    	IF (new.jeniskelamin!=old.jeniskelamin) THEN
+        	IF (new.jeniskelamin='Laki-Laki') THEN
+    			UPDATE kelas
+    			SET jp= jp-1,js=js-1
+    			WHERE kelas.nk=old.nk;
+            ELSEIF (new.jeniskelamin='Perempuan') THEN
+            	UPDATE kelas
+    			SET jl= jl-1,js=js-1
+    			WHERE kelas.nk=old.nk;
+         	END IF;
+        ELSEIF (new.jeniskelamin=old.jeniskelamin) THEN
+        	IF (old.jeniskelamin='Laki-Laki') THEN
+    			UPDATE kelas
+    			SET jl= jl-1,js=js-1
+    			WHERE kelas.nk=old.nk;
+            ELSEIF (old.jeniskelamin='Perempuan') THEN
+            	UPDATE kelas
+    			SET jp= jp-1,js=js-1
+    			WHERE kelas.nk=old.nk;
+         	END IF;
+        END IF;      
 	END IF;
-ELSEIF (new.jeniskelamin!=old.jeniskelamin AND old.status='Pasif') THEN
-	IF(new.jeniskelamin='Laki-Laki') THEN
-    	UPDATE kelas
-    	SET jl= jl,jp=jp
-    	WHERE kelas.nk=old.nk;
-	ELSEIF(new.jeniskelamin='Perempuan')THEN
-    	UPDATE kelas
-    	SET jp= jp,jl=jl
-    	WHERE kelas.nk=old.nk;      
+ELSEIF (new.status=old.status) THEN
+	IF(old.status='Aktif') THEN
+    	IF (new.jeniskelamin!=old.jeniskelamin) THEN
+        	IF (new.jeniskelamin='Laki-Laki') THEN
+    			UPDATE kelas
+    			SET jl= jl+1,jp=jp-1
+    			WHERE kelas.nk=old.nk;
+            ELSEIF (new.jeniskelamin='Perempuan') THEN
+            	UPDATE kelas
+    			SET jp= jp+1,jl=jl-1
+    			WHERE kelas.nk=old.nk;
+         	END IF;
+        ELSEIF (new.jeniskelamin=old.jeniskelamin) THEN
+        	IF (old.jeniskelamin='Laki-Laki') THEN
+    			UPDATE kelas
+    			SET jl= jl
+    			WHERE kelas.nk=old.nk;
+            ELSEIF (old.jeniskelamin='Perempuan') THEN
+            	UPDATE kelas
+    			SET jp= jp
+    			WHERE kelas.nk=old.nk;
+         	END IF;
+        END IF;
+	ELSEIF(old.status='Pasif')THEN
+    	IF (new.jeniskelamin!=old.jeniskelamin) THEN
+        	IF (new.jeniskelamin='Laki-Laki') THEN
+    			UPDATE kelas
+    			SET jp= jp,js=js
+    			WHERE kelas.nk=old.nk;
+            ELSEIF (new.jeniskelamin='Perempuan') THEN
+            	UPDATE kelas
+    			SET jl= jl,js=js
+    			WHERE kelas.nk=old.nk;
+         	END IF;
+        ELSEIF (new.jeniskelamin=old.jeniskelamin) THEN
+        	IF (old.jeniskelamin='Laki-Laki') THEN
+    			UPDATE kelas
+    			SET jl= jl,js=js
+    			WHERE kelas.nk=old.nk;
+            ELSEIF (old.jeniskelamin='Perempuan') THEN
+            	UPDATE kelas
+    			SET jp= jp,js=js
+    			WHERE kelas.nk=old.nk;
+         	END IF;
+        END IF;      
 	END IF;
 END IF
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `updatejkstatus` AFTER UPDATE ON `siswa` FOR EACH ROW IF  (new.status='Pasif' AND old.status='Aktif') THEN
-    IF(old.jeniskelamin='Laki-Laki') THEN
-        UPDATE kelas
-        SET jl= jl-1,js=js-1
-        WHERE kelas.nk=old.nk;
-    ELSE
-        UPDATE kelas
-        SET jp= jp-1,js=js-1
-        WHERE kelas.nk=old.nk;      
-    END IF;
-ELSEIF (new.status='Aktif' AND old.status='Pasif') THEN
-     IF(new.jeniskelamin='Laki-Laki') THEN
-        UPDATE kelas
-        SET jl=jl,js=js
-        WHERE kelas.nk=old.nk;
-        UPDATE kelas
-        SET jl= jl+1,js=js+1
-        WHERE kelas.nk=old.nk;
-     ELSE
-        UPDATE kelas
-        SET jp=jp
-        WHERE kelas.nk=old.nk;
-        UPDATE kelas
-        SET jp= jp+1,js=js+1
-        WHERE kelas.nk=old.nk;      
-    END IF;
-END IF
+CREATE TRIGGER `updatenamaabsen` AFTER UPDATE ON `siswa` FOR EACH ROW UPDATE absen
+set nama=new.nama
+WHERE nis=new.nis
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `updatenamahisabsen` AFTER UPDATE ON `siswa` FOR EACH ROW UPDATE historyabsen
+set nama=new.nama
+WHERE nis=new.nis
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `updatenamahislapabsen` AFTER UPDATE ON `siswa` FOR EACH ROW UPDATE historylapabsen
+set nama=new.nama
+WHERE nis=new.nis
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `updatenamalapabsen` AFTER UPDATE ON `siswa` FOR EACH ROW UPDATE lapabsen
+set nama=new.nama
+WHERE nis=new.nis
 $$
 DELIMITER ;
 DELIMITER $$
@@ -771,6 +857,7 @@ CREATE TABLE `walikelas` (
   `idwalikelas` varchar(15) NOT NULL,
   `nip` varchar(15) NOT NULL,
   `nama` varchar(45) NOT NULL,
+  `nk` varchar(15) DEFAULT NULL,
   `email` varchar(45) NOT NULL,
   `jeniskelamin` varchar(15) NOT NULL,
   `notlp` varchar(15) NOT NULL,
@@ -782,11 +869,12 @@ CREATE TABLE `walikelas` (
 -- Dumping data for table `walikelas`
 --
 
-INSERT INTO `walikelas` (`idwalikelas`, `nip`, `nama`, `email`, `jeniskelamin`, `notlp`, `alamat`, `status`) VALUES
-('WLS001', '3411181123', 'Rafi Aziizi M', 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi', 'Aktif'),
-('WLS002', '3411181122', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '08112', 'Cikalong', 'Pasif'),
-('WLS003', '3411181121', 'Rizko Ayundra', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang', 'Pasif'),
-('WLS004', '3411181111', 'Dandi Rusdani', 'dandi@gmail.com', 'Laki-Laki', '08128240844', 'Cimahi', 'Pasif');
+INSERT INTO `walikelas` (`idwalikelas`, `nip`, `nama`, `nk`, `email`, `jeniskelamin`, `notlp`, `alamat`, `status`) VALUES
+('WLS001', '3411181123', 'Rafi Aziizi M', NULL, 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi', 'Pasif'),
+('WLS002', '3411181122', 'Chania Ayu', NULL, 'chaniaayu@gmail.com', 'Perempuan', '08112', 'Cikalong', 'Pasif'),
+('WLS003', '3411181121', 'Rizko Ayundra', '12BDP1', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang', 'Aktif'),
+('WLS004', '3411181111', 'Dandi Rusdani', '12BDP1', 'dandi@gmail.com', 'Laki-Laki', '08128240844', 'Cimahi', 'Aktif'),
+('WLS005', '31', 'Yoman', '12BDP1', 'yo@gmail.com', 'Laki-Laki', '081282408414', 'weqdsadsa', 'Pasif');
 
 --
 -- Triggers `walikelas`
@@ -887,7 +975,8 @@ ALTER TABLE `siswa`
 --
 ALTER TABLE `walikelas`
   ADD PRIMARY KEY (`idwalikelas`),
-  ADD KEY `nip` (`nip`);
+  ADD KEY `nip` (`nip`),
+  ADD KEY `nk` (`nk`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -897,12 +986,12 @@ ALTER TABLE `walikelas`
 -- AUTO_INCREMENT for table `absen`
 --
 ALTER TABLE `absen`
-  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `historyabsen`
 --
 ALTER TABLE `historyabsen`
-  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `rfidlog`
 --
@@ -952,7 +1041,8 @@ ALTER TABLE `siswa`
 -- Constraints for table `walikelas`
 --
 ALTER TABLE `walikelas`
-  ADD CONSTRAINT `walikelas_ibfk_1` FOREIGN KEY (`nip`) REFERENCES `guru` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `walikelas_ibfk_1` FOREIGN KEY (`nip`) REFERENCES `guru` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `walikelas_ibfk_2` FOREIGN KEY (`nk`) REFERENCES `kelas` (`nk`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

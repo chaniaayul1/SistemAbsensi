@@ -53,44 +53,78 @@ public class lupapassword extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btn_simpanlupapassword = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(650, 350));
         setMinimumSize(new java.awt.Dimension(650, 350));
         setResizable(false);
         setSize(new java.awt.Dimension(650, 355));
 
         panellupapassword.setPreferredSize(new java.awt.Dimension(650, 350));
         panellupapassword.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panellupapassword.add(txt_niplupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 480, 30));
-        panellupapassword.add(txt_namalupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 480, 30));
-        panellupapassword.add(txt_usernamelupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 480, 30));
-        panellupapassword.add(txt_passlupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, 480, 30));
-        panellupapassword.add(txt_pass2lupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 480, 30));
+        panellupapassword.add(txt_niplupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 83, 450, 30));
+        panellupapassword.add(txt_namalupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 121, 450, 30));
+        panellupapassword.add(txt_usernamelupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 164, 450, 30));
+        panellupapassword.add(txt_passlupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 207, 450, 30));
+        panellupapassword.add(txt_pass2lupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 247, 450, 30));
 
-        jLabel1.setText("NIP");
-        panellupapassword.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 85, 50, 20));
+        jLabel1.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel1.setText(":");
+        panellupapassword.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 123, 50, 20));
 
+        jLabel2.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
         jLabel2.setText("Nama");
-        panellupapassword.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 123, 60, 20));
+        panellupapassword.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 128, 60, 20));
 
+        jLabel3.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
         jLabel3.setText("Username");
-        panellupapassword.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 167, -1, -1));
+        panellupapassword.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 172, -1, -1));
 
+        jLabel4.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
         jLabel4.setText("Password Baru");
-        panellupapassword.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
+        panellupapassword.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 212, -1, -1));
 
+        jLabel5.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
         jLabel5.setText("Tulis Ulang Password");
-        panellupapassword.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 245, 100, 20));
+        panellupapassword.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 251, 130, 20));
 
+        btn_simpanlupapassword.setBackground(new java.awt.Color(255, 255, 255));
+        btn_simpanlupapassword.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_simpanlupapassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/floppy-disk.png"))); // NOI18N
         btn_simpanlupapassword.setText("Simpan");
+        btn_simpanlupapassword.setIconTextGap(18);
+        btn_simpanlupapassword.setMargin(new java.awt.Insets(1, 1, 1, 1));
         btn_simpanlupapassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_simpanlupapasswordActionPerformed(evt);
             }
         });
-        panellupapassword.add(btn_simpanlupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, 80, 30));
+        panellupapassword.add(btn_simpanlupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 290, 130, 40));
+
+        jLabel7.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel7.setText("NIP");
+        panellupapassword.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 88, 50, 20));
+
+        jLabel8.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel8.setText(":");
+        panellupapassword.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 167, 50, 20));
+
+        jLabel9.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel9.setText(":");
+        panellupapassword.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 50, 20));
+
+        jLabel10.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel10.setText(":");
+        panellupapassword.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 251, 50, 20));
+
+        jLabel11.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel11.setText(":");
+        panellupapassword.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 85, 50, 20));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panellupapassword.png"))); // NOI18N
         jLabel6.setOpaque(true);
@@ -193,11 +227,16 @@ public class lupapassword extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_simpanlupapassword;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel panellupapassword;
     private javax.swing.JTextField txt_namalupapassword;
     private javax.swing.JTextField txt_niplupapassword;
