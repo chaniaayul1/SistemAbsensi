@@ -15,12 +15,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -39,8 +37,9 @@ public class keloladata_bk extends javax.swing.JFrame {
     Connection con;
     Statement stat;
     ResultSet rs,rs1,rs2;
-    String sql, leveluser,leveluser2,bfrfid,wlskelas,wlsprofkelas,usernameadm,idabsen;
+    String sql, leveluser,leveluser2,leveluser4,bfrfid,wlskelas,wlsprofkelas,usernameadm,idabsen;
     String gendersiswa,wlssiswa;
+    String nama;
     String lapabsen;
     String tanggalpert,tanggalakhr;
     int status=0;
@@ -64,7 +63,9 @@ public class keloladata_bk extends javax.swing.JFrame {
         LayerPane.removeAll();
         Background.removeAll();
         Background.repaint();
-        Background.revalidate();
+        Background.revalidate();   
+        lb_uname1.setText(Session.getname());
+        username.setText(Session.getusername());
     }
     
     //==================================SISWA=================================//
@@ -3486,7 +3487,100 @@ System.out.println(e);
            }
     }
     
+    public void editprofile(){
+        switchpanel(profileadmin2);
+        try{
+             stat = con.createStatement( );
+             sql  = "SELECT * FROM admin WHERE username='"+Session.getusername()+"' and status='Aktif'";
+            
+             rs   = stat.executeQuery(sql);
+             while(rs.next ()){
+                Object[ ] obj = new Object[7];
+                obj[0] =rs.getString("idadmin");
+                txt_idadminprofileadmin1.setText((String) obj[0]);
+                obj[1] =rs.getString("nip");
+                txt_nipprofileadmin1.setText((String) obj[1]);
+                obj[2] =rs.getString("nama");
+                txt_namaprofileadmin1.setText((String) obj[2]);
+                obj[3] =rs.getString("username");
+                txt_usernameprofileadmin1.setText((String) obj[3]);
+                obj[4] =rs.getString("password");
+                txt_passprofileadmin1.setText((String) obj[4]);
+                obj[5] =rs.getString("level");
+                if(obj[5].equals("0")){
+                    txt_statusprofileadmin1.setText("Guru BK");
+                }else if(obj[5].equals("1")){
+                    txt_statusprofileadmin1.setText("Bagian IT");
+                }else if(obj[5].equals("2")){
+                    txt_statusprofileadmin1.setText("Kepala Sekolah");
+                }
+            }
+        }catch (SQLException ex) {
+            Logger.getLogger(lupapassword.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
+    public void editprofileadmin2(boolean check){
+        if (check==true){
+            txt_namaprofileadmin1.setEnabled(false);
+            txt_nipprofileadmin1.setEnabled(false);
+            txt_namaprofileadmin1.setEnabled(false);
+            txt_usernameprofileadmin1.setEnabled(true);
+            txt_passbaruprofileadmin2.setEnabled(true);
+            txt_passulangprofileadmin2.setEnabled(true);
+        }
+        else{
+            txt_namaprofileadmin1.setEnabled(false);
+            txt_nipprofileadmin1.setEnabled(false);
+            txt_namaprofileadmin1.setEnabled(false);
+            txt_usernameprofileadmin1.setEnabled(false);
+            txt_passbaruprofileadmin2.setEnabled(false);
+            txt_passulangprofileadmin2.setEnabled(false);
+        }
+    }
+    
+    public void simpandataadmin2(){
+        if (!txt_passbaruprofileadmin2.getText().equals("") && !txt_passulangprofileadmin2.getText().equals("")){
+            if(txt_passbaruprofileadmin2.getText().equals(txt_passulangprofileadmin2.getText())){
+                int jwbn=JOptionPane.showConfirmDialog(null, "Benarkah anda ingin melakukan pembaharuan data ini?", "Edit Profile Password",JOptionPane.YES_NO_OPTION);
+                if (jwbn==JOptionPane.YES_OPTION){
+                    try {
+                    // TODO add your handling code here:
+                        stat = con.createStatement( );
+                        con.createStatement().executeUpdate("UPDATE admin set   username='"+txt_usernameprofileadmin1.getText()+"', "
+                                                                                    + "password=MD5('"+txt_passulangprofileadmin2.getText()+"') "
+                                                                                    + "WHERE username='"+username.getText()+"'");
+                        rs   = stat.executeQuery(sql);
+                        if(username.getText()!=txt_usernameprofileadmin1.getText()){
+                            JOptionPane.showMessageDialog(null, ("Data Admin Berhasil di perbaharui silahkan Login ulang"), 
+                            "Data Profile Admin", JOptionPane.INFORMATION_MESSAGE);
+                            this.logout();
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, ("Data Admin Berhasil di perbaharui silahkan Login ulang"), 
+                            "Data Profile Admin", JOptionPane.INFORMATION_MESSAGE);
+                            this.logout();
+                        }
+                    }catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, ("Data Admin Gagal di Update"), 
+                        "Data Profile Admin Error", JOptionPane.ERROR_MESSAGE);
+                        System.out.println(ex);
+                    }
+                }
+                else{
+                    txt_passbaruprofileadmin2.setText("");
+                    txt_passulangprofileadmin2.setText("");
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, ("Pastikan Password Baru dan Tulis Ulang Password Sama"), 
+                    "Data Profile Admin Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, ("Data Password Baru Tidak Boleh Kosong"), 
+                    "Data Profile Admin Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     //SET TABLE
     public void settable(){
         //SETTING TRANSPARASI SCROLLPANE TABEL SISWA
@@ -3658,7 +3752,11 @@ System.out.println(e);
         btn_logout = new javax.swing.JPanel();
         lblogout = new javax.swing.JLabel();
         iconlogout = new javax.swing.JLabel();
+        lb_come = new javax.swing.JLabel();
+        lb_come1 = new javax.swing.JLabel();
+        lb_uname1 = new javax.swing.JLabel();
         username = new javax.swing.JLabel();
+        btn_editprofile = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
         LayerPane = new javax.swing.JLayeredPane();
         form_registrasi = new javax.swing.JLayeredPane();
@@ -4089,6 +4187,37 @@ System.out.println(e);
         btn_hapusadmin = new javax.swing.JButton();
         bgadmin = new javax.swing.JLabel();
         saveadm = new javax.swing.JLabel();
+        profileadmin2 = new javax.swing.JLayeredPane();
+        panelprofileadmin2 = new javax.swing.JPanel();
+        lb_gambar4 = new javax.swing.JLabel();
+        lb_idadminprofileadmin1 = new javax.swing.JLabel();
+        lb_namaprofileadmin1 = new javax.swing.JLabel();
+        lb_usenameprofileadmin1 = new javax.swing.JLabel();
+        lb_passprofileadmin1 = new javax.swing.JLabel();
+        lb_statusprofileadmin1 = new javax.swing.JLabel();
+        lb_nipprofileadmin1 = new javax.swing.JLabel();
+        lb_passbaruprofileadmin2 = new javax.swing.JLabel();
+        lb_passulangprofileadmin2 = new javax.swing.JLabel();
+        lb_titik33 = new javax.swing.JLabel();
+        lb_titik34 = new javax.swing.JLabel();
+        lb_titik35 = new javax.swing.JLabel();
+        lb_titik36 = new javax.swing.JLabel();
+        lb_titik37 = new javax.swing.JLabel();
+        lb_titik38 = new javax.swing.JLabel();
+        lb_titik39 = new javax.swing.JLabel();
+        lb_titik40 = new javax.swing.JLabel();
+        txt_idadminprofileadmin1 = new javax.swing.JTextField();
+        txt_namaprofileadmin1 = new javax.swing.JTextField();
+        txt_usernameprofileadmin1 = new javax.swing.JTextField();
+        txt_passprofileadmin1 = new javax.swing.JPasswordField();
+        txt_statusprofileadmin1 = new javax.swing.JTextField();
+        txt_nipprofileadmin1 = new javax.swing.JTextField();
+        txt_passulangprofileadmin2 = new javax.swing.JPasswordField();
+        txt_passbaruprofileadmin2 = new javax.swing.JPasswordField();
+        btn_editprofileadmin1 = new javax.swing.JToggleButton();
+        btn_simpanprofileadmin1 = new javax.swing.JButton();
+        btn_kembaliprofileadmin1 = new javax.swing.JButton();
+        bgprofileadmin1 = new javax.swing.JLabel();
         profileadmin = new javax.swing.JLayeredPane();
         panelprofileadmin = new javax.swing.JPanel();
         lb_gambar3 = new javax.swing.JLabel();
@@ -4476,12 +4605,36 @@ System.out.println(e);
 
         PanelUtama.add(panelbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 260, 658));
 
-        username.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lb_come.setFont(new java.awt.Font("Tahoma", 1, 75)); // NOI18N
+        lb_come.setForeground(new java.awt.Color(33, 105, 170));
+        lb_come.setText("SELAMAT DATANG");
+        PanelUtama.add(lb_come, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 810, 100));
+
+        lb_come1.setFont(new java.awt.Font("Tahoma", 1, 65)); // NOI18N
+        lb_come1.setForeground(new java.awt.Color(33, 105, 170));
+        lb_come1.setText("DI KELOLA DATA");
+        PanelUtama.add(lb_come1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, 810, 100));
+
+        lb_uname1.setFont(new java.awt.Font("Tahoma", 0, 55)); // NOI18N
+        lb_uname1.setForeground(new java.awt.Color(33, 105, 170));
+        PanelUtama.add(lb_uname1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, 630, 80));
+
+        username.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         username.setForeground(new java.awt.Color(39, 113, 184));
         username.setText("INI USERNAME");
-        PanelUtama.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 30, 190, 40));
+        PanelUtama.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 35, 190, 40));
 
-        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/listmenu3.png"))); // NOI18N
+        btn_editprofile.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_editprofile.setForeground(new java.awt.Color(39, 113, 184));
+        btn_editprofile.setText("EDIT PROFILE");
+        btn_editprofile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_editprofileMouseClicked(evt);
+            }
+        });
+        PanelUtama.add(btn_editprofile, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 65, 90, -1));
+
+        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/listmenu4.png"))); // NOI18N
         PanelUtama.add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         LayerPane.setEnabled(false);
@@ -7154,6 +7307,159 @@ System.out.println(e);
 
         LayerPane.add(dataadmin, "card4");
 
+        profileadmin2.setOpaque(true);
+        profileadmin2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelprofileadmin2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lb_gambar4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/icon_profileadmin.png"))); // NOI18N
+        panelprofileadmin2.add(lb_gambar4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 260, 230));
+
+        lb_idadminprofileadmin1.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_idadminprofileadmin1.setForeground(new java.awt.Color(0, 51, 204));
+        lb_idadminprofileadmin1.setText("ID Admin");
+        panelprofileadmin2.add(lb_idadminprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, 110, 30));
+
+        lb_namaprofileadmin1.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_namaprofileadmin1.setForeground(new java.awt.Color(0, 51, 204));
+        lb_namaprofileadmin1.setText("Nama");
+        panelprofileadmin2.add(lb_namaprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, 90, 30));
+
+        lb_usenameprofileadmin1.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_usenameprofileadmin1.setForeground(new java.awt.Color(0, 51, 204));
+        lb_usenameprofileadmin1.setText("Username");
+        panelprofileadmin2.add(lb_usenameprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 270, 100, 30));
+
+        lb_passprofileadmin1.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_passprofileadmin1.setForeground(new java.awt.Color(0, 51, 204));
+        lb_passprofileadmin1.setText("Password");
+        panelprofileadmin2.add(lb_passprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 130, 30));
+
+        lb_statusprofileadmin1.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_statusprofileadmin1.setForeground(new java.awt.Color(0, 51, 204));
+        lb_statusprofileadmin1.setText("Status");
+        panelprofileadmin2.add(lb_statusprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 470, 120, 30));
+
+        lb_nipprofileadmin1.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_nipprofileadmin1.setForeground(new java.awt.Color(0, 51, 204));
+        lb_nipprofileadmin1.setText("NIP");
+        panelprofileadmin2.add(lb_nipprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 130, 30));
+
+        lb_passbaruprofileadmin2.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_passbaruprofileadmin2.setForeground(new java.awt.Color(0, 51, 204));
+        lb_passbaruprofileadmin2.setText("Password Baru");
+        panelprofileadmin2.add(lb_passbaruprofileadmin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, 130, 30));
+
+        lb_passulangprofileadmin2.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_passulangprofileadmin2.setForeground(new java.awt.Color(0, 51, 204));
+        lb_passulangprofileadmin2.setText("<html> \tTulis \tulang \tpassword  baru </html ");
+        panelprofileadmin2.add(lb_passulangprofileadmin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 410, 130, 50));
+
+        lb_titik33.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik33.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik33.setText(":");
+        panelprofileadmin2.add(lb_titik33, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, 20, 30));
+
+        lb_titik34.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik34.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik34.setText(":");
+        panelprofileadmin2.add(lb_titik34, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, 20, 30));
+
+        lb_titik35.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik35.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik35.setText(":");
+        panelprofileadmin2.add(lb_titik35, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 270, 20, 30));
+
+        lb_titik36.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik36.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik36.setText(":");
+        panelprofileadmin2.add(lb_titik36, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 320, 20, 30));
+
+        lb_titik37.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik37.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik37.setText(":");
+        panelprofileadmin2.add(lb_titik37, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 470, 20, 30));
+
+        lb_titik38.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik38.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik38.setText(":");
+        panelprofileadmin2.add(lb_titik38, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 170, 20, 30));
+
+        lb_titik39.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik39.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik39.setText(":");
+        panelprofileadmin2.add(lb_titik39, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 370, 20, 30));
+
+        lb_titik40.setFont(new java.awt.Font("Noto Serif", 0, 18)); // NOI18N
+        lb_titik40.setForeground(new java.awt.Color(0, 51, 204));
+        lb_titik40.setText(":");
+        panelprofileadmin2.add(lb_titik40, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 420, 20, 30));
+
+        txt_idadminprofileadmin1.setEnabled(false);
+        panelprofileadmin2.add(txt_idadminprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, 530, 30));
+
+        txt_namaprofileadmin1.setEnabled(false);
+        panelprofileadmin2.add(txt_namaprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 220, 530, 30));
+
+        txt_usernameprofileadmin1.setEnabled(false);
+        panelprofileadmin2.add(txt_usernameprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 270, 530, 30));
+
+        txt_passprofileadmin1.setEnabled(false);
+        panelprofileadmin2.add(txt_passprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 530, 30));
+
+        txt_statusprofileadmin1.setEnabled(false);
+        panelprofileadmin2.add(txt_statusprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 470, 530, 30));
+
+        txt_nipprofileadmin1.setEnabled(false);
+        panelprofileadmin2.add(txt_nipprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 530, 30));
+
+        txt_passulangprofileadmin2.setEnabled(false);
+        panelprofileadmin2.add(txt_passulangprofileadmin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 420, 530, 30));
+
+        txt_passbaruprofileadmin2.setEnabled(false);
+        panelprofileadmin2.add(txt_passbaruprofileadmin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 530, 30));
+
+        btn_editprofileadmin1.setBackground(new java.awt.Color(255, 255, 255));
+        btn_editprofileadmin1.setText("Edit");
+        btn_editprofileadmin1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_editprofileadmin1ActionPerformed(evt);
+            }
+        });
+        panelprofileadmin2.add(btn_editprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(785, 560, 120, 40));
+
+        btn_simpanprofileadmin1.setBackground(new java.awt.Color(255, 255, 255));
+        btn_simpanprofileadmin1.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_simpanprofileadmin1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/floppy-disk.png"))); // NOI18N
+        btn_simpanprofileadmin1.setText("Simpan");
+        btn_simpanprofileadmin1.setIconTextGap(18);
+        btn_simpanprofileadmin1.setMargin(new java.awt.Insets(1, 1, 1, 10));
+        btn_simpanprofileadmin1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_simpanprofileadmin1ActionPerformed(evt);
+            }
+        });
+        panelprofileadmin2.add(btn_simpanprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 560, 140, 40));
+
+        btn_kembaliprofileadmin1.setBackground(new java.awt.Color(255, 255, 255));
+        btn_kembaliprofileadmin1.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
+        btn_kembaliprofileadmin1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_kembali.png"))); // NOI18N
+        btn_kembaliprofileadmin1.setIconTextGap(18);
+        btn_kembaliprofileadmin1.setMargin(new java.awt.Insets(1, 10, 1, 10));
+        btn_kembaliprofileadmin1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kembaliprofileadmin1ActionPerformed(evt);
+            }
+        });
+        panelprofileadmin2.add(btn_kembaliprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 560, 55, 35));
+
+        bgprofileadmin1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelprofileadmin.png"))); // NOI18N
+        panelprofileadmin2.add(bgprofileadmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        profileadmin2.add(panelprofileadmin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1107, 658));
+
+        LayerPane.add(profileadmin2, "card4");
+
         profileadmin.setOpaque(true);
         profileadmin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -8720,6 +9026,30 @@ System.out.println(e);
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
+    private void btn_editprofileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editprofileMouseClicked
+        editprofile();
+        editprofileadmin2(false);
+    }//GEN-LAST:event_btn_editprofileMouseClicked
+
+    private void btn_simpanprofileadmin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanprofileadmin1ActionPerformed
+        this.simpandataadmin2();
+    }//GEN-LAST:event_btn_simpanprofileadmin1ActionPerformed
+
+    private void btn_kembaliprofileadmin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliprofileadmin1ActionPerformed
+        LayerPane.removeAll();
+        Background.removeAll();
+        Background.repaint();
+        Background.revalidate();
+    }//GEN-LAST:event_btn_kembaliprofileadmin1ActionPerformed
+
+    private void btn_editprofileadmin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editprofileadmin1ActionPerformed
+        if (btn_editprofileadmin1.isSelected()){
+            this.editprofileadmin2(true);
+        }else{
+            this.editprofileadmin2(false);
+        }
+    }//GEN-LAST:event_btn_editprofileadmin1ActionPerformed
+
     
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -8744,6 +9074,7 @@ System.out.println(e);
     private javax.swing.JLabel bglapabsensi;
     private javax.swing.JLabel bglapabsensi1;
     private javax.swing.JLabel bgprofileadmin;
+    private javax.swing.JLabel bgprofileadmin1;
     private javax.swing.JLabel bgprofileguru;
     private javax.swing.JLabel bgprofilekelas;
     private javax.swing.JLabel bgprofilesiswa;
@@ -8771,7 +9102,9 @@ System.out.println(e);
     private javax.swing.JPanel btn_datakelas;
     private javax.swing.JPanel btn_datasiswa;
     private javax.swing.JPanel btn_datawalikelas;
+    private javax.swing.JLabel btn_editprofile;
     private javax.swing.JToggleButton btn_editprofileadmin;
+    private javax.swing.JToggleButton btn_editprofileadmin1;
     private javax.swing.JToggleButton btn_editprofileguru;
     private javax.swing.JToggleButton btn_editprofilekelas;
     private javax.swing.JToggleButton btn_editprofilesiswa;
@@ -8788,6 +9121,7 @@ System.out.println(e);
     private javax.swing.JButton btn_kembaliformkelas;
     private javax.swing.JButton btn_kembaliformwalikelas;
     private javax.swing.JButton btn_kembaliprofileadmin;
+    private javax.swing.JButton btn_kembaliprofileadmin1;
     private javax.swing.JButton btn_kembaliprofileguru;
     private javax.swing.JButton btn_kembaliprofilekelas;
     private javax.swing.JButton btn_kembaliprofilesiswa;
@@ -8834,6 +9168,7 @@ System.out.println(e);
     private javax.swing.JButton btn_simpanformwalikelas;
     private javax.swing.JButton btn_simpanlapabsen;
     private javax.swing.JButton btn_simpanprofileadmin;
+    private javax.swing.JButton btn_simpanprofileadmin1;
     private javax.swing.JButton btn_simpanprofileguru;
     private javax.swing.JButton btn_simpanprofilekelas;
     private javax.swing.JButton btn_simpanprofilesiswa;
@@ -9010,6 +9345,8 @@ System.out.println(e);
     private javax.swing.JLabel lb_alamatprofileguru2;
     private javax.swing.JLabel lb_alamatprofilewalikelas;
     private javax.swing.JLabel lb_alamatprofilewalikelas1;
+    private javax.swing.JLabel lb_come;
+    private javax.swing.JLabel lb_come1;
     private javax.swing.JLabel lb_emailformguru;
     private javax.swing.JLabel lb_emailformsiswa;
     private javax.swing.JLabel lb_emailformwalikelas;
@@ -9020,10 +9357,12 @@ System.out.println(e);
     private javax.swing.JLabel lb_gambar1;
     private javax.swing.JLabel lb_gambar2;
     private javax.swing.JLabel lb_gambar3;
+    private javax.swing.JLabel lb_gambar4;
     private javax.swing.JLabel lb_guru;
     private javax.swing.JLabel lb_idabsen;
     private javax.swing.JLabel lb_idabsen1;
     private javax.swing.JLabel lb_idadminprofileadmin;
+    private javax.swing.JLabel lb_idadminprofileadmin1;
     private javax.swing.JLabel lb_idanggotawalikelas;
     private javax.swing.JLabel lb_idprofilewalikelas;
     private javax.swing.JLabel lb_idregadmin;
@@ -9051,6 +9390,7 @@ System.out.println(e);
     private javax.swing.JLabel lb_namaformsiswa;
     private javax.swing.JLabel lb_namaformwalikelas;
     private javax.swing.JLabel lb_namaprofileadmin;
+    private javax.swing.JLabel lb_namaprofileadmin1;
     private javax.swing.JLabel lb_namaprofileguru;
     private javax.swing.JLabel lb_namaprofilekelas;
     private javax.swing.JLabel lb_namaprofilewalikelas;
@@ -9062,6 +9402,7 @@ System.out.println(e);
     private javax.swing.JLabel lb_nipformwalikelas;
     private javax.swing.JLabel lb_nipformwalikelas1;
     private javax.swing.JLabel lb_nipprofileadmin;
+    private javax.swing.JLabel lb_nipprofileadmin1;
     private javax.swing.JLabel lb_nipprofileguru;
     private javax.swing.JLabel lb_nipprofilekelas;
     private javax.swing.JLabel lb_nipprofilewalikelas;
@@ -9088,7 +9429,10 @@ System.out.println(e);
     private javax.swing.JLabel lb_notelpformwalikelas;
     private javax.swing.JLabel lb_notelpprofileguru;
     private javax.swing.JLabel lb_notelpprofilewalikelas;
+    private javax.swing.JLabel lb_passbaruprofileadmin2;
     private javax.swing.JLabel lb_passprofileadmin;
+    private javax.swing.JLabel lb_passprofileadmin1;
+    private javax.swing.JLabel lb_passulangprofileadmin2;
     private javax.swing.JLabel lb_paswordregadmin;
     private javax.swing.JLabel lb_rfidformsiswa;
     private javax.swing.JLabel lb_sampairiwayatsiswa;
@@ -9096,6 +9440,7 @@ System.out.println(e);
     private javax.swing.JLabel lb_smtprofilekelas;
     private javax.swing.JLabel lb_status;
     private javax.swing.JLabel lb_statusprofileadmin;
+    private javax.swing.JLabel lb_statusprofileadmin1;
     private javax.swing.JLabel lb_statusregadmin;
     private javax.swing.JLabel lb_taformkelas;
     private javax.swing.JLabel lb_tahunajar;
@@ -9132,13 +9477,23 @@ System.out.println(e);
     private javax.swing.JLabel lb_titik30;
     private javax.swing.JLabel lb_titik31;
     private javax.swing.JLabel lb_titik32;
+    private javax.swing.JLabel lb_titik33;
+    private javax.swing.JLabel lb_titik34;
+    private javax.swing.JLabel lb_titik35;
+    private javax.swing.JLabel lb_titik36;
+    private javax.swing.JLabel lb_titik37;
+    private javax.swing.JLabel lb_titik38;
+    private javax.swing.JLabel lb_titik39;
     private javax.swing.JLabel lb_titik4;
+    private javax.swing.JLabel lb_titik40;
     private javax.swing.JLabel lb_titik5;
     private javax.swing.JLabel lb_titik6;
     private javax.swing.JLabel lb_titik7;
     private javax.swing.JLabel lb_titik8;
     private javax.swing.JLabel lb_titik9;
+    public javax.swing.JLabel lb_uname1;
     private javax.swing.JLabel lb_usenameprofileadmin;
+    private javax.swing.JLabel lb_usenameprofileadmin1;
     private javax.swing.JLabel lb_usernameregadmin;
     private javax.swing.JLabel lb_walikelas;
     private javax.swing.JLabel lbabsen;
@@ -9168,6 +9523,7 @@ System.out.println(e);
     private javax.swing.JPanel panelkelola_semester;
     private javax.swing.JPanel panellapabsensi;
     private javax.swing.JPanel panelprofileadmin;
+    private javax.swing.JPanel panelprofileadmin2;
     private javax.swing.JPanel panelprofileguru;
     private javax.swing.JPanel panelprofilekelas;
     private javax.swing.JPanel panelprofilesiswa;
@@ -9178,6 +9534,7 @@ System.out.println(e);
     private javax.swing.JPanel paneltambahsemester;
     private javax.swing.JPanel panelwalikelas;
     private javax.swing.JLayeredPane profileadmin;
+    private javax.swing.JLayeredPane profileadmin2;
     private javax.swing.JLayeredPane profileguru;
     private javax.swing.JLayeredPane profilekelas;
     private javax.swing.JLayeredPane profilesiswa;
@@ -9238,6 +9595,7 @@ System.out.println(e);
     private javax.swing.JTextField txt_emailsiswa;
     private javax.swing.JTextField txt_gendersiswa;
     private javax.swing.JTextField txt_idadminprofileadmin;
+    private javax.swing.JTextField txt_idadminprofileadmin1;
     private javax.swing.JTextField txt_idformwalikelas;
     private javax.swing.JTextField txt_idprofilewalikelas;
     private javax.swing.JTextField txt_idregadmin;
@@ -9256,6 +9614,7 @@ System.out.println(e);
     private javax.swing.JTextField txt_namaformsiswa;
     private javax.swing.JTextField txt_namaformwalikelas;
     private javax.swing.JTextField txt_namaprofileadmin;
+    private javax.swing.JTextField txt_namaprofileadmin1;
     private javax.swing.JTextField txt_namaprofileguru;
     private javax.swing.JTextField txt_namaprofilekelas;
     private javax.swing.JTextField txt_namaprofilewalikelas;
@@ -9264,6 +9623,7 @@ System.out.println(e);
     private javax.swing.JTextField txt_nipformguru;
     private javax.swing.JTextField txt_nipformwalikelas;
     private javax.swing.JTextField txt_nipprofileadmin;
+    private javax.swing.JTextField txt_nipprofileadmin1;
     private javax.swing.JTextField txt_nipprofileguru;
     private javax.swing.JTextField txt_nipprofilewalikelas;
     private javax.swing.JTextField txt_nipregadmin;
@@ -9281,7 +9641,10 @@ System.out.println(e);
     private javax.swing.JTextField txt_notelpprofilewalikelas;
     private javax.swing.JTextField txt_notelpsiswa;
     private javax.swing.JTextField txt_ortusiswa;
+    private javax.swing.JPasswordField txt_passbaruprofileadmin2;
     private javax.swing.JPasswordField txt_passprofileadmin;
+    private javax.swing.JPasswordField txt_passprofileadmin1;
+    private javax.swing.JPasswordField txt_passulangprofileadmin2;
     private javax.swing.JPasswordField txt_passwordregadmin;
     private javax.swing.JTextField txt_rfidformsiswa;
     private javax.swing.JTextField txt_rfidsiswa;
@@ -9300,6 +9663,7 @@ System.out.println(e);
     private javax.swing.JTextField txt_siswabermasalah;
     private javax.swing.JTextField txt_smtprofilekelas;
     private javax.swing.JTextField txt_statusprofileadmin;
+    private javax.swing.JTextField txt_statusprofileadmin1;
     private javax.swing.JTextField txt_taformkelas;
     private javax.swing.JTextField txt_tahunajaransemester;
     private javax.swing.JTextField txt_tanggal2riwayatsiswa;
@@ -9312,6 +9676,7 @@ System.out.println(e);
     private javax.swing.JTextField txt_tlpformguru;
     private javax.swing.JTextField txt_tlpformwalikelas;
     private javax.swing.JTextField txt_usernameprofileadmin;
+    private javax.swing.JTextField txt_usernameprofileadmin1;
     private javax.swing.JTextField txt_usernameregadmin;
     private javax.swing.JTextField txt_walasprofilekelas;
     private javax.swing.JTextField txt_walassiswa;

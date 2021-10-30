@@ -87,18 +87,19 @@ public class dashboard extends javax.swing.JFrame {
     //
     public dashboard() {
         initComponents();       
-        this.username.setText(Session.getusername());
+        
         koneksi DB = new koneksi();
         DB.config();
         con = DB.con;
         stat = DB.stm;
-
+        
         //RUN QUERY DEFAULT
         defaulttanggal();
         tanggal();
         tampil_jam();
         
-        
+        this.notifikasialphasemester();
+        username.setText(Session.getusername());
         //QUERY TOTAL SISWA,GURU,KELAS
         queryjumlahsiswa();
         queryjumlahguru();
@@ -836,13 +837,16 @@ public class dashboard extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jCalendar1 = new com.toedter.calendar.JCalendar();
+        btn_kelolaabsensi = new javax.swing.JPanel();
+        lb_kelolaabsensi = new javax.swing.JLabel();
+        icon_kelolaabsensi = new javax.swing.JLabel();
         btn_keluar = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        btn_kelolaabsen = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
+        lb_keluar = new javax.swing.JLabel();
+        icon_keluar = new javax.swing.JLabel();
         btn_siswabermasalah = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lb_siswamslh = new javax.swing.JLabel();
+        icon_siswamslh = new javax.swing.JLabel();
+        btn_editprofile = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         jTextField1.setText("jTextField1");
@@ -910,6 +914,7 @@ public class dashboard extends javax.swing.JFrame {
         Scrollpane.setBackground(new java.awt.Color(255, 255, 255));
         Scrollpane.setBorder(null);
         Scrollpane.setOpaque(false);
+        Scrollpane.setPreferredSize(new java.awt.Dimension(930, 5000));
 
         panelgrafik.setBackground(new java.awt.Color(255, 255, 255));
         panelgrafik.setPreferredSize(new java.awt.Dimension(930, 5500));
@@ -4632,7 +4637,7 @@ public class dashboard extends javax.swing.JFrame {
 
         lb_hadirabsensmtangkatan12.setFont(new java.awt.Font("Roboto Slab", 0, 11)); // NOI18N
         lb_hadirabsensmtangkatan12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        panelchartabssmtangkatan.add(lb_hadirabsensmtangkatan12, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 310, 70, 18));
+        panelchartabssmtangkatan.add(lb_hadirabsensmtangkatan12, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 310, 70, 18));
 
         lb_terlambatabsensmtangkatan12.setFont(new java.awt.Font("Roboto Slab", 0, 11)); // NOI18N
         lb_terlambatabsensmtangkatan12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -4783,10 +4788,11 @@ public class dashboard extends javax.swing.JFrame {
         paneldashboard.add(Scrollpane, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 950, 480));
 
         panel_waktu.setBackground(new java.awt.Color(255, 255, 255));
-        panel_waktu.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        panel_waktu.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(37, 112, 183), 2, true));
         panel_waktu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_tanggal.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 24)); // NOI18N
+        lbl_tanggal.setForeground(new java.awt.Color(37, 112, 183));
         lbl_tanggal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_tanggal.setText("Tanggal");
         lbl_tanggal.setToolTipText("");
@@ -4794,16 +4800,19 @@ public class dashboard extends javax.swing.JFrame {
 
         txt_tanggal.setBackground(new java.awt.Color(102, 255, 102));
         txt_tanggal.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 24)); // NOI18N
+        txt_tanggal.setForeground(new java.awt.Color(37, 112, 183));
         txt_tanggal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         panel_waktu.add(txt_tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 270, 40));
 
         lbl_waktu.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 24)); // NOI18N
+        lbl_waktu.setForeground(new java.awt.Color(37, 112, 183));
         lbl_waktu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_waktu.setText("Waktu ");
         panel_waktu.add(lbl_waktu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 380, -1));
 
         txt_jam.setBackground(new java.awt.Color(255, 51, 51));
         txt_jam.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 24)); // NOI18N
+        txt_jam.setForeground(new java.awt.Color(37, 112, 183));
         txt_jam.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         panel_waktu.add(txt_jam, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 270, 40));
 
@@ -4816,6 +4825,7 @@ public class dashboard extends javax.swing.JFrame {
         panel_waktu.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 40, 40));
 
         jLabel13.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 12)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(37, 112, 183));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("<html> Jl. Raya Batujajar, Batujajar Barat, Kecamatan Batujajar, Kabupaten Bandung Barat, <br> Jawa Barat <br> 40561  </html>");
         jLabel13.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -4830,6 +4840,7 @@ public class dashboard extends javax.swing.JFrame {
         panel_waktu.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 40, 40));
 
         jLabel10.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(37, 112, 183));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel10.setText("(022) 6867255");
         panel_waktu.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 140, 40));
@@ -4844,7 +4855,33 @@ public class dashboard extends javax.swing.JFrame {
 
         paneldashboard.add(panel_waktu, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 120, 390, 640));
 
-        btn_keluar.setBackground(new java.awt.Color(37, 112, 183));
+        btn_kelolaabsensi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_kelolaabsensiMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_kelolaabsensiMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_kelolaabsensiMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_kelolaabsensiMouseReleased(evt);
+            }
+        });
+        btn_kelolaabsensi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lb_kelolaabsensi.setFont(new java.awt.Font("Gadugi", 0, 26)); // NOI18N
+        lb_kelolaabsensi.setForeground(new java.awt.Color(37, 112, 183));
+        lb_kelolaabsensi.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lb_kelolaabsensi.setText("KELOLA ABSENSI");
+        btn_kelolaabsensi.add(lb_kelolaabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 230, 50));
+
+        icon_kelolaabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/dashabsen.png"))); // NOI18N
+        btn_kelolaabsensi.add(icon_kelolaabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
+
+        paneldashboard.add(btn_kelolaabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 690, 290, 50));
+
         btn_keluar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_keluarMouseEntered(evt);
@@ -4859,60 +4896,19 @@ public class dashboard extends javax.swing.JFrame {
                 btn_keluarMouseReleased(evt);
             }
         });
+        btn_keluar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel4.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Logout");
+        lb_keluar.setFont(new java.awt.Font("Gadugi", 0, 26)); // NOI18N
+        lb_keluar.setForeground(new java.awt.Color(37, 112, 183));
+        lb_keluar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lb_keluar.setText("KELUAR APLIKASI");
+        btn_keluar.add(lb_keluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 230, 50));
 
-        javax.swing.GroupLayout btn_keluarLayout = new javax.swing.GroupLayout(btn_keluar);
-        btn_keluar.setLayout(btn_keluarLayout);
-        btn_keluarLayout.setHorizontalGroup(
-            btn_keluarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-        );
-        btn_keluarLayout.setVerticalGroup(
-            btn_keluarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-        );
+        icon_keluar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/dashkeluar.png"))); // NOI18N
+        btn_keluar.add(icon_keluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
 
         paneldashboard.add(btn_keluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 690, 290, 50));
 
-        btn_kelolaabsen.setBackground(new java.awt.Color(37, 112, 183));
-        btn_kelolaabsen.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_kelolaabsenMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_kelolaabsenMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_kelolaabsenMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_kelolaabsenMouseReleased(evt);
-            }
-        });
-
-        jLabel7.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Kelola Absen");
-
-        javax.swing.GroupLayout btn_kelolaabsenLayout = new javax.swing.GroupLayout(btn_kelolaabsen);
-        btn_kelolaabsen.setLayout(btn_kelolaabsenLayout);
-        btn_kelolaabsenLayout.setHorizontalGroup(
-            btn_kelolaabsenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-        );
-        btn_kelolaabsenLayout.setVerticalGroup(
-            btn_kelolaabsenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-        );
-
-        paneldashboard.add(btn_kelolaabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 690, 290, 50));
-
-        btn_siswabermasalah.setBackground(new java.awt.Color(37, 112, 183));
         btn_siswabermasalah.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_siswabermasalahMouseEntered(evt);
@@ -4927,32 +4923,27 @@ public class dashboard extends javax.swing.JFrame {
                 btn_siswabermasalahMouseReleased(evt);
             }
         });
+        btn_siswabermasalah.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel5.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Laporan Siswa Bermasalah");
+        lb_siswamslh.setFont(new java.awt.Font("Gadugi", 0, 25)); // NOI18N
+        lb_siswamslh.setForeground(new java.awt.Color(37, 112, 183));
+        lb_siswamslh.setText("SISWA BERMASALAH");
+        btn_siswabermasalah.add(lb_siswamslh, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 240, 50));
 
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/iconlapmasalah.png"))); // NOI18N
-
-        javax.swing.GroupLayout btn_siswabermasalahLayout = new javax.swing.GroupLayout(btn_siswabermasalah);
-        btn_siswabermasalah.setLayout(btn_siswabermasalahLayout);
-        btn_siswabermasalahLayout.setHorizontalGroup(
-            btn_siswabermasalahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_siswabermasalahLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        btn_siswabermasalahLayout.setVerticalGroup(
-            btn_siswabermasalahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        icon_siswamslh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/dashbermasalah.png"))); // NOI18N
+        btn_siswabermasalah.add(icon_siswamslh, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
 
         paneldashboard.add(btn_siswabermasalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 690, 300, 50));
+
+        btn_editprofile.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_editprofile.setForeground(new java.awt.Color(255, 255, 255));
+        btn_editprofile.setText("EDIT PROFILE");
+        btn_editprofile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_editprofileMouseClicked(evt);
+            }
+        });
+        paneldashboard.add(btn_editprofile, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 65, 90, -1));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/dashboard.png"))); // NOI18N
         paneldashboard.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1366, 768));
@@ -4981,7 +4972,7 @@ public class dashboard extends javax.swing.JFrame {
     public void queryjumlahsiswa(){
         try{
            stat = con.createStatement( );
-           sql  = "SELECT COUNT(*) from siswa";
+           sql  = "SELECT COUNT(*) from siswa WHERE status='Aktif'";
            rs   = stat.executeQuery(sql);
            while(rs.next ()){
                 Object[ ] obj = new Object[1];
@@ -4997,7 +4988,7 @@ public class dashboard extends javax.swing.JFrame {
     public void queryjumlahguru(){
         try{
            stat = con.createStatement( );
-           sql  = "SELECT COUNT(*) from guru";
+           sql  = "SELECT COUNT(*) from guru WHERE status='Aktif'";
            rs   = stat.executeQuery(sql);
            while(rs.next ()){
                 Object[ ] obj = new Object[1];
@@ -5048,7 +5039,7 @@ public class dashboard extends javax.swing.JFrame {
     public void notifikasialphasemester(){
         try{
            stat = con.createStatement( );
-           sql  = "SELECT * FROM lapabsen WHERE alpha>=3 ";
+           sql  = "SELECT * FROM lapabsen WHERE alpha>=3 AND status='Aktif'";
            rs   = stat.executeQuery(sql);
            if (rs.next() ) {    
                 JOptionPane.showMessageDialog(null, ("Terdapat siswa bermasalah dengan absensi"), 
@@ -6569,65 +6560,71 @@ public class dashboard extends javax.swing.JFrame {
     }
    
     
-    private void btn_siswabermasalahMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_siswabermasalahMouseEntered
+    private void btn_keluarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_keluarMouseEntered
         // TODO add your handling code here:
-        btn_siswabermasalah.setBackground(new Color(63,138,209));
-    }//GEN-LAST:event_btn_siswabermasalahMouseEntered
+        btn_keluar.setBackground(new Color(37,112,183));
+        lb_keluar.setForeground(Color.white);
+    }//GEN-LAST:event_btn_keluarMouseEntered
 
-    private void btn_siswabermasalahMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_siswabermasalahMouseExited
+    private void btn_keluarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_keluarMouseExited
         // TODO add your handling code here:
-        btn_siswabermasalah.setBackground(new Color(37,112,183));
-    }//GEN-LAST:event_btn_siswabermasalahMouseExited
+        btn_keluar.setBackground(new Color(240,240,240));
+        lb_keluar.setForeground(new Color(37,112,183));
+    }//GEN-LAST:event_btn_keluarMouseExited
 
-    private void btn_siswabermasalahMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_siswabermasalahMousePressed
-        // TODO add your handling code here:
-        btn_siswabermasalah.setBackground(new Color(88,163,234));
-    }//GEN-LAST:event_btn_siswabermasalahMousePressed
+    private void btn_keluarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_keluarMousePressed
+        login lgn=new login();
+        lgn.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_keluarMousePressed
 
-    private void btn_kelolaabsenMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_kelolaabsenMouseEntered
-        // TODO add your handling code here:
-        btn_kelolaabsen.setBackground(new Color(63,138,209));
-    }//GEN-LAST:event_btn_kelolaabsenMouseEntered
+    private void btn_keluarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_keluarMouseReleased
+        
+    }//GEN-LAST:event_btn_keluarMouseReleased
 
-    private void btn_kelolaabsenMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_kelolaabsenMouseExited
-        // TODO add your handling code here:
-        btn_kelolaabsen.setBackground(new Color(37,112,183));
-    }//GEN-LAST:event_btn_kelolaabsenMouseExited
-
-    private void btn_kelolaabsenMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_kelolaabsenMousePressed
-        // TODO add your handling code here:
-        btn_kelolaabsen.setBackground(new Color(88,163,234));
-    }//GEN-LAST:event_btn_kelolaabsenMousePressed
+    private void btn_editprofileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_editprofileMouseClicked
+        profiladmin pa=new profiladmin();
+        pa.setVisible(true);
+    }//GEN-LAST:event_btn_editprofileMouseClicked
 
     private void btn_siswabermasalahMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_siswabermasalahMouseReleased
         // TODO add your handling code here:
         btn_siswabermasalah.setBackground(new Color(63,138,209));
     }//GEN-LAST:event_btn_siswabermasalahMouseReleased
 
-    private void btn_kelolaabsenMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_kelolaabsenMouseReleased
-        // TODO add your handling code here:
-        btn_kelolaabsen.setBackground(new Color(63,138,209));
-    }//GEN-LAST:event_btn_kelolaabsenMouseReleased
+    private void btn_siswabermasalahMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_siswabermasalahMousePressed
+        btn_siswabermasalah.setBackground(new Color(88,163,234));
+    }//GEN-LAST:event_btn_siswabermasalahMousePressed
 
-    private void btn_keluarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_keluarMouseEntered
-        // TODO add your handling code here:
-        btn_keluar.setBackground(new Color(63,138,209));
-    }//GEN-LAST:event_btn_keluarMouseEntered
+    private void btn_siswabermasalahMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_siswabermasalahMouseExited
+        btn_siswabermasalah.setBackground(new Color(240,240,240));
+        lb_siswamslh.setForeground(new Color(37,112,183));
+    }//GEN-LAST:event_btn_siswabermasalahMouseExited
 
-    private void btn_keluarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_keluarMouseExited
-        // TODO add your handling code here:
-        btn_keluar.setBackground(new Color(37,112,183));
-    }//GEN-LAST:event_btn_keluarMouseExited
+    private void btn_siswabermasalahMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_siswabermasalahMouseEntered
+        btn_siswabermasalah.setBackground(new Color(37,112,183));
+        lb_siswamslh.setForeground(Color.white);
+    }//GEN-LAST:event_btn_siswabermasalahMouseEntered
 
-    private void btn_keluarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_keluarMousePressed
-        // TODO add your handling code here:
-        btn_keluar.setBackground(new Color(88,163,234));
-    }//GEN-LAST:event_btn_keluarMousePressed
+    private void btn_kelolaabsensiMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_kelolaabsensiMouseEntered
+        btn_kelolaabsensi.setBackground(new Color(37,112,183));
+        lb_kelolaabsensi.setForeground(Color.white);
+    }//GEN-LAST:event_btn_kelolaabsensiMouseEntered
 
-    private void btn_keluarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_keluarMouseReleased
-        // TODO add your handling code here:
-        btn_keluar.setBackground(new Color(63,138,209));
-    }//GEN-LAST:event_btn_keluarMouseReleased
+    private void btn_kelolaabsensiMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_kelolaabsensiMouseExited
+        btn_kelolaabsensi.setBackground(new Color(240,240,240));
+        lb_kelolaabsensi.setForeground(new Color(37,112,183));
+    }//GEN-LAST:event_btn_kelolaabsensiMouseExited
+
+    private void btn_kelolaabsensiMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_kelolaabsensiMousePressed
+        keloladata_bk kbk=new keloladata_bk();
+        kbk.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_kelolaabsensiMousePressed
+
+    private void btn_kelolaabsensiMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_kelolaabsensiMouseReleased
+        
+    }//GEN-LAST:event_btn_kelolaabsensiMouseReleased
 
     /**
      * @param args the command line arguments
@@ -6670,7 +6667,8 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel Paneljumlahsiswa;
     private javax.swing.JScrollPane Scrollpane;
     private javax.swing.JLabel background;
-    private javax.swing.JPanel btn_kelolaabsen;
+    private javax.swing.JLabel btn_editprofile;
+    private javax.swing.JPanel btn_kelolaabsensi;
     private javax.swing.JPanel btn_keluar;
     private javax.swing.JPanel btn_siswabermasalah;
     private javax.swing.JPanel chartabsensibulanan;
@@ -6685,6 +6683,9 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel chartabsensissmtjurusan;
     private javax.swing.JPanel chartabsensissmtnangkatan;
     private javax.swing.JPanel chartmingguanangkatan;
+    private javax.swing.JLabel icon_kelolaabsensi;
+    private javax.swing.JLabel icon_keluar;
+    private javax.swing.JLabel icon_siswamslh;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel100;
@@ -6935,7 +6936,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel397;
     private javax.swing.JLabel jLabel398;
     private javax.swing.JLabel jLabel399;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel400;
     private javax.swing.JLabel jLabel401;
@@ -6950,7 +6950,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
@@ -6971,7 +6970,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel67;
     private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel69;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel70;
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
@@ -6982,7 +6980,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel77;
     private javax.swing.JLabel jLabel78;
     private javax.swing.JLabel jLabel79;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
     private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel82;
@@ -7233,6 +7230,8 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel lb_jumlahguru;
     private javax.swing.JLabel lb_jumlahkelas;
     private javax.swing.JLabel lb_jumlahsiswa;
+    private javax.swing.JLabel lb_kelolaabsensi;
+    private javax.swing.JLabel lb_keluar;
     private javax.swing.JLabel lb_sab;
     private javax.swing.JLabel lb_sah;
     private javax.swing.JLabel lb_sakitabsenbulanangkatan10;
@@ -7258,6 +7257,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel lb_sakitabsensmttitl;
     private javax.swing.JLabel lb_sam;
     private javax.swing.JLabel lb_sas;
+    private javax.swing.JLabel lb_siswamslh;
     private javax.swing.JLabel lb_sjb1;
     private javax.swing.JLabel lb_sjo1;
     private javax.swing.JLabel lb_sjt1;

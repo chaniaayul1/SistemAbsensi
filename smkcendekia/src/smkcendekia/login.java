@@ -72,13 +72,17 @@ public class login extends javax.swing.JFrame {
                         //Level 0 untuk Guru BK
                         JOptionPane.showMessageDialog(null,("Selamat Datang ") + rs.getString("nama"),
                                 "Login Guru BK Berhasil", JOptionPane.INFORMATION_MESSAGE);
-                        keloladata_bk kdbk = new keloladata_bk();
-                        kdbk.username.setText(usernm);
-                        kdbk.setVisible(true);
                         user = rs.getString("username");
                         nip = rs.getString("nip");
                         Session.seteditadmin(nip);
                         Session.setusername(user);
+                        dashboard dash=new dashboard();
+                        dash.setVisible(true);
+                        //keloladata_bk kdbk = new keloladata_bk();
+                        //kdbk.username.setText(usernm);
+                        //kdbk.setVisible(true);
+                        Session.setname(rs.getString("nama"));
+                        //kdbk.lb_uname1.setText(Session.getname());
                         dispose();
                         //
                         break;

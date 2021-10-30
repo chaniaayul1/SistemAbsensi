@@ -14,7 +14,7 @@ public class Session {
     public static String nipwalas;
     public static String nkkelas;
     public static String absen;
-    
+    public static String nama;
     public static String getusername(){
         return usernm;
     }
@@ -23,6 +23,13 @@ public class Session {
         Session.usernm=usernm;
     }
     
+    public static String getname(){
+        return nama;
+    }
+      
+    public static void setname(String nama){
+        Session.nama=nama;
+    }
     public static void setnissiswa(String nissiswa){
         Session.nissiswa=nissiswa;
     }
