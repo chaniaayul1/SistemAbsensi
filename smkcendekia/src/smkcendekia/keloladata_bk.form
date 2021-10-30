@@ -593,6 +593,23 @@
             </Constraint>
           </Constraints>
         </Component>
+        <Component class="javax.swing.JLabel" name="lb_quotes">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="24" style="0"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="aa" green="69" red="21" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa; &lt;p&gt;&quot;...Your presence will always be awaited to measure all the memories with us...&quot;-oleh SMK CENDEKIA&lt;/p&gt;&#xa;&lt;/html&gt;&#xa;"/>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="300" y="620" width="470" height="120"/>
+            </Constraint>
+          </Constraints>
+        </Component>
         <Component class="javax.swing.JLabel" name="username">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -2808,6 +2825,9 @@
             </Container>
             <Container class="javax.swing.JLayeredPane" name="riwayat_siswa">
               <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="33" red="0" type="rgb"/>
+                </Property>
                 <Property name="enabled" type="boolean" value="false"/>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[1366, 768]"/>
@@ -2986,6 +3006,9 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="cc" green="33" red="0" type="rgb"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Berdasarkan"/>
                       </Properties>
                       <Constraints>
@@ -2998,6 +3021,9 @@
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Noto Serif" size="14" style="0"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="cc" green="33" red="0" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Tanggal "/>
                       </Properties>
@@ -3012,6 +3038,9 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="cc" green="33" red="0" type="rgb"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="NIS"/>
                       </Properties>
                       <Constraints>
@@ -3025,6 +3054,9 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="cc" green="33" red="0" type="rgb"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="NK"/>
                       </Properties>
                       <Constraints>
@@ -3037,6 +3069,9 @@
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Noto Serif" size="14" style="0"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="cc" green="33" red="0" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Nama"/>
                       </Properties>
@@ -3770,7 +3805,7 @@
                     <Component class="javax.swing.JLabel" name="lb_nipprofileguru">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -3786,7 +3821,7 @@
                     <Component class="javax.swing.JLabel" name="lb_jabatanprofileguru">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -3802,7 +3837,7 @@
                     <Component class="javax.swing.JLabel" name="lb_namaprofileguru">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -3818,7 +3853,7 @@
                     <Component class="javax.swing.JLabel" name="lb_emailprofileguru">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -3834,7 +3869,7 @@
                     <Component class="javax.swing.JLabel" name="lb_jkprofileguru">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -3850,7 +3885,7 @@
                     <Component class="javax.swing.JLabel" name="lb_notelpprofileguru">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -3866,7 +3901,7 @@
                     <Component class="javax.swing.JLabel" name="lb_alamatprofileguru">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -4253,7 +4288,7 @@
                     <Component class="javax.swing.JLabel" name="lb_alamatprofileguru2">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -5083,7 +5118,7 @@
                     <Component class="javax.swing.JLabel" name="lb_idprofilewalikelas">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -5099,7 +5134,7 @@
                     <Component class="javax.swing.JLabel" name="lb_nipprofilewalikelas">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -5115,7 +5150,7 @@
                     <Component class="javax.swing.JLabel" name="lb_nkprofilewalikelas">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -5131,7 +5166,7 @@
                     <Component class="javax.swing.JLabel" name="lb_namaprofilewalikelas">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -5147,7 +5182,7 @@
                     <Component class="javax.swing.JLabel" name="lb_emailprofilewalikelas">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -5163,7 +5198,7 @@
                     <Component class="javax.swing.JLabel" name="lb_jkprofilewalikelas">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -5179,7 +5214,7 @@
                     <Component class="javax.swing.JLabel" name="lb_notelpprofilewalikelas">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -5195,7 +5230,7 @@
                     <Component class="javax.swing.JLabel" name="lb_alamatprofilewalikelas">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -5339,7 +5374,7 @@
                     <Component class="javax.swing.JLabel" name="lb_alamatprofilewalikelas1">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Noto Serif" size="18" style="0"/>
+                          <Font name="Noto Serif" size="14" style="0"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="33" red="0" type="rgb"/>
@@ -6189,7 +6224,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="51" y="125" width="50" height="20"/>
+                          <AbsoluteConstraints x="51" y="135" width="50" height="20"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -6205,7 +6240,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="50" y="150" width="-1" height="20"/>
+                          <AbsoluteConstraints x="50" y="165" width="-1" height="20"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -6233,7 +6268,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="150" y="100" width="250" height="20"/>
+                          <AbsoluteConstraints x="150" y="102" width="250" height="20"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -6245,7 +6280,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="150" y="125" width="250" height="20"/>
+                          <AbsoluteConstraints x="150" y="135" width="250" height="20"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -6257,7 +6292,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="150" y="148" width="250" height="20"/>
+                          <AbsoluteConstraints x="150" y="165" width="250" height="20"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -6404,7 +6439,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="140" y="150" width="-1" height="-1"/>
+                          <AbsoluteConstraints x="140" y="165" width="-1" height="-1"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -6436,7 +6471,7 @@
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="140" y="125" width="-1" height="-1"/>
+                          <AbsoluteConstraints x="140" y="135" width="-1" height="-1"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -10148,6 +10183,11 @@
                   </Layout>
                   <SubComponents>
                     <Container class="javax.swing.JScrollPane" name="tabsemester">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                      </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                           <AbsoluteConstraints x="510" y="160" width="560" height="470"/>

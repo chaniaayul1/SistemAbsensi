@@ -74,22 +74,27 @@ public class lupapassword extends javax.swing.JFrame {
         panellupapassword.add(txt_pass2lupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 247, 450, 30));
 
         jLabel1.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 204));
         jLabel1.setText(":");
         panellupapassword.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 123, 50, 20));
 
         jLabel2.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 51, 204));
         jLabel2.setText("Nama");
         panellupapassword.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 128, 60, 20));
 
         jLabel3.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 51, 204));
         jLabel3.setText("Username");
         panellupapassword.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 172, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 51, 204));
         jLabel4.setText("Password Baru");
         panellupapassword.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 212, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 51, 204));
         jLabel5.setText("Tulis Ulang Password");
         panellupapassword.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 251, 130, 20));
 
@@ -104,25 +109,30 @@ public class lupapassword extends javax.swing.JFrame {
                 btn_simpanlupapasswordActionPerformed(evt);
             }
         });
-        panellupapassword.add(btn_simpanlupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 290, 130, 40));
+        panellupapassword.add(btn_simpanlupapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, 160, 40));
 
         jLabel7.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 51, 204));
         jLabel7.setText("NIP");
         panellupapassword.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 88, 50, 20));
 
         jLabel8.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 51, 204));
         jLabel8.setText(":");
         panellupapassword.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 167, 50, 20));
 
         jLabel9.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 51, 204));
         jLabel9.setText(":");
         panellupapassword.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 50, 20));
 
         jLabel10.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 51, 204));
         jLabel10.setText(":");
         panellupapassword.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 251, 50, 20));
 
         jLabel11.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 51, 204));
         jLabel11.setText(":");
         panellupapassword.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 85, 50, 20));
 

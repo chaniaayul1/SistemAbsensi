@@ -3551,7 +3551,6 @@ public class dashboard extends javax.swing.JFrame {
         panelchartabsmingguanangkatan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         chartmingguanangkatan.setBackground(new java.awt.Color(255, 255, 255));
-        chartmingguanangkatan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         chartmingguanangkatan.setLayout(new javax.swing.OverlayLayout(chartmingguanangkatan));
         panelchartabsmingguanangkatan.add(chartmingguanangkatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 660, 430));
 
@@ -3646,13 +3645,13 @@ public class dashboard extends javax.swing.JFrame {
         jLabel132.setText("Alpha");
         panelchartabsmingguanangkatan.add(jLabel132, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 100, -1, -1));
 
-        jLabel133.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 10)); // NOI18N
+        jLabel133.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
         jLabel133.setText("KEHADIARAN SISWA KELAS 10");
-        panelchartabsmingguanangkatan.add(jLabel133, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 20, -1, -1));
+        panelchartabsmingguanangkatan.add(jLabel133, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, -1, -1));
 
-        jLabel134.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 10)); // NOI18N
+        jLabel134.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
         jLabel134.setText("KEHADIARAN SISWA KELAS 12");
-        panelchartabsmingguanangkatan.add(jLabel134, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 284, -1, -1));
+        panelchartabsmingguanangkatan.add(jLabel134, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 271, -1, 30));
 
         jLabel135.setText(":");
         panelchartabsmingguanangkatan.add(jLabel135, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 120, -1, -1));
@@ -3914,9 +3913,9 @@ public class dashboard extends javax.swing.JFrame {
         jLabel154.setText("Alpha");
         panelchartabsmingguanangkatan.add(jLabel154, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 230, -1, -1));
 
-        jLabel155.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 10)); // NOI18N
+        jLabel155.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
         jLabel155.setText("KEHADIARAN SISWA KELAS 11");
-        panelchartabsmingguanangkatan.add(jLabel155, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 150, -1, -1));
+        panelchartabsmingguanangkatan.add(jLabel155, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 137, -1, 30));
 
         jLabel156.setText(":");
         panelchartabsmingguanangkatan.add(jLabel156, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 250, -1, -1));
@@ -3963,7 +3962,6 @@ public class dashboard extends javax.swing.JFrame {
         panelchartabsbulanangkatan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         chartabsensisbulananangkatan.setBackground(new java.awt.Color(255, 255, 255));
-        chartabsensisbulananangkatan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         chartabsensisbulananangkatan.setLayout(new javax.swing.OverlayLayout(chartabsensisbulananangkatan));
         panelchartabsbulanangkatan.add(chartabsensisbulananangkatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 660, 430));
 
@@ -4058,13 +4056,13 @@ public class dashboard extends javax.swing.JFrame {
         jLabel341.setText("Alpha");
         panelchartabsbulanangkatan.add(jLabel341, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 100, -1, -1));
 
-        jLabel342.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 10)); // NOI18N
+        jLabel342.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
         jLabel342.setText("KEHADIARAN SISWA KELAS 10");
-        panelchartabsbulanangkatan.add(jLabel342, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 20, -1, -1));
+        panelchartabsbulanangkatan.add(jLabel342, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, -1, -1));
 
-        jLabel343.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 10)); // NOI18N
+        jLabel343.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
         jLabel343.setText("KEHADIARAN SISWA KELAS 12");
-        panelchartabsbulanangkatan.add(jLabel343, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 284, -1, -1));
+        panelchartabsbulanangkatan.add(jLabel343, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 271, -1, 30));
 
         jLabel344.setText(":");
         panelchartabsbulanangkatan.add(jLabel344, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 120, -1, -1));
@@ -4326,9 +4324,9 @@ public class dashboard extends javax.swing.JFrame {
         jLabel363.setText("Alpha");
         panelchartabsbulanangkatan.add(jLabel363, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 230, -1, -1));
 
-        jLabel364.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 10)); // NOI18N
+        jLabel364.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
         jLabel364.setText("KEHADIARAN SISWA KELAS 11");
-        panelchartabsbulanangkatan.add(jLabel364, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 150, -1, -1));
+        panelchartabsbulanangkatan.add(jLabel364, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 137, -1, 30));
 
         jLabel365.setText(":");
         panelchartabsbulanangkatan.add(jLabel365, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 250, -1, -1));
@@ -4375,7 +4373,6 @@ public class dashboard extends javax.swing.JFrame {
         panelchartabssmtangkatan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         chartabsensissmtnangkatan.setBackground(new java.awt.Color(255, 255, 255));
-        chartabsensissmtnangkatan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         chartabsensissmtnangkatan.setLayout(new javax.swing.OverlayLayout(chartabsensissmtnangkatan));
         panelchartabssmtangkatan.add(chartabsensissmtnangkatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 660, 430));
 
@@ -4470,13 +4467,13 @@ public class dashboard extends javax.swing.JFrame {
         jLabel374.setText("Alpha");
         panelchartabssmtangkatan.add(jLabel374, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 100, -1, -1));
 
-        jLabel375.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 10)); // NOI18N
+        jLabel375.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
         jLabel375.setText("KEHADIARAN SISWA KELAS 10");
-        panelchartabssmtangkatan.add(jLabel375, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 20, -1, -1));
+        panelchartabssmtangkatan.add(jLabel375, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, -3, -1, 40));
 
-        jLabel376.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 10)); // NOI18N
+        jLabel376.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
         jLabel376.setText("KEHADIARAN SISWA KELAS 12");
-        panelchartabssmtangkatan.add(jLabel376, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 284, -1, -1));
+        panelchartabssmtangkatan.add(jLabel376, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 271, -1, 30));
 
         jLabel377.setText(":");
         panelchartabssmtangkatan.add(jLabel377, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 120, -1, -1));
@@ -4738,9 +4735,9 @@ public class dashboard extends javax.swing.JFrame {
         jLabel396.setText("Alpha");
         panelchartabssmtangkatan.add(jLabel396, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 230, -1, -1));
 
-        jLabel397.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 10)); // NOI18N
+        jLabel397.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
         jLabel397.setText("KEHADIARAN SISWA KELAS 11");
-        panelchartabssmtangkatan.add(jLabel397, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 150, -1, -1));
+        panelchartabssmtangkatan.add(jLabel397, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 137, -1, 30));
 
         jLabel398.setText(":");
         panelchartabssmtangkatan.add(jLabel398, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 250, -1, -1));
@@ -6206,7 +6203,7 @@ public class dashboard extends javax.swing.JFrame {
            totalalpha = Integer.toString(mgalpha12);
            totalterlambat = Integer.toString(mgterlambat12);
            lb_hadirabsenmingguanangkatan12.setText(totalhadir);
-           lb_hadirabsenmingguanangkatan12.setText(totalsakit);
+           lb_sakitabsenmingguanangkatan12.setText(totalsakit);
            lb_izinabsenmingguanangkatan12.setText(totalizin);
            lb_alphaabsenmingguanangkatan12.setText(totalalpha);
            lb_terlambatabsenmingguanangkatan12.setText(totalterlambat);
@@ -6361,10 +6358,10 @@ public class dashboard extends javax.swing.JFrame {
            totalalpha = Integer.toString(blnalpha12);
            totalterlambat = Integer.toString(blnterlambat11);
            lb_hadirabsenbulanangkatan12.setText(totalhadir);
-           lb_hadirabsenbulanangkatan12.setText(totalsakit);
-           lb_hadirabsenbulanangkatan12.setText(totalizin);
-           lb_hadirabsenbulanangkatan12.setText(totalalpha);
-           lb_hadirabsenbulanangkatan12.setText(totalterlambat);       
+           lb_sakitabsenbulaniangkatan12.setText(totalsakit);
+           lb_izinabsenbulaniangkatan12.setText(totalizin);
+           lb_alphaabsenbulaniangkatan12.setText(totalalpha);
+           lb_terlambatabsenbulaniangkatan12.setText(totalterlambat);       
         } catch (SQLException e) {
             System.out.println(e);
         }

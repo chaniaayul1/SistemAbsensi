@@ -72,50 +72,62 @@ public class profiladmin extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 204));
         jLabel1.setText("<html> \tTulis \tulang \tpassword  baru </html ");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 100, -1));
 
         jLabel2.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 51, 204));
         jLabel2.setText(":");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 51, 204));
         jLabel3.setText("Nama");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 51, 204));
         jLabel4.setText("Username");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 51, 204));
         jLabel5.setText("Password Lama");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 51, 204));
         jLabel6.setText("Password Baru");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 51, 204));
         jLabel7.setText("NIP");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 51, 204));
         jLabel8.setText(":");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 51, 204));
         jLabel9.setText(":");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 51, 204));
         jLabel10.setText(":");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 51, 204));
         jLabel11.setText(":");
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Noto Serif", 0, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 51, 204));
         jLabel12.setText(":");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, -1, -1));
 
@@ -146,7 +158,7 @@ public class profiladmin extends javax.swing.JFrame {
                 btn_simpanprofadminActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_simpanprofadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 120, 40));
+        jPanel1.add(btn_simpanprofadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 140, 40));
         jPanel1.add(txt_tulisulangprofadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 510, 30));
 
         txt_passlamaprofadmin.setDisabledTextColor(new java.awt.Color(0, 0, 0));

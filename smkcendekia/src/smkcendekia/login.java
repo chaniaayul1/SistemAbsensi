@@ -180,7 +180,7 @@ public class login extends javax.swing.JFrame {
         remember.setText("Remind Me Later");
         panel_login.add(remember, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 490, -1, -1));
 
-        lb_lupapass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lb_lupapass.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
         lb_lupapass.setText("Lupa Password ?");
         lb_lupapass.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
