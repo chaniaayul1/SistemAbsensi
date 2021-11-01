@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.prefs.Preferences;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 
 /**
@@ -55,16 +56,6 @@ public class login extends javax.swing.JFrame {
             String usernm = txt_username.getText();
             //ps = con.prepareStatement("SELECT * FROM admin where username='"+txt_username.getText()+"' and password = MD5('"+txt_password.getText()+"')";
             if (rs.next()) {
-                if(remember.isSelected() && !rememberPreferences){
-                    preference.put("username",txt_username.getText());
-                    preference.put("password",txt_password.getText());
-                    preference.putBoolean("rememberMe",true);
-                } else if (!remember.isSelected() && rememberPreferences){
-                    preference.put("Username","");
-                    preference.put("password","");
-                    preference.putBoolean("rememberMe",false);
-                }
-                
                 if (null == rs.getString("level")) {
                     //
                 } else switch (rs.getString("level")) {
@@ -74,17 +65,13 @@ public class login extends javax.swing.JFrame {
                                 "Login Guru BK Berhasil", JOptionPane.INFORMATION_MESSAGE);
                         user = rs.getString("username");
                         nip = rs.getString("nip");
+                        Session.setname(rs.getString("nama"));
                         Session.seteditadmin(nip);
                         Session.setusername(user);
+                        dispose();
                         dashboard dash=new dashboard();
                         dash.setVisible(true);
-                        //keloladata_bk kdbk = new keloladata_bk();
-                        //kdbk.username.setText(usernm);
-                        //kdbk.setVisible(true);
-                        Session.setname(rs.getString("nama"));
-                        //kdbk.lb_uname1.setText(Session.getname());
-                        dispose();
-                        //
+                        dash.notifikasialphasemester();
                         break;
                     case "1":
                         //Level 1 untuk Bagian IT
@@ -134,7 +121,6 @@ public class login extends javax.swing.JFrame {
         txt_username = new javax.swing.JTextField();
         txt_password = new javax.swing.JPasswordField();
         btn_login = new javax.swing.JButton();
-        remember = new javax.swing.JCheckBox();
         lb_lupapass = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -174,11 +160,6 @@ public class login extends javax.swing.JFrame {
             }
         });
         panel_login.add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 530, 520, 40));
-
-        remember.setBackground(new java.awt.Color(255, 255, 255));
-        remember.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
-        remember.setText("Remind Me Later");
-        panel_login.add(remember, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 490, -1, -1));
 
         lb_lupapass.setFont(new java.awt.Font("Roboto Slab", 0, 12)); // NOI18N
         lb_lupapass.setText("Lupa Password ?");
@@ -288,7 +269,6 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lb_lupapass;
     private javax.swing.JPanel panel_login;
-    private javax.swing.JCheckBox remember;
     private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables

@@ -83,7 +83,8 @@ public class dashboard extends javax.swing.JFrame {
     int hadir10,sakit10,izin10,alpha10,terlambat10 = 0;
     int hadir11,sakit11,izin11,alpha11,terlambat11 = 0;
     int hadir12,sakit12,izin12,alpha12,terlambat12 = 0;
-    
+    Object[ ] obj2 = new Object[10];
+    Object[ ] obj3 = new Object[11];
     //
     public dashboard() {
         initComponents();       
@@ -98,7 +99,6 @@ public class dashboard extends javax.swing.JFrame {
         tanggal();
         tampil_jam();
         
-        this.notifikasialphasemester();
         username.setText(Session.getusername());
         //QUERY TOTAL SISWA,GURU,KELAS
         queryjumlahsiswa();
@@ -167,11 +167,9 @@ public class dashboard extends javax.swing.JFrame {
             dataabsensiangkatan11();
             dataabsensiangkatan12();
             chartangkatan();
-        
-        //ABSENSI JURUSAN
-        
+    
     }
-
+    
     public void tampil_jam(){
         ActionListener taskPerformer = new ActionListener() {
             @Override
@@ -207,9 +205,9 @@ public class dashboard extends javax.swing.JFrame {
         username = new javax.swing.JLabel();
         paneljumlahkelas = new javax.swing.JPanel();
         lb_jumlahkelas = new javax.swing.JLabel();
-        Paneljumlahguru = new javax.swing.JPanel();
+        paneljumlahguru = new javax.swing.JPanel();
         lb_jumlahguru = new javax.swing.JLabel();
-        Paneljumlahsiswa = new javax.swing.JPanel();
+        paneljumlahsiswa = new javax.swing.JPanel();
         lb_jumlahsiswa = new javax.swing.JLabel();
         Scrollpane = new javax.swing.JScrollPane();
         panelgrafik = new javax.swing.JPanel();
@@ -865,6 +863,7 @@ public class dashboard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
         setMinimumSize(new java.awt.Dimension(1366, 768));
+        setResizable(false);
         setSize(new java.awt.Dimension(1366, 768));
 
         paneldashboard.setFocusable(false);
@@ -888,31 +887,33 @@ public class dashboard extends javax.swing.JFrame {
 
         paneldashboard.add(paneljumlahkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 120, 260, 50));
 
-        Paneljumlahguru.setBackground(new java.awt.Color(0, 179, 131));
-        Paneljumlahguru.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        paneljumlahguru.setBackground(new java.awt.Color(0, 179, 131));
+        paneljumlahguru.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lb_jumlahguru.setBackground(new java.awt.Color(255, 255, 255));
         lb_jumlahguru.setFont(new java.awt.Font("Roboto Slab SemiBold", 0, 24)); // NOI18N
         lb_jumlahguru.setForeground(new java.awt.Color(255, 255, 255));
         lb_jumlahguru.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Paneljumlahguru.add(lb_jumlahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 160, 50));
+        paneljumlahguru.add(lb_jumlahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 160, 50));
 
-        paneldashboard.add(Paneljumlahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, 260, 50));
+        paneldashboard.add(paneljumlahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, 260, 50));
 
-        Paneljumlahsiswa.setBackground(new java.awt.Color(162, 32, 195));
-        Paneljumlahsiswa.setFont(new java.awt.Font("Roboto Slab SemiBold", 0, 12)); // NOI18N
-        Paneljumlahsiswa.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        paneljumlahsiswa.setBackground(new java.awt.Color(162, 32, 195));
+        paneljumlahsiswa.setFont(new java.awt.Font("Roboto Slab SemiBold", 0, 12)); // NOI18N
+        paneljumlahsiswa.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lb_jumlahsiswa.setBackground(new java.awt.Color(255, 255, 255));
         lb_jumlahsiswa.setFont(new java.awt.Font("Roboto Slab SemiBold", 0, 24)); // NOI18N
         lb_jumlahsiswa.setForeground(new java.awt.Color(255, 255, 255));
         lb_jumlahsiswa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Paneljumlahsiswa.add(lb_jumlahsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 160, 50));
+        paneljumlahsiswa.add(lb_jumlahsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 160, 50));
 
-        paneldashboard.add(Paneljumlahsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 260, 50));
+        paneldashboard.add(paneljumlahsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 260, 50));
 
         Scrollpane.setBackground(new java.awt.Color(255, 255, 255));
         Scrollpane.setBorder(null);
+        Scrollpane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        Scrollpane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         Scrollpane.setOpaque(false);
         Scrollpane.setPreferredSize(new java.awt.Dimension(930, 5000));
 
@@ -4821,12 +4822,12 @@ public class dashboard extends javax.swing.JFrame {
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/icon_calender.png"))); // NOI18N
         panel_waktu.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 40, 40));
 
-        jLabel13.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 12)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Roboto Slab SemiBold", 1, 16)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(37, 112, 183));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("<html> Jl. Raya Batujajar, Batujajar Barat, Kecamatan Batujajar, Kabupaten Bandung Barat, <br> Jawa Barat <br> 40561  </html>");
         jLabel13.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        panel_waktu.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 490, 320, 70));
+        panel_waktu.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 490, 320, 130));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/icon_location.png"))); // NOI18N
@@ -4960,7 +4961,6 @@ public class dashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     public void tanggal(){
-        
         Date dates = new Date();
         SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy");
         txt_tanggal.setText(s.format(dates));
@@ -5029,18 +5029,22 @@ public class dashboard extends javax.swing.JFrame {
         }
     }
     
-    public void notifikasimingguan(){
-        
-    }
     
     public void notifikasialphasemester(){
         try{
            stat = con.createStatement( );
-           sql  = "SELECT * FROM lapabsen WHERE alpha>=3 AND status='Aktif'";
+           sql  = "SELECT * FROM lapabsen WHERE alpha=3 OR alpha=6 OR alpha>=9 AND status='Aktif' AND keterangan !='Selesai'";
            rs   = stat.executeQuery(sql);
-           if (rs.next() ) {    
-                JOptionPane.showMessageDialog(null, ("Terdapat siswa bermasalah dengan absensi"), 
-                    "Lihat Data Absensi Gagal", JOptionPane.INFORMATION_MESSAGE);
+           if (rs.next() ) {
+               if(rs.getInt("alpha")>9){
+                   JOptionPane.showMessageDialog(null, ("Terdapat siswa bermasalah dengan absensi lebih dari 9 kali alpha"), 
+                   "Informasi Siswa Bermasalah", JOptionPane.INFORMATION_MESSAGE);
+               }
+               else{
+                   JOptionPane.showMessageDialog(null, ("Terdapat siswa bermasalah dengan absensi"), 
+                   "Informasi Siswa Bermasalah", JOptionPane.INFORMATION_MESSAGE);
+               }
+                
             }
            else{
            }
@@ -6657,11 +6661,10 @@ public class dashboard extends javax.swing.JFrame {
                 
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Paneljumlahguru;
-    private javax.swing.JPanel Paneljumlahsiswa;
     private javax.swing.JScrollPane Scrollpane;
     private javax.swing.JLabel background;
     private javax.swing.JLabel btn_editprofile;
@@ -7303,7 +7306,9 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel panelchartabssmtjurusan;
     private javax.swing.JPanel paneldashboard;
     private javax.swing.JPanel panelgrafik;
+    private javax.swing.JPanel paneljumlahguru;
     private javax.swing.JPanel paneljumlahkelas;
+    private javax.swing.JPanel paneljumlahsiswa;
     private javax.swing.JLabel txt_jam;
     private javax.swing.JLabel txt_tanggal;
     public javax.swing.JLabel username;
