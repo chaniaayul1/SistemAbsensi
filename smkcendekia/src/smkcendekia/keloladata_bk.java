@@ -4491,7 +4491,9 @@ System.out.println(e);
         setResizable(false);
         setSize(new java.awt.Dimension(0, 0));
 
+        PanelUtama.setMinimumSize(new java.awt.Dimension(1366, 768));
         PanelUtama.setOpaque(false);
+        PanelUtama.setPreferredSize(new java.awt.Dimension(1366, 768));
         PanelUtama.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelbutton.setBackground(new java.awt.Color(37, 112, 183));
@@ -4962,6 +4964,7 @@ System.out.println(e);
         cb_formatsiswa.setBounds(50, 110, 280, 34);
 
         jTextField2.setEditable(false);
+        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.setFont(new java.awt.Font("Roboto Slab", 1, 12)); // NOI18N
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField2.setText("CRUD");
@@ -4990,7 +4993,7 @@ System.out.println(e);
                 btn_hapussiswaActionPerformed(evt);
             }
         });
-        CRUD.add(btn_hapussiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 130, 40));
+        CRUD.add(btn_hapussiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 130, 40));
 
         btn_tambahsiswa.setBackground(new java.awt.Color(255, 255, 255));
         btn_tambahsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -5027,7 +5030,7 @@ System.out.println(e);
                 btn_lihatsiswaActionPerformed(evt);
             }
         });
-        kelsiswa.add(btn_lihatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 130, 40));
+        kelsiswa.add(btn_lihatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 130, 40));
 
         panelsiswa.add(kelsiswa);
         kelsiswa.setBounds(410, 564, 320, 70);
@@ -5883,6 +5886,7 @@ System.out.println(e);
 
         crudguru.setBackground(new java.awt.Color(255, 255, 255));
         crudguru.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        crudguru.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         brn_hapusguru.setBackground(new java.awt.Color(255, 255, 255));
         brn_hapusguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -5895,6 +5899,7 @@ System.out.println(e);
                 brn_hapusguruActionPerformed(evt);
             }
         });
+        crudguru.add(brn_hapusguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 18, 130, 40));
 
         btn_tambahguru.setBackground(new java.awt.Color(255, 255, 255));
         btn_tambahguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -5905,27 +5910,7 @@ System.out.println(e);
                 btn_tambahguruActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout crudguruLayout = new javax.swing.GroupLayout(crudguru);
-        crudguru.setLayout(crudguruLayout);
-        crudguruLayout.setHorizontalGroup(
-            crudguruLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, crudguruLayout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addComponent(btn_tambahguru, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(brn_hapusguru, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        crudguruLayout.setVerticalGroup(
-            crudguruLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, crudguruLayout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addGroup(crudguruLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(brn_hapusguru, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_tambahguru, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
+        crudguru.add(btn_tambahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 18, 130, 40));
 
         panelguru.add(crudguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 560, 310, 70));
 
@@ -5961,7 +5946,7 @@ System.out.println(e);
                 btn_lihatguruActionPerformed(evt);
             }
         });
-        kelguru.add(btn_lihatguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 17, 130, 40));
+        kelguru.add(btn_lihatguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 18, 130, 40));
 
         panelguru.add(kelguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 560, 170, 70));
 
@@ -6402,7 +6387,7 @@ System.out.println(e);
                 btn_tambahwalikelasActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_tambahwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 130, 40));
+        jPanel1.add(btn_tambahwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, 40));
 
         brn_hapuswalikelas.setBackground(new java.awt.Color(255, 255, 255));
         brn_hapuswalikelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -6930,18 +6915,18 @@ System.out.println(e);
         datakelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelkelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panelkelas.add(txt_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 108, 850, 30));
+        panelkelas.add(txt_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 105, 850, 34));
 
         btn_searchkelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchkelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
         btn_searchkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/brn_search2_1.png"))); // NOI18N
-        btn_searchkelas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        btn_searchkelas.setBorder(null);
         btn_searchkelas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchkelasActionPerformed(evt);
             }
         });
-        panelkelas.add(btn_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 110, 30, 30));
+        panelkelas.add(btn_searchkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(995, 107, 30, 30));
 
         btn_refreshkelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_refreshkelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refreshlagi.png"))); // NOI18N
@@ -6952,7 +6937,7 @@ System.out.println(e);
                 btn_refreshkelasActionPerformed(evt);
             }
         });
-        panelkelas.add(btn_refreshkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 110, 32, 32));
+        panelkelas.add(btn_refreshkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 105, 34, 34));
 
         jTextField7.setFont(new java.awt.Font("Roboto Slab", 1, 12)); // NOI18N
         jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -7457,7 +7442,7 @@ System.out.println(e);
                 btn_kelolasemesterdataadminActionPerformed(evt);
             }
         });
-        jPanel6.add(btn_kelolasemesterdataadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 140, 40));
+        jPanel6.add(btn_kelolasemesterdataadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 20, 140, 40));
 
         btn_lihatadmin.setBackground(new java.awt.Color(255, 255, 255));
         btn_lihatadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -7467,7 +7452,7 @@ System.out.println(e);
                 btn_lihatadminActionPerformed(evt);
             }
         });
-        jPanel6.add(btn_lihatadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 140, 40));
+        jPanel6.add(btn_lihatadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 20, 140, 40));
 
         paneladmin.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 566, 320, 70));
 
@@ -7483,7 +7468,7 @@ System.out.println(e);
                 btn_registrasiActionPerformed(evt);
             }
         });
-        jPanel5.add(btn_registrasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 130, 40));
+        jPanel5.add(btn_registrasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 20, 130, 40));
 
         btn_hapusadmin.setBackground(new java.awt.Color(255, 255, 255));
         btn_hapusadmin.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -7501,7 +7486,7 @@ System.out.println(e);
                 btn_hapusadminActionPerformed(evt);
             }
         });
-        jPanel5.add(btn_hapusadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 140, 40));
+        jPanel5.add(btn_hapusadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 20, 140, 40));
 
         paneladmin.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 566, 310, 70));
 
@@ -8481,11 +8466,11 @@ System.out.println(e);
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelUtama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PanelUtama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelUtama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PanelUtama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

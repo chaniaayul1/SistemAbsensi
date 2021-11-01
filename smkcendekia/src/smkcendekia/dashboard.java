@@ -841,9 +841,6 @@ public class dashboard extends javax.swing.JFrame {
         btn_keluar = new javax.swing.JPanel();
         lb_keluar = new javax.swing.JLabel();
         icon_keluar = new javax.swing.JLabel();
-        btn_siswabermasalah = new javax.swing.JPanel();
-        lb_siswamslh = new javax.swing.JLabel();
-        icon_siswamslh = new javax.swing.JLabel();
         btn_editprofile = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
@@ -4853,6 +4850,7 @@ public class dashboard extends javax.swing.JFrame {
 
         paneldashboard.add(panel_waktu, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 120, 390, 640));
 
+        btn_kelolaabsensi.setBackground(new java.awt.Color(245, 245, 245));
         btn_kelolaabsensi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_kelolaabsensiMouseEntered(evt);
@@ -4873,13 +4871,14 @@ public class dashboard extends javax.swing.JFrame {
         lb_kelolaabsensi.setForeground(new java.awt.Color(37, 112, 183));
         lb_kelolaabsensi.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lb_kelolaabsensi.setText("KELOLA ABSENSI");
-        btn_kelolaabsensi.add(lb_kelolaabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 230, 50));
+        btn_kelolaabsensi.add(lb_kelolaabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 390, 50));
 
         icon_kelolaabsensi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/dashabsen.png"))); // NOI18N
         btn_kelolaabsensi.add(icon_kelolaabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
 
-        paneldashboard.add(btn_kelolaabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 690, 290, 50));
+        paneldashboard.add(btn_kelolaabsensi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 690, 450, 50));
 
+        btn_keluar.setBackground(new java.awt.Color(245, 245, 245));
         btn_keluar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_keluarMouseEntered(evt);
@@ -4896,42 +4895,17 @@ public class dashboard extends javax.swing.JFrame {
         });
         btn_keluar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lb_keluar.setBackground(new java.awt.Color(255, 255, 255));
         lb_keluar.setFont(new java.awt.Font("Gadugi", 0, 26)); // NOI18N
         lb_keluar.setForeground(new java.awt.Color(37, 112, 183));
         lb_keluar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lb_keluar.setText("KELUAR APLIKASI");
-        btn_keluar.add(lb_keluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 230, 50));
+        btn_keluar.add(lb_keluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 390, 50));
 
         icon_keluar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/dashkeluar.png"))); // NOI18N
         btn_keluar.add(icon_keluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
 
-        paneldashboard.add(btn_keluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 690, 290, 50));
-
-        btn_siswabermasalah.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_siswabermasalahMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_siswabermasalahMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_siswabermasalahMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_siswabermasalahMouseReleased(evt);
-            }
-        });
-        btn_siswabermasalah.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lb_siswamslh.setFont(new java.awt.Font("Gadugi", 0, 25)); // NOI18N
-        lb_siswamslh.setForeground(new java.awt.Color(37, 112, 183));
-        lb_siswamslh.setText("SISWA BERMASALAH");
-        btn_siswabermasalah.add(lb_siswamslh, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 240, 50));
-
-        icon_siswamslh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/dashbermasalah.png"))); // NOI18N
-        btn_siswabermasalah.add(icon_siswamslh, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
-
-        paneldashboard.add(btn_siswabermasalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 690, 300, 50));
+        paneldashboard.add(btn_keluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 690, 450, 50));
 
         btn_editprofile.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn_editprofile.setForeground(new java.awt.Color(255, 255, 255));
@@ -6588,25 +6562,6 @@ public class dashboard extends javax.swing.JFrame {
         pa.setVisible(true);
     }//GEN-LAST:event_btn_editprofileMouseClicked
 
-    private void btn_siswabermasalahMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_siswabermasalahMouseReleased
-        // TODO add your handling code here:
-        btn_siswabermasalah.setBackground(new Color(63,138,209));
-    }//GEN-LAST:event_btn_siswabermasalahMouseReleased
-
-    private void btn_siswabermasalahMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_siswabermasalahMousePressed
-        btn_siswabermasalah.setBackground(new Color(88,163,234));
-    }//GEN-LAST:event_btn_siswabermasalahMousePressed
-
-    private void btn_siswabermasalahMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_siswabermasalahMouseExited
-        btn_siswabermasalah.setBackground(new Color(240,240,240));
-        lb_siswamslh.setForeground(new Color(37,112,183));
-    }//GEN-LAST:event_btn_siswabermasalahMouseExited
-
-    private void btn_siswabermasalahMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_siswabermasalahMouseEntered
-        btn_siswabermasalah.setBackground(new Color(37,112,183));
-        lb_siswamslh.setForeground(Color.white);
-    }//GEN-LAST:event_btn_siswabermasalahMouseEntered
-
     private void btn_kelolaabsensiMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_kelolaabsensiMouseEntered
         btn_kelolaabsensi.setBackground(new Color(37,112,183));
         lb_kelolaabsensi.setForeground(Color.white);
@@ -6670,7 +6625,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel btn_editprofile;
     private javax.swing.JPanel btn_kelolaabsensi;
     private javax.swing.JPanel btn_keluar;
-    private javax.swing.JPanel btn_siswabermasalah;
     private javax.swing.JPanel chartabsensibulanan;
     private javax.swing.JPanel chartabsensibulanjurusan;
     private javax.swing.JPanel chartabsensiharian;
@@ -6685,7 +6639,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel chartmingguanangkatan;
     private javax.swing.JLabel icon_kelolaabsensi;
     private javax.swing.JLabel icon_keluar;
-    private javax.swing.JLabel icon_siswamslh;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel100;
@@ -7257,7 +7210,6 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel lb_sakitabsensmttitl;
     private javax.swing.JLabel lb_sam;
     private javax.swing.JLabel lb_sas;
-    private javax.swing.JLabel lb_siswamslh;
     private javax.swing.JLabel lb_sjb1;
     private javax.swing.JLabel lb_sjo1;
     private javax.swing.JLabel lb_sjt1;
