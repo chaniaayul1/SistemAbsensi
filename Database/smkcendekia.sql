@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 26, 2021 at 09:57 PM
+-- Generation Time: Nov 01, 2021 at 06:56 PM
 -- Server version: 10.3.29-MariaDB-0+deb10u1
 -- PHP Version: 7.3.29-1~deb10u1
 
@@ -42,10 +42,14 @@ CREATE TABLE `absen` (
 --
 
 INSERT INTO `absen` (`idabsen`, `idrfid`, `nk`, `nis`, `nama`, `tanggal`, `jam`, `status`) VALUES
-(1, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-24', '10:50:36', 'Hadir'),
-(2, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-01-06', '05:55:30', 'Hadir'),
-(4, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-25', '06:41:38', 'Hadir'),
-(5, '51871758571', '12BDP1', '2021.10.001', 'Rafi Aziizi Muchtar', '2021-10-26', '08:44:37', 'Alpha');
+(1, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-24', '10:50:36', 'Alpha'),
+(2, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-01-06', '05:55:30', 'Hadir'),
+(4, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-25', '06:41:38', 'Alpha'),
+(5, '51871758571', '12BDP1', '2021.10.001', 'Rafi Aziizi Muchtar', '2021-10-26', '08:44:37', 'Alpha'),
+(6, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-28', '07:35:21', 'Alpha'),
+(7, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-29', '09:21:02', 'Alpha'),
+(8, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-11-01', '11:01:33', 'Alpha'),
+(11, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-11-01', '11:01:33', 'Hadir');
 
 --
 -- Triggers `absen`
@@ -70,15 +74,19 @@ DELIMITER $$
 CREATE TRIGGER `inserttolapabsen` AFTER INSERT ON `absen` FOR EACH ROW IF(new.status='Hadir') THEN
     UPDATE lapabsen
     SET hadir= hadir + 1
-    WHERE lapabsen.nis=new.nis;
+    WHERE lapsiswabermasalah.nis=new.nis;
 ELSEIF(new.status='Terlambat') THEN
 	UPDATE lapabsen
     SET terlambat= terlambat + 1
     WHERE lapabsen.nis=new.nis;
 ELSEIF(new.status='Alpha') THEN
 	UPDATE lapabsen
-    SET alpha= alpha + 1
-    WHERE lapabsen.nis=new.nis;
+    SET alpha= alpha + 1, keterangan=CASE WHEN alpha>=3 AND alpha<5 THEN 'SP1'
+                             WHEN alpha = 6 THEN 'SP2'
+                             WHEN alpha = 9 THEN 'SP3'
+                             WHEN alpha <3 THEN NULL
+                        END
+    WHERE lapabsen.nis=new.nis;                 
 END IF
 $$
 DELIMITER ;
@@ -89,7 +97,11 @@ CREATE TRIGGER `updatelapabsen` AFTER UPDATE ON `absen` FOR EACH ROW IF(new.stat
     WHERE lapabsen.nis=new.nis;
 ELSEIF(new.status='Hadir' AND old.status='Alpha') THEN
     UPDATE lapabsen
-    SET hadir= hadir + 1,alpha=alpha-1
+    SET hadir= hadir + 1,alpha=alpha-1,keterangan=CASE WHEN alpha >= 3 AND alpha<6 THEN 'SP1'
+                             WHEN alpha = 6 THEN 'SP2'
+                             WHEN alpha = 9 THEN 'SP3'
+                             WHEN alpha <3 THEN NULL
+                        END
     WHERE lapabsen.nis=new.nis;
 ELSEIF(new.status='Hadir' AND old.status='Izin') THEN
     UPDATE lapabsen
@@ -106,7 +118,11 @@ ELSEIF(new.status='Sakit' AND old.status='Izin') THEN
     WHERE lapabsen.nis=new.nis;
 ELSEIF(new.status='Sakit' AND old.status='Alpha') THEN
 	UPDATE lapabsen
-    SET sakit= sakit + 1,alpha = alpha-1
+    SET sakit= sakit + 1,alpha = alpha-1,keterangan=CASE WHEN alpha >= 3 AND alpha<6 THEN 'SP1'
+                             WHEN alpha = 6 THEN 'SP2'
+                             WHEN alpha = 9 THEN 'SP3'
+                             WHEN alpha <3 THEN NULL
+                        END
     WHERE lapabsen.nis=new.nis;
 /* UPDATE IZIN */
 ELSEIF(new.status='Izin' AND old.status='Hadir') THEN
@@ -119,20 +135,36 @@ ELSEIF(new.status='Izin' AND old.status='Sakit') THEN
     WHERE lapabsen.nis=new.nis;
 ELSEIF(new.status='Izin' AND old.status='Alpha') THEN
 	UPDATE lapabsen
-    SET izin= izin + 1,alpha = alpha-1
+    SET izin= izin + 1,alpha = alpha-1,keterangan=CASE WHEN alpha >= 3 AND alpha<6 THEN 'SP1'
+                             WHEN alpha = 6 THEN 'SP2'
+                             WHEN alpha = 9 THEN 'SP3'
+                             WHEN alpha <3 THEN NULL
+                        END
     WHERE lapabsen.nis=new.nis;
 /* UPDATE ALPHA */
 ELSEIF(new.status='Alpha' AND old.status='Hadir') THEN
 	UPDATE lapabsen
-    SET alpha= alpha + 1,hadir = hadir-1
+    SET alpha= alpha + 1,hadir = hadir-1,keterangan=CASE WHEN alpha >= 3 AND alpha<6 THEN 'SP1'
+                             WHEN alpha = 6 THEN 'SP2'
+                             WHEN alpha = 9 THEN 'SP3'
+                             WHEN alpha <3 THEN NULL
+                        END
     WHERE lapabsen.nis=new.nis;
 ELSEIF(new.status='Alpha' AND old.status='Sakit') THEN
 	UPDATE lapabsen
-    SET alpha= alpha + 1,sakit = sakit-1
+    SET alpha= alpha + 1,sakit = sakit-1,keterangan=CASE WHEN alpha >= 3 AND alpha<6 THEN 'SP1'
+                             WHEN alpha = 6 THEN 'SP2'
+                             WHEN alpha = 9 THEN 'SP3'
+                             WHEN alpha <3 THEN NULL
+                        END
     WHERE lapabsen.nis=new.nis;
 ELSEIF(new.status='Alpha' AND old.status='Izin') THEN
 	UPDATE lapabsen
-    SET alpha= alpha + 1,izin = izin-1
+    SET alpha= alpha + 1,izin = izin-1,keterangan=CASE WHEN alpha >= 3 AND alpha<6 THEN 'SP1'
+                             WHEN alpha = 6 THEN 'SP2'
+                             WHEN alpha = 9 THEN 'SP3'
+                             WHEN alpha <3 THEN NULL
+                        END
     WHERE lapabsen.nis=new.nis;
 /* UPDATE TERLAMBAT */
 ELSEIF(new.status='Hadir' AND old.status='Terlambat') THEN
@@ -149,7 +181,11 @@ ELSEIF(new.status='Izin' AND old.status='Terlambat') THEN
     WHERE lapabsen.nis=new.nis;
 ELSEIF(new.status='Alpha' AND old.status='Terlambat') THEN
 	UPDATE lapabsen
-    SET alpha= alpha + 1,terlambat = terlambat-1
+    SET alpha= alpha + 1,terlambat = terlambat-1,keterangan=CASE WHEN alpha >= 3 AND alpha<6 THEN 'SP1'
+                             WHEN alpha = 6 THEN 'SP2'
+                             WHEN alpha = 9 THEN 'SP3'
+                             WHEN alpha <3 THEN NULL
+                        END
     WHERE lapabsen.nis=new.nis;
 END IF
 $$
@@ -177,7 +213,7 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`idadmin`, `nip`, `nama`, `username`, `password`, `level`, `status`) VALUES
 ('ADM001', '3411181123', 'Rafi Aziizi M', 'rafi', 'c4ca4238a0b923820dcc509a6f75849b', 0, 'Aktif'),
-('ADM002', '3411181122', 'Chania Ayu', 'chania', 'chan', 0, 'Aktif'),
+('ADM002', '3411181122', 'Chania Ayu', 'chania', 'chan', 0, 'Pasif'),
 ('ADM003', '3411181121', 'Rizko Ayundra', 'rizko', 'r', 0, 'Aktif'),
 ('ADM004', '31', 'Yoman', '1', 'c81e728d9d4c2f636f067f89cc14862c', 0, 'Aktif');
 
@@ -206,7 +242,7 @@ INSERT INTO `guru` (`nip`, `jabatan`, `nama`, `email`, `jeniskelamin`, `notlp`, 
 ('31', 'OB', 'Yoman', 'yo@gmail.com', 'Laki-Laki', '081282408414', 'weqdsadsa', 'Aktif'),
 ('3411181111', 'Bagian TI', 'Dandi Rusdani', 'dandi@gmail.com', 'Laki-Laki', '08128240844', 'Cimahi', 'Aktif'),
 ('3411181121', 'Bagian IT', 'Rizko Ayundra', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang', 'Aktif'),
-('3411181122', 'Bagian IT', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '08112', 'Cikalong', 'Aktif'),
+('3411181122', 'Bagian IT', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '08112', 'Cikalong', 'Pasif'),
 ('3411181123', 'Guru BK', 'Rafi Aziizi M', 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi', 'Aktif');
 
 --
@@ -254,7 +290,10 @@ INSERT INTO `historyabsen` (`idabsen`, `idrfid`, `nk`, `nis`, `nama`, `tanggal`,
 (1, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-24', '10:50:36', 'Alpha'),
 (2, '632745563716', '11BDP1', '2021.10.002', 'Chania Ayuu', '2021-01-06', '05:55:30', 'Hadir'),
 (3, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-25', '06:41:38', 'Hadir'),
-(4, '51871758571', '12BDP1', '2021.10.001', 'Rafi Aziizi Muchtar', '2021-10-26', '08:44:37', 'Alpha');
+(4, '51871758571', '12BDP1', '2021.10.001', 'Rafi Aziizi Muchtar', '2021-10-26', '08:44:37', 'Alpha'),
+(5, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-28', '07:35:21', 'Alpha'),
+(6, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-29', '09:21:02', 'Alpha'),
+(7, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-11-01', '11:01:33', 'Alpha');
 
 -- --------------------------------------------------------
 
@@ -330,16 +369,17 @@ CREATE TABLE `lapabsen` (
   `izin` int(3) NOT NULL,
   `alpha` int(3) NOT NULL,
   `terlambat` int(3) NOT NULL,
-  `status` varchar(15) NOT NULL
+  `status` varchar(15) NOT NULL,
+  `keterangan` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `lapabsen`
 --
 
-INSERT INTO `lapabsen` (`idlapabsen`, `idwalikelas`, `nis`, `nk`, `nama`, `hadir`, `sakit`, `izin`, `alpha`, `terlambat`, `status`) VALUES
-('LAP0000001', 'WLS004', '2021.10.001', '12BDP1', 'Rafi Aziizi Muchtar', 0, 0, 0, 1, 0, 'Pasif'),
-('LAP0000002', 'WLS004', '2021.10.002', '12BDP1', 'Chania Ayuu', 2, 0, 0, 0, 0, 'Aktif');
+INSERT INTO `lapabsen` (`idlapabsen`, `idwalikelas`, `nis`, `nk`, `nama`, `hadir`, `sakit`, `izin`, `alpha`, `terlambat`, `status`, `keterangan`) VALUES
+('LAP0000001', 'WLS004', '2021.10.001', '12BDP1', 'Rafi Aziizi Muchtar', 0, 0, 0, 1, 0, 'Pasif', 'Selesai'),
+('LAP0000002', 'WLS004', '2021.10.002', '12BDP1', 'Chania Ayuu', 1, 0, 0, 5, 0, 'Aktif', 'Proses');
 
 -- --------------------------------------------------------
 
@@ -360,7 +400,7 @@ CREATE TABLE `rfid` (
 
 INSERT INTO `rfid` (`idrfid`, `nis`, `nama`, `status`) VALUES
 ('51871758571', '2021.10.001', 'Rafi Aziizi Muchtar', 'Pasif'),
-('632745563716', '2021.10.002', 'Chania Ayuu', 'Pasif');
+('566390232631', '2021.10.002', 'Chania Ayuu', 'Pasif');
 
 -- --------------------------------------------------------
 
@@ -609,7 +649,9 @@ INSERT INTO `rfidlog` (`no`, `idrfid`) VALUES
 (250, '51871758571'),
 (251, '632745563716'),
 (252, '632745563716'),
-(253, '632745563716');
+(253, '632745563716'),
+(254, '51871758571'),
+(255, '566390232631');
 
 -- --------------------------------------------------------
 
@@ -661,7 +703,7 @@ CREATE TABLE `siswa` (
 
 INSERT INTO `siswa` (`nis`, `idrfid`, `nk`, `idwalikelas`, `nama`, `alamat`, `jeniskelamin`, `email`, `notlp`, `namaortu`, `noortu`, `status`) VALUES
 ('2021.10.001', '51871758571', '12BDP1', 'WLS004', 'Rafi Aziizi Muchtar', 'Cikampek', 'Perempuan', 'rafiaziizi69@gmail.com', '08128423', 'Kaka', '08232131', 'Pasif'),
-('2021.10.002', '632745563716', '12BDP1', 'WLS004', 'Chania Ayuu', 'Cikampek', 'Perempuan', 'chania@gmail.com', '08231', 'Kaka', '02831231', 'Aktif');
+('2021.10.002', '566390232631', '12BDP1', 'WLS004', 'Chania Ayuu', 'Cikampek', 'Perempuan', 'chania@gmail.com', '08231', 'Kaka', '02831231', 'Aktif');
 
 --
 -- Triggers `siswa`
@@ -986,17 +1028,17 @@ ALTER TABLE `walikelas`
 -- AUTO_INCREMENT for table `absen`
 --
 ALTER TABLE `absen`
-  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `historyabsen`
 --
 ALTER TABLE `historyabsen`
-  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `rfidlog`
 --
 ALTER TABLE `rfidlog`
-  MODIFY `no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
+  MODIFY `no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=256;
 --
 -- Constraints for dumped tables
 --
