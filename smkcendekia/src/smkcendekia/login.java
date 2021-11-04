@@ -71,16 +71,15 @@ public class login extends javax.swing.JFrame {
                         dispose();
                         dashboard dash=new dashboard();
                         dash.setVisible(true);
-                        dash.notifikasialphasemester();
                         break;
                     case "1":
                         //Level 1 untuk Bagian IT
                         JOptionPane.showMessageDialog(null,("Selamat Datang ") + rs.getString("nama"),
                                 "Login Bagian IT Berhasil", JOptionPane.INFORMATION_MESSAGE);
                         //
-                        keloladata_it kdit = new keloladata_it();
-                        kdit.username.setText(usernm);
-                        kdit.setVisible(true);
+                        //keloladata_it kdit = new keloladata_it();
+                        //kdit.username.setText(usernm);
+                        //kdit.setVisible(true);
                         user = rs.getString("username");
                         Session.setusername(user);
                         dispose();

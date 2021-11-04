@@ -5004,29 +5004,7 @@ public class dashboard extends javax.swing.JFrame {
     }
     
     
-    public void notifikasialphasemester(){
-        try{
-           stat = con.createStatement( );
-           sql  = "SELECT * FROM lapabsen WHERE alpha=3 OR alpha=6 OR alpha>=9 AND status='Aktif' AND keterangan !='Selesai'";
-           rs   = stat.executeQuery(sql);
-           if (rs.next() ) {
-               if(rs.getInt("alpha")>9){
-                   JOptionPane.showMessageDialog(null, ("Terdapat siswa bermasalah dengan absensi lebih dari 9 kali alpha"), 
-                   "Informasi Siswa Bermasalah", JOptionPane.INFORMATION_MESSAGE);
-               }
-               else{
-                   JOptionPane.showMessageDialog(null, ("Terdapat siswa bermasalah dengan absensi"), 
-                   "Informasi Siswa Bermasalah", JOptionPane.INFORMATION_MESSAGE);
-               }
-                
-            }
-           else{
-           }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        
-    }
+    
     
 //SEMUA SISWA
     //HARI
@@ -6576,6 +6554,7 @@ public class dashboard extends javax.swing.JFrame {
         keloladata_bk kbk=new keloladata_bk();
         kbk.setVisible(true);
         this.setVisible(false);
+        kbk.notifikasialphasemester();
     }//GEN-LAST:event_btn_kelolaabsensiMousePressed
 
     private void btn_kelolaabsensiMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_kelolaabsensiMouseReleased
