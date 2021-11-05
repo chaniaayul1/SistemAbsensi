@@ -227,7 +227,7 @@ public class keloladata_it extends javax.swing.JFrame  {
     }
     
     //PROSEDUR MENAMBAH DATA SISWA PADA TABEL
-    public void tambahdatasiswa(){
+     public void tambahdatasiswa(){
         String jeniskelamin = null;
         if(rb1.isSelected()){
             jeniskelamin = "Perempuan";
@@ -243,7 +243,6 @@ public class keloladata_it extends javax.swing.JFrame  {
                 JOptionPane.showMessageDialog(this, "Data Tidak Boleh Kosong","Pesan",JOptionPane.ERROR_MESSAGE);
             } else {
                 stat = con.createStatement( );
-                
                 String simpan = "insert into siswa values ('"+txt_nisformsiswa.getText()
                         +"','"+txt_rfidformsiswa.getText()
                         +"','"+txt_nkformsiswa.getText()
@@ -282,7 +281,7 @@ public class keloladata_it extends javax.swing.JFrame  {
                         +"','"+status
                         +"','"+status
                         +"','"+status
-                        +"','Aktif')";
+                        +"','Aktif',NULL)";
                 stat = con.createStatement();
                 int SA =stat.executeUpdate(simpan);
     }
@@ -348,7 +347,7 @@ public class keloladata_it extends javax.swing.JFrame  {
         else{
             try {
                 stat = con.createStatement( );
-                String simpan = "insert into rfid values ('"+rfidid+"','"+nis+"','"+nama+"')";
+                String simpan = "insert into rfid values ('"+rfidid+"','"+nis+"','"+nama+"','Aktif')";
                 stat = con.createStatement();
                 int SA =stat.executeUpdate(simpan);
             } catch (Exception e) {
