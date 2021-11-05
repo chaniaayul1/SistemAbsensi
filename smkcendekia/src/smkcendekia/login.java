@@ -69,32 +69,36 @@ public class login extends javax.swing.JFrame {
                         Session.seteditadmin(nip);
                         Session.setusername(user);
                         dispose();
-                        dashboard dash=new dashboard();
+                        dashboard_bk dash=new dashboard_bk();
                         dash.setVisible(true);
                         break;
                     case "1":
                         //Level 1 untuk Bagian IT
                         JOptionPane.showMessageDialog(null,("Selamat Datang ") + rs.getString("nama"),
                                 "Login Bagian IT Berhasil", JOptionPane.INFORMATION_MESSAGE);
-                        //
-                        //keloladata_it kdit = new keloladata_it();
-                        //kdit.username.setText(usernm);
-                        //kdit.setVisible(true);
                         user = rs.getString("username");
+                        nip = rs.getString("nip");
+                        Session.setname(rs.getString("nama"));
+                        Session.seteditadmin(nip);
                         Session.setusername(user);
                         dispose();
+                        dashboard_it dash1=new dashboard_it();
+                        dash1.setVisible(true);
                         break;
                     case "2":
                         //Level 2 untuk Kepsek
                         JOptionPane.showMessageDialog(null,("Selamat Datang ") + rs.getString("nama"),
                                 "Login Kepala Sekolah Berhasil", JOptionPane.INFORMATION_MESSAGE);
                         //
-//                        registrasi regist3 = new registrasi();
-//                        regist3.setVisible(true);
                         user = rs.getString("username");
+                        nip = rs.getString("nip");
+                        Session.setname(rs.getString("nama"));
+                        Session.seteditadmin(nip);
                         Session.setusername(user);
                         dispose();
-                        break;    
+                        dashboard_ks dash2=new dashboard_ks();
+                        dash2.setVisible(true);
+                        break;   
                     default:
                         break;          
                 }

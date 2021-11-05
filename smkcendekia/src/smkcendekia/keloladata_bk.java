@@ -2520,7 +2520,7 @@ System.out.println(e);
         try {
             Object[ ] obj = new Object[1];
             stat = con.createStatement( );
-            sql  = "SELECT * FROM guru WHERE nip='"+txt_nipregadmin.getText()+"'";
+            sql  = "SELECT * FROM guru WHERE nip='"+txt_nipregadmin.getText()+"' AND status='Aktif'";
             rs   = stat.executeQuery(sql);
             while(rs.next ()){
                 
@@ -3401,25 +3401,28 @@ System.out.println(e);
     }
     //HAPUS DATA SEMESTER
     public void deletedatasemester(){
-        model = new DefaultTableModel ( );
-        tabel_absen.setModel(model);
-        model.addColumn("no");
-        model.addColumn("Nama");
-        model.addColumn("Status");
-        model.addColumn("Tahun Ajaran");
-        model.addColumn("Tanggal Pertama");
-        model.addColumn("Tanggal Kedua");
-        try {
-            stat = con.createStatement( );
-            con.createStatement().executeUpdate("DELETE FROM semester WHERE idadmin='"+saveadm.getText()+"'");
-            rs   = stat.executeQuery(sql);
-            int no=1;
-            this.tampiladmin();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
-            "Delete Data Semester Gagal", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println(ex);
-        }
+        int jwbn=JOptionPane.showConfirmDialog(null, "Benarkah anda ingin merubah username diri sendiri? (Relogin)", "Update Data Admin",JOptionPane.YES_NO_OPTION);
+        if (jwbn==JOptionPane.YES_OPTION){
+            model = new DefaultTableModel ( );
+            tabel_absen.setModel(model);
+            model.addColumn("no");
+            model.addColumn("Nama");
+            model.addColumn("Status");
+            model.addColumn("Tahun Ajaran");
+            model.addColumn("Tanggal Pertama");
+            model.addColumn("Tanggal Kedua");
+            try {
+                stat = con.createStatement( );
+                con.createStatement().executeUpdate("DELETE FROM semester WHERE idsemester='"+txt_searchsemester.getText()+"'");
+                rs   = stat.executeQuery(sql);
+                int no=1;
+                this.tampilsemester();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
+                "Delete Data Semester Gagal", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println(ex);
+            }
+        }  
     }
     
     public void updatedatasemester(){
@@ -4989,7 +4992,7 @@ System.out.println(e);
             }
         });
         panelsiswa.add(cb_formatsiswa);
-        cb_formatsiswa.setBounds(50, 110, 280, 34);
+        cb_formatsiswa.setBounds(50, 110, 290, 34);
 
         jTextField2.setEditable(false);
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
@@ -5578,7 +5581,7 @@ System.out.println(e);
         panelformsiswa.add(btn_scantambahsiswa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 130, 70, 30));
 
         btn_simpantambahsiswa.setBackground(new java.awt.Color(255, 255, 255));
-        btn_simpantambahsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 1, 14)); // NOI18N
+        btn_simpantambahsiswa.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 14)); // NOI18N
         btn_simpantambahsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/floppy-disk.png"))); // NOI18N
         btn_simpantambahsiswa.setText("Simpan");
         btn_simpantambahsiswa.setIconTextGap(18);
@@ -5803,22 +5806,27 @@ System.out.println(e);
         panelriwayatsiswa.add(btn_kembaliriwayatabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 573, 55, -1));
 
         jLabel92.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel92.setForeground(new java.awt.Color(0, 51, 204));
         jLabel92.setText(":");
         panelriwayatsiswa.add(jLabel92, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 173, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 51, 204));
         jLabel5.setText(":");
         panelriwayatsiswa.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 51, 204));
         jLabel7.setText(":");
         panelriwayatsiswa.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 203, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 51, 204));
         jLabel4.setText(":");
         panelriwayatsiswa.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 145, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 51, 204));
         jLabel6.setText(":");
         panelriwayatsiswa.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 117, -1, -1));
 
@@ -5834,6 +5842,7 @@ System.out.println(e);
         panelriwayatsiswa.add(btn_searchriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 200, 30, 30));
 
         bgriwayatsiswa.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        bgriwayatsiswa.setForeground(new java.awt.Color(0, 51, 204));
         bgriwayatsiswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/panelriwayatabsen.png"))); // NOI18N
         panelriwayatsiswa.add(bgriwayatsiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -5845,7 +5854,7 @@ System.out.println(e);
         dataguru.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelguru.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panelguru.add(txt_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 110, 650, 34));
+        panelguru.add(txt_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 110, 630, 34));
 
         btn_searchguru.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchguru.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -5856,7 +5865,7 @@ System.out.println(e);
                 btn_searchguruActionPerformed(evt);
             }
         });
-        panelguru.add(btn_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 110, 34, 34));
+        panelguru.add(btn_searchguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(985, 110, 34, 34));
 
         tabel_guru.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -5894,7 +5903,7 @@ System.out.println(e);
             tabel_guru.getColumnModel().getColumn(5).setResizable(false);
         }
 
-        panelguru.add(tabguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 1020, 370));
+        panelguru.add(tabguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 1010, 370));
 
         btn_refreshdataguru.setBackground(new java.awt.Color(255, 255, 255));
         btn_refreshdataguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refreshlagi.png"))); // NOI18N
@@ -5904,7 +5913,7 @@ System.out.println(e);
                 btn_refreshdataguruActionPerformed(evt);
             }
         });
-        panelguru.add(btn_refreshdataguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 110, 34, 34));
+        panelguru.add(btn_refreshdataguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(1025, 110, 34, 34));
 
         jTextField4.setFont(new java.awt.Font("Roboto Slab", 1, 12)); // NOI18N
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -6217,37 +6226,37 @@ System.out.println(e);
         lb_alamatformguru.setText("Alamat");
         panelformguru.add(lb_alamatformguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, -1, -1));
 
-        jLabel56.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel56.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         jLabel56.setForeground(new java.awt.Color(0, 51, 204));
         jLabel56.setText(":");
         panelformguru.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 155, -1, -1));
 
-        jLabel62.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel62.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         jLabel62.setForeground(new java.awt.Color(0, 51, 204));
         jLabel62.setText(":");
         panelformguru.add(jLabel62, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 195, -1, -1));
 
-        jLabel63.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel63.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         jLabel63.setForeground(new java.awt.Color(0, 51, 204));
         jLabel63.setText(":");
         panelformguru.add(jLabel63, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 235, -1, -1));
 
-        jLabel64.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel64.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         jLabel64.setForeground(new java.awt.Color(0, 51, 204));
         jLabel64.setText(":");
         panelformguru.add(jLabel64, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 350, -1, -1));
 
-        jLabel71.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel71.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         jLabel71.setForeground(new java.awt.Color(0, 51, 204));
         jLabel71.setText(":");
         panelformguru.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 275, -1, -1));
 
-        jLabel74.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel74.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         jLabel74.setForeground(new java.awt.Color(0, 51, 204));
         jLabel74.setText(":");
         panelformguru.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 315, -1, -1));
 
-        jLabel75.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel75.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         jLabel75.setForeground(new java.awt.Color(0, 51, 204));
         jLabel75.setText(":");
         panelformguru.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 115, -1, -1));
@@ -6292,6 +6301,7 @@ System.out.println(e);
         });
         panelformguru.add(btn_kembaliformguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 580, 55, 35));
 
+        bgtambahguru.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         bgtambahguru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/paneltambahguru.png"))); // NOI18N
         panelformguru.add(bgtambahguru, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -6304,7 +6314,7 @@ System.out.println(e);
         datawalikelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelwalikelas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panelwalikelas.add(txt_searchwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 110, 650, 34));
+        panelwalikelas.add(txt_searchwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 110, 630, 34));
 
         btn_searchwalikelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchwalikelas.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -6315,7 +6325,7 @@ System.out.println(e);
                 btn_searchwalikelasActionPerformed(evt);
             }
         });
-        panelwalikelas.add(btn_searchwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(995, 110, 34, 34));
+        panelwalikelas.add(btn_searchwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(985, 110, 34, 34));
 
         tabel_walikelas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -6353,7 +6363,7 @@ System.out.println(e);
             tabel_walikelas.getColumnModel().getColumn(6).setResizable(false);
         }
 
-        panelwalikelas.add(tabwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 1020, 370));
+        panelwalikelas.add(tabwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 1010, 370));
 
         btn_refreshdatawalikelas.setBackground(new java.awt.Color(255, 255, 255));
         btn_refreshdatawalikelas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/btn_refreshlagi.png"))); // NOI18N
@@ -6363,7 +6373,7 @@ System.out.println(e);
                 btn_refreshdatawalikelasActionPerformed(evt);
             }
         });
-        panelwalikelas.add(btn_refreshdatawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 110, 34, 34));
+        panelwalikelas.add(btn_refreshdatawalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1025, 110, 34, 34));
 
         cb_formatwalikelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aktif", "Pasif" }));
         cb_formatwalikelas.setLightWeightPopupEnabled(false);
@@ -6372,7 +6382,7 @@ System.out.println(e);
                 cb_formatwalikelasItemStateChanged(evt);
             }
         });
-        panelwalikelas.add(cb_formatwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 280, 34));
+        panelwalikelas.add(cb_formatwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 290, 34));
 
         jTextField6.setFont(new java.awt.Font("Roboto Slab", 1, 12)); // NOI18N
         jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -6685,37 +6695,37 @@ System.out.println(e);
         lb_alamatformwalikelas.setText("Alamat");
         panelformwalikelas.add(lb_alamatformwalikelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, -1, -1));
 
-        jLabel57.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel57.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         jLabel57.setForeground(new java.awt.Color(0, 51, 204));
         jLabel57.setText(":");
         panelformwalikelas.add(jLabel57, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 200, -1, -1));
 
-        jLabel58.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel58.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         jLabel58.setForeground(new java.awt.Color(0, 51, 204));
         jLabel58.setText(":");
         panelformwalikelas.add(jLabel58, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 240, -1, -1));
 
-        jLabel59.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel59.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         jLabel59.setForeground(new java.awt.Color(0, 51, 204));
         jLabel59.setText(":");
         panelformwalikelas.add(jLabel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, -1, -1));
 
-        jLabel60.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel60.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         jLabel60.setForeground(new java.awt.Color(0, 51, 204));
         jLabel60.setText(":");
         panelformwalikelas.add(jLabel60, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 270, -1, -1));
 
-        jLabel61.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel61.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         jLabel61.setForeground(new java.awt.Color(0, 51, 204));
         jLabel61.setText(":");
         panelformwalikelas.add(jLabel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, -1, -1));
 
-        jLabel65.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel65.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         jLabel65.setForeground(new java.awt.Color(0, 51, 204));
         jLabel65.setText(":");
         panelformwalikelas.add(jLabel65, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 155, -1, -1));
 
-        jLabel67.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
+        jLabel67.setFont(new java.awt.Font("Noto Serif", 1, 14)); // NOI18N
         jLabel67.setForeground(new java.awt.Color(0, 51, 204));
         jLabel67.setText(":");
         panelformwalikelas.add(jLabel67, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 115, -1, -1));
@@ -7027,13 +7037,13 @@ System.out.println(e);
         jLabel3.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText(":");
-        panelkelas.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 110, -1, 30));
+        panelkelas.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 105, -1, 30));
 
         jLabel93.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         jLabel93.setForeground(new java.awt.Color(0, 51, 204));
         jLabel93.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel93.setText("Pencarian");
-        panelkelas.add(jLabel93, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, 30));
+        panelkelas.add(jLabel93, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 105, -1, 30));
 
         tabkelas.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -7394,7 +7404,7 @@ System.out.println(e);
         jLabel1.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 204));
         jLabel1.setText("Pencarian :");
-        paneladmin.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 119, -1, -1));
+        paneladmin.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 116, -1, -1));
 
         btn_searchwalikelas1.setBackground(new java.awt.Color(255, 255, 255));
         btn_searchwalikelas1.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 12)); // NOI18N
@@ -7921,17 +7931,17 @@ System.out.println(e);
         });
         panelabsensi.add(cb_statusdataabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 280, 30));
 
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 51, 204));
         jLabel8.setText(":");
         panelabsensi.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 197, 10, -1));
 
-        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 51, 204));
         jLabel9.setText(":");
         panelabsensi.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 10, -1));
 
-        jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 51, 204));
         jLabel10.setText(":");
         panelabsensi.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 10, -1));
@@ -8027,12 +8037,12 @@ System.out.println(e);
         });
         panellapabsensi.add(btn_simpanlapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(813, 590, 120, 40));
 
-        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(0, 51, 204));
         jLabel27.setText(":");
         panellapabsensi.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 105, -1, -1));
 
-        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(0, 51, 204));
         jLabel29.setText(":");
         panellapabsensi.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 143, -1, -1));
@@ -8505,12 +8515,12 @@ System.out.println(e);
         cb_statussiswabermasalah.setVerifyInputWhenFocusTarget(false);
         panelsiswabermasalah.add(cb_statussiswabermasalah, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 280, 30));
 
-        jLabel94.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel94.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel94.setForeground(new java.awt.Color(0, 51, 204));
         jLabel94.setText(":");
         panelsiswabermasalah.add(jLabel94, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 155, 10, -1));
 
-        jLabel95.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel95.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel95.setForeground(new java.awt.Color(0, 51, 204));
         jLabel95.setText(":");
         panelsiswabermasalah.add(jLabel95, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 10, -1));
@@ -9046,7 +9056,7 @@ System.out.println(e);
     private void btn_dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dashboardMouseClicked
         // TODO add your handling code here:
         this.setVisible(false);
-        dashboard ds = new dashboard();
+        dashboard_bk ds = new dashboard_bk();
         ds.setVisible(true);
     }//GEN-LAST:event_btn_dashboardMouseClicked
 
@@ -9239,7 +9249,7 @@ System.out.println(e);
     }//GEN-LAST:event_btn_kelolasemesterdataadminActionPerformed
 
     private void btn_hapussemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapussemesterActionPerformed
-        // TODO add your handling code here:
+        this.deletedatasemester();
     }//GEN-LAST:event_btn_hapussemesterActionPerformed
 
     private void btn_editprofileguruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editprofileguruActionPerformed

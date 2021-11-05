@@ -64,6 +64,7 @@ public class profiladmin extends javax.swing.JFrame {
         txt_passlamaprofadmin = new javax.swing.JPasswordField();
         jPasswordField3 = new javax.swing.JPasswordField();
         txt_passbaruprofadmin = new javax.swing.JPasswordField();
+        background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -158,7 +159,7 @@ public class profiladmin extends javax.swing.JFrame {
                 btn_simpanprofadminActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_simpanprofadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 140, 40));
+        jPanel1.add(btn_simpanprofadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 140, 40));
         jPanel1.add(txt_tulisulangprofadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 510, 30));
 
         txt_passlamaprofadmin.setDisabledTextColor(new java.awt.Color(0, 0, 0));
@@ -168,6 +169,9 @@ public class profiladmin extends javax.swing.JFrame {
         jPasswordField3.setText("jPasswordField1");
         jPanel1.add(jPasswordField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 510, 30));
         jPanel1.add(txt_passbaruprofadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 510, 30));
+
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/panel/paneleditprofile.png"))); // NOI18N
+        jPanel1.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 370));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 370));
 
@@ -266,6 +270,7 @@ public class profiladmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel background;
     private javax.swing.JButton btn_simpanprofadmin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
