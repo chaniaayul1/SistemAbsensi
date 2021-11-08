@@ -2559,13 +2559,13 @@ System.out.println(e);
             // TODO add your handling code here:
             stat = con.createStatement( );
             this.convertstatusprofileadmin();
-            con.createStatement().executeUpdate("UPDATE admin set   nip='"+txt_searchadmin.getText()+"', "
+            con.createStatement().executeUpdate("UPDATE admin set   nip='"+Session.getnipadmin()+"', "
                                                                         + "idadmin='"+txt_idadminprofileadmin.getText()+"', "
                                                                         + "nama='"+txt_namaprofileadmin.getText()+"', "
                                                                         + "username='"+txt_usernameprofileadmin.getText()+"', "
-                                                                        + "password='"+txt_passprofileadmin.getText()+"', "
+                                                                        + "password=MD5('"+txt_passprofileadmin.getText()+"'), "
                                                                          + "level='"+leveluser3+"' "
-                                                                        + "WHERE nip='"+Session.getnipadmin()+"'");
+                                                                        + "WHERE idadmin='"+txt_idadminprofileadmin.getText()+"'");
             rs   = stat.executeQuery(sql);
             
             this.tampilprofileadmin();
@@ -2647,7 +2647,7 @@ System.out.println(e);
         try {
             if(saveadm.getText()!=null){
                 stat = con.createStatement( );
-                sql  = "SELECT * FROM admin WHERE nip='"+Session.getnipadmin()+"'";
+                sql  = "SELECT * FROM admin WHERE nip='"+txt_searchadmin.getText()+"'";
             
                 rs   = stat.executeQuery(sql);
                 while(rs.next ()){
@@ -3797,6 +3797,16 @@ System.out.println(e);
         tab_anggotakelas.getViewport().setOpaque(false);
         tab_anggotakelas.setViewportBorder(null);
         tabel_anggotakelas.setShowGrid(true);
+        
+        //SETTING TRANSPARASI SCROLLPANE TABLE ANGGOTA KELAS
+        ((DefaultTableCellRenderer)tabel_semester.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
+        tabel_semester.setGridColor(Color.BLACK);
+        tabel_semester.setForeground(Color.BLACK);
+        ((DefaultTableCellRenderer)tabel_semester.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        tabsemester.setOpaque(false);
+        tabsemester.getViewport().setOpaque(false);
+        tabsemester.setViewportBorder(null);
+        tabel_semester.setShowGrid(true);
         
         ((DefaultTableCellRenderer)tabel_lapabsen.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
         tabel_lapabsen.setGridColor(Color.BLACK);
@@ -8028,6 +8038,7 @@ System.out.println(e);
         btn_cetaklapabsen.setMargin(new java.awt.Insets(1, 1, 1, 1));
         panellapabsensi.add(btn_cetaklapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 590, 120, 40));
 
+        btn_simpanlapabsen.setBackground(new java.awt.Color(255, 255, 255));
         btn_simpanlapabsen.setText("Simpan Lap Absen");
         btn_simpanlapabsen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
