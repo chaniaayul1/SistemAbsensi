@@ -3159,14 +3159,14 @@ System.out.println(e);
     public void simpanlapabsen(){
         try{
           stat = con.createStatement( );
-          con.createStatement( ).executeUpdate("INSERT INTO historylapabsen SELECT idlapabsen,idwalikelas,nis,nk,nama,hadir,sakit,izin,alpha,terlambat,status FROM lapabsen");
+          con.createStatement( ).executeUpdate("INSERT INTO historylapabsen SELECT idlapabsen,idwalikelas,nis,nk,nama,hadir,sakit,izin,alpha,terlambat,status,keterangan FROM lapabsen");
           rs   = stat.executeQuery(sql);
         } catch (SQLException e) {
             System.out.println(e);
         }
         try{
           stat = con.createStatement( );
-          con.createStatement( ).executeUpdate("UPDATE lapabsen SET hadir='0',izin='0',sakit='0',alpha='0',terlambat='0'");
+          con.createStatement( ).executeUpdate("UPDATE lapabsen SET hadir='0',izin='0',sakit='0',alpha='0',terlambat='0',keterangan=NULL");
           rs   = stat.executeQuery(sql);
         } catch (SQLException e) {
             System.out.println(e);
@@ -7980,7 +7980,7 @@ System.out.println(e);
         });
         panellapabsensi.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 180, 30, 30));
 
-        cb_lapabsen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--pilih--", "Nama Walikelas", "Nomor Kelas [NK]", "Nomor Induk Siswa [NIS]" }));
+        cb_lapabsen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--pilih--", "Nama Walikelas", "Nomor Kelas [NK]", "Nomor Induk Siswa [NIS]", "Riwayat Laporan Absensi" }));
         cb_lapabsen.setLightWeightPopupEnabled(false);
         panellapabsensi.add(cb_lapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 400, 30));
         panellapabsensi.add(txt_searchlapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 400, 25));
