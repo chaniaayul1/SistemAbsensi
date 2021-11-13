@@ -134,7 +134,7 @@ public class keloladata_it extends javax.swing.JFrame  {
             model.addColumn("Status");
              try{
                stat = con.createStatement( );
-               sql  = "Select * from siswa where status='Pasif'";
+               sql  = "Select * from historysiswa";
                rs   = stat.executeQuery(sql);
                int no=1;
                while(rs.next ()){
@@ -158,6 +158,7 @@ public class keloladata_it extends javax.swing.JFrame  {
     
     //PROSEDUR MENGHAPUS DATA SISWA PADA TABEL
     public void deletedatasiswa(){
+        
         model = new DefaultTableModel ( );
         tabel_siswa.setModel(model);
         model.addColumn("No");
@@ -182,25 +183,74 @@ public class keloladata_it extends javax.swing.JFrame  {
                 model.addRow(obj);
                 no++;
             }
-            this.deletedatarfid();
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
             "Delete Data Siswa Gagal", JOptionPane.INFORMATION_MESSAGE);
             System.out.println(ex);
         }
         try{
-            stat = con.createStatement( );
-            con.createStatement().executeUpdate("UPDATE lapabsen SET status='Pasif' WHERE nis='"+txt_searchsiswa.getText()+"'");
+            //this.historysiswa();
+            //this.historylapabsen();
+            stat=con.createStatement();
+            con.createStatement().executeUpdate("DELETE FROM siswa WHERE nis='"+txt_searchsiswa.getText()+"'");
             rs   = stat.executeQuery(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(keloladata_it.class.getName()).log(Level.SEVERE, null, ex);
+            this.deletedatarfid();
+        }catch (SQLException ex) {
+            Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public void historysiswa(){
+        String a1 = null,a2= null,a3 = null,a4= null,
+        a5= null,a6= null,a7= null,a8= null,a9= null,a10 = null,a11 = null,a12=null;
+        try{
+            stat = con.createStatement( );
+            sql  = "Select * from siswa where status='Pasif' and nis='"+txt_searchsiswa.getText()+"'";
+            rs   = stat.executeQuery(sql);
+            while (rs.next()){
+                a1=rs.getString("nis");
+                a2=rs.getString("idrfid");
+                a3=rs.getString("nk");
+                a4=rs.getString("idwalikelas");
+                a5=rs.getString("nama");
+                a6=rs.getString("alamat");
+                a7=rs.getString("jeniskelamin");
+                a8=rs.getString("email");
+                a9=rs.getString("notlp");
+                a10=rs.getString("namaortu");
+                a11=rs.getString("noortu");
+                a12=rs.getString("status");
+            }
+        }catch(SQLException ex){
+            Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try{
+            stat = con.createStatement( );
+                String simpan = "insert into historysiswa values ('"+a1
+                        +"','"+a2
+                        +"','"+a3
+                        +"','"+a4
+                        +"','"+a5
+                        +"','"+a6
+                        +"','"+a7
+                        +"','"+a8
+                        +"','"+a9
+                        +"','"+a10
+                        +"','"+a11
+                        +"','"+a12+"')";
+                stat = con.createStatement();
+                int SA =stat.executeUpdate(simpan);
+        }catch(SQLException ex){
+            Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     public void deletedatarfid(){
         try {
             stat = con.createStatement( );
-            con.createStatement().executeUpdate("UPDATE rfid SET status='Pasif' WHERE nis='"+txt_searchsiswa.getText()+"'");
+            con.createStatement().executeUpdate("DELETE FROM rfid WHERE nis='"+txt_searchsiswa.getText()+"'");
             rs   = stat.executeQuery(sql);
             } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
@@ -227,7 +277,7 @@ public class keloladata_it extends javax.swing.JFrame  {
     }
     
     //PROSEDUR MENAMBAH DATA SISWA PADA TABEL
-     public void tambahdatasiswa(){
+    public void tambahdatasiswa(){
         String jeniskelamin = null;
         if(rb1.isSelected()){
             jeniskelamin = "Perempuan";
@@ -381,72 +431,145 @@ public class keloladata_it extends javax.swing.JFrame  {
     
     //PROSEDUR MENAMPILKAN DATA PROFILE SISWA
     public void tampilprofilesiswa(){
-        try {
-            stat = con.createStatement( );
-            //sql  = "SELECT s.*,w.nama from siswa as s inner join walikelas as w ON s.idwalikelas=w.idwalikelas where s.nis='"+Session.getnissiswa()+"'";
-            sql="SELECT * from siswa WHERE nis='"+Session.getnissiswa()+"'";
-            rs   = stat.executeQuery(sql);
-            while(rs.next ()){
-                Object[ ] obj = new Object[12];
-                obj[0] =rs.getString("idrfid");
-                txt_rfidsiswa.setText((String) obj[0]);
-                obj[1] =rs.getString("nis");
-                txt_nissiswa.setText((String) obj[1]);
-                obj[2] =rs.getString("nk");
-                txt_nksiswa.setText((String) obj[2]);
-                obj[3] =rs.getString("nama");
-                txt_namasiswa.setText((String) obj[3]);
-                obj[4] =rs.getString("alamat");
-                txt_alamatsiswa.setText((String) obj[4]);
-                obj[5] =rs.getString("jeniskelamin");
-                if(obj[5].equals("Laki-Laki")){
-                    cb_gendersiswa.setSelectedIndex(0);
-                }
-                else{
-                    cb_gendersiswa.setSelectedIndex(1);
-                }
-                txt_gendersiswa.setText((String) obj[5]);
-                obj[6] =rs.getString("notlp");
-                txt_notelpsiswa.setText((String) obj[6]);
-                obj[7] =rs.getString("email");
-                txt_emailsiswa.setText((String) obj[7]);
-                obj[8] =rs.getString("idwalikelas");
-                txt_walassiswa.setText((String) obj[8]);
-                obj[9] =rs.getString("namaortu");
-                txt_ortusiswa.setText((String) obj[9]);
-                obj[10] =rs.getString("noortu");
-                txt_noortusiswa.setText((String) obj[10]);
-                obj[11]=rs.getString("status");
-                if(obj[11].equals("Aktif")){
-                    cb_statussiswa.setSelectedIndex(0);
-                }
-                else{
-                    cb_statussiswa.setSelectedIndex(1);
-                }
-            }
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
-            "Lihat Profile Siswa Gagal", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println(ex);
-        }
-        if (txt_walassiswa.getText().equals("")){
-            txt_walassiswa.setText("Tidak Ada");
-        }
-        else{
+        String value=cb_formatsiswa.getSelectedItem().toString();
+        if (value=="Aktif"){
             try {
                 stat = con.createStatement( );
-                sql="SELECT nama from walikelas WHERE idwalikelas='"+txt_walassiswa.getText()+"'";
+                sql="SELECT * from siswa WHERE nis='"+Session.getnissiswa()+"'";
                 rs   = stat.executeQuery(sql);
                 while(rs.next ()){
-                    Object[ ] obj = new Object[1];
-                    obj[0] =rs.getString("nama");
-                    txt_walassiswa.setText((String) obj[0]);
+                    Object[ ] obj = new Object[12];
+                    obj[0] =rs.getString("idrfid");
+                    txt_rfidsiswa.setText((String) obj[0]);
+                    obj[1] =rs.getString("nis");
+                    txt_nissiswa.setText((String) obj[1]);
+                    obj[2] =rs.getString("nk");
+                    txt_nksiswa.setText((String) obj[2]);
+                    obj[3] =rs.getString("nama");
+                    txt_namasiswa.setText((String) obj[3]);
+                    obj[4] =rs.getString("alamat");
+                    txt_alamatsiswa.setText((String) obj[4]);
+                    obj[5] =rs.getString("jeniskelamin");
+                    if(obj[5].equals("Laki-Laki")){
+                        cb_gendersiswa.setSelectedIndex(0);
+                    }
+                    else{
+                        cb_gendersiswa.setSelectedIndex(1);
+                    }
+                    txt_gendersiswa.setText((String) obj[5]);
+                    obj[6] =rs.getString("notlp");
+                    txt_notelpsiswa.setText((String) obj[6]);
+                    obj[7] =rs.getString("email");
+                    txt_emailsiswa.setText((String) obj[7]);
+                    obj[8] =rs.getString("idwalikelas");
+                    txt_walassiswa.setText((String) obj[8]);
+                    obj[9] =rs.getString("namaortu");
+                    txt_ortusiswa.setText((String) obj[9]);
+                    obj[10] =rs.getString("noortu");
+                    txt_noortusiswa.setText((String) obj[10]);
+                    obj[11]=rs.getString("status");
+                    if(obj[11].equals("Aktif")){
+                        txt_statussiswa.setText((String)obj[11]);
+                    }
+                    else{
+                        txt_statussiswa.setText((String)obj[11]);
+                    }
                 }
+
             } catch (SQLException ex) {
-    //            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
-    //            "Lihat Profile Wali Kelas Gagal", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+                "Lihat Profile Siswa Gagal", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println(ex);
+            }
+            if (txt_walassiswa.getText().equals("")){
+                txt_walassiswa.setText("Tidak Ada");
+            }
+            else{
+                try {
+                    stat = con.createStatement( );
+                    sql="SELECT nama from walikelas WHERE idwalikelas='"+txt_walassiswa.getText()+"'";
+                    rs   = stat.executeQuery(sql);
+                    while(rs.next ()){
+                        Object[ ] obj = new Object[1];
+                        obj[0] =rs.getString("nama");
+                        txt_walassiswa.setText((String) obj[0]);
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+                    "Lihat Profile Wali Kelas Gagal", JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println(ex);
+                }
+            }
+        }
+        else if(value=="Pasif"){
+            btn_editprofilesiswa.setEnabled(false);
+            btn_simpanprofilesiswa.setEnabled(false);
+            try {
+                stat = con.createStatement( );
+                sql="SELECT * from historysiswa WHERE nis='"+Session.getnissiswa()+"'";
+                rs   = stat.executeQuery(sql);
+                while(rs.next ()){
+                    Object[ ] obj = new Object[12];
+                    obj[0] =rs.getString("idrfid");
+                    txt_rfidsiswa.setText((String) obj[0]);
+                    obj[1] =rs.getString("nis");
+                    txt_nissiswa.setText((String) obj[1]);
+                    obj[2] =rs.getString("nk");
+                    txt_nksiswa.setText((String) obj[2]);
+                    obj[3] =rs.getString("nama");
+                    txt_namasiswa.setText((String) obj[3]);
+                    obj[4] =rs.getString("alamat");
+                    txt_alamatsiswa.setText((String) obj[4]);
+                    obj[5] =rs.getString("jeniskelamin");
+                    if(obj[5].equals("Laki-Laki")){
+                        cb_gendersiswa.setSelectedIndex(0);
+                    }
+                    else{
+                        cb_gendersiswa.setSelectedIndex(1);
+                    }
+                    txt_gendersiswa.setText((String) obj[5]);
+                    obj[6] =rs.getString("notlp");
+                    txt_notelpsiswa.setText((String) obj[6]);
+                    obj[7] =rs.getString("email");
+                    txt_emailsiswa.setText((String) obj[7]);
+                    obj[8] =rs.getString("idwalikelas");
+                    txt_walassiswa.setText((String) obj[8]);
+                    obj[9] =rs.getString("namaortu");
+                    txt_ortusiswa.setText((String) obj[9]);
+                    obj[10] =rs.getString("noortu");
+                    txt_noortusiswa.setText((String) obj[10]);
+                    obj[11]=rs.getString("status");
+                    if(obj[11].equals("Aktif")){
+                        txt_statussiswa.setText((String)obj[11]);
+                    }
+                    else{
+                        txt_statussiswa.setText((String)obj[11]);
+                    }
+                }
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+                "Lihat Profile Siswa Gagal", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println(ex);
+            }
+            if (txt_walassiswa.getText().equals("")){
+                txt_walassiswa.setText("Tidak Ada");
+            }
+            else{
+                try {
+                    stat = con.createStatement( );
+                    sql="SELECT nama from walikelas WHERE idwalikelas='"+txt_walassiswa.getText()+"'";
+                    rs   = stat.executeQuery(sql);
+                    while(rs.next ()){
+                        Object[ ] obj = new Object[1];
+                        obj[0] =rs.getString("nama");
+                        txt_walassiswa.setText((String) obj[0]);
+                    }
+                } catch (SQLException ex) {
+        //            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan"), 
+        //            "Lihat Profile Wali Kelas Gagal", JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println(ex);
+                }
             }
         }
     }
@@ -458,41 +581,80 @@ public class keloladata_it extends javax.swing.JFrame  {
         model.addColumn("No");
         model.addColumn("Tanggal");
         model.addColumn("Jam");
-        model.addColumn("Status");  
-        try{
-           stat = con.createStatement( );
-           sql  = "Select * from siswa where nis='"+Session.getnissiswa()+"'";
-           rs   = stat.executeQuery(sql);
-           while(rs.next ()){                
-                lb_nisriwayatsiswa.setText(rs.getString("nis"));
-                lb_namariwayatsiswa.setText(rs.getString("nama"));
-                lb_nkriwayatsiswa.setText(rs.getString("nk"));
-            }                    
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        this.querysemesterterkini();
-        try{
-           stat = con.createStatement( );
-           sql  = "Select * from absen where nis='"+Session.getnissiswa()+"' AND tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakhr+"'";
-           rs   = stat.executeQuery(sql);
-           int no = 1;
-           while(rs.next ()){
-                
-                Object[ ] obj = new Object[4];
-                obj[0] = Integer.toString(no);
-                obj[1] = rs.getString("tanggal");
-                obj[2] = rs.getString("jam");
-                obj[3] = rs.getString("status");
-                model.addRow(obj);
-                no++;
+        model.addColumn("Status");
+        String value=cb_formatsiswa.getSelectedItem().toString();
+        if (value=="Aktif"){
+            try{
+               stat = con.createStatement( );
+               sql  = "Select * from siswa where nis='"+Session.getnissiswa()+"'";
+               rs   = stat.executeQuery(sql);
+               while(rs.next ()){                
+                    lb_nisriwayatsiswa.setText(rs.getString("nis"));
+                    lb_namariwayatsiswa.setText(rs.getString("nama"));
+                    lb_nkriwayatsiswa.setText(rs.getString("nk"));
+                }                    
+            } catch (SQLException e) {
+                System.out.println(e);
             }
-            this.chartriwayatsiswa();
-            tabel_absen.setModel(model);
-                    
-        } catch (SQLException e) {
-            System.out.println(e);
-      } 
+            this.querysemesterterkini();
+            try{
+               stat = con.createStatement( );
+               sql  = "Select * from absen where nis='"+Session.getnissiswa()+"' AND tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakhr+"'";
+               rs   = stat.executeQuery(sql);
+               int no = 1;
+               while(rs.next ()){
+
+                    Object[ ] obj = new Object[4];
+                    obj[0] = Integer.toString(no);
+                    obj[1] = rs.getString("tanggal");
+                    obj[2] = rs.getString("jam");
+                    obj[3] = rs.getString("status");
+                    model.addRow(obj);
+                    no++;
+                }
+                this.chartriwayatsiswa();
+                tabel_absen.setModel(model);
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+        else if(value=="Pasif"){
+            try{
+               stat = con.createStatement( );
+               sql  = "Select * from historysiswa where nis='"+Session.getnissiswa()+"'";
+               rs   = stat.executeQuery(sql);
+               while(rs.next ()){                
+                    lb_nisriwayatsiswa.setText(rs.getString("nis"));
+                    lb_namariwayatsiswa.setText(rs.getString("nama"));
+                    lb_nkriwayatsiswa.setText(rs.getString("nk"));
+                }                    
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+            this.querysemesterterkini();
+            try{
+               stat = con.createStatement( );
+               sql  = "Select * from absen where nis='"+Session.getnissiswa()+"' AND tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakhr+"'";
+               rs   = stat.executeQuery(sql);
+               int no = 1;
+               while(rs.next ()){
+
+                    Object[ ] obj = new Object[4];
+                    obj[0] = Integer.toString(no);
+                    obj[1] = rs.getString("tanggal");
+                    obj[2] = rs.getString("jam");
+                    obj[3] = rs.getString("status");
+                    model.addRow(obj);
+                    no++;
+                }
+                this.chartriwayatsiswa();
+                tabel_absen.setModel(model);
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
     }
     
     public void chartriwayatsiswa(){
@@ -647,7 +809,7 @@ public class keloladata_it extends javax.swing.JFrame  {
             txt_gendersiswa.setEnabled(false);
             cb_gendersiswa.setVisible(true);
             cb_gendersiswa.setEnabled(true);
-            cb_statussiswa.setEnabled(true);
+            txt_statussiswa.setEnabled(false);
         }
         else{
             btn_scanprofilesiswa.setEnabled(false);
@@ -665,12 +827,12 @@ public class keloladata_it extends javax.swing.JFrame  {
             txt_gendersiswa.setEnabled(false);
             cb_gendersiswa.setVisible(false);
             cb_gendersiswa.setEnabled(false);
-            cb_statussiswa.setEnabled(false);
+            txt_statussiswa.setEnabled(false);
         }
     }
     
     public void simpanprofilesiswa(){
-        String value=cb_statussiswa.getSelectedItem().toString();
+        String value=txt_statussiswa.getText();
         try {
             // TODO add your handling code here:
             stat = con.createStatement( );
@@ -693,7 +855,7 @@ public class keloladata_it extends javax.swing.JFrame  {
                                                                         + "notlp='"+txt_notelpsiswa.getText()+"', "
                                                                         + "namaortu='"+txt_ortusiswa.getText()+"', "        
                                                                         + "noortu='"+txt_noortusiswa.getText()+"',"
-                                                                        + "status='"+cb_statussiswa.getSelectedItem().toString()+"'"
+                                                                        + "status='"+txt_statussiswa.getText()+"'"
                                                                         + "WHERE nis='"+txt_searchsiswa.getText()+"'");
             rs   = stat.executeQuery(sql);
             JOptionPane.showMessageDialog(null, ("Data Siswa Berhasil di Update"), 
@@ -713,13 +875,15 @@ public class keloladata_it extends javax.swing.JFrame  {
                 }
                 try {
                     stat = con.createStatement( );
-                    con.createStatement().executeUpdate("UPDATE siswa set   idwalikelas='"+idwls+"' WHERE nis='"+Session.getnissiswa()+"'");
+                    con.createStatement().executeUpdate("UPDATE siswa set idwalikelas='"+idwls+"' WHERE nis='"+Session.getnissiswa()+"'");
                     rs   = stat.executeQuery(sql);
                 }
                     catch (SQLException ex) {            
                 }
             }
-            
+            else{
+                this.deletedatasiswa();
+            }
             this.tampilprofilesiswa();
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data Siswa Gagal di Update"), 
@@ -753,7 +917,7 @@ public class keloladata_it extends javax.swing.JFrame  {
                 no++;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(keloladata_it.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -814,7 +978,7 @@ public class keloladata_it extends javax.swing.JFrame  {
                     no++;
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(keloladata_it.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else{
@@ -841,7 +1005,7 @@ public class keloladata_it extends javax.swing.JFrame  {
                     no++;
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(keloladata_it.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
             }
         }     
     }
@@ -1974,12 +2138,30 @@ System.out.println(e);
     }
     
     public void deletedatakelas(){
-        try {
+        String checkjs = null;
+        try{
             stat = con.createStatement( );
-            con.createStatement().executeUpdate("DELETE FROM kelas WHERE nk='"+txt_searchkelas.getText()+"'");
+            sql="SELECT js FROM kelas WHERE nk='"+txt_searchkelas.getText()+"'";
             rs   = stat.executeQuery(sql);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
+            while (rs.next()){
+                checkjs=rs.getString("js");
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        if (checkjs.equals("0")){
+            try {
+                stat = con.createStatement( );
+                con.createStatement().executeUpdate("DELETE FROM kelas WHERE nk='"+txt_searchkelas.getText()+"'");
+                rs   = stat.executeQuery(sql);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
+                "Delete Data kelas Gagal", JOptionPane.ERROR_MESSAGE);
+                System.out.println(ex);
+        }
+        }else{
+            JOptionPane.showMessageDialog(null, ("Terdapat siswa didalam kelas tersebut"), 
             "Delete Data kelas Gagal", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -2787,16 +2969,17 @@ System.out.println(e);
      }
     
     public void simpanlapabsen(){
+    
         try{
           stat = con.createStatement( );
-          con.createStatement( ).executeUpdate("INSERT INTO historylapabsen SELECT idlapabsen,idwalikelas,nis,nk,nama,hadir,sakit,izin,alpha,terlambat,status FROM lapabsen");
+          con.createStatement( ).executeUpdate("INSERT INTO historylapabsen SELECT idlapabsen,idwalikelas,nis,nk,nama,hadir,sakit,izin,alpha,terlambat,status,keterangan FROM lapabsen");
           rs   = stat.executeQuery(sql);
         } catch (SQLException e) {
             System.out.println(e);
         }
         try{
           stat = con.createStatement( );
-          con.createStatement( ).executeUpdate("UPDATE lapabsen SET hadir='0',izin='0',sakit='0',alpha='0',terlambat='0'");
+          con.createStatement( ).executeUpdate("UPDATE lapabsen SET hadir='0',izin='0',sakit='0',alpha='0',terlambat='0',keterangan=NULL");
           rs   = stat.executeQuery(sql);
         } catch (SQLException e) {
             System.out.println(e);
@@ -3536,7 +3719,7 @@ System.out.println(e);
         txt_walassiswa = new javax.swing.JTextField();
         txt_ortusiswa = new javax.swing.JTextField();
         txt_noortusiswa = new javax.swing.JTextField();
-        cb_statussiswa = new javax.swing.JComboBox<>();
+        txt_statussiswa = new javax.swing.JTextField();
         cb_gendersiswa = new javax.swing.JComboBox<>();
         btn_editprofilesiswa = new javax.swing.JToggleButton();
         btn_scanprofilesiswa = new javax.swing.JButton();
@@ -4540,10 +4723,10 @@ System.out.println(e);
         txt_noortusiswa.setEnabled(false);
         panelprofilesiswa.add(txt_noortusiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 490, 550, 29));
 
-        cb_statussiswa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aktif", "Pasif" }));
-        cb_statussiswa.setEnabled(false);
-        cb_statussiswa.setLightWeightPopupEnabled(false);
-        panelprofilesiswa.add(cb_statussiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 526, 550, 30));
+        txt_statussiswa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txt_statussiswa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txt_statussiswa.setEnabled(false);
+        panelprofilesiswa.add(txt_statussiswa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 525, 550, 29));
 
         cb_gendersiswa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-Laki", "Perempuan" }));
         cb_gendersiswa.setFocusable(false);
@@ -8547,7 +8730,6 @@ System.out.println(e);
     private javax.swing.JComboBox<String> cb_statusprofileguru;
     private javax.swing.JComboBox<String> cb_statusprofilewalas;
     private javax.swing.JComboBox<String> cb_statussemester;
-    private javax.swing.JComboBox<String> cb_statussiswa;
     private javax.swing.JComboBox<String> cb_statussiswabermasalah;
     private javax.swing.JComboBox<String> cb_walasformkelas;
     private javax.swing.JComboBox<String> cb_walasprofilekelas;
@@ -8973,6 +9155,7 @@ System.out.println(e);
     private javax.swing.JTextField txt_searchwalikelas;
     private javax.swing.JTextField txt_smtprofilekelas;
     private javax.swing.JTextField txt_statusprofileadmin1;
+    private javax.swing.JTextField txt_statussiswa;
     private javax.swing.JTextField txt_taformkelas;
     private javax.swing.JTextField txt_tahunajaransemester;
     private javax.swing.JTextField txt_tanggal2riwayatsiswa;
