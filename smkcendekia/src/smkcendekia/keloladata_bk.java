@@ -2309,10 +2309,17 @@ System.out.println(e);
                                                                     + "idwalikelas='"+wlsprofkelas+"'"
                                                                     + "WHERE nk='"+txt_nkprofilekelas.getText()+"' AND status='Aktif'");
             rs   = stat.executeQuery(sql);
-            System.out.println("CHECK NK");
-            while(rs.next()){
-                System.out.println("CHECK NK");
-            }
+
+         }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data Kelas Gagal di Update"), 
+            "Data Profile Kelas Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex);
+        }
+        
+        try {
+            stat = con.createStatement( );
+            con.createStatement().executeUpdate("UPDATE absen set   nk='"+txt_nkprofilekelas.getText()+"' WHERE nk='"+txt_nkprofilekelas.getText()+"'");
+            rs   = stat.executeQuery(sql);
 
          }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data Kelas Gagal di Update"), 
@@ -2324,9 +2331,6 @@ System.out.println(e);
             con.createStatement().executeUpdate("UPDATE walikelas set   nk='"+txt_nkprofilekelas.getText()+"'"
                                                                     + "WHERE idwalikelas='"+wlsprofkelas+"'");
             rs   = stat.executeQuery(sql);
-            while(rs.next()){
-                System.out.println("CHECK NK");
-            }
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data Kelas Gagal di Update"), 
             "Data Profile Kelas Error", JOptionPane.ERROR_MESSAGE);
