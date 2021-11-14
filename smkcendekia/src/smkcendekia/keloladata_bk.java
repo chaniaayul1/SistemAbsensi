@@ -1191,6 +1191,8 @@ public class keloladata_bk extends javax.swing.JFrame  {
         if (jwbn==JOptionPane.YES_OPTION){
             this.deletedataguru();
             this.tampilguru();
+            JOptionPane.showMessageDialog(null, ("Data guru berhasil dihapus"), 
+            "Delete Data Guru", JOptionPane.INFORMATION_MESSAGE);
             txt_searchguru.setText("");
         }
         else if(jwbn==JOptionPane.NO_OPTION){
@@ -1599,6 +1601,8 @@ public class keloladata_bk extends javax.swing.JFrame  {
         if (jwbn==JOptionPane.YES_OPTION){
             this.deletedatawalas();
             this.tampilwalas();
+            JOptionPane.showMessageDialog(null, ("Data walikelas berhasil dihapus"), 
+            "Delete Data Walikelas", JOptionPane.INFORMATION_MESSAGE);
             txt_searchwalikelas.setText("");
         }
         else if(jwbn==JOptionPane.NO_OPTION){
@@ -2155,6 +2159,8 @@ System.out.println(e);
                 stat = con.createStatement( );
                 con.createStatement().executeUpdate("DELETE FROM kelas WHERE nk='"+txt_searchkelas.getText()+"'");
                 rs   = stat.executeQuery(sql);
+                JOptionPane.showMessageDialog(null, ("Data Kelas Berhasil dihapus"), 
+                "Hapus Data Kelas", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
                 "Delete Data kelas Gagal", JOptionPane.ERROR_MESSAGE);
@@ -2678,6 +2684,8 @@ System.out.println(e);
                 if (jwbn==JOptionPane.YES_OPTION){
                 this.deletedataadmin();
                 this.tampiladmin();
+                JOptionPane.showMessageDialog(null, ("Data admin berhasil dihapus"), 
+                "Hapus Data Admin", JOptionPane.INFORMATION_MESSAGE);
                 txt_searchadmin.setText("");
                 saveadm.setText("");
             }  
@@ -3280,6 +3288,7 @@ System.out.println(e);
             System.out.println(e);
       }
     }
+    
     public void searchlapabsen(){
         String value = cb_lapabsen.getSelectedItem().toString();
         if (value.equals("Nama Walikelas")){
@@ -3454,7 +3463,6 @@ System.out.println(e);
      }
     
     public void simpanlapabsen(){
-    
         try{
           stat = con.createStatement( );
           con.createStatement( ).executeUpdate("INSERT INTO historylapabsen SELECT idlapabsen,idwalikelas,nis,nk,nama,hadir,sakit,izin,alpha,terlambat,status,keterangan FROM lapabsen");
@@ -3469,6 +3477,8 @@ System.out.println(e);
         } catch (SQLException e) {
             System.out.println(e);
         }
+        JOptionPane.showMessageDialog(null, ("Data Laporan Absen Berhasil disimpan"), 
+            "Data History Laporan Absen", JOptionPane.INFORMATION_MESSAGE);
     }
     
     //===================== DATA LAP SISWA BERMASALAH ========================//
@@ -3628,7 +3638,8 @@ System.out.println(e);
                         +"')";
                 stat = con.createStatement();
                 int SA =stat.executeUpdate(simpan);
-                JOptionPane.showMessageDialog(this,"Data Semester Berhasil disimpan!");
+                JOptionPane.showMessageDialog(null, ("Data Semester Berhasil disimpan"), 
+            "Data Semester", JOptionPane.INFORMATION_MESSAGE);
                 this.hapuslayar();
             }
         } catch (Exception e) {
@@ -3698,7 +3709,7 @@ System.out.println(e);
     }
     //HAPUS DATA SEMESTER
     public void deletedatasemester(){
-        int jwbn=JOptionPane.showConfirmDialog(null, "Benarkah anda ingin merubah username diri sendiri? (Relogin)", "Update Data Admin",JOptionPane.YES_NO_OPTION);
+        int jwbn=JOptionPane.showConfirmDialog(null, "Benarkah anda ingin menghapus data semester ini?", "Hapus Data Semester",JOptionPane.YES_NO_OPTION);
         if (jwbn==JOptionPane.YES_OPTION){
             model = new DefaultTableModel ( );
             tabel_absen.setModel(model);
@@ -3712,8 +3723,10 @@ System.out.println(e);
                 stat = con.createStatement( );
                 con.createStatement().executeUpdate("DELETE FROM semester WHERE idsemester='"+txt_searchsemester.getText()+"'");
                 rs   = stat.executeQuery(sql);
-                int no=1;
+                JOptionPane.showMessageDialog(null, ("Data Semester Berhasil dihapus"), 
+                "Data Semester", JOptionPane.INFORMATION_MESSAGE);
                 this.tampilsemester();
+                this.hapuslayar();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
                 "Delete Data Semester Gagal", JOptionPane.INFORMATION_MESSAGE);
@@ -3738,6 +3751,7 @@ System.out.println(e);
             this.tampilsemester();
             JOptionPane.showMessageDialog(null, ("Data Semester Berhasil di Update"), 
             "Data Semester", JOptionPane.INFORMATION_MESSAGE);
+            this.hapuslayar();
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data Semester Gagal di Update"), 
             "Data Semester", JOptionPane.ERROR_MESSAGE);
@@ -3851,10 +3865,16 @@ System.out.println(e);
         //kelas                    
         txt_nkformkelas.setText("");txt_tingkatanformkelas.setText("");
         txt_jurusanformkelas.setText("");txt_namaformkelas.setText("");
-        
+        cb_walasformkelas.setSelectedIndex(0);cb_smtformkelas.setSelectedIndex(0);
+        txt_taformkelas.setText("");
         //admin
         txt_nipregadmin.setText("");txt_namaregadmin.setText("");
         txt_usernameregadmin.setText("");txt_passwordregadmin.setText("");
+        
+        //semester
+        txt_tglpertamasemester.setText("");txt_tglterakhirsemester.setText("");
+        txt_tahunajaransemester.setText("");
+        cb_statussemester.setSelectedIndex(0);cb_namasemester.setSelectedIndex(0);
     }
     
     //AUTO NUMBER
@@ -4150,14 +4170,17 @@ System.out.println(e);
     public void notifikasialphasemester(){
         try{
            stat = con.createStatement( );
-           sql  = "SELECT * FROM lapabsen WHERE alpha=3 OR alpha=6 OR alpha>=9 AND status='Aktif' AND keterangan !='Selesai'";
+           sql  = "SELECT * FROM lapabsen WHERE alpha=3 OR alpha=6 OR alpha>=9 AND status='Aktif' AND keterangan!='Selesai'";
            rs   = stat.executeQuery(sql);
            if (rs.next() ) {
+               
                if(rs.getInt("alpha")>9){
                    JOptionPane.showMessageDialog(null, ("Terdapat siswa bermasalah dengan absensi lebih dari 9 kali alpha"), 
                    "Informasi Siswa Bermasalah", JOptionPane.INFORMATION_MESSAGE);
                }
-               else{
+               else if(rs.getString("keterangan").equals("Selesai")){
+
+               }else{
                    JOptionPane.showMessageDialog(null, ("Terdapat siswa bermasalah dengan absensi"), 
                    "Informasi Siswa Bermasalah", JOptionPane.INFORMATION_MESSAGE);
                }
@@ -7644,6 +7667,7 @@ System.out.println(e);
         panelformkelas.add(jLabel85, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 435, -1, -1));
 
         cb_smtformkelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ganjil", "Genap" }));
+        cb_smtformkelas.setLightWeightPopupEnabled(false);
         panelformkelas.add(cb_smtformkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 380, 840, 30));
 
         txt_nkformkelas.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
@@ -8347,7 +8371,7 @@ System.out.println(e);
         panellapabsensi.add(btn_cetaklapabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 590, 120, 40));
 
         btn_simpanlapabsen.setBackground(new java.awt.Color(255, 255, 255));
-        btn_simpanlapabsen.setText("Simpan Lap Absen");
+        btn_simpanlapabsen.setText("Simpan Laporan");
         btn_simpanlapabsen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_simpanlapabsenActionPerformed(evt);
@@ -9550,7 +9574,6 @@ System.out.println(e);
         // TODO add your handling code here:
         this.tambahsemester();
         this.tampilsemester();
-        this.hapuslayar();
     }//GEN-LAST:event_btn_simpansemesterActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

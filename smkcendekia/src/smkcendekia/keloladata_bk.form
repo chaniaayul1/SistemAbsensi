@@ -7761,6 +7761,7 @@
                             <StringItem index="1" value="Genap"/>
                           </StringArray>
                         </Property>
+                        <Property name="lightWeightPopupEnabled" type="boolean" value="false"/>
                       </Properties>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -9760,7 +9761,7 @@
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Simpan Lap Absen"/>
+                        <Property name="text" type="java.lang.String" value="Simpan Laporan"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_simpanlapabsenActionPerformed"/>
