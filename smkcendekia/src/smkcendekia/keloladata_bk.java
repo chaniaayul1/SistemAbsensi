@@ -265,6 +265,8 @@ public class keloladata_bk extends javax.swing.JFrame  {
             if (jwbn==JOptionPane.YES_OPTION){
                 this.deletedatasiswa();
                 this.tampilsiswa();
+                JOptionPane.showMessageDialog(null, ("Data Siswa berhasil dihapus"), 
+                "Hapus Data Siswa", JOptionPane.INFORMATION_MESSAGE);
                 txt_searchsiswa.setText("");
             }
             else if(jwbn==JOptionPane.NO_OPTION){
