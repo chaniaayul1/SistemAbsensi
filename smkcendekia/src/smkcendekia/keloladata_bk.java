@@ -9,6 +9,7 @@ package smkcendekia;
 import javax.swing.JLayeredPane;
 import java.awt.Color;
 import java.awt.HeadlessException;
+import java.awt.print.PrinterException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -2984,12 +2985,18 @@ System.out.println(e);
     
      public void updatestatusabsen(){
        try {
-
             stat = con.createStatement( );
             con.createStatement().executeUpdate("UPDATE absen set status='"+cb_statusdataabsen.getSelectedItem()+"' WHERE idabsen='"+idabsen+"'");
             System.out.println(idabsen);
             rs   = stat.executeQuery(sql);
-            
+            try{
+                stat = con.createStatement( );
+                con.createStatement().executeUpdate("UPDATE historyabsen set status='"+cb_statusdataabsen.getSelectedItem()+"' WHERE idabsen='"+idabsen+"'");
+                System.out.println(idabsen);
+                rs   = stat.executeQuery(sql);
+            }catch (SQLException ex) {
+                System.out.println(ex);
+            }
             this.tampilabsen();
             
             JOptionPane.showMessageDialog(null, ("Update berhasil"), 
@@ -3192,7 +3199,16 @@ System.out.println(e);
                 obj[9] = rs.getString("alpha");
                 obj[10] = rs.getString("terlambat");
                 model.addRow(obj);
-                if (tabel_lapabsen.getColumnModel().getColumnCount() > 0) {
+                this.formattabeladmin();
+                no++;
+            }
+       
+        } catch (SQLException e) {
+            System.out.println(e);
+      }
+    }
+    public void formattabellapabsen(){
+        if (tabel_lapabsen.getColumnModel().getColumnCount() > 0) {
                     tabel_lapabsen.getColumnModel().getColumn(0).setMinWidth(45);
                     tabel_lapabsen.getColumnModel().getColumn(0).setMaxWidth(45);
                     tabel_lapabsen.getColumnModel().getColumn(1).setMinWidth(125);
@@ -3216,12 +3232,6 @@ System.out.println(e);
                     tabel_lapabsen.getColumnModel().getColumn(10).setMinWidth(80);
                     tabel_lapabsen.getColumnModel().getColumn(10).setMaxWidth(80);
                 }
-                no++;
-            }
-       
-        } catch (SQLException e) {
-            System.out.println(e);
-      }
     }
     
     public void tampilhistorylapabsen(){
@@ -3323,6 +3333,7 @@ System.out.println(e);
                             obj[9] = rs.getString("alpha");
                             obj[10] = rs.getString("terlambat");
                             model.addRow(obj);
+                            this.formattabeladmin();
                             no++;
                         }
                     if (model.getRowCount()==0){
@@ -3366,6 +3377,7 @@ System.out.println(e);
                         obj[9] = rs.getString("alpha");
                         obj[10] = rs.getString("terlambat");
                         model.addRow(obj);
+                        this.formattabeladmin();
                         no++;
                     }
                     if (model.getRowCount()==0){
@@ -3409,6 +3421,8 @@ System.out.println(e);
                         obj[9] = rs.getString("alpha");
                         obj[10] = rs.getString("terlambat");
                         model.addRow(obj);
+                        this.formattabeladmin();
+
                         no++;
                     }
                 if (model.getRowCount()==0){
@@ -3446,6 +3460,7 @@ System.out.println(e);
                     obj[8] = rs.getString("izin");
                     obj[9] = rs.getString("alpha");
                     obj[10] = rs.getString("terlambat");
+                    this.formattabeladmin();
                     model.addRow(obj);
                     no++;
                 }
@@ -9446,9 +9461,10 @@ System.out.println(e);
 
     private void btn_cetakanggotakelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakanggotakelasActionPerformed
         // TODO add your handling code here:
-        MessageFormat header = new MessageFormat("ANGGOTA KELAS");
+        MessageFormat header = new MessageFormat("DAFTAR ANGGOTA KELAS");
+        MessageFormat footer = new MessageFormat(lb_nkak.getText()+" "+"("+lb_iwak.getText()+")");
         try {
-            tabel_anggotakelas.print(JTable.PrintMode.FIT_WIDTH, header,null);
+            tabel_anggotakelas.print(JTable.PrintMode.FIT_WIDTH, header,footer);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e);
         }
@@ -9505,17 +9521,26 @@ System.out.println(e);
     }//GEN-LAST:event_tabel_riwayatsiswaMouseClicked
 
     private void btn_cetakriwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakriwayatsiswaActionPerformed
-        // TODO add your handling code here:
-        MessageFormat header = new MessageFormat("RIWAYAT ABSEN");
-        MessageFormat nis = new MessageFormat(lb_nisriwayatsiswa.getText());
-        MessageFormat nk = new MessageFormat(lb_nkriwayatsiswa.getText());
-        MessageFormat nama = new MessageFormat(lb_namariwayatsiswa.getText());
-        try {
-            tabel_riwayatsiswa.print(JTable.PrintMode.FIT_WIDTH, header,null);
-        } catch (Exception e) {
+        String value=cb_formatriwayatsiswa.getSelectedItem().toString();
+        if(value=="Semester ini"){
+            MessageFormat header = new MessageFormat("RIWAYAT ABSENSI PER-SEMESTER");
+            MessageFormat footer = new MessageFormat(lb_namariwayatsiswa.getText()+" "+"("+lb_nisriwayatsiswa.getText()+")"+" Kelas "+lb_nkriwayatsiswa.getText());
+     
+            try {
+                tabel_riwayatsiswa.print(JTable.PrintMode.FIT_WIDTH, header,footer);
+            } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, e);
+            }
         }
-
+        else if(value=="Seluruh Absensi"){
+            MessageFormat header = new MessageFormat("RIWAYAT SELURUH ABSENSI");
+            MessageFormat footer = new MessageFormat(lb_namariwayatsiswa.getText()+" "+"("+lb_nisriwayatsiswa.getText()+")");
+            try {
+                tabel_riwayatsiswa2.print(JTable.PrintMode.FIT_WIDTH, header,footer);
+            } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+            }
+        }
     }//GEN-LAST:event_btn_cetakriwayatsiswaActionPerformed
 
     private void txt_tanggal2riwayatsiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tanggal2riwayatsiswaActionPerformed
@@ -9527,7 +9552,13 @@ System.out.println(e);
     }//GEN-LAST:event_btn_searchriwayatsiswaActionPerformed
 
     private void btn_cetakanggotawalikelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakanggotawalikelasActionPerformed
-        // TODO add your handling code here:
+        MessageFormat header = new MessageFormat("DAFTAR ANGGOTA SISWA");
+        MessageFormat footer = new MessageFormat(lb_namaanggotawalikelas.getText()+" "+"("+lb_idanggotawalikelas.getText()+")"+" Kelas "+lb_nkanggotawalikelas.getText());
+        try {
+            tabel_anggotawalikelas.print(JTable.PrintMode.FIT_WIDTH, header,footer);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
     }//GEN-LAST:event_btn_cetakanggotawalikelasActionPerformed
 
     private void tabel_anggotawalikelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_anggotawalikelasMouseClicked
@@ -9833,7 +9864,52 @@ System.out.println(e);
     }//GEN-LAST:event_btn_pssiswabermasalahActionPerformed
 
     private void btn_cetaklapabsenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetaklapabsenActionPerformed
-        // TODO add your handling code here:
+        String value=cb_lapabsen.getSelectedItem().toString();
+        if("--pilih--".equals(value)){
+            MessageFormat header = new MessageFormat("LAPORAN ABSEN SELURUH SISWA");
+            MessageFormat footer = new MessageFormat("SMK CENDEKIA BATUJAJAR");
+            try {
+                tabel_lapabsen.print(JTable.PrintMode.FIT_WIDTH, header,footer);
+            } catch (PrinterException e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+            }
+        }
+        else if("Nama Walikelas".equals(value)){
+            MessageFormat header = new MessageFormat("LAPORAN ABSEN PER-WALIKELAS");
+            MessageFormat footer = new MessageFormat(txt_searchlapabsen.getText());
+            try {
+                tabel_lapabsen.print(JTable.PrintMode.FIT_WIDTH, header,footer);
+            } catch (PrinterException e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+            }
+        }
+        else if("Nomor Kelas [NK]".equals(value)){
+            MessageFormat header = new MessageFormat("LAPORAN ABSEN PER-KELAS");
+            MessageFormat footer = new MessageFormat(txt_searchlapabsen.getText());
+            try {
+                tabel_lapabsen.print(JTable.PrintMode.FIT_WIDTH, header,footer);
+            } catch (PrinterException e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+            }
+        }
+        else if("Nomor Induk Siswa [NIS]".equals(value)){
+            MessageFormat header = new MessageFormat("LAPORAN ABSEN PER-SISWA");
+            MessageFormat footer = new MessageFormat(txt_searchlapabsen.getText());
+            try {
+                tabel_lapabsen.print(JTable.PrintMode.FIT_WIDTH, header,footer);
+            } catch (PrinterException e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+            }
+        }
+        else if("Riwayat Laporan Absensi".equals(value)){
+            MessageFormat header = new MessageFormat("RIWAYAT LAPORAN ABSEN");
+            MessageFormat footer = new MessageFormat("RIWAYAT LAPORAN ABSENSI SMK CENDEKIA BATUJAJAR");
+            try {
+                tabel_lapabsen.print(JTable.PrintMode.FIT_WIDTH, header,footer);
+            } catch (PrinterException e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+            }
+        }
     }//GEN-LAST:event_btn_cetaklapabsenActionPerformed
 
     private void cb_lapabsenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_lapabsenItemStateChanged
