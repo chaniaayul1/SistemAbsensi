@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 01, 2021 at 06:56 PM
+-- Generation Time: Nov 14, 2021 at 09:08 PM
 -- Server version: 10.3.29-MariaDB-0+deb10u1
 -- PHP Version: 7.3.29-1~deb10u1
 
@@ -38,20 +38,6 @@ CREATE TABLE `absen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `absen`
---
-
-INSERT INTO `absen` (`idabsen`, `idrfid`, `nk`, `nis`, `nama`, `tanggal`, `jam`, `status`) VALUES
-(1, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-24', '10:50:36', 'Alpha'),
-(2, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-01-06', '05:55:30', 'Hadir'),
-(4, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-25', '06:41:38', 'Alpha'),
-(5, '51871758571', '12BDP1', '2021.10.001', 'Rafi Aziizi Muchtar', '2021-10-26', '08:44:37', 'Alpha'),
-(6, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-28', '07:35:21', 'Alpha'),
-(7, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-29', '09:21:02', 'Alpha'),
-(8, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-11-01', '11:01:33', 'Alpha'),
-(11, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-11-01', '11:01:33', 'Hadir');
-
---
 -- Triggers `absen`
 --
 DELIMITER $$
@@ -74,7 +60,7 @@ DELIMITER $$
 CREATE TRIGGER `inserttolapabsen` AFTER INSERT ON `absen` FOR EACH ROW IF(new.status='Hadir') THEN
     UPDATE lapabsen
     SET hadir= hadir + 1
-    WHERE lapsiswabermasalah.nis=new.nis;
+    WHERE lapabsen.nis=new.nis;
 ELSEIF(new.status='Terlambat') THEN
 	UPDATE lapabsen
     SET terlambat= terlambat + 1
@@ -212,10 +198,9 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`idadmin`, `nip`, `nama`, `username`, `password`, `level`, `status`) VALUES
-('ADM001', '3411181123', 'Rafi Aziizi M', 'rafi', 'c4ca4238a0b923820dcc509a6f75849b', 0, 'Aktif'),
-('ADM002', '3411181122', 'Chania Ayu', 'chania', 'chan', 0, 'Pasif'),
-('ADM003', '3411181121', 'Rizko Ayundra', 'rizko', 'r', 0, 'Aktif'),
-('ADM004', '31', 'Yoman', '1', 'c81e728d9d4c2f636f067f89cc14862c', 0, 'Aktif');
+('ADM002', '3411181123', 'Rafi Aziizi M', 'rafi', 'c4ca4238a0b923820dcc509a6f75849b', 0, 'Aktif'),
+('ADM003', '3411181121', 'Rizko Ayundra', 'rizko', '1', 0, 'Aktif'),
+('ADM005', '321001', 'Dandi Rusdani, S.Pd.', 'dandir', 'c4ca4238a0b923820dcc509a6f75849b', 0, 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -230,7 +215,7 @@ CREATE TABLE `guru` (
   `email` varchar(45) NOT NULL,
   `jeniskelamin` varchar(15) NOT NULL,
   `notlp` varchar(15) NOT NULL,
-  `alamat` varchar(45) NOT NULL,
+  `alamat` varchar(100) NOT NULL,
   `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -240,7 +225,7 @@ CREATE TABLE `guru` (
 
 INSERT INTO `guru` (`nip`, `jabatan`, `nama`, `email`, `jeniskelamin`, `notlp`, `alamat`, `status`) VALUES
 ('31', 'OB', 'Yoman', 'yo@gmail.com', 'Laki-Laki', '081282408414', 'weqdsadsa', 'Aktif'),
-('3411181111', 'Bagian TI', 'Dandi Rusdani', 'dandi@gmail.com', 'Laki-Laki', '08128240844', 'Cimahi', 'Aktif'),
+('321001', 'Bagian IT', 'Dandi Rusdani, S.Pd.', 'dandirusdani@gmail.com', 'Laki-Laki', '081282407414', 'Blok Carik Rt 06 Rw 01 Ds. Batujajar Barat Kec. Batujajar Kab. Bandung Barat', 'Aktif'),
 ('3411181121', 'Bagian IT', 'Rizko Ayundra', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang', 'Aktif'),
 ('3411181122', 'Bagian IT', 'Chania Ayu', 'chaniaayu@gmail.com', 'Perempuan', '08112', 'Cikalong', 'Pasif'),
 ('3411181123', 'Guru BK', 'Rafi Aziizi M', 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi', 'Aktif');
@@ -287,13 +272,8 @@ CREATE TABLE `historyabsen` (
 --
 
 INSERT INTO `historyabsen` (`idabsen`, `idrfid`, `nk`, `nis`, `nama`, `tanggal`, `jam`, `status`) VALUES
-(1, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-24', '10:50:36', 'Alpha'),
-(2, '632745563716', '11BDP1', '2021.10.002', 'Chania Ayuu', '2021-01-06', '05:55:30', 'Hadir'),
-(3, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-25', '06:41:38', 'Hadir'),
-(4, '51871758571', '12BDP1', '2021.10.001', 'Rafi Aziizi Muchtar', '2021-10-26', '08:44:37', 'Alpha'),
-(5, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-28', '07:35:21', 'Alpha'),
-(6, '632745563716', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-10-29', '09:21:02', 'Alpha'),
-(7, '566390232631', '12BDP1', '2021.10.002', 'Chania Ayuu', '2021-11-01', '11:01:33', 'Alpha');
+(1, '14756353782', '11TITL1', '2021.10.001', 'Rafi Aziizi Muchtar', '2021-04-04', '06:47:02', 'Hadir'),
+(2, '14756353782', '11TITL1', '2021.10.001', 'Rafi Aziizi Muchtar', '2021-11-14', '06:15:03', 'Sakit');
 
 -- --------------------------------------------------------
 
@@ -312,16 +292,47 @@ CREATE TABLE `historylapabsen` (
   `izin` int(3) NOT NULL,
   `alpha` int(3) NOT NULL,
   `terlambat` int(3) NOT NULL,
-  `status` varchar(15) NOT NULL
+  `status` varchar(15) NOT NULL,
+  `keterangan` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `historylapabsen`
 --
 
-INSERT INTO `historylapabsen` (`idlapabsen`, `idwalikelas`, `nis`, `nk`, `nama`, `hadir`, `sakit`, `izin`, `alpha`, `terlambat`, `status`) VALUES
-('LAP0000001', 'WLS001', '2021.10.001', '12BDS1', 'Rafi Aziizi Muchtar', 0, 0, 0, 0, 0, 'Pasif'),
-('LAP0000002', 'WLS001', '2021.10.002', '12BDS1', 'Chania Ayuu', 1, 0, 0, 2, 0, 'Aktif');
+INSERT INTO `historylapabsen` (`idlapabsen`, `idwalikelas`, `nis`, `nk`, `nama`, `hadir`, `sakit`, `izin`, `alpha`, `terlambat`, `status`, `keterangan`) VALUES
+('LAP0000001', 'WLS002', '2021', '12TITL4', 'Rafi Aziizi Muchtar', 0, 0, 0, 0, 0, 'Pasif', NULL),
+('LAP0000001', 'WLS002', '20211131', '12TITL4', 'Raaaff', 1, 0, 0, 0, 0, 'Aktif', NULL),
+('LAP0000001', 'WLS003', '2021.10.001', '11TITL1', 'Rafi Aziizi Muchtar', 0, 1, 0, 0, 0, 'Aktif', NULL),
+('LAP0000001', 'WLS003', '2021.10.001', '11TITL1', 'Rafi Aziizi Muchtar', 0, 0, 0, 0, 0, 'Pasif', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `historysiswa`
+--
+
+CREATE TABLE `historysiswa` (
+  `nis` varchar(15) NOT NULL,
+  `idrfid` varchar(15) NOT NULL,
+  `nk` varchar(15) DEFAULT NULL,
+  `idwalikelas` varchar(15) DEFAULT NULL,
+  `nama` varchar(45) NOT NULL,
+  `alamat` varchar(100) NOT NULL,
+  `jeniskelamin` varchar(15) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `notlp` varchar(15) NOT NULL,
+  `namaortu` varchar(15) NOT NULL,
+  `noortu` varchar(15) NOT NULL,
+  `status` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `historysiswa`
+--
+
+INSERT INTO `historysiswa` (`nis`, `idrfid`, `nk`, `idwalikelas`, `nama`, `alamat`, `jeniskelamin`, `email`, `notlp`, `namaortu`, `noortu`, `status`) VALUES
+('2021.10.001', '14756353782', '11TITL1', 'WLS003', 'Rafi Aziizi Muchtar', 'Kp.bojong asih rt 6 rw 10 desa cikalong kec. Cikalong wetan 40556', 'Laki-Laki', 'rafiaziizi69@gmail.com', '081282407414', 'Tatang', '08174925763', 'Pasif');
 
 -- --------------------------------------------------------
 
@@ -347,10 +358,7 @@ CREATE TABLE `kelas` (
 --
 
 INSERT INTO `kelas` (`nk`, `idwalikelas`, `namakelas`, `angkatan`, `jurusan`, `semester`, `tahunajaran`, `jl`, `jp`, `js`) VALUES
-('11TITL1', NULL, 'TITL1', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
-('11TITL2', NULL, '2', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
-('11TITL3', NULL, '3', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0),
-('12BDP1', 'WLS004', '1', 12, 'BDP', 'Ganjil', '2021/2022', 0, 1, 1);
+('11TITL1', 'WLS003', 'TITL1', 11, 'TITL', 'Ganjil', '2021/2022', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -373,14 +381,6 @@ CREATE TABLE `lapabsen` (
   `keterangan` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `lapabsen`
---
-
-INSERT INTO `lapabsen` (`idlapabsen`, `idwalikelas`, `nis`, `nk`, `nama`, `hadir`, `sakit`, `izin`, `alpha`, `terlambat`, `status`, `keterangan`) VALUES
-('LAP0000001', 'WLS004', '2021.10.001', '12BDP1', 'Rafi Aziizi Muchtar', 0, 0, 0, 1, 0, 'Pasif', 'Selesai'),
-('LAP0000002', 'WLS004', '2021.10.002', '12BDP1', 'Chania Ayuu', 1, 0, 0, 5, 0, 'Aktif', 'Proses');
-
 -- --------------------------------------------------------
 
 --
@@ -393,14 +393,6 @@ CREATE TABLE `rfid` (
   `nama` varchar(45) NOT NULL,
   `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `rfid`
---
-
-INSERT INTO `rfid` (`idrfid`, `nis`, `nama`, `status`) VALUES
-('51871758571', '2021.10.001', 'Rafi Aziizi Muchtar', 'Pasif'),
-('566390232631', '2021.10.002', 'Chania Ayuu', 'Pasif');
 
 -- --------------------------------------------------------
 
@@ -651,7 +643,22 @@ INSERT INTO `rfidlog` (`no`, `idrfid`) VALUES
 (252, '632745563716'),
 (253, '632745563716'),
 (254, '51871758571'),
-(255, '566390232631');
+(255, '566390232631'),
+(256, '51871758571'),
+(257, '632745563716'),
+(258, '566390232631'),
+(259, '566390232631'),
+(260, '632745563716'),
+(261, '359445304937'),
+(262, '14756353782'),
+(263, '14756353782'),
+(264, '359445304937'),
+(265, '632745563716'),
+(266, '566390232631'),
+(267, '14756353782'),
+(268, '566390232631'),
+(269, '566390232631'),
+(270, '14756353782');
 
 -- --------------------------------------------------------
 
@@ -673,8 +680,7 @@ CREATE TABLE `semester` (
 --
 
 INSERT INTO `semester` (`idsemester`, `nama`, `status`, `tahunajaran`, `tanggalpertama`, `tanggalterakhir`) VALUES
-('SMT002', 'Semester 1', 'Ganjil', '2021/2022', '2021-08-30', '2022-04-19'),
-('SMT003', 'Semester 2', 'Genap', '2021/2022', '2021-05-19', '2022-01-19');
+('SMT005', 'Semester 2', 'Genap', '2021/2022', '2021-05-19', '2022-01-19');
 
 -- --------------------------------------------------------
 
@@ -685,10 +691,10 @@ INSERT INTO `semester` (`idsemester`, `nama`, `status`, `tahunajaran`, `tanggalp
 CREATE TABLE `siswa` (
   `nis` varchar(15) NOT NULL,
   `idrfid` varchar(15) NOT NULL,
-  `nk` varchar(15) NOT NULL,
+  `nk` varchar(15) DEFAULT NULL,
   `idwalikelas` varchar(15) DEFAULT NULL,
   `nama` varchar(45) NOT NULL,
-  `alamat` varchar(45) NOT NULL,
+  `alamat` varchar(100) NOT NULL,
   `jeniskelamin` varchar(15) NOT NULL,
   `email` varchar(45) NOT NULL,
   `notlp` varchar(15) NOT NULL,
@@ -698,25 +704,47 @@ CREATE TABLE `siswa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `siswa`
---
-
-INSERT INTO `siswa` (`nis`, `idrfid`, `nk`, `idwalikelas`, `nama`, `alamat`, `jeniskelamin`, `email`, `notlp`, `namaortu`, `noortu`, `status`) VALUES
-('2021.10.001', '51871758571', '12BDP1', 'WLS004', 'Rafi Aziizi Muchtar', 'Cikampek', 'Perempuan', 'rafiaziizi69@gmail.com', '08128423', 'Kaka', '08232131', 'Pasif'),
-('2021.10.002', '566390232631', '12BDP1', 'WLS004', 'Chania Ayuu', 'Cikampek', 'Perempuan', 'chania@gmail.com', '08231', 'Kaka', '02831231', 'Aktif');
-
---
 -- Triggers `siswa`
 --
+DELIMITER $$
+CREATE TRIGGER `movelapabsen` BEFORE DELETE ON `siswa` FOR EACH ROW INSERT INTO historylapabsen
+SELECT * FROM lapabsen
+WHERE nis=old.nis
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `movesiswa` BEFORE DELETE ON `siswa` FOR EACH ROW INSERT INTO historysiswa
+SELECT * FROM siswa
+where nis=old.nis
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `tambahjk` AFTER INSERT ON `siswa` FOR EACH ROW IF (new.jeniskelamin='Laki-Laki') THEN
+    UPDATE kelas
+    SET jl= jl+1,js=js+1
+    WHERE kelas.nk=new.nk;
+ELSEIF (new.jeniskelamin='Perempuan') THEN
+    UPDATE kelas
+    SET jp= jp+1,js=js+1
+    WHERE kelas.nk=new.nk;
+END IF
+$$
+DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `updatedatalapabsen` AFTER UPDATE ON `siswa` FOR EACH ROW IF (new.status!=old.status) THEN
 	IF (new.status='Aktif') THEN
     	UPDATE lapabsen
         set status=new.status
         WHERE nis=new.nis;
+        UPDATE rfid
+        set status=new.status
+        WHERE nis=new.nis;
     ELSEIF (new.status='Pasif') THEN
     	UPDATE lapabsen
         SET status=new.status
+        WHERE nis=new.nis;
+        UPDATE rfid
+        set status=new.status
         WHERE nis=new.nis;
     END IF;
 END IF
@@ -903,7 +931,7 @@ CREATE TABLE `walikelas` (
   `email` varchar(45) NOT NULL,
   `jeniskelamin` varchar(15) NOT NULL,
   `notlp` varchar(15) NOT NULL,
-  `alamat` varchar(45) NOT NULL,
+  `alamat` varchar(100) NOT NULL,
   `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
@@ -914,9 +942,9 @@ CREATE TABLE `walikelas` (
 INSERT INTO `walikelas` (`idwalikelas`, `nip`, `nama`, `nk`, `email`, `jeniskelamin`, `notlp`, `alamat`, `status`) VALUES
 ('WLS001', '3411181123', 'Rafi Aziizi M', NULL, 'rafi69@gmail.com', 'Laki-Laki', '081282407414', 'Cimahi', 'Pasif'),
 ('WLS002', '3411181122', 'Chania Ayu', NULL, 'chaniaayu@gmail.com', 'Perempuan', '08112', 'Cikalong', 'Pasif'),
-('WLS003', '3411181121', 'Rizko Ayundra', '12BDP1', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang', 'Aktif'),
-('WLS004', '3411181111', 'Dandi Rusdani', '12BDP1', 'dandi@gmail.com', 'Laki-Laki', '08128240844', 'Cimahi', 'Aktif'),
-('WLS005', '31', 'Yoman', '12BDP1', 'yo@gmail.com', 'Laki-Laki', '081282408414', 'weqdsadsa', 'Pasif');
+('WLS003', '3411181121', 'Rizko Ayundra', '11TITL1', 'rizko@gmail.com', 'Laki-Laki', '0811', 'Karawang', 'Aktif'),
+('WLS005', '31', 'Yoman', NULL, 'yo@gmail.com', 'Laki-Laki', '081282408414', 'weqdsadsa', 'Pasif'),
+('WLS006', '321001', 'Dandi Rusdani, S.Pd.', NULL, 'dandirusdani@gmail.com', 'Laki-Laki', '081282407414', 'Blok Carik Rt 06 Rw 01 Ds. Batujajar Barat Kec. Batujajar Kab. Bandung Barat', 'Aktif');
 
 --
 -- Triggers `walikelas`
@@ -967,6 +995,12 @@ ALTER TABLE `guru`
 --
 ALTER TABLE `historyabsen`
   ADD PRIMARY KEY (`idabsen`);
+
+--
+-- Indexes for table `historysiswa`
+--
+ALTER TABLE `historysiswa`
+  ADD PRIMARY KEY (`nis`);
 
 --
 -- Indexes for table `kelas`
@@ -1028,17 +1062,17 @@ ALTER TABLE `walikelas`
 -- AUTO_INCREMENT for table `absen`
 --
 ALTER TABLE `absen`
-  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `historyabsen`
 --
 ALTER TABLE `historyabsen`
-  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idabsen` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `rfidlog`
 --
 ALTER TABLE `rfidlog`
-  MODIFY `no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=256;
+  MODIFY `no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=271;
 --
 -- Constraints for dumped tables
 --
@@ -1049,7 +1083,7 @@ ALTER TABLE `rfidlog`
 ALTER TABLE `absen`
   ADD CONSTRAINT `absen_ibfk_1` FOREIGN KEY (`idrfid`) REFERENCES `rfid` (`idrfid`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `absen_ibfk_3` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `absen_ibfk_4` FOREIGN KEY (`nk`) REFERENCES `kelas` (`nk`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `absen_ibfk_4` FOREIGN KEY (`nk`) REFERENCES `kelas` (`nk`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `admin`
@@ -1076,7 +1110,7 @@ ALTER TABLE `lapabsen`
 --
 ALTER TABLE `siswa`
   ADD CONSTRAINT `siswa_ibfk_1` FOREIGN KEY (`idrfid`) REFERENCES `rfid` (`idrfid`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `siswa_ibfk_2` FOREIGN KEY (`nk`) REFERENCES `kelas` (`nk`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `siswa_ibfk_2` FOREIGN KEY (`nk`) REFERENCES `kelas` (`nk`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `siswa_ibfk_3` FOREIGN KEY (`idwalikelas`) REFERENCES `walikelas` (`idwalikelas`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
