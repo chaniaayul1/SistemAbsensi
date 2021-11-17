@@ -265,6 +265,8 @@ public class keloladata_it extends javax.swing.JFrame  {
             if (jwbn==JOptionPane.YES_OPTION){
                 this.deletedatasiswa();
                 this.tampilsiswa();
+                JOptionPane.showMessageDialog(null, ("Data Siswa berhasil dihapus"), 
+                "Hapus Data Siswa", JOptionPane.INFORMATION_MESSAGE);
                 txt_searchsiswa.setText("");
             }
             else if(jwbn==JOptionPane.NO_OPTION){
@@ -277,7 +279,7 @@ public class keloladata_it extends javax.swing.JFrame  {
     }
     
     //PROSEDUR MENAMBAH DATA SISWA PADA TABEL
-    public void tambahdatasiswa(){
+    public void tambahdatasiswa() {
         String jeniskelamin = null;
         if(rb1.isSelected()){
             jeniskelamin = "Perempuan";
@@ -635,7 +637,7 @@ public class keloladata_it extends javax.swing.JFrame  {
             this.querysemesterterkini();
             try{
                stat = con.createStatement( );
-               sql  = "Select * from absen where nis='"+Session.getnissiswa()+"' AND tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakhr+"'";
+               sql  = "Select * from historyabsen where nis='"+Session.getnissiswa()+"' AND tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakhr+"'";
                rs   = stat.executeQuery(sql);
                int no = 1;
                while(rs.next ()){
@@ -660,55 +662,108 @@ public class keloladata_it extends javax.swing.JFrame  {
     public void chartriwayatsiswa(){
         int hadir = 0,sakit = 0,izin = 0,alpha = 0,terlambat = 0;
         this.querysemesterterkini();
-        try{
-           stat = con.createStatement( );
-           sql  = "Select status from absen WHERE nis='"+lb_nisriwayatsiswa.getText()+"' AND nk='"+lb_nkriwayatsiswa.getText()+"'"
-                   + "AND tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakhr+"'";
-           rs   = stat.executeQuery(sql);
-           while(rs.next ()){
-               Object[] obj=new Object[1];
-               obj[0]=rs.getString("status");
-               if(obj[0].equals("Hadir")){
-                   hadir=hadir+1;
-               }
-               else if(obj[0].equals("Sakit")){
-                   sakit=sakit+1;
-               }
-               else if(obj[0].equals("Izin")){
-                   izin=izin+1;
-               }
-               else if(obj[0].equals("Alpha")){
-                   alpha=alpha+1;
-               }
-               else if(obj[0].equals("Terlambat")){
-                   terlambat=terlambat+1;
-               }
+        String value=cb_formatsiswa.getSelectedItem().toString();
+        if (value=="Aktif"){
+            try{
+               stat = con.createStatement( );
+               sql  = "Select status from absen WHERE nis='"+lb_nisriwayatsiswa.getText()+"' AND nk='"+lb_nkriwayatsiswa.getText()+"'"
+                       + "AND tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakhr+"'";
+               rs   = stat.executeQuery(sql);
+               while(rs.next ()){
+                   Object[] obj=new Object[1];
+                   obj[0]=rs.getString("status");
+                   if(obj[0].equals("Hadir")){
+                       hadir=hadir+1;
+                   }
+                   else if(obj[0].equals("Sakit")){
+                       sakit=sakit+1;
+                   }
+                   else if(obj[0].equals("Izin")){
+                       izin=izin+1;
+                   }
+                   else if(obj[0].equals("Alpha")){
+                       alpha=alpha+1;
+                   }
+                   else if(obj[0].equals("Terlambat")){
+                       terlambat=terlambat+1;
+                   }
+                }
+            } catch (SQLException e) {
+                System.out.println(e);
             }
-        } catch (SQLException e) {
-            System.out.println(e);
+            DefaultPieDataset piedata=new DefaultPieDataset();
+            piedata.setValue("Hadir", hadir);
+            piedata.setValue("Sakit", sakit);
+            piedata.setValue("Izin", izin);
+            piedata.setValue("Alpha",alpha);
+            piedata.setValue("Terlambat", terlambat);
+            JFreeChart chart=ChartFactory.createPieChart(" ", piedata,true,false,false);
+            final PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
+            final PiePlot plot1 = (PiePlot) chart.getPlot();
+            plot1.setLabelGenerator(labelGenerator);
+            PiePlot piePlot=(PiePlot) chart.getPlot();
+            chart.getPlot().setBackgroundPaint( Color.white);
+            chart.getPlot().setOutlinePaint(null);
+            piePlot.setSectionPaint("Hadir",Color.green);
+            piePlot.setSectionPaint("Sakit",Color.yellow);
+            piePlot.setSectionPaint("Izin",Color.blue);
+            piePlot.setSectionPaint("Alpha",Color.red);
+            piePlot.setSectionPaint("Terlambat",Color.orange);
+            ChartPanel barChartPanel=new ChartPanel(chart);
+            panel_chartrs.removeAll();
+            panel_chartrs.add(barChartPanel);
+            panel_chartrs.validate();
+        }else if(value=="Pasif"){
+            try{
+               stat = con.createStatement( );
+               sql  = "Select status from historyabsen WHERE nis='"+lb_nisriwayatsiswa.getText()+"' AND nk='"+lb_nkriwayatsiswa.getText()+"'"
+                       + "AND tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakhr+"'";
+               rs   = stat.executeQuery(sql);
+               while(rs.next ()){
+                   Object[] obj=new Object[1];
+                   obj[0]=rs.getString("status");
+                   if(obj[0].equals("Hadir")){
+                       hadir=hadir+1;
+                   }
+                   else if(obj[0].equals("Sakit")){
+                       sakit=sakit+1;
+                   }
+                   else if(obj[0].equals("Izin")){
+                       izin=izin+1;
+                   }
+                   else if(obj[0].equals("Alpha")){
+                       alpha=alpha+1;
+                   }
+                   else if(obj[0].equals("Terlambat")){
+                       terlambat=terlambat+1;
+                   }
+                }
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+            DefaultPieDataset piedata=new DefaultPieDataset();
+            piedata.setValue("Hadir", hadir);
+            piedata.setValue("Sakit", sakit);
+            piedata.setValue("Izin", izin);
+            piedata.setValue("Alpha",alpha);
+            piedata.setValue("Terlambat", terlambat);
+            JFreeChart chart=ChartFactory.createPieChart(" ", piedata,true,false,false);
+            final PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
+            final PiePlot plot1 = (PiePlot) chart.getPlot();
+            plot1.setLabelGenerator(labelGenerator);
+            PiePlot piePlot=(PiePlot) chart.getPlot();
+            chart.getPlot().setBackgroundPaint( Color.white);
+            chart.getPlot().setOutlinePaint(null);
+            piePlot.setSectionPaint("Hadir",Color.green);
+            piePlot.setSectionPaint("Sakit",Color.yellow);
+            piePlot.setSectionPaint("Izin",Color.blue);
+            piePlot.setSectionPaint("Alpha",Color.red);
+            piePlot.setSectionPaint("Terlambat",Color.orange);
+            ChartPanel barChartPanel=new ChartPanel(chart);
+            panel_chartrs.removeAll();
+            panel_chartrs.add(barChartPanel);
+            panel_chartrs.validate();
         }
-        DefaultPieDataset piedata=new DefaultPieDataset();
-        piedata.setValue("Hadir", hadir);
-        piedata.setValue("Sakit", sakit);
-        piedata.setValue("Izin", izin);
-        piedata.setValue("Alpha",alpha);
-        piedata.setValue("Terlambat", terlambat);
-        JFreeChart chart=ChartFactory.createPieChart(" ", piedata,true,false,false);
-        final PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
-        final PiePlot plot1 = (PiePlot) chart.getPlot();
-        plot1.setLabelGenerator(labelGenerator);
-        PiePlot piePlot=(PiePlot) chart.getPlot();
-        chart.getPlot().setBackgroundPaint( Color.white);
-        chart.getPlot().setOutlinePaint(null);
-        piePlot.setSectionPaint("Hadir",Color.green);
-        piePlot.setSectionPaint("Sakit",Color.yellow);
-        piePlot.setSectionPaint("Izin",Color.blue);
-        piePlot.setSectionPaint("Alpha",Color.red);
-        piePlot.setSectionPaint("Terlambat",Color.orange);
-        ChartPanel barChartPanel=new ChartPanel(chart);
-        panel_chartrs.removeAll();
-        panel_chartrs.add(barChartPanel);
-        panel_chartrs.validate();
     }
     
 //CHART RIWAYAT ABSENSI SELAMA SEKOLAH
@@ -1191,6 +1246,8 @@ public class keloladata_it extends javax.swing.JFrame  {
         if (jwbn==JOptionPane.YES_OPTION){
             this.deletedataguru();
             this.tampilguru();
+            JOptionPane.showMessageDialog(null, ("Data guru berhasil dihapus"), 
+            "Delete Data Guru", JOptionPane.INFORMATION_MESSAGE);
             txt_searchguru.setText("");
         }
         else if(jwbn==JOptionPane.NO_OPTION){
@@ -1396,7 +1453,7 @@ public class keloladata_it extends javax.swing.JFrame  {
                 no++;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(keloladata_it.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -1599,6 +1656,8 @@ public class keloladata_it extends javax.swing.JFrame  {
         if (jwbn==JOptionPane.YES_OPTION){
             this.deletedatawalas();
             this.tampilwalas();
+            JOptionPane.showMessageDialog(null, ("Data walikelas berhasil dihapus"), 
+            "Delete Data Walikelas", JOptionPane.INFORMATION_MESSAGE);
             txt_searchwalikelas.setText("");
         }
         else if(jwbn==JOptionPane.NO_OPTION){
@@ -2034,7 +2093,7 @@ public class keloladata_it extends javax.swing.JFrame  {
                 no++;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(keloladata_it.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -2155,6 +2214,8 @@ System.out.println(e);
                 stat = con.createStatement( );
                 con.createStatement().executeUpdate("DELETE FROM kelas WHERE nk='"+txt_searchkelas.getText()+"'");
                 rs   = stat.executeQuery(sql);
+                JOptionPane.showMessageDialog(null, ("Data Kelas Berhasil dihapus"), 
+                "Hapus Data Kelas", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
                 "Delete Data kelas Gagal", JOptionPane.ERROR_MESSAGE);
@@ -2270,7 +2331,6 @@ System.out.println(e);
         this.convernamawalaskelas();
         try {
             stat = con.createStatement( );
-            
             con.createStatement().executeUpdate("UPDATE kelas set   nk='"+txt_nkprofilekelas.getText()+"', "
                                                                         + "idwalikelas='"+wlsprofkelas+"', "
                                                                         + "angkatan='"+txt_angkatanprofilekelas.getText()+"', "
@@ -2287,12 +2347,15 @@ System.out.println(e);
             "Data Profile Kelas Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(ex);
         }
-         try {
+        try {
             stat = con.createStatement( );
             con.createStatement().executeUpdate("UPDATE siswa set   nk='"+txt_nkprofilekelas.getText()+"', "
                                                                     + "idwalikelas='"+wlsprofkelas+"'"
                                                                     + "WHERE nk='"+txt_nkprofilekelas.getText()+"' AND status='Aktif'");
             rs   = stat.executeQuery(sql);
+            while(rs.next()){
+                System.out.println("CHECK NK");
+            }
             this.convernamawalaskelas();
             txt_walasprofilekelas.setText(cb_walasprofilekelas.getSelectedItem().toString());
             this.tampilprofilekelas();
@@ -2301,12 +2364,24 @@ System.out.println(e);
             "Data Profile Kelas Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(ex);
         }
-         try {
+        try {
             stat = con.createStatement( );
             con.createStatement().executeUpdate("UPDATE lapabsen set   nk='"+txt_nkprofilekelas.getText()+"', "
                                                                     + "idwalikelas='"+wlsprofkelas+"'"
                                                                     + "WHERE nk='"+txt_nkprofilekelas.getText()+"' AND status='Aktif'");
             rs   = stat.executeQuery(sql);
+
+         }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ("Data Kelas Gagal di Update"), 
+            "Data Profile Kelas Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex);
+        }
+        
+        try {
+            stat = con.createStatement( );
+            con.createStatement().executeUpdate("UPDATE absen set   nk='"+txt_nkprofilekelas.getText()+"' WHERE nk='"+txt_nkprofilekelas.getText()+"'");
+            rs   = stat.executeQuery(sql);
+
          }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data Kelas Gagal di Update"), 
             "Data Profile Kelas Error", JOptionPane.ERROR_MESSAGE);
@@ -2405,7 +2480,7 @@ System.out.println(e);
                 wlsprofkelas=(rs.getString("idwalikelas"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(keloladata_it.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
         }       
     }
     
@@ -2540,7 +2615,7 @@ System.out.println(e);
                 no++;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(keloladata_it.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(keloladata_bk.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -2590,12 +2665,18 @@ System.out.println(e);
     
      public void updatestatusabsen(){
        try {
-
             stat = con.createStatement( );
             con.createStatement().executeUpdate("UPDATE absen set status='"+cb_statusdataabsen.getSelectedItem()+"' WHERE idabsen='"+idabsen+"'");
             System.out.println(idabsen);
             rs   = stat.executeQuery(sql);
-            
+            try{
+                stat = con.createStatement( );
+                con.createStatement().executeUpdate("UPDATE historyabsen set status='"+cb_statusdataabsen.getSelectedItem()+"' WHERE idabsen='"+idabsen+"'");
+                System.out.println(idabsen);
+                rs   = stat.executeQuery(sql);
+            }catch (SQLException ex) {
+                System.out.println(ex);
+            }
             this.tampilabsen();
             
             JOptionPane.showMessageDialog(null, ("Update berhasil"), 
@@ -3143,7 +3224,8 @@ System.out.println(e);
                         +"')";
                 stat = con.createStatement();
                 int SA =stat.executeUpdate(simpan);
-                JOptionPane.showMessageDialog(this,"Data Semester Berhasil disimpan!");
+                JOptionPane.showMessageDialog(null, ("Data Semester Berhasil disimpan"), 
+            "Data Semester", JOptionPane.INFORMATION_MESSAGE);
                 this.hapuslayar();
             }
         } catch (Exception e) {
@@ -3211,9 +3293,9 @@ System.out.println(e);
            JOptionPane.showMessageDialog(null, e);
            }
     }
-    
+    //HAPUS DATA SEMESTER
     public void deletedatasemester(){
-        int jwbn=JOptionPane.showConfirmDialog(null, "Benarkah anda ingin merubah username diri sendiri? (Relogin)", "Update Data Admin",JOptionPane.YES_NO_OPTION);
+        int jwbn=JOptionPane.showConfirmDialog(null, "Benarkah anda ingin menghapus data semester ini?", "Hapus Data Semester",JOptionPane.YES_NO_OPTION);
         if (jwbn==JOptionPane.YES_OPTION){
             model = new DefaultTableModel ( );
             tabel_absen.setModel(model);
@@ -3227,8 +3309,10 @@ System.out.println(e);
                 stat = con.createStatement( );
                 con.createStatement().executeUpdate("DELETE FROM semester WHERE idsemester='"+txt_searchsemester.getText()+"'");
                 rs   = stat.executeQuery(sql);
-                int no=1;
+                JOptionPane.showMessageDialog(null, ("Data Semester Berhasil dihapus"), 
+                "Data Semester", JOptionPane.INFORMATION_MESSAGE);
                 this.tampilsemester();
+                this.hapuslayar();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ("Data tidak ditemukan dan tidak dapat dihapus"), 
                 "Delete Data Semester Gagal", JOptionPane.INFORMATION_MESSAGE);
@@ -3253,6 +3337,7 @@ System.out.println(e);
             this.tampilsemester();
             JOptionPane.showMessageDialog(null, ("Data Semester Berhasil di Update"), 
             "Data Semester", JOptionPane.INFORMATION_MESSAGE);
+            this.hapuslayar();
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ("Data Semester Gagal di Update"), 
             "Data Semester", JOptionPane.ERROR_MESSAGE);
@@ -3366,27 +3451,17 @@ System.out.println(e);
         //kelas                    
         txt_nkformkelas.setText("");txt_tingkatanformkelas.setText("");
         txt_jurusanformkelas.setText("");txt_namaformkelas.setText("");
+        cb_walasformkelas.setSelectedIndex(0);cb_smtformkelas.setSelectedIndex(0);
+        txt_taformkelas.setText("");
+        //admin
+        
+        //semester
+        txt_tglpertamasemester.setText("");txt_tglterakhirsemester.setText("");
+        txt_tahunajaransemester.setText("");
+        cb_statussemester.setSelectedIndex(0);cb_namasemester.setSelectedIndex(0);
     }
     
-     public void editprofileadmin2(boolean check){
-        if (check==true){
-            txt_namaprofileadmin1.setEnabled(false);
-            txt_nipprofileadmin1.setEnabled(false);
-            txt_namaprofileadmin1.setEnabled(false);
-            txt_usernameprofileadmin1.setEnabled(true);
-            txt_passbaruprofileadmin2.setEnabled(true);
-            txt_passulangprofileadmin2.setEnabled(true);
-        }
-        else{
-            txt_namaprofileadmin1.setEnabled(false);
-            txt_nipprofileadmin1.setEnabled(false);
-            txt_namaprofileadmin1.setEnabled(false);
-            txt_usernameprofileadmin1.setEnabled(false);
-            txt_passbaruprofileadmin2.setEnabled(false);
-            txt_passulangprofileadmin2.setEnabled(false);
-        }
-    }
-     
+       
     public void autonumberwalas(){
        try {
             sql="select * from walikelas order by idwalikelas desc";
@@ -3445,7 +3520,26 @@ System.out.println(e);
             Logger.getLogger(lupapassword.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-       
+    
+    public void editprofileadmin2(boolean check){
+        if (check==true){
+            txt_namaprofileadmin1.setEnabled(false);
+            txt_nipprofileadmin1.setEnabled(false);
+            txt_namaprofileadmin1.setEnabled(false);
+            txt_usernameprofileadmin1.setEnabled(true);
+            txt_passbaruprofileadmin2.setEnabled(true);
+            txt_passulangprofileadmin2.setEnabled(true);
+        }
+        else{
+            txt_namaprofileadmin1.setEnabled(false);
+            txt_nipprofileadmin1.setEnabled(false);
+            txt_namaprofileadmin1.setEnabled(false);
+            txt_usernameprofileadmin1.setEnabled(false);
+            txt_passbaruprofileadmin2.setEnabled(false);
+            txt_passulangprofileadmin2.setEnabled(false);
+        }
+    }
+    
     public void simpandataadmin2(){
         if (!txt_passbaruprofileadmin2.getText().equals("") && !txt_passulangprofileadmin2.getText().equals("")){
             if(txt_passbaruprofileadmin2.getText().equals(txt_passulangprofileadmin2.getText())){
@@ -3530,6 +3624,8 @@ System.out.println(e);
         tabkelas.setViewportBorder(null);
         tabel_kelas.setShowGrid(true);
         
+    
+        
         //SETTING TRANSPARASI SCROLLPANE TABLE LAP ABSEN
         ((DefaultTableCellRenderer)tabel_absen.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
         tabel_absen.setGridColor(Color.BLACK);
@@ -3569,6 +3665,16 @@ System.out.println(e);
         tab_anggotakelas.getViewport().setOpaque(false);
         tab_anggotakelas.setViewportBorder(null);
         tabel_anggotakelas.setShowGrid(true);
+        
+        //SETTING TRANSPARASI SCROLLPANE TABLE ANGGOTA KELAS
+        ((DefaultTableCellRenderer)tabel_semester.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
+        tabel_semester.setGridColor(Color.BLACK);
+        tabel_semester.setForeground(Color.BLACK);
+        ((DefaultTableCellRenderer)tabel_semester.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        tabsemester.setOpaque(false);
+        tabsemester.getViewport().setOpaque(false);
+        tabsemester.setViewportBorder(null);
+        tabel_semester.setShowGrid(true);
         
         ((DefaultTableCellRenderer)tabel_lapabsen.getDefaultRenderer(Object.class)).setBackground(new Color(255,255,255));
         tabel_lapabsen.setGridColor(Color.BLACK);
@@ -3613,14 +3719,17 @@ System.out.println(e);
     public void notifikasialphasemester(){
         try{
            stat = con.createStatement( );
-           sql  = "SELECT * FROM lapabsen WHERE alpha=3 OR alpha=6 OR alpha>=9 AND status='Aktif' AND keterangan !='Selesai'";
+           sql  = "SELECT * FROM lapabsen WHERE alpha=3 OR alpha=6 OR alpha>=9 AND status='Aktif' AND keterangan!='Selesai'";
            rs   = stat.executeQuery(sql);
            if (rs.next() ) {
+               
                if(rs.getInt("alpha")>9){
                    JOptionPane.showMessageDialog(null, ("Terdapat siswa bermasalah dengan absensi lebih dari 9 kali alpha"), 
                    "Informasi Siswa Bermasalah", JOptionPane.INFORMATION_MESSAGE);
                }
-               else{
+               else if(rs.getString("keterangan").equals("Selesai")){
+
+               }else{
                    JOptionPane.showMessageDialog(null, ("Terdapat siswa bermasalah dengan absensi"), 
                    "Informasi Siswa Bermasalah", JOptionPane.INFORMATION_MESSAGE);
                }

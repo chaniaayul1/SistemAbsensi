@@ -663,55 +663,108 @@ public class keloladata_bk extends javax.swing.JFrame  {
     public void chartriwayatsiswa(){
         int hadir = 0,sakit = 0,izin = 0,alpha = 0,terlambat = 0;
         this.querysemesterterkini();
-        try{
-           stat = con.createStatement( );
-           sql  = "Select status from absen WHERE nis='"+lb_nisriwayatsiswa.getText()+"' AND nk='"+lb_nkriwayatsiswa.getText()+"'"
-                   + "AND tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakhr+"'";
-           rs   = stat.executeQuery(sql);
-           while(rs.next ()){
-               Object[] obj=new Object[1];
-               obj[0]=rs.getString("status");
-               if(obj[0].equals("Hadir")){
-                   hadir=hadir+1;
-               }
-               else if(obj[0].equals("Sakit")){
-                   sakit=sakit+1;
-               }
-               else if(obj[0].equals("Izin")){
-                   izin=izin+1;
-               }
-               else if(obj[0].equals("Alpha")){
-                   alpha=alpha+1;
-               }
-               else if(obj[0].equals("Terlambat")){
-                   terlambat=terlambat+1;
-               }
+        String value=cb_formatsiswa.getSelectedItem().toString();
+        if (value=="Aktif"){
+            try{
+               stat = con.createStatement( );
+               sql  = "Select status from absen WHERE nis='"+lb_nisriwayatsiswa.getText()+"' AND nk='"+lb_nkriwayatsiswa.getText()+"'"
+                       + "AND tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakhr+"'";
+               rs   = stat.executeQuery(sql);
+               while(rs.next ()){
+                   Object[] obj=new Object[1];
+                   obj[0]=rs.getString("status");
+                   if(obj[0].equals("Hadir")){
+                       hadir=hadir+1;
+                   }
+                   else if(obj[0].equals("Sakit")){
+                       sakit=sakit+1;
+                   }
+                   else if(obj[0].equals("Izin")){
+                       izin=izin+1;
+                   }
+                   else if(obj[0].equals("Alpha")){
+                       alpha=alpha+1;
+                   }
+                   else if(obj[0].equals("Terlambat")){
+                       terlambat=terlambat+1;
+                   }
+                }
+            } catch (SQLException e) {
+                System.out.println(e);
             }
-        } catch (SQLException e) {
-            System.out.println(e);
+            DefaultPieDataset piedata=new DefaultPieDataset();
+            piedata.setValue("Hadir", hadir);
+            piedata.setValue("Sakit", sakit);
+            piedata.setValue("Izin", izin);
+            piedata.setValue("Alpha",alpha);
+            piedata.setValue("Terlambat", terlambat);
+            JFreeChart chart=ChartFactory.createPieChart(" ", piedata,true,false,false);
+            final PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
+            final PiePlot plot1 = (PiePlot) chart.getPlot();
+            plot1.setLabelGenerator(labelGenerator);
+            PiePlot piePlot=(PiePlot) chart.getPlot();
+            chart.getPlot().setBackgroundPaint( Color.white);
+            chart.getPlot().setOutlinePaint(null);
+            piePlot.setSectionPaint("Hadir",Color.green);
+            piePlot.setSectionPaint("Sakit",Color.yellow);
+            piePlot.setSectionPaint("Izin",Color.blue);
+            piePlot.setSectionPaint("Alpha",Color.red);
+            piePlot.setSectionPaint("Terlambat",Color.orange);
+            ChartPanel barChartPanel=new ChartPanel(chart);
+            panel_chartrs.removeAll();
+            panel_chartrs.add(barChartPanel);
+            panel_chartrs.validate();
+        }else if(value=="Pasif"){
+            try{
+               stat = con.createStatement( );
+               sql  = "Select status from historyabsen WHERE nis='"+lb_nisriwayatsiswa.getText()+"' AND nk='"+lb_nkriwayatsiswa.getText()+"'"
+                       + "AND tanggal BETWEEN '"+tanggalpert+"' AND '"+tanggalakhr+"'";
+               rs   = stat.executeQuery(sql);
+               while(rs.next ()){
+                   Object[] obj=new Object[1];
+                   obj[0]=rs.getString("status");
+                   if(obj[0].equals("Hadir")){
+                       hadir=hadir+1;
+                   }
+                   else if(obj[0].equals("Sakit")){
+                       sakit=sakit+1;
+                   }
+                   else if(obj[0].equals("Izin")){
+                       izin=izin+1;
+                   }
+                   else if(obj[0].equals("Alpha")){
+                       alpha=alpha+1;
+                   }
+                   else if(obj[0].equals("Terlambat")){
+                       terlambat=terlambat+1;
+                   }
+                }
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+            DefaultPieDataset piedata=new DefaultPieDataset();
+            piedata.setValue("Hadir", hadir);
+            piedata.setValue("Sakit", sakit);
+            piedata.setValue("Izin", izin);
+            piedata.setValue("Alpha",alpha);
+            piedata.setValue("Terlambat", terlambat);
+            JFreeChart chart=ChartFactory.createPieChart(" ", piedata,true,false,false);
+            final PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
+            final PiePlot plot1 = (PiePlot) chart.getPlot();
+            plot1.setLabelGenerator(labelGenerator);
+            PiePlot piePlot=(PiePlot) chart.getPlot();
+            chart.getPlot().setBackgroundPaint( Color.white);
+            chart.getPlot().setOutlinePaint(null);
+            piePlot.setSectionPaint("Hadir",Color.green);
+            piePlot.setSectionPaint("Sakit",Color.yellow);
+            piePlot.setSectionPaint("Izin",Color.blue);
+            piePlot.setSectionPaint("Alpha",Color.red);
+            piePlot.setSectionPaint("Terlambat",Color.orange);
+            ChartPanel barChartPanel=new ChartPanel(chart);
+            panel_chartrs.removeAll();
+            panel_chartrs.add(barChartPanel);
+            panel_chartrs.validate();
         }
-        DefaultPieDataset piedata=new DefaultPieDataset();
-        piedata.setValue("Hadir", hadir);
-        piedata.setValue("Sakit", sakit);
-        piedata.setValue("Izin", izin);
-        piedata.setValue("Alpha",alpha);
-        piedata.setValue("Terlambat", terlambat);
-        JFreeChart chart=ChartFactory.createPieChart(" ", piedata,true,false,false);
-        final PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
-        final PiePlot plot1 = (PiePlot) chart.getPlot();
-        plot1.setLabelGenerator(labelGenerator);
-        PiePlot piePlot=(PiePlot) chart.getPlot();
-        chart.getPlot().setBackgroundPaint( Color.white);
-        chart.getPlot().setOutlinePaint(null);
-        piePlot.setSectionPaint("Hadir",Color.green);
-        piePlot.setSectionPaint("Sakit",Color.yellow);
-        piePlot.setSectionPaint("Izin",Color.blue);
-        piePlot.setSectionPaint("Alpha",Color.red);
-        piePlot.setSectionPaint("Terlambat",Color.orange);
-        ChartPanel barChartPanel=new ChartPanel(chart);
-        panel_chartrs.removeAll();
-        panel_chartrs.add(barChartPanel);
-        panel_chartrs.validate();
     }
     
 //CHART RIWAYAT ABSENSI SELAMA SEKOLAH
